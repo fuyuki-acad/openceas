@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Bootstrap
-gem 'bootstrap-sass' ,'~>3.3.4'
+gem "bootstrap-sass", ">= 3.4.1"
 
 # pagenation
 gem 'kaminari'
