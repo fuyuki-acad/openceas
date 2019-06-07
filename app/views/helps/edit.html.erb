@@ -1,0 +1,73 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= form_for :manual, :url => {:action => :upload}, :method => :patch, :multipart => true do |form| %>
+  <!--***************************************ヘッダ*********************************************-->
+  <div class="row">
+    <div class="col-sm-12">
+  		<h4>
+        <%= t("helptop.HELPTOP_TITLE") %>
+  		</h4>
+    </div>
+  </div>
+  <!--***************************************ヘッダ終わり*******************************************-->
+
+
+  <!--***************************説明文1********************************-->
+  <div class="row">
+    <div class="col-sm-12">
+  		<div class="explanation_normal">
+   			<p>
+          <%= t("helptop.HELPTOP_MANUALEXPLANATION_ADMIN3_html") %>
+   			</p>
+  		</div>
+   	</div>
+  </div>
+  <!--*****************************説明文1終わり********************************-->
+
+
+
+  <!-- マニュアルアップロード-->
+  <div class="row">
+    <div class="col-sm-12">
+      <%= @manual.title %>
+    </div>
+    <br/>
+    <br/>
+    <div class="col-sm-12">
+      <%= form.file_field :file, {:class => "inputForm"} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="text-center">
+        <div class="btn-group">
+          <%= form.submit t("common.COMMON_UPLOAD"), :class => "btn btn-default ceas-button-margin-5 center-block" %>
+          <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        </div>
+      </div>
+    </div>
+	</div>
+  <!-- マニュアルアップロード終わり-->
+<% end %>

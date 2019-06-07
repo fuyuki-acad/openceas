@@ -1,0 +1,472 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+  <!-- 現在の授業回（タイトル）表示 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h5>
+            <% if @class_session.class_session_day.blank? %>
+              <% if @class_session.class_session_no == 0 %>
+                &nbsp;&nbsp;<%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+              <% else %>
+                <%= t("common.COMMON_NO2") + @class_session.class_session_no.to_s + t("common.COMMON_COUNT2") %>
+              <% end %>
+            <% else %>
+              <% if @class_session.class_session_no == 0 %>
+                &nbsp;&nbsp;<%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+              <% else %>
+                <%= @class_session.class_session_day %>
+              <% end %>
+            <% end %>
+            &nbsp;&nbsp;
+            <%= @course.course_name %>
+            &nbsp;&nbsp;
+            <%= @course.instructor_name %>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 非公開メモ -->
+  <% unless current_user.student? %>
+    <% unless @class_session.class_session_memo_closed.blank? %>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_CLASSSESSIONMEMOCLOSED") %>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                <%== convert_html(@class_session.class_session_memo_closed) %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <!--　授業タイトル　-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("common.COMMON_SUBJECT") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p>
+            <%== @class_session.class_session_title || t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NULL") %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--　授業概要　-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_CLASSSESSIONOUTLINE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p>
+            <%== @class_session.overview || t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NULL") %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--　授業メモ（公開メモ）　-->
+  <% unless @class_session.class_session_memo.blank? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_CLASSSESSIONMEMOOPEN") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <p>
+              <%== convert_html(@class_session.class_session_memo) %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 教材 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_MATERIAL") %>
+          </h3>
+        </div>
+
+        <div class="panel-body">
+          <% unless @class_session.assigned_materials? %>
+            <p>
+              <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOMATERIAL") %>
+            </p>
+          <% else %>
+            <% @class_session.materials.each do |material| %>
+              <p>
+                <%= link_to material.generic_page_title, material_path(material.id), :target => "_blank" %>
+
+                <!-- 非公開メモ -->
+                <% unless current_user.student? %>
+                  <% unless @class_session.class_session_memo_closed.blank? %>
+                  <%#--
+                    <h:commandLink id="closedMemoLink" value="#{exebundle.CLA_CLASSSESSIONEXECUTION_CLASSSESSIONMEMOCLOSED}" onclick="alertMessage('#{sessionScope.materialPage.genericPage.materialMemoClosed}');"></h:commandLink>
+                  --#%>
+                  <% end %>
+                <% end %>
+                &nbsp;
+                <% unless material.material_memo.blank? %>
+                  <p>
+                    <%= convert_html(material.material_memo) %>
+                  </p>
+                <% end %>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--　アンケート　-->
+  <% if @class_session.assigned_questionnaires? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT13") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% if @open_flag %>
+              <!--************************公開科目のとき*******************-->
+              <% @class_session.questionnaires.each do |questionnaire| %>
+                <p>
+                  <%= questionnaire.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
+                  <% unless questionnaire.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(questionnaire.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+
+            <% else %>
+
+              <% @class_session.questionnaires.each do |questionnaire| %>
+                <p>
+                  <%= link_to questionnaire.generic_page_title, "javascript:void();",
+                    {:onclick => "openWindow3('" + url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire) +"', 'executeQuestionnaire', '800', '600')"} %>
+                  <% if questionnaire.start_time.blank? %>
+                    <% unless questionnaire.end_time.blank? %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(questionnaire.end_time)) %>
+                    <% end %>
+                  <% else %>
+                    <% if questionnaire.end_time.blank? %>
+                    <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_STARTTIME", :param0 => l(questionnaire.start_time)) %>
+                    <% else %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_TERM", :param0 => l(questionnaire.start_time), :param1 => l(questionnaire.end_time)) %>
+                    <% end %>
+                  <% end %>
+                  <% unless questionnaire.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(questionnaire.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!--　複合式テスト　-->
+  <% if @class_session.assigned_componds? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT7") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% if @open_flag %>
+              <!--************************公開科目のとき*******************-->
+              <% @class_session.componds.each do |compond| %>
+                <p>
+                  <%= compond.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
+                  <% unless compond.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(compond.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+
+            <% else %>
+
+              <% @class_session.componds.each do |compond| %>
+                <p>
+                  <%= link_to compond.generic_page_title, "javascript:void();",
+                    {:onclick => "openWindow3('" + url_for(:controller => "/compounds", :action => :show, :id => compond) +"', 'executeCompound', '800', '600')"} %>
+                  <% if compond.start_time.blank? %>
+                    <% unless compond.end_time.blank? %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(compond.end_time)) %>
+                    <% end %>
+                  <% else %>
+                    <% if compond.end_time.blank? %>
+                    <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_STARTTIME", :param0 => l(compond.start_time)) %>
+                    <% else %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_TERM", :param0 => l(compond.start_time), :param1 => l(compond.end_time)) %>
+                    <% end %>
+                  <% end %>
+                  <% unless compond.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(compond.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 記号入力式テスト -->
+  <% if @class_session.assigned_multiplefibs? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT9") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% if @open_flag %>
+              <!--************************公開科目のとき*******************-->
+              <% @class_session.multiplefibs.each do |multiplefib| %>
+                <p>
+                  <%= multiplefib.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
+                  <% unless multiplefib.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(multiplefib.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+
+            <% else %>
+
+              <% @class_session.multiplefibs.each do |multiplefib| %>
+                <p>
+                  <%= link_to multiplefib.generic_page_title, "javascript:void();",
+                    {:onclick => "openWindow3('" + url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib) +"', 'executeMultipleFib', '800', '600')"} %>
+                  <% if multiplefib.start_time.blank? %>
+                    <% unless multiplefib.end_time.blank? %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(multiplefib.end_time)) %>
+                    <% end %>
+                  <% else %>
+                    <% if multiplefib.end_time.blank? %>
+                    <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_STARTTIME", :param0 => l(multiplefib.start_time)) %>
+                    <% else %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_TERM", :param0 => l(multiplefib.start_time), :param1 => l(multiplefib.end_time)) %>
+                    <% end %>
+                  <% end %>
+                  <% unless multiplefib.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(multiplefib.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- レポート -->
+  <% if @class_session.assigned_essays? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT11") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% if @open_flag %>
+              <!--************************公開科目のとき*******************-->
+              <% @class_session.essays.each do |essay| %>
+                <p>
+                  <%= essay.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
+                  <% unless essay.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(essay.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+
+            <% else %>
+
+              <% @class_session.essays.each do |essay| %>
+                <p>
+                  <%= link_to essay.generic_page_title, "javascript:void();",
+                    {:onclick => "openWindow3('" + url_for(:controller => "/essays", :action => :show, :id => essay) +"', 'executeAssignmentEssay', '800', '600')"} %>
+                  <% if essay.start_time.blank? %>
+                    <% unless essay.end_time.blank? %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(essay.end_time)) %>
+                    <% end %>
+                  <% else %>
+                    <% if essay.end_time.blank? %>
+                    <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_STARTTIME", :param0 => l(essay.start_time)) %>
+                    <% else %>
+                      <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_TERM", :param0 => l(essay.start_time), :param1 => l(essay.end_time)) %>
+                    <% end %>
+                  <% end %>
+                  <% unless essay.material_memo.blank? %>
+                    <p>
+                      <%= convert_html(essay.material_memo) %>
+                    </p>
+                  <% end %>
+                </p>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- URL -->
+  <% if @class_session.assigned_urls? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% @class_session.urls.each do |url| %>
+              <div>
+                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank" %>
+                <% unless url.material_memo.blank? %>
+                  <p>
+                    <%= convert_html(url.material_memo) %>
+                  </p>
+                <% end %>
+                &nbsp;
+                <% unless url.content.blank? %>
+                  <p>
+                    <%== url.content %>
+                  </p>
+                <% end %>
+                <hr>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<!-- ********** 未対応（現行よりコピー） ここから **********-->
+  <!-- include file="../forumManagement/includes/ClassSessionExecutionMainForum.jsp" -->
+  <!-- include file="../courseware/includes/ClassSessionExecutionMainCourseware.jsp" -->
+<!-- ********** 未対応（現行よりコピー） ここまで**********-->
+
+  <!-- 評価記入リスト-->
+  <% if @class_session.assigned_evaluations? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT20") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% @class_session.evaluations.each do |evaluation| %>
+              <p>
+                <%= evaluation.generic_page_title %>
+                <% unless evaluation.material_memo.blank? %>
+                  <p>
+                    <%= convert_html(evaluation.material_memo) %>
+                  </p>
+                <% end %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- アンカーボタン -->
+  <div class="pull-right">
+    <a class="anchor" href="#anchor-top">
+      <%= t("common.COMMON_TOP") %>
+    </a>
+  </div>

@@ -1,0 +1,507 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :combined_record, @course %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("combinedRecord.COMMONCOMBINEDRECORD_COMBINEDRECORD") } %>
+
+<!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+<div class="row">
+  <div class="col-xs-12">
+    <!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+    <div class="pull-right">
+      <div class="btn-group">
+        <!-- 他の作業ボタン -->
+        <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+        <!-- 科目選択ボタン -->
+        <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 作業中科目 -->
+<%= render :partial => "shared/courses/course_information", :locals => { course: @course } %>
+
+<br />
+
+<!-- 科目検索 -->
+<%= form_tag url_for({:action => :show}), :method => :get do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <!-- 説明文 -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <%= t("combinedRecord.COM_COMBINEDRECORD_SEARCHTEXT_html") %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <table>
+              <tr><td><label><%= check_box_tag "select[]", 6, params['select'] && params[:select].include?("6") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND2") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 0, params['select'] && params[:select].include?("0") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 1, params['select'] && params[:select].include?("1") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_MULTIPLEFIB") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 2, params['select'] && params[:select].include?("2") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_ASSIGNMENTESSAY") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 3, params['select'] && params[:select].include?("3") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_QUESTIONNAIRE") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 5, params['select'] && params[:select].include?("5") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_EVALUATIONLIST") %></label></td></tr>
+              <tr><td><label><%= check_box_tag "select[]", 4, params['select'] && params[:select].include?("4") ? true : nil %>&nbsp;<%= t("combinedRecord.COM_COMBINEDRECORD_ATTENDANCE") %></label></td></tr>
+              <%= hidden_field_tag "select[]", "" %>
+            </table>
+          </div>
+
+          <div class="text-center">
+            <div class="btn-group">
+              <%= submit_tag t("combinedRecord.COM_COMBINEDRECORD_DISPLAY"), :name => "", :class => "btn btn-primary center-block" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="pull-right">
+      <div class="btn-group">
+        <!-- csv出力 -->
+        <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :output_csv, :course_id => @course.id, :select => @selected, :format => 'csv'}, :data => {:confirm => t("combinedRecord.COM_COMBINEDRECORD_JAVASCRIPT1")}, :class => "btn btn-primary", :target => "_blank" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<br />
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 連結評価一覧表の表示 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body table-responsive">
+        <!-- 0件メッセージ -->
+        <% if @course.enrolled_users.count == 0 %>
+        <p>
+          <%= t("common.COMMON_NOTFOUND") %>
+        </p>
+        <% else %>
+        <!-- リスト表示 -->
+          <!-- 一覧テーブル -->
+          <div class="main">
+            <table class="table table-bordered table-striped">
+              <!-- ヘッダ1 (学生、共通、n回目) -->
+              <tr>
+                <td colspan="2" class="table_header_upper_student_combinedrecord">
+                  <%= t("common.COMMON_STUDENT") %>
+                </td>
+                <td colspan="<%= calculate_column([@classSessionColumnCount[0][0], @classSessionColumnCount[0][1], @classSessionColumnCount[0][2], @classSessionColumnCount[0][3], @classSessionColumnCount[0][4], @classSessionColumnCount[0][5], @classSessionColumnCount[0][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                  <%= t("combinedRecord.COM_COMBINEDRECORD_COMMON") %>
+                </td>
+
+                <% for class_session_count in 1..@course.class_session_count %>
+                  <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                      <%= class_session_name(class_session_count) %>
+                    </td>
+                  <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                      <%= class_session_name(class_session_count) %>
+                    </td>
+                  <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                      <%= class_session_name(class_session_count) %>
+                    </td>
+                  <% else %>
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                      <%= class_session_name(class_session_count) %>
+                    </td>
+                  <% end %>
+                <% end %>
+              </tr>
+
+              <!-- ヘッダ2 (No.、氏名、[-、複合、記号、レ、ア、出]) -->
+              <tr>
+                <td class="table_header_under_no_combinedrecord" rowspan="2">
+                  <%= t("common.COMMON_NO1") %>
+                </td>
+                <td class="table_header_under_name_combinedrecord" rowspan="2">
+                  <%= t("common.COMMON_TARGETNAME") %>
+                </td>
+
+                <% for class_session_count in 0..@course.class_session_count %>
+                  <% if calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) == 0 %>
+                    <td class="table_header_under_score_combiedrecord" rowspan="2">
+                      <%= t("combinedRecord.COM_COMBINEDRECORD_NOTHING") %>
+                    </td>
+                  <% end %>
+
+                  <% if @compounds %>
+                    <% if @classSessionColumnCount[class_session_count][0] > 0 || @classSessionColumnCount[class_session_count][6] > 0 %>
+                      <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
+                          <td class="table_header_under_score_combiedrecord2" colspan="2">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
+                          </td>
+                        <% end %>
+                      <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
+                          <td class="table_header_under_score_combiedrecord2">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
+                          </td>
+                        <% end %>
+                      <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
+                          <td class="table_header_under_score_combiedrecord2">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if @multiple_fibs %>
+                    <% if @classSessionColumnCount[class_session_count][1] > 0 %>
+                      <% for count in 0..@classSessionColumnCount[class_session_count][1] - 1 %>
+                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                          <%= t("combinedRecord.COM_COMBINEDRECORD_MULTIPLEFIBOMIT") %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if @assignment_essays %>
+                    <% if @classSessionColumnCount[class_session_count][2] > 0 %>
+                      <% for count in 0..@classSessionColumnCount[class_session_count][2] - 1 %>
+                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                          <%= t("combinedRecord.COM_COMBINEDRECORD_ASSIGNMENTESSAYOMIT") %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if @questionnaires %>
+                    <% if @classSessionColumnCount[class_session_count][3] > 0 %>
+                      <% for count in 0..@classSessionColumnCount[class_session_count][3] - 1 %>
+                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                          <%= t("combinedRecord.COM_COMBINEDRECORD_QUESTIONNAIREOMIT") %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if @evaluations %>
+                    <% if @classSessionColumnCount[class_session_count][5] > 0 %>
+                      <% for count in 0..@classSessionColumnCount[class_session_count][5] - 1 %>
+                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                          <%= t("combinedRecord.COM_COMBINEDRECORD_EVALUATIONLISTOMIT") %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if @attendances %>
+                    <% if @classSessionColumnCount[class_session_count][4] > 0 %>
+                      <% for count in 0..@classSessionColumnCount[class_session_count][4] - 1 %>
+                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                          <%= t("combinedRecord.COM_COMBINEDRECORD_ATTENDANCE") %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </tr>
+
+              <!-- 複合式テスト2段目 -->
+              <tr>
+                <% for class_session_count in 0..@course.class_session_count %>
+                  <% if @compounds %>
+                    <% if @classSessionColumnCount[class_session_count][0] > 0 || @classSessionColumnCount[class_session_count][6] > 0 %>
+                      <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
+                          <td class="table_header_under_score_combiedrecord">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_RAW") %>
+                          </td>
+                          <td class="table_header_under_score_combiedrecord">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_PERCENTAGE") %>
+                          </td>
+                        <% end %>
+                      <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
+                          <td class="table_header_under_score_combiedrecord">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_PERCENTAGE") %>
+                          </td>
+                        <% end %>
+                      <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
+                          <td class="table_header_under_score_combiedrecord">
+                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_RAW") %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </tr>
+
+              <!-- 学生ごと -->
+              <% @course.enrolled_users.each.with_index(1) do |user, user_index| %>
+                <tr>
+                  <td class="table_body_no_combinedrecord">
+                    <%= user_index %>
+                  </td>
+                  <td class="table_body_name_combinedrecord">
+                    <%= user.get_name_no_prefix %>
+                    <%= user.user_name %>
+                  </td>
+
+                  <% for class_session_count in 0..@course.class_session_count %>
+                    <% if calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) == 0 %>
+                      <td class="table_body_score_combinedrecord"></td>
+                    <% end %>
+
+                    <% if @compounds %>
+                      <% if @classSessionColumnCount[class_session_count][0] > 0 || @classSessionColumnCount[class_session_count][6] > 0 %>
+                        <% if @classSessionColumnCount[class_session_count][0] > 0 %>
+                          <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
+                            <!--  素点合計 -->
+                            <% if @classSessionColumnCount[class_session_count][6] > 0 %>
+                              <td class="table_body_score_combinedrecord">
+                                <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
+                                  <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalRawScore<0)-->
+                                  <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
+                                    <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
+                                      <%= t("combinedRecord.COM_COMBINEDRECORD_SELFSCORE") %>
+                                      <%= @compounds[class_session_count][count][user.id].total_raw_score %>
+                                    <% end %>
+                                  <!--採点済(- ->selfTotalScore>=0,totalScore>=0)-->
+                                  <% elsif @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score >= 0 %>
+                                    <%= @compounds[class_session_count][count][user.id].total_raw_score %>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            <% end %>
+
+                            <!--  百分率 -->
+                            <td class="table_body_score_combinedrecord">
+                              <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
+                                <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalScore<0)-->
+                                <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
+                                  <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
+                                    <%= t("combinedRecord.COM_COMBINEDRECORD_SELFSCORE") %>
+                                    <%= @compounds[class_session_count][count][user.id].self_total_score %>
+                                  <% end %>
+                                <% end %>
+
+                                <!--採点済(selfTotalScore>=0,totalScore>=0)-->
+                                <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score >= 0 %>
+                                  <%= @compounds[class_session_count][count][user.id].total_score %>
+                                <% end %>
+                              <% end %>
+                            </td>
+                          <% end %>
+
+                        <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
+                          <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
+                            <!-- 素点合計 -->
+                            <td class="table_body_score_combinedrecord">
+                              <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
+                                <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalRawScore<0)-->
+                                <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
+                                  <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
+                                    <%= t("combinedRecord.COM_COMBINEDRECORD_SELFSCORE") %>
+                                    <%= @compounds[class_session_count][count][user.id].total_raw_score %>
+                                  <% end %>
+                                <% elsif @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_raw_score >= 0 %>
+                                  <!--採点済(selfTotalScore>=0,totalScore>=0)-->
+                                  <%= @compounds[class_session_count][count][user.id].total_raw_score %>
+                                <% end %>
+                              <% end %>
+                            </td>
+
+                            <!-- 百分率 -->
+                            <% if @classSessionColumnCount[class_session_count][0] > 0 %>
+                              <td class="table_body_score_combinedrecord">
+                                <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
+                                  <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalScore<0)-->
+                                  <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
+                                    <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
+                                      <%= t("combinedRecord.COM_COMBINEDRECORD_SELFSCORE") %>
+                                      <%= @compounds[class_session_count][count][user.id].self_total_score %>
+                                    <% end %>
+                                  <% end %>
+
+                                  <!--採点済(selfTotalScore>=0,totalScore>=0)-->
+                                  <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score >= 0 %>
+                                    <%= @compounds[class_session_count][count][user.id].total_score %>
+                                  <% end %>
+                                <% end %>
+                              </td>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if @multiple_fibs %>
+                      <% if @classSessionColumnCount[class_session_count][1] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][1] - 1 %>
+                          <td class="table_body_score_combinedrecord">
+                            <% if @multiple_fibs[class_session_count][count][user.id] %>
+                              <% if @multiple_fibs[class_session_count][count][user.id].total_score >= 0 %>
+                                <%= @multiple_fibs[class_session_count][count][user.id].total_score %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if @assignment_essays %>
+                      <% if @classSessionColumnCount[class_session_count][2] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][2] - 1 %>
+                          <td class="table_body_score_combinedrecord">
+                            <% if @assignment_essays[class_session_count][count][user.id] %>
+                              <% if @return_method_cds[class_session_count][count].assignment_essay_return_method_cd != 0 %>
+                                <% if @assignment_essays[class_session_count][count][user.id].assignment_essay_score.nil? %>
+                                  <%= t("combinedRecord.COM_COMBINEDRECORD_NOTGRADED") %>
+                                <% else %>
+                                  <%= @assignment_essays[class_session_count][count][user.id].assignment_essay_score %>
+                                  <%= t("common.COMMON_PARANTHESISLEFT2") %>
+                                  <%= @assignment_essays[class_session_count][count][user.id].answer_count %>
+                                  <%= t("common.COMMON_PARANTHESISRIGHT2") %>
+                                <% end %>
+                              <% end %>
+
+                              <% if @return_method_cds[class_session_count][count].assignment_essay_return_method_cd == 0 %>
+                                <!-- assignmentEssayScoreを優先する -->
+                                <% if @assignment_essays[class_session_count][count][user.id].assignment_essay_score.nil? %>
+                                  <% if @assignment_essays[class_session_count][count][user.id].total_score < 0 %>
+                                    <%= t("combinedRecord.COM_COMBINEDRECORD_NOTGRADED") %>
+                                  <% else %>
+                                    <%= @assignment_essays[class_session_count][count][user.id].total_score %>
+                                    <%= t("common.COMMON_PARANTHESISLEFT2") %>
+                                    <%= @assignment_essays[class_session_count][count][user.id].answer_count %>
+                                    <%= t("common.COMMON_PARANTHESISRIGHT2") %>
+                                  <% end %>
+                                <% else %>
+                                  <%= @assignment_essays[class_session_count][count][user.id].assignment_essay_score %>
+                                  <%= t("common.COMMON_PARANTHESISLEFT2") %>
+                                  <%= @assignment_essays[class_session_count][count][user.id].answer_count %>
+                                  <%= t("common.COMMON_PARANTHESISRIGHT2") %>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if @questionnaires %>
+                      <% if @classSessionColumnCount[class_session_count][3] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][3] - 1 %>
+                          <td class="table_body_score_combinedrecord">
+                            <% if @questionnaires[class_session_count][count][user.id] %>
+                              <% unless @questionnaires[class_session_count][count][user.id].nil? %>
+                                <span class="color_pattern1"><%= t("combinedRecord.COM_COMBINEDRECORD_CIRCLE") %></span>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if @evaluations %>
+                      <% if @classSessionColumnCount[class_session_count][5] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][5] - 1 %>
+                          <td class="table_body_score_combinedrecord">
+                            <% if @evaluations[class_session_count][count][user.id] %>
+                              <% unless @evaluations[class_session_count][count][user.id].nil? %>
+                                <%= @evaluations[class_session_count][count][user.id].assignment_essay_score %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+
+                    <% if @attendances %>
+                      <% if @classSessionColumnCount[class_session_count][4] > 0 %>
+                        <% for count in 0..@classSessionColumnCount[class_session_count][4] - 1 %>
+                          <td class="table_body_score_combinedrecord">
+                            <% if @attendances[class_session_count][count][user.id] %>
+                              <% if @attendances[class_session_count][count][user.id] == 1 %>
+                                <span class="color_pattern1"><%= t("combinedRecord.COM_COMBINEDRECORD_CIRCLE") %></span>
+                              <% elsif @attendances[class_session_count][count][user.id] == 2 %>
+                                <span class="color_pattern2"><%= t("combinedRecord.COM_COMBINEDRECORD_TRIANGLE") %></span>
+                              <% elsif @attendances[class_session_count][count][user.id] == 3 %>
+                                <span class="color_pattern3"><%= t("combinedRecord.COM_COMBINEDRECORD_X") %></span>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </tr>
+              <% end %>
+            </table>
+
+            <!-- アンカーボタン -->
+            <div class="pull-right">
+              <a class="anchor" href="#anchor-top">
+                <%= t("common.COMMON_TOP") %>
+              </a>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @course.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @course, :courses => @courses} %>

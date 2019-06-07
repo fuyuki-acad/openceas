@@ -1,0 +1,29 @@
+ja:
+  copyright: "Copyright &copy; %{year} Fuyuki Academy. All rights reserved."
+
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "..."
+
+  date:
+    view:
+      format: "YYYY/MM/DD"
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+  time:
+    view:
+      format: "YYYY/MM/DD HH:mm:ss"
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%y/%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+      ym: "%Y年%m月"
+    am: "午前"
+    pm: "午後"

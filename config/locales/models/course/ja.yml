@@ -1,0 +1,35 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      course: "科目"
+
+    attributes:
+      course:
+        course_name: "科目名称"
+        school_year: "年度"
+        season_cd: "学期"
+        day_cd: "曜日"
+        hour_cd: "時限"
+        instructor_name: "担任者"
+        major: "系・学科・コース"
+
+    convert:
+      day_cd:
+        day_cd1: "月"
+        day_cd2: "火"
+        day_cd3: "水"
+        day_cd4: "木"
+        day_cd5: "金"
+        day_cd6: "土"
+        day_cd7: "日"
+      season_cd:
+        season_cd1: "春"
+        season_cd2: "夏"
+        season_cd3: "秋"
+        season_cd4: "冬"
+        season_cd5: "前期"
+        season_cd6: "後期"
+        season_cd7: "集中"
+        season_cd8: "通年"
+        season_cd9: "その他"

@@ -1,0 +1,31 @@
+zh_CN:
+  general_announcement:
+    #####システム情報・告知#####
+    #共通
+    COMMONGENERALINFO_GENERALINFOLIST: "通知一览"
+    COMMONGENERALINFO_INFOMATION: "通知内容"
+    COMMONGENERALINFO_TITLE: "学习环境管理人的通知"
+    COMMONGENERALINFO_LOGIN_INFOMATION: "通知内容"
+    #systemInfo.jsp
+    GEN_SYSTEMINFO_SYSTEMINFO: "系统信息"
+    GEN_SYSTEMINFO_EXPLANATION1_html: "这里显示的信息，是系统更新信息，<br>或者是系统更新计划，等等。"
+    #generalInfo.jsp
+    GEN_GENERALINFO_GENERALINFO: "通知机能"
+    GEN_GENERALINFO_EXPLANATION1_html: "填写下列输入格式即可通知。"
+    GEN_GENERALINFO_EXPLANATION2_html: "从进入页告知的<strong>“利用进入页的通知</strong>”"
+    GEN_GENERALINFO_EXPLANATION3_html: "从授课教师的菜单系统信息告知的“<strong>利用系统信息单的通知</strong>”"
+    GEN_GENERALINFO_STATE: "状态"
+    GEN_GENERALINFO_INFOMATIONWAY: "通知方法"
+    GEN_GENERALINFO_BYUSINGLOGIN: "利用进入页的通知"
+    GEN_GENERALINFO_BYUSINGSYSTEMINFO: "利用系统信息单的通知"
+    GEN_GENERALINFO_HIDE: "设为不显示"
+    GEN_GENERALINFO_TOINSTRUCTOR: "向老师汇报"
+    GEN_GENERALINFO_REGISTERED: "登录完毕。"
+    GEN_GENERALINFO_SCRIPT1: "请填写标题。"
+    GEN_GENERALINFO_SCRIPT2: "请填写通知内容。"
+    GEN_GENERALINFO_SCRIPT3: "通知内容请控制在4096字以内。"
+    GEN_GENERALINFO_SCRIPT4: "转向编辑画面。"
+    #detailGeneralInfo.jsp
+    GEN_DETAILGENERALINFO_INFOMATION: "通知"
+    #generalInfoList.jsp
+    GEN_GENERALINFOLIST_INFOMATIONLIST: "通知一览"

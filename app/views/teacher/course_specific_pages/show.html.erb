@@ -1,0 +1,145 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :course_specific_page, @specific_page %>
+
+<%= render 'shared/error', :record => @specific_page %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_NAVI") } %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+    <div class="pull-right">
+      <div class="btn-group">
+        <!-- 他の作業ボタン -->
+        <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+        <!-- 科目選択ボタン -->
+        <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 作業中科目 -->
+<%= render :partial => "shared/courses/course_information", :locals => { course: @specific_page } %>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION1") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION2") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION3") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION4") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION5") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION6") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION7") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION8") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION9") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <span class="bigText"><%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION10") %></span><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION11") %><br />
+        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION12") %><br />
+        <p>
+          <%= image_tag "relative_path.jpg", :class => "hidden-xs" %>
+          <%= image_tag "relative_path.jpg", :class => "visible-xs width-100" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= form_tag url_for(:action => "upload"), {:class => "form-horizontal", :multipart => true} do %>
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!--1行目-->
+          <tr>
+            <td>
+              <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_NOWPAGE") %>
+            </td>
+            <td>
+              <%= link_to t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_CONFIRMNOWPAGE"),
+                {:action => :show_file, :course_id => @specific_page},
+                class: "btn btn-default", :target => "_blank" %>
+              <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION1") %>
+            </td>
+          </tr>
+          <!--2行目-->
+          <tr>
+            <td>
+              <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_REGISTERFILE") %>
+            </td>
+            <td>
+              <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION2") %>
+              <br/>
+              <%= file_field_tag :file, {:class => "inputForm"} %>
+              <br/>
+              <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION3") %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= submit_tag t("common.COMMON_REGISTER"), :data => {:confirm => t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION4")}, :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @specific_page.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @specific_page, :courses => @courses} %>

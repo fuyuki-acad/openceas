@@ -1,0 +1,23 @@
+en:
+  system_usage:
+    #####システム利用状況#####
+    #confirmSystemLog.jsp
+    SYS_CONFIRMSYSTEMLOG_TITLE: "List of Uploaded Course Contents"
+    SYS_CONFIRMSYSTEMLOG_NAVI: "Course Contents"
+    SYS_CONFIRMSYSTEMLOG_EXPLANATION1: "Descending order (Ascending order if the checkbox is cleared.)"
+    SYS_CONFIRMSYSTEMLOG_EXPLANATION2: "Select Academic Year"
+    SYS_CONFIRMSYSTEMLOG_EXPLANATION3: "Select Semester"
+    SYS_CONFIRMSYSTEMLOG_EXPLANATION4: "Select Your Status"
+    SYS_CONFIRMSYSTEMLOG_STATUS1: "Registered Course Contents"
+    SYS_CONFIRMSYSTEMLOG_STATUS2: "Registered URL"
+    SYS_CONFIRMSYSTEMLOG_STATUS3: "Registered Mixed Format Quiz"
+    SYS_CONFIRMSYSTEMLOG_STATUS4: "Registered Multiple-choice Quiz"
+    SYS_CONFIRMSYSTEMLOG_STATUS5: "Registered Essay Assignment"
+    SYS_CONFIRMSYSTEMLOG_STATUS6: "Registered Survey"
+    SYS_CONFIRMSYSTEMLOG_STATUS7: "Attendance Data"
+    SYS_CONFIRMSYSTEMLOG_STATUS8: "Announcements"
+    SYS_CONFIRMSYSTEMLOG_STATUS9: "FAQ"
+    SYS_CONFIRMSYSTEMLOG_STATUS10: "Registered Topic"
+    SYS_CONFIRMSYSTEMLOG_STATUS11: "Registered SCROM Contents"
+    SYS_CONFIRMSYSTEMLOG_ALL: "All"
+    SYS_CONFIRMSYSTEMLOG_STARTYEAR: "2003"

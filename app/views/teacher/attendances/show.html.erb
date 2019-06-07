@@ -1,0 +1,272 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= javascript_include_tag 'admin/attendanceAdministration' %>
+
+<% breadcrumb :combined_records %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ADMIN") } %>
+
+<!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+<div class="row">
+  <div class="col-xs-12">
+    <!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+    <div class="pull-right">
+      <div class="btn-group">
+        <!-- 他の作業ボタン -->
+        <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 作業中科目 -->
+<%= render :partial => "shared/courses/course_information", :locals => { course: @course } %>
+
+<br />
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION11_html") %>
+          <br/>
+          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION13_html") %>
+          <br/>
+          <br/>
+          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION12_html") %>
+          <br/>
+
+          <% if @course.enrolled_users.count > 0 %>
+            <div class="text-center">
+              <div class="btn-group">
+                <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :output_csv, :course_id => @course.id, :format => 'csv'}, :data => {:confirm => t("common.COMMON_DOWNLOADMESSAGE")}, :class => "btn btn-primary ceas-button-margin-5 center-block", :target => "_blank" %>
+              </div>
+            </div>
+          <% end %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<% if @attendance_cd == 'attendance' || @attendance_cd == 'late' %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h5>
+            <div class="explanation_wide">
+              <% if @attendance_cd == 'attendance' %>
+                <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION21", :param0 => @course.class_session_count, :param1 => t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION22"), :param2 => @attendance.attendance_count) %>
+              <% end %>
+              <% if @attendance_cd == 'late' %>
+                <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION21", :param0 => @course.class_session_count, :param1 => t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION23"), :param2 => @attendance.attendance_count) %>
+              <% end %>
+              <br/>
+
+              <%= link_to t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION2BUTTON1"), collect_attendance_path(@course, :session_no => @class_session.class_session_no), {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+              <%= link_to t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION2BUTTON2"), teacher_attendance_path(@course, :session_no => @class_session.class_session_no), {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+            </div>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 一覧テーブル -->
+<% if @course.enrolled_users.count > 0 %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ATTENDANCEDATACDEXPLANATION") %>
+          </h3>
+        </div>
+        <div class="panel-body table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <td class="col-xs-3 table_header_left_attendance_administration" colspan=3>
+                <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNCLASSSESSIONNO") %>
+              </td>
+              <% for class_session_count in 1..@course.class_session_count %>
+                <td class="table_header_right_upper_attendance_administration" width="<%= @attendance_count_list[class_session_count] * 35 %>" colspan="<%= @attendance_count_list[class_session_count] %>">
+                  <%= class_session_name(class_session_count) %>
+                </td>
+              <% end %>
+            </tr>
+
+            <tr>
+              <td class="table_header_left_attendance_administration" colspan=3>
+                <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNATTENDANCECOUNTNO") %>
+              </td>
+              <% for class_session_count in 1..@course.class_session_count %>
+                <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                  <td id="col_<%= class_session_count %>_<%= attendance_count %>" class="table_header_right_under_attendance_administration"
+                    onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
+                    <%= attendance_count %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+
+            <tr>
+              <td class="table_state_left_attendance_administration" colspan=3>
+                <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNATTENDANCE") %>
+              </td>
+              <% for class_session_count in 1..@course.class_session_count %>
+                <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                  <td id="col0_<%= class_session_count %>_<%= attendance_count %>" class="table_state_right_attendance_administration"
+                    onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
+                    <%= @total_attendance_data[1][class_session_count][attendance_count].blank? ? 0 : @total_attendance_data[1][class_session_count][attendance_count] %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+
+            <tr>
+              <td class="table_state_left_attendance_administration" colspan=3>
+                <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNLATE") %>
+              </td>
+              <% for class_session_count in 1..@course.class_session_count %>
+                <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                  <td id="col1_<%= class_session_count %>_<%= attendance_count %>" class="table_state_right_attendance_administration"
+                    onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
+                    <%= @total_attendance_data[2][class_session_count][attendance_count].blank? ? 0 : @total_attendance_data[2][class_session_count][attendance_count] %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+
+            <tr>
+              <td class="table_state_left_attendance_administration" colspan=3>
+                <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNABSENT") %>
+              </td>
+              <% for class_session_count in 1..@course.class_session_count %>
+                <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                  <td id="col2_<%= class_session_count %>_<%= attendance_count %>" class="table_state_right_attendance_administration"
+                    onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                    onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
+                    <%= @total_attendance_data[3][class_session_count][attendance_count].blank? ? 0 : @total_attendance_data[3][class_session_count][attendance_count] %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+
+            <% @course.enrolled_users.each.with_index(1) do |user, user_index| %>
+<!-- i= user_index -->
+              <tr id="row<%= user_index %>" onMouseOver="mouseOverCol(<%= user_index %>)" onMouseOut="mouseOutCol(<%= user_index %>)" onClick="preparePersonalAttendance(<%= @course.id%>, <%= user.id %>)">
+                <td>
+                  <%= user_index %>
+                </td>
+                <td>
+                  <% if user.user_image.count > 0 %>
+                    <%= link_to user.get_user_image(UserImage::IMAGE_TYPE_EXPRESSION), :class => "preview" do %>
+                      <%= image_tag user.get_user_image(UserImage::IMAGE_TYPE_ICON), :width => "20x20", :alt => '' %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= user.get_name_no_prefix %>
+                  <%= user.user_name %>
+                </td>
+                <% for class_session_count in 1..@course.class_session_count %>
+                  <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+<!-- j= class_session_count -->
+<!-- k= attendance_count -->
+                    <td id="cell<%= user_index %>_<%= class_session_count %>_<%= attendance_count %>" class="table_body_mark_attendance_administration">
+                      <% if @attendance_data[user.id][class_session_count] %>
+                        <% if @attendance_data[user.id][class_session_count][attendance_count] == 0 %>
+                          &nbsp;
+                        <% end %>
+                        <% if @attendance_data[user.id][class_session_count][attendance_count] == 1 %>
+                          <span class="color_pattern1"><%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ATTENDANCE") %></span>
+                        <% end %>
+                        <% if @attendance_data[user.id][class_session_count][attendance_count] == 2 %>
+                          <span class="color_pattern1"><%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_LATE") %></span>
+                        <% end %>
+                        <% if @attendance_data[user.id][class_session_count][attendance_count] == 3 %>
+                          <span class="color_pattern1"><%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ABSENT") %></span>
+                        <% end %>
+                      <% else %>
+                        &nbsp;
+                      <% end %>
+                    </td>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- アンカーボタン -->
+  <div class="pull-right">
+    <a class="anchor" href="#anchor-top">
+      <%= t("common.COMMON_TOP") %>
+    </a>
+  </div>
+<% else %>
+  <!-- 一覧テーブル(履修者がいない) -->
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION32") %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @course.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @course, :courses => @courses} %>

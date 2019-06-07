@@ -1,0 +1,103 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :teacher_new_announcement, @course %>
+
+<%= render 'shared/error', :record => @announcement %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("announcement.COMMONANNOUNCEMENT_NAVI") } %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <!-- 「他作業へ」ボタンで作業機能選択をモーダル表示-->
+    <div class="pull-right">
+      <div class="btn-group">
+        <!-- 他の作業ボタン -->
+        <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+        <!-- 科目選択ボタン -->
+        <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 作業中科目 -->
+<%= render :partial => "shared/courses/course_information", :locals => { course: @course } %>
+
+<!-- 入力フォーム -->
+<%= form_for :announcement, :url => {:action => "create"}, :html => {:class => "form-horizontal"} do |form| %>
+<%= form.hidden_field :course_id %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("announcement.COMMONANNOUNCEMENT_NAVI") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <%= render form %>
+      </div>
+    </div>
+
+    <!-- 説明文 -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <span class="explanation_text"><%= t("announcement.ANN_REGISTERANNOUNCEMENT_EXPLANATION_html") %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ボタン -->
+    <div class="text-center">
+      <div class="btn-group">
+        <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-default ceas-button-margin-5" %>
+        <%= form.button t("common.COMMON_CANCEL"), {:class => "btn btn-default ceas-button-margin-5", :type => :reset} %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5"} %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @course.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @course, :courses => @courses} %>

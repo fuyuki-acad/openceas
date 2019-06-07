@@ -1,0 +1,674 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :users %>
+
+<!-- メッセージ -->
+<% if @user && @user.errors.count > 0 %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <% @user.errors.full_messages.each do |message| %>
+          <%= message %><br />
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-xs-12">
+    <p><%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_EXPLANATION_html") %></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-5">
+    <!-- 氏名表示、表示用画像変更 -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <%= t("common.COMMON_TARGETNAME") %>
+          <%= @user.user_name %>
+        </h3>
+      </div>
+
+      <div class="panel-body form-horizontal">
+        <fieldset>
+          <%= form_for :user_image, :url => {:action => "create_image"}, :html => {:class => "form-horizontal"} do |form| %>
+            <%= form.hidden_field :user_id %>
+            <div class="col-sm-5">
+              <p>
+                <%= image_tag @user.get_user_image(UserImage::IMAGE_TYPE_EXPRESSION), :class => "img-rounded user-image" %>
+              </p>
+            </div>
+            <div class="form-group col-sm-7">
+              <label for="current-Password" class="col-lg-10">
+                <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_IMAGETITLE") %>
+              </label>
+              <div class="col-lg-10"><%= form.file_field :mount_url %></div>
+            </div>
+            <div class="form-group">
+              <div class="pull-right">
+                <div class="col-xs-12">
+                  <% if @user.has_user_image(UserImage::IMAGE_TYPE_EXPRESSION) %>
+                    <!-- 更新ボタン -->
+                    <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary' %>
+                    <!-- 削除ボタン -->
+                    <%= link_to({action: :delete_image}, method: :delete, class: "btn btn-danger") do %>
+                      <%= t("common.COMMON_DELETE") %>
+                    <% end %>
+                  <% else %>
+                    <!-- 登録ボタン -->
+                    <%= form.submit t('common.COMMON_REGISTER'), class: 'btn btn-primary' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- password変更 -->
+    <% if current_user.provider.blank? %>
+      <%= form_for :user, :url => {:action => "update_password", :updated_type => User::UPDATED_TYPE_PASSWORD}, :html => {:class => "form-horizontal"} do |form| %>
+        <%= form.hidden_field :updated_type, :value => User::UPDATED_TYPE_PASSWORD %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+              <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTITLE") %>
+            </h3>
+          </div>
+          <div class="panel-body form-horizontal">
+            <fieldset>
+              <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION1_html") %>
+              </div>
+              <div class="form-group">
+                <label for="current-Password" class="col-xs-10">
+                  <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE1") %>
+                </label>
+                <div class="col-xs-10">
+                  <%= form.password_field :current_password, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="new-Password" class="col-xs-10">
+                  <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE2") %>
+                </label>
+                <div class="col-xs-10">
+                  <%= form.password_field :password, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="new-Password-re-enter" class="col-xs-10">
+                  <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE3") %>
+                </label>
+                <div class="col-xs-10">
+                  <%= form.password_field :password_confirmation, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="pull-right">
+                  <div class="col-xs-12">
+                    <!-- 更新ボタン -->
+                    <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary' %>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+          <%= t("top.COMMONTOP_CHANGELOCALE") %>
+        </h3>
+      </div>
+      <div class="panel-body form-horizontal">
+        <%= form_for :user, :url => {:action => "update_locale"}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+          <fieldset>
+            <div class="input-group">
+              <%= form.collection_select :locale, Locale.all, :locale, :title, {:selected => @user.locale}, {:class => "form-control"} %>
+              <span class="input-group-btn">
+                <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary' %>
+              </span>
+            </div>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-7">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- メールアドレス1変更 -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_MAILADDRESSTITLE") %>
+            </h3>
+          </div>
+          <div class="panel-body form-horizontal">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2") %>
+            </div>
+            <fieldset>
+              <%= form_for :user, :url => {:action => "update_email"}, :html => {:class => "form-horizontal"} do |form| %>
+                <%= form.hidden_field :updated_type, :value => User::UPDATED_TYPE_EMAIL %>
+                <div class="form-group">
+                  <div class="col-xs-12">
+                    <label for="current-Email-1">
+                      <h5>
+                        <%= @user.email.presence || t('change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_NOTREGISTER') %>
+                      </h5>
+                    </label>
+                  </div>
+                  <label for="new-Email-1" class="col-xs-10">
+                    <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_MAILADDRESS2") %>
+                  </label>
+                  <div class="col-xs-10">
+                    <%= form.email_field :new_email, autofocus: false, class: 'string required form-control' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="new-Email-1-re-enter" class="col-xs-10">
+                    <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_MAILADDRESS3") %>
+                  </label>
+                  <div class="col-xs-10">
+                    <%= form.email_field :email_confirmation, autofocus: false, class: 'string required form-control' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="pull-right">
+                    <div class="col-xs-12">
+                      <!-- 更新ボタン -->
+                      <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary' %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- メールアドレス2変更 -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_CELLULARPHONEMAILADDRESSTITLE") %>
+            </h3>
+          </div>
+          <div class="panel-body form-horizontal">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2") %>
+            </div>
+            <fieldset>
+              <%= form_for :user, :url => {:action => "update_email_mobile"}, :html => {:class => "form-horizontal"} do |form| %>
+                <%= form.hidden_field :updated_type, :value => User::UPDATED_TYPE_EMAIL_MOBILE %>
+                <div class="form-group">
+                  <div class="col-xs-12">
+                    <label for="current-Email-2">
+                      <% if @user.email_mobile.blank? %>
+                        <%= t('change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_NOTREGISTER') %>
+                      <% else %>
+                        <h5><%= @user.email_mobile.presence %></h5>
+                      <% end %>
+                    </label>
+                  </div>
+                  <label for="new-Email-2" class="col-xs-10">
+                    <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_CELLULARPHONEMAILADDRESS2") %>
+                  </label>
+                  <div class="col-xs-10">
+                    <%= form.email_field :new_email_mobile, autofocus: false, class: 'string required form-control' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="new-Email-2-re-enter" class="col-xs-10">
+                    <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_CELLULARPHONEMAILADDRESS3") %>
+                  </label>
+                  <div class="col-xs-10">
+                    <%= form.email_field :email_mobile_confirmation, autofocus: false, class: 'string required form-control' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="pull-right">
+                    <div class="col-xs-12">
+                      <!-- 更新ボタン -->
+                      <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary' %>
+                      <% unless @user.email_mobile.blank? %>
+                        <%= link_to t("common.COMMON_DELETE"), {:action => :delete_email_mobile, :id => @user},
+                          :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :method => :delete, class: "btn btn-danger" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% unless current_user.admin? %>
+<!-- 履修科目一覧　前期 　スマホ以外の時テーブル表示 -->
+<div class="row">
+  <div class="col-sm-12 hidden-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_COURSEENROLLMENT") %>
+          &nbsp;&nbsp;
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_FIRSTTERMCLASSSCHEDULE") %>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table border="0" class="table table-striped table-hover">
+            <% SemesterSchedule::SCHEDULE_HOUR.each.with_index do |hour_cd, i| %>
+              <% if i == 0 %>
+                <tr>
+                <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+                  <% if j == 0 %>
+                    <td> </td>
+                  <% end %>
+                  <td class="td-bold"><%= convert_day_cd(day_cd) %></td>
+                <% end %>
+                </tr>
+              <% end %>
+              <tr>
+                <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+                  <% if j == 0 %>
+                    <td><%= convert_hour_cd(hour_cd) %></td>
+                  <% end %>
+                  <td class="td-bold"><%= @schedule.first_semester.get_schedule(hour_cd, day_cd) %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--　履修科目一覧　前期　スマホの時だけカルーセル表示　-->
+  <div class="col-xs-12 visible-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_COURSEENROLLMENT") %>
+          &nbsp;&nbsp;
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_FIRSTTERMCLASSSCHEDULE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div id="carousel-first-term" class="carousel slide" data-ride="carousel" data-interval="0">
+
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+              <% if j == 0 %>
+                <div class="item active">
+              <% else %>
+                <div class="item">
+              <% end %>
+                <table border="1" width="100%">
+                  <% SemesterSchedule::SCHEDULE_HOUR.each.with_index do |hour_cd, i| %>
+                    <% if i == 0 %>
+                      <thead>
+                        <tr>
+                          <th class="col-sm-1"></th>
+                          <th><%= convert_day_cd(day_cd) %></th>
+                        </tr>
+                      </thead>
+                    <% end %>
+                    <tbody>
+                      <tr>
+                        <td><%= convert_hour_cd(hour_cd) %></td>
+                        <td class="td-bold"><%= @schedule.first_semester.get_schedule(hour_cd, day_cd) %></td>
+                      </tr>
+                    </tbody>
+                  <% end %>
+                </table>
+              </div>
+            <% end %>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-first-term" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-first-term" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 履修科目一覧　後期 -->
+<div class="row">
+  <!-- スマホ以外の時テーブル表示 -->
+  <div class="col-sm-12 hidden-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_COURSEENROLLMENT") %>
+          &nbsp;&nbsp;
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_SECONDTERMCLASSSCHEDULE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table border="0" class="table table-striped table-hover">
+            <% SemesterSchedule::SCHEDULE_HOUR.each.with_index do |hour_cd, i| %>
+              <% if i == 0 %>
+                <tr>
+                <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+                  <% if j == 0 %>
+                    <td> </td>
+                  <% end %>
+                  <td class="td-bold"><%= convert_day_cd(day_cd) %></td>
+                <% end %>
+                </tr>
+              <% end %>
+              <tr>
+                <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+                  <% if j == 0 %>
+                    <td><%= convert_hour_cd(hour_cd) %></td>
+                  <% end %>
+                  <td class="td-bold"><%= @schedule.secound_semester.get_schedule(hour_cd, day_cd) %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--　履修科目一覧　後期　スマホの時だけカルーセル表示　-->
+  <div class="col-xs-12 visible-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_COURSEENROLLMENT") %>
+          &nbsp;&nbsp;
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_SECONDTERMCLASSSCHEDULE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div id="carousel-second-term" class="carousel slide" data-ride="carousel" data-interval="0">
+
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <% SemesterSchedule::SCHEDULE_WEEK.each.with_index do |day_cd, j| %>
+              <% if j == 0 %>
+                <div class="item active">
+              <% else %>
+                <div class="item">
+              <% end %>
+                <table border="1" width="100%">
+                  <% SemesterSchedule::SCHEDULE_HOUR.each.with_index do |hour_cd, i| %>
+                    <% if i == 0 %>
+                      <thead>
+                        <tr>
+                          <th class="col-sm-1"></th>
+                          <th><%= convert_day_cd(day_cd) %></th>
+                        </tr>
+                      </thead>
+                    <% end %>
+                    <tbody>
+                      <tr>
+                        <td><%= convert_hour_cd(hour_cd) %></td>
+                        <td class="td-bold"><%= @schedule.secound_semester.get_schedule(hour_cd, day_cd) %></td>
+                      </tr>
+                    </tbody>
+                  <% end %>
+                </table>
+              </div>
+            <% end %>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-second-term" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-second-term" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--　その他科目　-->
+<!-- 0件メッセージ -->
+<% if @others.count == 0 %>
+  <ul class="empty">
+    <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_NOTHING") %>
+  </ul>
+
+<% else %>
+
+  <!-- リスト表示 -->
+  <!--　その他科目　スマホの時だけカルーセル表示　-->
+  <div class="col-xs-12 visible-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_OTHERCOURSE") %>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <div id="carousel-example-generic-3" class="carousel slide" data-ride="carousel" data-interval="0">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <table border="1" width="100%">
+                <thead>
+                  <tr>
+                    <th><%= t("common.COMMON_NO1") %></th>
+                    <th><%= t("common.COMMON_DAY") %></th>
+                    <th><%= t("common.COMMON_HOUR") %></th>
+                    <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                    <th><%= t("common.COMMON_SEASON") %></th>
+                    <th><%= t("common.COMMON_COURSENAME") %></th>
+                  </tr>
+                </thead>
+                <% @others.each.with_index(1) do |course, index| %>
+                  <tr>
+                    <!-- No. -->
+                    <td class="td-bold"><%= index %></td>
+
+                    <!-- 曜日 -->
+                    <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+
+                    <!-- 時限 -->
+                    <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                    <!-- 年度 -->
+                    <td class="td-bold"><%= course.school_year %></td>
+
+                    <!-- 学期 -->
+                    <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+
+                    <!-- 科目名称 -->
+                    <td class="td-bold"><%= course.course_name %></td>
+
+                    <!-- 担任者 -->
+                    <td class="td-bold"><%= course.instructor_name %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+
+            <div class="item">
+              <table border="1" width="100%">
+                <thead>
+                  <tr>
+                    <th><%= t("common.COMMON_NO1") %></th>
+                    <th><%= t("common.COMMON_COURSEOUTLINE") %></th>
+                    <th><%= t("common.COMMON_INSTRUCTOR") %></th>
+                  </tr>
+                </thead>
+                <% @others.each.with_index(1) do |course, index| %>
+                  <tr>
+                    <!-- No. -->
+                    <td><%= index %></td>
+
+                    <!-- 科目概要 -->
+                    <td><%= convert_html(course.overview) %></td>
+
+                    <!-- 担任者 -->
+                    <td><%= course.instructor_name %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic-3" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic-3" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- その他科目 -->
+  <div class="row">
+    <div class="col-xs-12 hidden-xs">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_OTHERCOURSE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><%= t("common.COMMON_NO1") %></th>
+                  <th><%= t("common.COMMON_DAY") %></th>
+                  <th><%= t("common.COMMON_HOUR") %></th>
+                  <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                  <th><%= t("common.COMMON_SEASON") %></th>
+                  <th><%= t("common.COMMON_COURSENAME") %></th>
+                  <th><%= t("common.COMMON_COURSEOUTLINE") %></th>
+                  <th><%= t("common.COMMON_INSTRUCTOR") %></th>
+                </tr>
+              </thead>
+              <% @others.each.with_index(1) do |course, index| %>
+                <tr>
+                  <!-- No. -->
+                  <td><%= index %></td>
+
+                  <!-- 曜日 -->
+                  <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+
+                  <!-- 時限 -->
+                  <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                  <!-- 年度 -->
+                  <td class="td-bold"><%= course.school_year %></td>
+
+                  <!-- 学期 -->
+                  <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+
+                  <!-- 科目名称 -->
+                  <td class="td-bold"><%= course.course_name %></td>
+
+                  <!-- 科目概要 -->
+                  <td class="td-bold"><%= convert_html(course.overview) %></td>
+
+                  <!-- 担任者 -->
+                  <td class="td-bold"><%= course.instructor_name %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% end %>

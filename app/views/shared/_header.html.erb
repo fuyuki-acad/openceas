@@ -1,0 +1,150 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<header id="main-header">
+  <div class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <% if current_page?(root_path) %>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <% end %>
+
+        <p class="navbar-brand">
+          <img class="img-responsive" src="<%= asset_path "logo_s.png" %>">
+        </p>
+        <p class="navbar-brand hidden-xs">
+          <% breadcrumbs(autoroot: false).tap do |links| %>
+            <% if links.any? %>
+              <% links.each do |link| %>
+                <% if link.current? %>
+                  <%= link.text %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <% if current_user %>
+                <% if controller.controller_name == "top" %>
+                  <% if current_user.admin? %>
+                    <%= t("top.ADMINISTRATORTOP_TITLE") %>
+                  <% elsif current_user.teacher? %>
+                    <%= t("top.INSTRUCTORTOP_TITLE") %>
+                    <% elsif current_user.student? %>
+                      <%= t("top.STUDENTTOP_TITLE") %>
+                  <% else %>
+                    <%= system_name %>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= system_name %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </p>
+      </div>
+
+      <% if current_user %>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav navbar-right">
+
+          <% if Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
+          <li>
+            <%= link_to('#', {class: "bnt-support", data: {toggle: 'modal', target: '.support-modal'}}) do %>
+              <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><%= t("top.COMMONTOP_SUPPORT") %>
+            <% end %>
+          </li>
+          <% end %>
+
+          <!-- グロナビ（トップページのみ表示） -->
+          <% if current_page?(root_path) %>
+            <!-- レポート確認 -->
+            <li>
+              <%= link_to essay_results_path do %>
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span><%= t("top.COMMONTOP_ASSIGNMENTESSAY") %>
+              <% end %>
+            </li>
+
+            <!-- 公開科目一覧 -->
+            <li>
+              <%= link_to open_courses_path do %>
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><%= t("top.COMMONTOP_OPENCOURSE") %>
+              <% end %>
+            </li>
+
+            <!-- 操作マニュアル -->
+            <li>
+              <%= link_to helps_path, :target => "_blank" do %>
+                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span><%= t("top.COMMONTOP_MANUAL") %>
+              <% end %>
+            </li>
+
+            <!-- サブメニュー -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="glyphicon glyphicon-user" aria-hidden="true">
+                </span>
+                <%= current_user.user_name %>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- 個人情報変更 -->
+                <li>
+                  <%= link_to users_path do %>
+                    <span class="glyphicon glyphicon-cog"></span><%= t("top.COMMONTOP_PERSONALDATA") %>
+                  <% end %>
+                </li>
+
+                <!-- ログアウト -->
+                <li>
+                  <%= link_to logout_path, method: :delete do %>
+                    <span class="glyphicon glyphicon-log-out"></span><%= t("top.COMMONTOP_LOGOUT") %>
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</header>
+
+<% if current_user %>
+<% if Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
+<!-- support modal-->
+<div class="modal fade support-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> <%= t("top.COMMONTOP_SUPPORT") %></h4>
+    </div>
+    <div class="modal-body">
+      <%= render "supports/index" %>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>

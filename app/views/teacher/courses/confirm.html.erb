@@ -1,0 +1,265 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :course, @course %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t('admin.course.COMMON_ADMINISTRATECOURSE_COURSEADMINISTRATION') %>
+</h5>
+
+<!-- 科目名 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRMEXPLANATION') %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 科目登録確認フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRMCONTENT') %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!--科目名称-->
+          <tr>
+            <td class="col-xs-4">
+              <%= t('common.COMMON_COURSENAME') %>
+            </td>
+            <td class="col-xs-8">
+              <%= @course.course_name %>
+            </td>
+          </tr>
+          <!--科目コード-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_COURSECD') %>
+            </td>
+            <td>
+              <%= @course.course_cd %>
+            </td>
+          </tr>
+          <!--科目概要-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_COURSEOUTLINE') %>
+            </td>
+            <td>
+              <%== @course.overview %>
+            </td>
+          </tr>
+          <!--年度-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_SCHOOLYEAR') %>
+            </td>
+            <td>
+              <%= @course.school_year %>
+            </td>
+          </tr>
+          <!--学期-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_SEASON') %>
+            </td>
+            <td>
+              <%= convert_season_cd(@course.season_cd) %>
+            </td>
+          </tr>
+          <!--曜日-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_DAY') %>
+            </td>
+            <td>
+              <%= convert_day_cd(@course.day_cd) %>
+            </td>
+          </tr>
+          <!--時限-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_HOUR') %>
+            </td>
+            <td>
+              <%= convert_hour_cd(@course.hour_cd) %>
+            </td>
+          </tr>
+          <!--担任者表示名-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_INSTRUCTORNAME_DISP') %>
+            </td>
+            <td>
+              <%= @course.instructor_name %>
+            </td>
+          </tr>
+          <!--系・学科・コース-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_MAJOR') %>
+            </td>
+            <td>
+              <%= @course.major %>
+            </td>
+          </tr>
+          <!--TOPページへの表示-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_TERMFLG_html') %>
+            </td>
+            <td>
+              <%= convert_term_flag(@course.term_flag) %>
+            </td>
+          </tr>
+          <!--授業回数-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_CLASSSESSIONCOUNT') %>
+            </td>
+            <td>
+              <%= @course.class_session_count %>
+            </td>
+          </tr>
+          <!--グループフォルダ数-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_GROUPFOLDERCOUNT') %>
+            </td>
+            <td>
+              <%= @course.group_folder_count %>
+            </td>
+          </tr>
+          <!--公開科目にする-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSE') %>
+            </td>
+            <td>
+              <%= convert_open_course_flag(@course.open_course_flag) %>
+            </td>
+          </tr>
+          <!--公開パスワード-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEPASSWORD') %>
+            </td>
+            <td>
+              <%= convert_password(@course.open_course_pass) %>
+            </td>
+          </tr>
+          <!--お知らせ-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_ANNOUNCEMENT') %>
+            </td>
+            <td>
+              <%= convert_announcement_cd(@course.announcement_cd) %>
+              <%= convert_open_course_announcement_flag(@course.open_course_announcement_flag) %>
+            </td>
+          </tr>
+          <!--FAQ-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_FAQ') %>
+            </td>
+            <td>
+              <%= convert_faq_cd(@course.faq_cd) %>
+              <%= convert_open_course_faq_flag(@course.open_course_faq_flag) %>
+            </td>
+          </tr>
+          <!--未読レポート表示-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_NOTREAD_ASSIGNMENT') %>
+            </td>
+            <td>
+              <%= convert_unread_assignment_display_cd(@course.unread_assignment_display_cd) %>
+            </td>
+          </tr>
+          <!--未読FAQ表示-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_NOTREAD_FAQ') %>
+            </td>
+            <td>
+              <%= convert_unread_faq_display_cd(@course.unread_faq_display_cd) %>
+            </td>
+          </tr>
+
+          <!-- 親科目の担任・履修コピー登録確認フォーム -->
+          <% unless @course.parent_course_id.blank? %>
+            <tr>
+              <td class="input_left" rowspan="2">
+                <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_PARENTCOURSE_COPY') %>
+              </td>
+              <td>
+                <%= check_box_tag "copy_assigned", true, false, {} %>
+                <% if @course.indirect_use_flag == Settings.COURSE_INDIRECTUSEFLG_DIRECT %>
+                  <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_PARENTCOURSE_COPY_ASSIGNED') %>
+                  (<%= t('common.COMMON_HITCOURSE', param0: @course.parent_course.assigned_users.count) %>)
+                <% else %>
+                  <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ASSIGNED') %>
+                  (<%= t('common.COMMON_HITCOURSE', param0: @course.assigned_users.count) %>)
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <%= check_box_tag "copy_enrollment", true, false, {} %>
+                <% if @course.indirect_use_flag == Settings.COURSE_INDIRECTUSEFLG_DIRECT %>
+                  <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_PARENTCOURSE_COPY_ENROLLMENT') %>
+                  (<%= t('common.COMMON_HITCOURSE', param0: @course.parent_course.enrolled_users.count) %>)
+                <% else %>
+                  <%= t('admin.course.PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ENROLLMENT') %>
+                  (<%= t('common.COMMON_HITCOURSE', param0: @course.enrolled_users.count) %>)
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+    </div>
+
+    <%= form_for :generic_page, :url => {:action => "update", :id => @course}, :html => {:method => :patch} do |form| %>
+      <div class="text-center">
+        <div class="btn-group">
+          <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5 center-block" %>
+          <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @course, :back => true}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

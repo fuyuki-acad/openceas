@@ -1,0 +1,45 @@
+zh_CN:
+  #####お知らせ#####
+  announcement:
+    #####お知らせ#####
+    #共通(お知らせ機能全般)
+    COMMONANNOUNCEMENT_NAVI: "通知/邮件"
+    COMMONANNOUNCEMENT_PAGE1: "登录通知"
+    COMMONANNOUNCEMENT_PAGE2: "通知的阅览/取消"
+    COMMONANNOUNCEMENT_STATE: "状态"
+    COMMONANNOUNCEMENT_SCRIPT1: "内容请控制在4096字以内"
+    COMMONANNOUNCEMENT_SCRIPT2: "正常地结束了"
+    COMMONANNOUNCEMENT_MAILSUBJECT: "的通知信息"
+    COMMONANNOUNCEMENT_MAILCONTENT1: "通知如下。"
+    COMMONANNOUNCEMENT_MAILCONTENT2: "●对象课程:"
+    COMMONANNOUNCEMENT_MAILCONTENT3: "●通知的标题:"
+    COMMONANNOUNCEMENT_MAILCONTENT4: "●通知的内容:"
+    #selectCourseAnnouncement.jsp
+    ANN_SELECTCOURSEANNOUNCEMENT_PAGETITLE: "课程一览(通知/邮件)"
+    ANN_SELECTCOURSEANNOUNCEMENT_PAST: "过去的内容"
+    ANN_REGISTERANNOUNCEMENT_RESULT: "It was registered announcements."
+    ANN_REGISTERANNOUNCEMENT_RESULT_SENDMAIL_html: "It was registered announcements. <br> mail transmission process may take a few minutes to a few tens of minutes. <br> transmission result, please check from the past of the content."
+    #registerAnnouncement.jsp
+    ANN_REGISTERANNOUNCEMENT_PAGETITLE: "新注册页面"
+    ANN_REGISTERANNOUNCEMENT_SENDCHECK: "是否发送邮件"
+    ANN_REGISTERANNOUNCEMENT_MAILONLY: "只有邮件"
+    ANN_REGISTERANNOUNCEMENT_EXPLANATION_html: "在是否发送邮件处，选择<strong>“只有邮件”</strong>来发送邮件时，可以选择学生发送。请在给个别的学生发信时使用。"
+    #selectSendUsr.jsp
+    ANN_SELECTSENDUSR_PAGETITLE: "选择发信用户"
+    ANN_SELECTSENDUSR_SEARCHUSR: "按条件搜索用户"
+    ANN_SELECTSENDUSR_TARGETALT: "邮件内容"
+    ANN_SELECTSENDUSR_SEND: "发送"
+    ANN_SELECTSENDUSR_SCRIPT1: "请选择发信用户"
+    ANN_SELECTSENDUSR_SCRIPT2: "可以发送邮件吗?"
+    #editAnnouncement.jsp
+    ANN_EDITANNOUNCEMENT_PAGETITLE: "编辑通知"
+    ANN_EDITANNOUNCEMENT_IMAGEALT: "发信完毕的用户"
+    ANN_EDITANNOUNCEMENT_NOUSER: "If, after a while does not appear Sent user, there is a possibility that e-mail was not sent"
+    #announcementList.jsp
+    ANN_ANNOUNCEMENTLIST_PAGETITLE: "通知一览"
+    #announcementTop.jsp
+    ANN_ANNOUNCEMENTTOP_PAGETITLE: "详细通知页"
+    ANN_ANNOUNCEMENTTOP_THISPAGE: "显示通知"
+    #announcementListTop.jsp
+    ANN_ANNOUNCEMENTLISTTOP_PAGETITLE: "详细通知一览页"
+    ANN_ANNOUNCEMENTLISTTOP_THISPAGE: "显示通知一览"

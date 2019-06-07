@@ -1,0 +1,9 @@
+qna_maker:
+  host: 'https://url_of_qnamaker'
+  endpoint_key: 'your_endpoint_key'
+  knowledgebase: 'your_knowledgebase_id'
+  strict_filters:
+    teacher:
+      role: 'teacher'
+    student:
+      role: 'student'

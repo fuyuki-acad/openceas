@@ -1,0 +1,280 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION15") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ユーザ情報確認 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("admin.user.COMMON_ADMINISTRATEUSR_CONFIRMTITLE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!-- 氏名（漢字） -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_USRNAME") %>
+              </td>
+              <td class="col-xs-8">
+                <%= h(@user.user_name) %>
+              </td>
+            </tr>
+
+            <!-- 氏名（カナ） -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_KANANAME") %>
+              </td>
+              <td class="col-xs-8">
+                <%= null_to_space(@user.kana_name) %>
+              </td>
+            </tr>
+
+            <!-- メールアドレス１ -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_MAIL_1") %>
+              </td>
+              <td class="col-xs-8">
+                <%= null_to_space(@user.email) %>
+              </td>
+            </tr>
+
+            <!-- メールアドレス２ -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_MAIL_2") %>
+              </td>
+              <td class="col-xs-8">
+                <%= null_to_space(@user.email_mobile) %>
+              </td>
+            </tr>
+
+            <!-- 性別 -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_SEXCD") %>
+              </td>
+              <td class="col-xs-8">
+                <%= sex_cd_title(@user.sex_cd) %>
+              </td>
+            </tr>
+
+            <!-- 生年月日 -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_BIRTHDATE") %>
+              </td>
+              <td class="col-xs-8">
+                <%= null_to_space(@user.birth_date.strftime("%Y/%m/%d")) if @user.birth_date %>
+              </td>
+            </tr>
+
+            <!-- アカウント -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_ACCOUNT") %>
+              </td>
+              <td class="col-xs-8">
+                <%= h(@user.account) %>
+              </td>
+            </tr>
+
+            <!-- パスワード -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_PASSWORD") %>
+              </td>
+              <td class="col-xs-8">
+                <%= convert_password(@user.password) %><br/>
+                <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION16") %>
+              </td>
+            </tr>
+
+            <!-- 管理権限 -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_AUTHCD2") %>
+              </td>
+              <td class="col-xs-8">
+                <%= role_name(@user.role_id) %>
+              </td>
+            </tr>
+
+            <!-- CEAS利用許可 -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM1") %>
+              </td>
+              <td class="col-xs-8">
+                <%= convert_term_flag(@user.term_flag) %>
+              </td>
+            </tr>
+
+            <!-- 削除フラグ -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM2") %>
+              </td>
+              <td class="col-xs-8">
+                <%= convert_delete_flag(@user.delete_flag) %>
+              </td>
+            </tr>
+
+            <!-- 移動コード-->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_MOVECD") %>
+              </td>
+              <td class="col-xs-8">
+                <%= convert_move_cd(@user.move_cd) %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 受講科目登録確認フォーム -->
+  <% if @add_courses && @add_courses.count > 0 %>
+    <!-- ユーザ情報確認 -->
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("admin.user.PRI_ADM_USR_CONFIRMREGISTERUSR_HEADER1") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><%= t("common.COMMON_COURSECD") %></th>
+                  <th><%= t("common.COMMON_DAY") %></th>
+                  <th><%= t("common.COMMON_HOUR") %></th>
+                  <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                  <th><%= t("common.COMMON_SEASON") %></th>
+                  <th><%= t("common.COMMON_COURSENAME") %></th>
+                  <th><%= t("common.COMMON_INSTRUCTORNAME") %></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @add_courses.each do |course| %>
+                  <tr>
+                    <td><%= course.course_cd %></td>
+                    <td><%= convert_day_cd(course.day_cd) %></td>
+                    <td><%= convert_hour_cd(course.hour_cd) %></td>
+                    <td><%= course.school_year %></td>
+                    <td><%= convert_season_cd(course.season_cd) %></td>
+                    <td><%= course.course_name %></td>
+                    <td><%= course.instructor_name %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 受講科目登録解除確認フォーム -->
+  <% if @delete_courses && @delete_courses.count > 0 %>
+    <!-- ユーザ情報確認 -->
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("admin.user.PRI_ADM_USR_CONFIRMREGISTERUSR_HEADER2") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><%= t("common.COMMON_COURSECD") %></th>
+                  <th><%= t("common.COMMON_DAY") %></th>
+                  <th><%= t("common.COMMON_HOUR") %></th>
+                  <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                  <th><%= t("common.COMMON_SEASON") %></th>
+                  <th><%= t("common.COMMON_COURSENAME") %></th>
+                  <th><%= t("common.COMMON_INSTRUCTORNAME") %></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @delete_courses.each do |course| %>
+                  <tr>
+                    <td><%= course.course_cd %></td>
+                    <td><%= convert_day_cd(course.day_cd) %></td>
+                    <td><%= convert_hour_cd(course.hour_cd) %></td>
+                    <td><%= course.school_year %></td>
+                    <td><%= convert_season_cd(course.season_cd) %></td>
+                    <td><%= course.course_name %></td>
+                    <td><%= course.instructor_name %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @user.new_record?  %>
+    <%= form_for :user, :url => {:action => "create"} do |form| %>
+    <div class="text-center">
+      <div class="btn-group">
+        <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :new, :back => true}, {:class => "btn btn-default ceas-button-margin-5"} %>
+      </div>
+    </div>
+    <% end %>
+  <% else %>
+    <%= form_for :user, :url => {:action => "update", :id => @user}, :html => {:method => :patch} do |form| %>
+    <div class="text-center">
+      <div class="btn-group">
+        <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :edit, :id => @user, :back => true}, {:class => "btn btn-default ceas-button-margin-5"} %>
+      </div>
+    </div>
+    <% end %>
+  <% end %>

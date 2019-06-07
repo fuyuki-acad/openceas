@@ -1,0 +1,178 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% if controller.controller_name == "essay_results" %>
+  <% breadcrumb :mark_essay_result, @essay %>
+<% else %>
+  <% breadcrumb :mark_essay, @essay %>
+<% end %>
+
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_ASSIGNMENTESSAYADMINISTRATION") } %>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_EXPLANATION1") %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 入力フォーム -->
+<%= form_for :answer_score, :url => {:action => "save"}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+<%= form.hidden_field :page_id %>
+<%= form.hidden_field :user_id %>
+<%= form.hidden_field :answer_count %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= @essay.generic_page_title %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 氏名 -->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_TARGETNAME") %>
+            </td>
+            <td class="col-xs-9">
+              <%= @user.get_name_no_prefix %>
+              <%= @user.user_name %>
+            </td>
+          </tr>
+
+          <!-- 提出回数 -->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_PRESENTATIONCOUNT") %>
+            </td>
+            <td>
+              <% if @answer_score %>
+                <%= @answer_score.answer_count %>
+              <% else %>
+                0
+              <% end %>
+            </td>
+          </tr>
+
+          <!-- ステータス -->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_STATUS") %>
+            </td>
+            <td>
+              <%= essay_status_name(@essay.essay_status(@user.id)) %>
+            </td>
+          </tr>
+
+          <!-- 受理／再提出 -->
+          <tr>
+            <td>
+              <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_RECIEVEORREPRESENT") %>
+            </td>
+            <td>
+              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_SUBMITTED %> <%= t('materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_RECIEVE') %>
+              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_UNSUBMITTING %> <%= t('materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_REPRESENT') %>
+            </td>
+          </tr>
+
+          <!-- 評点 -->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_MARK2") %>
+            </td>
+            <td>
+              <!-- 任意レポート -->
+              <%= form.text_field :assignment_essay_score, :class => 'form-control', :size => 3 %>
+              <code>
+                <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_MARKEXPLANATION") %>
+              </code>
+            </td>
+          </tr>
+
+          <%= form.fields_for :assignment_essay_comments_attributes, @comment do |comment| %>
+          <!-- コメント -->
+          <tr>
+            <td>
+              <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_COMMENT") %>
+            </td>
+            <td>
+              <%= comment.hidden_field :id %>
+              <%= comment.text_area :memo, {:class => 'form-control', :rows => 5}%>
+              <code>
+                <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_COMMENTEXPLANATION") %>
+              </code>
+            </td>
+          </tr>
+
+          <!-- メール送信 -->
+          <tr>
+            <td>
+              <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDMAIL") %>
+            </td>
+            <td>
+              <%= comment.radio_button :mail_flag, "0" %> <%= t('common.COMMON_NOTDO') %>
+              <%= comment.radio_button :mail_flag, "1" %> <%= t('common.COMMON_DO') %>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_EXPLANATION2_html") %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="text-center">
+      <div class="btn-group">
+        <%= submit_tag t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5" %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :result, :id => @essay}, {:class => "btn btn-primary ceas-button-margin-5"} %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,62 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_user_upload_results %>
+
+<!-- alertメッセージ -->
+<div class="row">
+  <div class="col-xs-12">
+<% if @messages %>
+    <div class="alert alert-warning alert-dismissible" role="alert2">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_CSV_UPLOAD_ERROR_EXPLANATION_html") %>
+      <%= @messages %>
+    </div>
+<% else %>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_CSV_REGIST_RESULT_EXPLANATION1") %>
+        <br/><br/>
+        <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_CSV_REGIST_RESULT_EXPLANATION2", :param0 => @success_count) %>
+      </div>
+    </div>
+<% end %>
+  </div>
+</div>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_CSV_UPLOAD_TITLE") %>
+</h5>
+
+<!-- エラーボタン -->
+<div class="text-center">
+  <div class="btn-group">
+    <% if @messages %>
+      <%= link_to t("common.COMMON_RETURN"), :back, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+    <% else %>
+      <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @course.id}, :class => "btn btn-default ceas-button-margin-5 center-block" %>
+    <% end %>
+  </div>
+</div>

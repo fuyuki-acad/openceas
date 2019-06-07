@@ -1,0 +1,70 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= form.hidden_field :course_id %>
+<%= form.hidden_field :type_cd %>
+
+<table class="table table-striped table-hover">
+  <!-- URLタイトル -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLTITLE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= form.text_field :generic_page_title, {:class => 'form-control', :maxlength => '100'} %>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLEXPLANATION1") %>
+    </td>
+  </tr>
+
+  <!-- URL登録内容 -->
+  <tr>
+    <td>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URL") %>
+    </td>
+    <td>
+      <%= form.text_field :url_content, {:class => 'form-control', :maxlength => '2083'} %>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLEXPLANATION2") %>
+    </td>
+  </tr>
+
+  <!-- 授業メモ -->
+  <tr>
+    <td>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OPENCOMMENT") %>
+    </td>
+    <td>
+      <%= form.text_area :material_memo, {:class => 'form-control', :rows => '5'} %>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT1") %>
+    </td>
+  </tr>
+
+  <!-- 追加情報 -->
+  <tr>
+    <td>
+      <%= t("page_management.extra_content") %>
+    </td>
+    <td>
+      <%= form.cktext_area :content, {:class => 'form-control', :rows => '5'} %>
+    </td>
+  </tr>
+</table>

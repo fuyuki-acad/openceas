@@ -1,0 +1,75 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<div class="container-fluid">
+  <!-- 科目名 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h5>
+            <%= @course.course_name %>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メッセージ -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <% if @attendance_register_cd == 'administratorOrInstructor' || @attendance_register_cd == 'remoteAddressError' || @attendance_register_cd == 'notCollecting' %>
+              <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_CLASSSESSIONNO", :param0 => @class_session.class_session_no) %>
+            <% elsif @attendance_register_cd == 'attendance' || @attendance_register_cd == 'late' || @attendance_register_cd == 'registered' %>
+              <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_TEXT2", :param0 => @class_session.class_session_no, :param1 => @class_session.class_session_no) %>
+            <% end %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <% if @attendance_register_cd == 'administratorOrInstructor' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_ADMINISTRATORORINSTRUCTOR") %>
+          <% elsif @attendance_register_cd == 'remoteAddressError' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_REMOTEADDRESSERROR") %>
+          <% elsif @attendance_register_cd == 'notCollecting' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_NOTCOLLECTING") %>
+          <% elsif @attendance_register_cd == 'attendance' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_ATTENDANCE") %>
+          <% elsif @attendance_register_cd == 'late' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_LATE") %>
+          <% elsif @attendance_register_cd == 'registered' %>
+            <%= t("attendance_execution.ATT_EXE_REGISTERATTENDANCE_REGISTERED") %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <div class="btn-group">
+      <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5 center-block', onclick: 'closeWindow(); return false;' %>
+    </div>
+  </div>
+</div>

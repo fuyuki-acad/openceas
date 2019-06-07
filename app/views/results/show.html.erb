@@ -1,0 +1,274 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :result, @generic_page %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_HEADERTITLE1") } %>
+
+<!-- 科目名称パネル表示 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+
+          <!-- テスト名称 -->
+          <tr>
+            <td>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE1") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+
+          <!-- 氏名 -->
+          <tr>
+            <td>
+              <%= t("common.COMMON_TARGETNAME") %>
+            </td>
+            <td>
+              <%= current_user.user_name %>
+            </td>
+          </tr>
+
+          <!-- 出題数 -->
+          <tr>
+            <td>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE2") %>
+            </td>
+            <td>
+              <%= @generic_page.parent_questions.count %>
+            </td>
+          </tr>
+
+          <!-- 合格点数 -->
+          <tr>
+            <td>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE3") %>
+            </td>
+            <td>
+              <%= @generic_page.pass_grade %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 結果一覧 -->
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th class="hidden.xs"><%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE4") %></th>
+          <th class="hidden.xs"><%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE6") %></th>
+          <th class="hidden.xs"><%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE7") %></th>
+          <th class="hidden.xs"><%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE10") %></th>
+        </tr>
+      </thead>
+      <% @answer_scores.each do |answer_score| %>
+        <tr>
+          <!-- 受験回数 -->
+          <td class="td-bold">
+            <%= answer_score.answer_count %>
+            <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE5") %>
+          </td>
+          <!-- 得点 -->
+          <td class="td-bold">
+            <% if answer_score.total_score >= 0 %>
+              <%= answer_score.total_score %>
+            <% else %>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE19") %>
+            <% end %>
+          </td>
+          <!-- 合否 -->
+          <td class="td-bold">
+            <% if answer_score.pass_cd == Settings.ANSWERSCORE_PASSCD_SUBMITTED %>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE8") %>
+            <% elsif answer_score.pass_cd == Settings.ANSWERSCORE_PASSCD_UNSUBMITTING %>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE9") %>
+            <% else %>
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE19") %>
+            <% end %>
+          </td>
+          <!-- 回答終了時間 -->
+          <td class="td-bold">
+            <%= answer_score.effective_date ? l(answer_score.effective_date) : "" %>
+            <% if @compoundFlg == 1 %>
+              <%= link_to t("common.COMMON_CONFIRM2"), "javascript:void();",
+                {:onclick => "openWindow3('" + url_for(:action => :show, :id => @generic_page.id) +"', 'MaterialResultView', '540', '540')", :class => "btn btn-warning ceas-button-margin-5", :target => "_top"} %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<!-- テスト別詳細得点データ　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_GRAPHIC3") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover ">
+              <thead>
+                <tr>
+                  <!-- 履修者数　-->
+                  <th>
+                    <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE11") %>
+                  </th>
+
+                  <!-- 成績順位　-->
+                  <th>
+                    <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE12") %>
+                  </th>
+
+                  <!-- 得点/満点　-->
+                  <th>
+                    <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE13") %>
+                  </th>
+
+                  <!-- 最高得点率(%)　-->
+                  <th>
+                    <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE14") %>
+                  </th>
+
+                  <!-- 平均得点率(%)　-->
+                  <th>
+                    <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE15") %>
+                    <% if @latest_score.total_score < 0 %>
+                      <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE19") %>
+                    <% end %>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- 履修者数　-->
+                  <td>
+                    <%= @generic_page.course.course_enrollment_users.count %>
+                  </td>
+
+                  <!-- 成績順位　-->
+                  <td>
+                    <%= @latest_score.rank %>
+                  </td>
+
+                  <!-- 得点/満点　-->
+                  <td>
+                    <% if @latest_score.total_score >= 0 %>
+                      <%= @latest_score.total_score %> / 100
+                    <% end %>
+                  </td>
+
+                  <!-- 最高得点率(%)　-->
+                  <td>
+                    <%= @latest_score.max_score %>
+                  </td>
+
+                  <!-- 平均得点率(%)　-->
+                  <td>
+                    <%= @latest_score.average %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- グラフ表示　-->
+            <div class="row">
+              <div class="text-center"><%= t("common.COMMON_BARCHARTTITLE") %></div>
+              <div class="col-sm-12 table-responsive">
+                <%=
+                  column_chart @chart_data.map {|key, value| [key.to_s + "〜\n(#{value}#{t("common.COMMON_BARCHARTPEOPLE")})", value]},
+                  colors: ["red"],
+                  label: t("common.COMMON_BARCHARTDATASET"),
+                  ytitle: t("common.COMMON_BARCHARTVERTICALAXIS"),
+                  xtitle: t("common.COMMON_BARCHARTHORIZONTALAXIS")
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- テスト別詳細得点データ　-->
+<% if @answer_scores.count != 1 %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_GRAPHIC4") %>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <table class="table table-striped table-hover ">
+                <tbody>
+                  <tr>
+                    <td>
+                      <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_ANSWERSCORETABLE16") %>
+                    </td>
+
+                    <td>
+                      <%= @answer_scores.count %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- グラフ表示　-->
+              <div class="row">
+                <div class="text-center"><%= t("common.COMMON_LINECHARTTITLE") %></div>
+                <div class="col-sm-12 table-responsive">
+                  <%=
+                    column_chart @answer_scores.map {|value| [value.answer_count.to_s + "#{t("common.COMMON_COUNT2")}", value.total_score]},
+                    colors: ["red"],
+                    label: t("common.COMMON_LINECHARTDATASET"),
+                    ytitle: t("common.COMMON_LINECHARTVERTICALAXIS"),
+                    xtitle: t("common.COMMON_LINECHARTHORIZONTALAXIS")
+                  %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

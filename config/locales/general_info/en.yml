@@ -1,0 +1,31 @@
+en:
+  general_announcement:
+    #####システム情報・告知#####
+    #共通
+    COMMONGENERALINFO_GENERALINFOLIST: "List of announcements"
+    COMMONGENERALINFO_INFOMATION: "Announcement contents"
+    COMMONGENERALINFO_TITLE: "News from the Registration Administrator"
+    COMMONGENERALINFO_LOGIN_INFOMATION: "Announcement"
+    #systemInfo.jsp
+    GEN_SYSTEMINFO_SYSTEMINFO: "System Information"
+    GEN_SYSTEMINFO_EXPLANATION1_html: "Information here provides the history of system update <br> and future update plans."
+    #generalInfo.jsp
+    GEN_GENERALINFO_GENERALINFO: "Announcement"
+    GEN_GENERALINFO_EXPLANATION1_html: "Enter the message below for announcement."
+    GEN_GENERALINFO_EXPLANATION2_html: "Make announcement from the Log in page. <strong> Making Announcement from the Log In Page </strong>"
+    GEN_GENERALINFO_EXPLANATION3_html: "Make announcement from the System Information Page (aka the Instructor Menu). <strong> Making Announcement from the System Information Page </strong>"
+    GEN_GENERALINFO_STATE: "Status"
+    GEN_GENERALINFO_INFOMATIONWAY: "How to make announcement"
+    GEN_GENERALINFO_BYUSINGLOGIN: "From the Log In Page"
+    GEN_GENERALINFO_BYUSINGSYSTEMINFO: "From the System Information Page"
+    GEN_GENERALINFO_HIDE: "Hide"
+    GEN_GENERALINFO_TOINSTRUCTOR: "Announcement to instructors"
+    GEN_GENERALINFO_REGISTERED: "Announcement is successfully added."
+    GEN_GENERALINFO_SCRIPT1: "You need the title."
+    GEN_GENERALINFO_SCRIPT2: "You need the message."
+    GEN_GENERALINFO_SCRIPT3: "The message must be in less than 4096 characters."
+    GEN_GENERALINFO_SCRIPT4: "Go on to the message editor."
+    #detailGeneralInfo.jsp
+    GEN_DETAILGENERALINFO_INFOMATION: "Announcement"
+    #generalInfoList.jsp
+    GEN_GENERALINFOLIST_INFOMATIONLIST: "Announcement"

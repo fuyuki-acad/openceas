@@ -1,0 +1,11 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      announcement: "お知らせ"
+
+    attributes:
+      announcement:
+        subject: "タイトル"
+        content: "内容"
+        updated_at: "日付"

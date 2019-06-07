@@ -1,0 +1,203 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :result_result_multiplefib, @generic_page %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_MULTIPLEFIBADMINISTRATION") } %>
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_MULTIPLEFIBADMINISTRATION") %>
+</h5>
+
+<!-- 担当科目名称欄 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= @generic_page.course.course_name %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_TESTTITLE") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_PASSGRADE") %>
+            </td>
+            <td>
+              <%= @generic_page.pass_grade %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_EXAMINATIONCOUNT") %>
+            </td>
+            <td>
+              <%= @generic_page.max_count %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t("materials_administration.MAT_ADM_MUL_MULTIPLEFIBTOTALRESULT_EXPLANATION1_html") %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a id="anchor-top"></a>
+
+<!-- テスト一覧 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-8">
+                <h3 class="panel-title">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <%= t("common.COMMON_USRTABLEALT") %>
+                </h3>
+              </div>
+
+              <% if @generic_page.course.enrolled_users.count > 0 %>
+                <div class="col-xs-4">
+                  <p class="pull-right badge">
+                    <%= t("common.COMMON_HITCOURSE", :param0 => @generic_page.course.enrolled_users.count) %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="panel-body table-responsive">
+            <% if @generic_page.course.enrolled_users.count == 0 %>
+              <p>
+                <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_NOUSER") %>
+              </p>
+            <% else %>
+              <table class="table table-striped table-hover">
+                <tr>
+                  <td class="table_header_upper_student_multiplefib_administration" colspan="2">
+                    <%= t("common.COMMON_STUDENT") %>
+                  </td>
+                  <td class="table_header_upper_class_session_multiplefib_administration" colspan="<%= @generic_page.max_count * 2 %>">
+                    <%= @generic_page.get_class_session_day %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table_header_under_no_multiplefib_administration" rowspan="2">
+                    <%= t("common.COMMON_NO1") %>
+                  </td>
+                  <td class="table_header_under_name_multiplefib_administration" rowspan="2">
+                    <%= t("common.COMMON_TARGETNAME") %>
+                  </td>
+                  <% 1.upto(@generic_page.max_count) do |index| %>
+                    <td class="table_header_upper_no_multiplefib_administration" colspan="2">
+                      <%= index %>
+                      <%= t("common.COMMON_COUNT1") %>
+                      <% unless @average_list[index].blank? %>
+                        <strong>
+                          <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_AVERAGE_PREFIX") %>
+                          <%= @average_list[index] %>
+                          <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_AVERAGE_SUFFIX") %>
+                        </strong>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+                <tr>
+                  <% 1.upto(@generic_page.max_count) do |index| %>
+                    <td class="table_header_under_score_multiplefib_administration">
+                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_SCORE") %>
+                    </td>
+                    <td class="table_header_under_order_multiplefib_administration">
+                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_ORDER") %>
+                    </td>
+                  <% end %>
+                </tr>
+                <% @generic_page.course.enrolled_users.each.with_index(1) do |user, index| %>
+                  <tr>
+                    <td class="table_body_no_multiplefib_administration">
+                      <%= index %>
+                    </td>
+                    <td class="table_body_name_multiplefib_administration">
+                      <%= user.get_name_no_prefix %>
+                      <%= user.user_name %>
+                    </td>
+                    <% 1.upto(@generic_page.max_count) do |index| %>
+                      <td class="table_body_score_multiplefib_administration">
+                        <% if @results[index][user.id] && @results[index][user.id].total_score >= @generic_page.pass_grade %>
+                          <span style="color: blue;" class="strong2">
+                            <%= @results[index][user.id].total_score %>
+                          </span>
+                        <% else %>
+                          <%= @results[index][user.id] ? @results[index][user.id].total_score : "" %>
+                        <% end %>
+                      </td>
+                      <td class="table_body_order_multiplefib_administration">
+                        <!-- 得点のある学生のみ順位表示 -->
+                        <% if @results[index][user.id] %>
+                          <%= @results[index][user.id].rank %>
+                          /
+                          <%= @results[index].count %>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </table>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="pull-right">
+          <a class="anchor" href="#anchor-top">
+            <%= t("common.COMMON_TOP") %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

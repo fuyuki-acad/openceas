@@ -1,0 +1,14 @@
+zh_TW:
+  open_course_list:
+    #####公開科目#####
+    ##openCourseList.jsp
+    OPE_OPENCOURSELIST_TITLE: "公開科目一覽畫面"
+    OPE_OPENCOURSELIST_NAVI: "公開科目一覽"
+    OPE_OPENCOURSELIST_ALLOCATEDCOURSE: "配置的公開科目一覽"
+    OPE_OPENCOURSELIST_EXPLANATION_html: "能看每次授課大綱、授課資料、參考網頁的公開科目一覽。透過查看課程配置的登錄，登錄內容會顯示在「已登錄的公開科目一覽」首頁上。已設定公開密碼的科目請先輸入密碼再進行配置。然而自己的選課／擔任授課教師的科目無法進行配置。"
+    OPE_OPENCOURSELIST_ERROR1: "公開密碼錯誤"
+    OPE_OPENCOURSELIST_ERROR2: "請輸入公開密碼"
+    OPE_OPENCOURSELIST_ERROR3: "請選擇配置科目"
+    OPE_OPENCOURSELIST_PASSWORD: "密碼"
+    OPE_OPENCOURSELIST_ALLOCATION: "配置"
+    OPE_OPENCOURSELIST_RELEASE: "解除"

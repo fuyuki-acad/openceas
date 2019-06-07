@@ -1,0 +1,140 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_user_result_bulk_update %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true" />
+  <%= t("admin.course.PRI_ADM_COU_COURSEBATCHUPDATE_COMPLETE") %>
+</h5>
+
+<div class="row">
+  <!-- 検索条件　-->
+  <div class="col-xs-12 col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_SEARCHCOURSE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 曜日　-->
+          <tr>
+            <td>
+              <%= t("common.COMMON_DAY") %>
+            </td>
+            <td>
+              <%= convert_day_cd(params[:day]) %>
+            </td>
+          </tr>
+
+          <!-- 時限　-->
+          <tr>
+            <td>
+              <%= t("common.COMMON_HOUR") %>
+            </td>
+            <td>
+              <%= convert_hour_cd(params[:hour]) %>
+            </td>
+          </tr>
+
+          <!-- 年度　-->
+          <tr>
+            <td>
+              <%= t("common.COMMON_SCHOOLYEAR") %>
+            </td>
+            <td>
+              <%= params[:school_year] %>
+            </td>
+          </tr>
+
+          <!-- 学期　-->
+          <tr>
+            <td>
+              <%= t("common.COMMON_SEASON") %>
+            </td>
+            <td>
+              <%= convert_season_cd(params[:season]) %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 更新条件 -->
+  <div class="col-xs-12 col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("admin.course.PRI_ADM_COU_COURSEBATCHUPDATE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- Topページからの利用 -->
+          <tr>
+            <td class="col-xs-5">
+              <%= t("admin.course.COMMON_ADMINISTRATECOURSE_TERMFLG_html") %>
+            </td>
+            <td class="col-xs-5">
+              <%= convert_term_flag(params[:term_flag]) %>
+            </td>
+          </tr>
+
+          <!-- 未読レポート表示 -->
+          <tr>
+            <td>
+              <%= t("common.COMMON_NOTREAD_ASSIGNMENT") %>
+            </td>
+            <td>
+              <%= convert_unread_assignment_display_cd(params[:unread_assignment_display_cd]) %>
+            </td>
+          </tr>
+          <!-- 未読FAQ表示 -->
+          <tr>
+            <td>
+              <%= t("common.COMMON_NOTREAD_FAQ") %>
+            </td>
+            <td>
+              <%= convert_unread_faq_display_cd(params[:unread_faq_display_cd]) %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("admin.course.PRI_ADM_COU_BATCHUPDATE_COMPLETE", :param0 => params[:course].count) %>
+      </div>
+    </div>
+  </div>
+</div>

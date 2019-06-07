@@ -1,0 +1,26 @@
+== README
+
+* OpenCEAS
+OpenCEASはRuby言語で実装されたWebアプリケーション型のLMSです。
+
+
+* インストール方法
+1)データベースを作成してください。利用できるDBMSはMySQLとMariaDBです。
+
+2)configディレクトリの ".example" ファイルを参考に設定ファイルを作成してください。
+　
+3)データベースのテーブル定義処理を実行してください。
+$ bundle exec rake db:migrate
+
+4)初期データを登録してください。
+$ bundle exec rake db:seed
+
+5)静的ファイルの生成処理を実行してください。
+$ bundle exec rake assets:precompile
+
+6)Web APIの仕様書を生成してください。
+$ bundle exec yard -o public/doc
+
+
+以上でインストール完了です。
+システム管理権限を持つ初期ユーザの認証情報は db/seeds.rb で確認してください。

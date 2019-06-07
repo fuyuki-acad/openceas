@@ -1,0 +1,14 @@
+ja:
+  open_course_list:
+    #####公開科目#####
+    ##openCourseList.jsp
+    OPE_OPENCOURSELIST_TITLE: "公開科目一覧画面"
+    OPE_OPENCOURSELIST_NAVI: "公開科目一覧"
+    OPE_OPENCOURSELIST_ALLOCATEDCOURSE: "割付した公開科目一覧"
+    OPE_OPENCOURSELIST_EXPLANATION＿html: "毎回の授業概要、授業資料、参照URLを見ることが出来る科目の一覧です。<br>割付をチェックして登録することによりTopページの「登録した公開科目一覧」に表示されます。<br>公開パスワードの設定がされている科目に関してはパスワードを入力してから「割付」してください。<br>なお、自分の履修/担当している科目は割付できません。"
+    OPE_OPENCOURSELIST_ERROR1: "公開パスワードが正しくありません"
+    OPE_OPENCOURSELIST_ERROR2: "公開パスワードを入力してください"
+    OPE_OPENCOURSELIST_ERROR3: "割付科目を選択してください"
+    OPE_OPENCOURSELIST_PASSWORD: "パスワード"
+    OPE_OPENCOURSELIST_ALLOCATION: "割付"
+    OPE_OPENCOURSELIST_RELEASE: "解除"

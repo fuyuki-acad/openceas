@@ -1,0 +1,15 @@
+zh_TW:
+  error:
+    #####エラー画面#####
+    #error.jsp
+    ERROR_TITLE: "錯誤"
+    ERROR_EXPLANATION1: "錯誤"
+    ERROR_EXPLANATION2: "移動頁面時有使用瀏覽器的「上一頁」嗎？"
+    ERROR_EXPLANATION3: "返回上一頁時請使用全球導航"
+    ERROR_EXPLANATION4: "全球導航系統是指各頁面上方的連結"
+    ERROR_EXPLANATION5_html: "長時間無法連接，在沒有點擊返回按鈕的情況下出現此畫面，請與CEAS管理員聯繫。【與CEAS管理員聯絡時】在郵件的題目中簡潔的說明問題，在郵件的正文中寫明姓名/所屬機構/問題（科目名稱，擔任教員，操作和問題等）。另外，聯絡地址記載於登陸頁面。"
+    ERROR_TOTOP: "TOP"
+    ERROR_TOLOGIN: "返回登錄介面"
+    ERROR_FATAL_EXPLANATION1_html: "An unexpected error has occurred. <br> If this screen is displayed, please contact the CEAS administrator. <br> <br> fill briefly the problem of the content in the subject line of the e-mail <br> [When contact to CEAS administrator], <br> to the body of the email name / affiliation / failure of content (subject name, teacher Sha name, please <br> specify the operation and phenomenon, etc.). <br> In addition, contacts can be found on the login page."
+
+    ERROR_UNSUPPORTED_CHARACTER_IN_FILE_NAME: "There are unsupported characters in the file name."

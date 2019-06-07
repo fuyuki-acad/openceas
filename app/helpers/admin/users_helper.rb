@@ -1,0 +1,52 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
+module Admin::UsersHelper
+  def circle(value)
+    if value
+      "○"
+    end
+  end
+
+  def move_list
+    User::MOVE_LIST.map {|key, value| [value, key]}
+  end
+
+  def null_to_space(value)
+    if (!value)
+      value = "　"
+    end
+    value
+  end
+
+  def sex_cd_title(value)
+    case value
+    when Settings.USR_SEXCD_UNKOWN
+      t("common.COMMON_UNKOWN")
+    when Settings.USR_SEXCD_MALE
+      t("common.COMMON_MALE")
+    when Settings.USR_SEXCD_FEMALE
+      t("common.COMMON_FEMALE")
+    end
+  end
+end

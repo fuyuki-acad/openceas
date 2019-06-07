@@ -1,0 +1,2 @@
+#!/bin/sh
+exec env NOEXEC_EXCLUDE=passenger passenger start --daemonize --address 0.0.0.0 -p 28080 -R cable/config.ru --force-max-concurrent-requests-per-process 0

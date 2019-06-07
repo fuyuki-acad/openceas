@@ -1,0 +1,276 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <% if @user.new_record? %>
+            <%= t("admin.user.PRI_ADM_USR_REGISTERUSR_FORMTITLE1") %>
+          <% else %>
+            <%= t("admin.user.PRI_ADM_USR_REGISTERUSR_FORMTITLE2") %>
+          <% end %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!--氏名（漢字）-->
+          <tr>
+            <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
+              <%= t("common.COMMON_USRNAME") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :user_name, {:class => 'form-control', :maxlength => '64'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION2") %>
+            </td>
+          </tr>
+
+          <!--氏名（カナ）-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_KANANAME") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :kana_name, {:class => 'form-control', :maxlength => '64'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION3") %>
+            </td>
+          </tr>
+
+          <!--メールアドレス１-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_MAIL_1") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :email, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '256'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION4") %>
+            </td>
+          </tr>
+
+          <!--メールアドレス２-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_MAIL_2") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :email_mobile, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '256'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION5") %>
+            </td>
+          </tr>
+
+          <!--性別-->
+          <tr>
+            <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
+              <%= t("common.COMMON_SEXCD") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_MALE %> <%= t('common.COMMON_MALE') %><br/>
+              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_FEMALE %> <%= t('common.COMMON_FEMALE') %>
+            </td>
+          </tr>
+
+          <!--生年月日-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_BIRTHDATE") %>
+            </td>
+            <td class="col-xs-9">
+              <div class="form-group">
+                  <div class='input-group date datetimepicker'>
+                    <%= f.text_field :birth_date, :data => {:date_format => 'YYYY/MM/DD'}, :class => 'form-control', placeholder: 'YYYY/MM/DD'  %>
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+              </div>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION6") %>
+            </td>
+          </tr>
+
+          <!--アカウント-->
+          <tr>
+            <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
+              <%= t("common.COMMON_ACCOUNT") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :account, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '64'} %>
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
+            </td>
+          </tr>
+
+          <!--パスワード-->
+          <tr>
+            <td class="col-xs-3">
+              <% if @user.new_record? %>
+                <code><%= t("common.COMMON_ATTENTION") %></code>
+              <% end %>
+              <%= t("common.COMMON_PASSWORD") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.password_field :password, {:class => 'form-control', autocomplete: "off", :maxlength => '128'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION7") %><br />
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %><br />
+              <% if !@user.new_record? %>
+                <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION2") %><br />
+              <% end %>
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION3") %>
+            </td>
+          </tr>
+
+          <!--管理権限-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_AUTHCD2") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_ADMINISTRATOR %> <%= t('common.COMMON_ADMINISTRATOR') %><br/>
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_INSTRUCTOR %> <%= t('common.COMMON_INSTRUCTOR') %><br/>
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_STUDENT %> <%= t('common.COMMON_STUDENT') %>
+            </td>
+          </tr>
+
+          <!--CEAS利用許可-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM1") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_EFFECTIVE %> <%= t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION8') %><br/>
+              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_INVALIDITY %> <%= t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION9') %>
+            </td>
+          </tr>
+
+          <!--削除フラグ -->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM2") %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.radio_button :delete_flag, "1" %> <%= t('common.COMMON_ON') %><br/>
+              <%= f.radio_button :delete_flag, "0" %> <%= t('common.COMMON_OFF') %>
+          </tr>
+
+          <!--移動コード -->
+          <% unless @user.new_record? %>
+            <tr>
+              <td class="col-xs-3">
+                <%= t("common.COMMON_MOVECD") %>
+              </td>
+              <td class="col-xs-9">
+                <%= f.select :move_cd, move_list, {}, {:class => "form-control"}
+                %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION11") %>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= f.submit t("common.COMMON_REGISTER"),
+          {:class => "btn btn-primary ceas-button-margin-5"} %>
+        <%= f.button t("common.COMMON_CANCEL"), {:class => "btn btn-default ceas-button-margin-5", :type => :reset} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<!-- 検索フォーム -->
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="input-group">
+          <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
+          <span class="input-group-btn">
+            <%= link_to t("common.COMMON_SEARCH"), {:action => :course, :id => @user}, :class => "btn btn-default search_unassigned_course" %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 検索フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_ADMINISTRATEENROLLMENT") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION17") %>
+            <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION18") %>
+            <div>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION12") %>
+            </div>
+            <div>
+              <% if @user.teacher? %>
+                <%= select_tag 'user[delete_courses]', options_from_collection_for_select(@user.assigned_courses, :id, :course_name), {:multiple => true, :class => "form-control", :size => 15} %>
+              <% elsif @user.student? %>
+                <%= select_tag 'user[delete_courses]', options_from_collection_for_select(@user.enrollment_courses, :id, :course_name), {:multiple => true, :class => "form-control", :size => 15} %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION13") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <%= render 'unassigned_course', :courses => @courses %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <div class="btn-group">
+      <%= f.submit t("common.COMMON_REGISTER"),
+        {:class => "btn btn-primary ceas-button-margin-5"} %>
+      <%= f.button t("common.COMMON_CANCEL"), {:class => "btn btn-default ceas-button-margin-5", :type => :reset} %>
+    </div>
+  </div>
+</div>

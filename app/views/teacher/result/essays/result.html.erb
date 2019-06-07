@@ -1,0 +1,558 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% if controller.controller_name == "essay_results" %>
+  <% breadcrumb :result_essay_result, @essay %>
+<% else %>
+  <% breadcrumb :result_result_essay, @essay %>
+<% end %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_ASSIGNMENTESSAYADMINISTRATION") } %>
+
+<!-- 担当科目名称欄 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= @essay.course.course_name %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_ASSIGNMENTESSAYTITLE") %>
+            </td>
+            <td>
+              <%= @essay.generic_page_title %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_TERM") %>
+            </td>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_FROMTO", :param0 => l(@essay.start_time), :param1 => l(@essay.end_time)) %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION6") %>
+            </td>
+            <td>
+              <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_INDIVIDUALLY %>
+                <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION7") %>
+              <% elsif @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+                <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION8") %>
+              <% else %>
+                <%= t("common.COMMON_NOTDO") %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION10") %>
+            </td>
+            <td>
+              <% if @essay.pre_grading_enable_flag == Settings.GENERICPAGE_PREGRADINGENABLEFLG_ON %>
+                <%= t("common.COMMON_DO") %>
+              <% else %>
+                <%= t("common.COMMON_NOTDO") %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 検索条件 -->
+<%= form_tag url_for({:action => :result}), :method => :get do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <%= t("common.COMMON_SEARCHREQUIREMENT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <fieldset>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="checkbox">
+                  <%= radio_button_tag "search[order1]", "0", params[:search][:order1] == "0" %> <%= t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM1') %><br/>
+                  <%= radio_button_tag "search[order1]", "2", params[:search][:order1] == "2" %> <%= t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM3') %><br/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <%= check_box_tag "search[order2]", "1", params[:search][:order2] == "1" %>
+                    <%= t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_EXPLANATION1") %>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="scoring_status">
+                  <%= t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS") %>
+                </label>
+                <%= select_tag "search[status]",
+                  options_for_select(
+                    {t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS_5") => AssignmentEssay::STATUS_GRADED_ACCEPTANCE,
+                     t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS_4") => AssignmentEssay::STATUS_GRADED_REPRESENT,
+                     t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS_3") => AssignmentEssay::STATUS_PRESENTED,
+                     t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS_2") => AssignmentEssay::STATUS_NOTPRESENT,
+                     t("materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_STATUS_1") => "-1",
+                    },
+                    :selected => params[:search][:status]),
+                  {:class => "form-control"} %>
+              </div>
+              <div class="form-group">
+                <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default pull-right" %>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION3_html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION4") %>
+        <span class="explanation_text"><%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION5") %></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <%= t("common.COMMON_USRTABLEALT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <!-- 採点表ダウンロード -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON2"), {:action => :outputcsv_scoresheet}, :method => :post, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+          </div>
+
+          <!-- 採点表アップロード -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON3"), {:action => :upload}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+          </div>
+
+          <!-- 提出状況CSV出力 -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON7"), {:action => :outputcsv_assignmentessay, :id => @essay.id}, {:method => :post, :class => "btn btn-primary btn-block ceas-button-margin-5", :data => {:confirm => t("common.COMMON_DOWNLOADMESSAGE")}} %>
+          </div>
+
+          <!-- 一括メール送信 -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON5"), "",
+              :class => "btn btn-primary btn-block ceas-button-margin-5 btn_send_mail_essay",
+              :data => {:confirm => t("materials_administration.COMMONMATERIALSADMINISTRATION_JAVASCRIPT5") + t("materials_administration.MAT_ADM_ASS_MAILSEND_CLEAR_SEARCH_TERM")} %>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- レポート一括ダウンロード -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON4"), {:action => :download_report, :course_id => @essay.course.id}, :method => :post, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+          </div>
+
+          <!-- レポート一括アップロード -->
+          <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_INDIVIDUALLY ||
+                @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON1"), {:action => :upload_return_report, :course_id => @essay.course.id}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+          </div>
+          <% end %>
+
+          <!-- レポート個別アップロード -->
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON8"), {:action => :report_upload}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+          </div>
+
+          <!-- チェックされたレポートを一斉返却-->
+          <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+          <div class="col-md-3">
+            <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON6"), "", class: "btn btn-primary btn-block ceas-button-margin-5 btn_return_report_essay" %>
+          </div>
+          <% end %>
+        </div>
+
+        <div style="display: none">
+          <%= form_tag url_for(:action => "send_mail", :id => @essay.id), {:class => "form-horizontal form_send_mail", :method => "post"} do %>
+            <% @users.each do |user| %>
+              <%= hidden_field_tag "user[]", user.id %>
+            <% end %>
+          <% end %>
+
+          <%= form_tag url_for(:action => "return_report", :id => @essay.id), {:class => "form-horizontal form_return_report", :method => "post"} do %>
+          <% end %>
+        </div>
+
+        <br />
+
+        <div class="row">
+          <div class="col-xs-8">
+            <p>
+              <%= t("common.COMMON_PARANTHESISLEFT2") %>
+              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DEADLINE") %>
+              <%= l(@essay.end_time) %>
+              <%= t("common.COMMON_PARANTHESISRIGHT2") %>
+            </p>
+          </div>
+          <div class="col-xs-4">
+            <p class="pull-right badge">
+              <%= t("common.COMMON_HITCOURSE", :param0 => @users.count) %>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <% if @users.count == 0 %>
+              <p>
+                <%= t("common.COMMON_NOTFOUND") %>
+              </p>
+            <% else %>
+              <table class="table table-striped table-hover table-bordered result_essay">
+                <thead>
+                  <tr>
+                    <!--No. -->
+                    <th>
+                      <%= t("common.COMMON_NO1") %>
+                    </th>
+
+                    <!--氏名 -->
+                    <th>
+                      <%= t("common.COMMON_TARGETNAME") %>
+                    </th>
+
+                    <!--点数 -->
+                    <th>
+                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_MARK1") %>
+                    </th>
+
+                    <!--総合評価 -->
+                    <th>
+                      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_VALUE") %>
+                    </th>
+
+                    <!--メール送信 -->
+                    <th class="hidden-xs">
+                      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDMAIL") %>
+                    </th>
+
+                    <!--ステータス -->
+                    <th class="hidden-xs">
+                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_STATUS") %>
+                    </th>
+
+                    <!--提出 -->
+                    <th class="hidden-xs">
+                      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_PRESENT") %>
+                    </th>
+
+                    <!--過去の提出レポート確認 -->
+                    <th class="hidden-xs">
+                      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_PASTASSIGNMENTESSAY") %>
+                    </th>
+
+                    <!--確認／採点 -->
+                    <th>
+                      <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE") %>
+                    </th>
+
+                    <!--返却 -->
+                    <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+                    <th>
+                      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SUBMITCHECK") %>
+                    </th>
+                    <% end %>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @users.each.with_index(1) do |user, index| %>
+                    <tr>
+                      <!--No. -->
+                      <td>
+                        <%= index %>
+                      </td>
+
+                      <!--氏名 -->
+                      <td>
+                        <% if user.user_image.count > 0 %>
+                          <%= link_to user.get_user_image(UserImage::IMAGE_TYPE_EXPRESSION), :class => "preview" do %>
+                            <%= image_tag user.get_user_image(UserImage::IMAGE_TYPE_ICON), :width => "20x20", :alt => '' %>
+                          <% end %>
+                        <% end %>
+
+                        <%= user.get_name_no_prefix %>
+                        <%= user.user_name %>
+                      </td>
+
+                      <!--点数 -->
+                      <td>
+                        <% if @scores[user.id].blank? %>
+                          -
+                        <% else %>
+                          <% if @scores[user.id].assignment_essay_score.blank? %>
+                            -
+                          <% else %>
+                            <%= @scores[user.id].assignment_essay_score %>
+                          <% end %>
+                        <% end %>
+                      </td>
+
+                      <!--総合評価 -->
+                      <td>
+                        <% if @scores[user.id] && @scores[user.id].latest_comment %>
+                          <% if @scores[user.id].latest_comment.memo.blank? %>
+                            -
+                          <% else %>
+                            <%= @scores[user.id].latest_comment.memo %>
+                          <% end %>
+                        <% end %>
+                      </td>
+
+                      <!--メール送信 -->
+                      <td class="hidden-xs">
+                        <% if @scores[user.id] && @scores[user.id].latest_comment %>
+                          <% if @scores[user.id].latest_comment.mail_flag == 0 %>
+                            -
+                          <% elsif @scores[user.id].latest_comment.mail_flag == 1 %>
+                            <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDPLAN") %>
+                          <% end %>
+                        <% else %>
+                          -
+                        <% end %>
+                      </td>
+
+                      <!--ステータス -->
+                      <td class="hidden-xs">
+                        <%= essay_status_name(@essay.essay_status(user.id)) %>
+                      </td>
+
+                      <!--提出 -->
+                      <td class="hidden-xs">
+                        <% if @scores[user.id] && (!@scores[user.id].link_name.blank? || (@scores[user.id].latest_comment && !@scores[user.id].latest_comment.processed_link_name.blank?)) %>
+                          <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_PRESENTMARK") %>
+                        <% end %>
+                      </td>
+
+                      <!--過去の提出レポート確認 -->
+                      <td class="hidden-xs">
+                        <% if @scores[user.id].nil? %>
+                          -
+                        <% else %>
+                          <% if @scores[user.id].answer_count > 1 %>
+                            <div class="image_block_button3">
+                              <%= link_to t("common.COMMON_CONFIRM2"), {:action => :history, :id => @essay, :user => user.id} %>
+                            </div>
+                            <%= t("common.COMMON_PARANTHESISLEFT2") %>
+                            <%= @scores[user.id].answer_count - 1 %>
+                            <%= t("common.COMMON_PARANTHESISRIGHT2") %>
+                          <% else %>
+                            -
+                          <% end %>
+                        <% end %>
+                      </td>
+
+                      <!--確認／採点 -->
+                      <td>
+                        <!-- 採点できない -->
+                        <% if @essay.report_cd == 0 %>
+                          <!-- "提出レポートが存在する"場合にのみ「確認」ボタンを表示する -->
+                          <% if @scores[user.id] %>
+                            <% if @essay.pre_grading_enable_flag == 1 || (@essay.pre_grading_enable_flag == 0 && (@essay.start_time < Time.zone.now && @essay.end_time < Time.zone.now)) %>
+                              <%= link_to url_for(:action => :mark, :id => @essay, :user => user),
+                                {:class => "btn btn-warning btn-block ceas-button-margin-5",
+                                 :onclick => "openWindow1('" + url_for(:action => :file, :id => @essay, :score => @scores[user.id].latest_history.id) +"', 'browseAssignmentEssay')"} do %>
+                                <%= t("common.COMMON_CONFIRM2") %>
+                              <% end %>
+                            <% elsif !@scores[user.id].link_name.blank? %>
+                              <%= link_to t("common.COMMON_CONFIRM2"), {:action => :file_confirm, :id => @essay, :user => user}, :class => "btn btn-warning btn-block ceas-button-margin-5", :target => "_blank" %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                        <!-- 採点できる（フィードバック） -->
+                        <% if @essay.report_cd == 1 %>
+                          <% if @essay.pre_grading_enable_flag == 1 || (@essay.pre_grading_enable_flag == 0 && (@essay.start_time < Time.zone.now && @essay.end_time < Time.zone.now)) %>
+                            <% if @scores[user.id] && @scores[user.id].link_name.blank? %>
+                              <%= link_to t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE"), {:action => :mark, :id => @essay, :user => user}, {:class => "btn btn-warning"} %>
+                            <% else %>
+                              <% if @scores[user.id] %>
+                                <% if (@scores[user.id].latest_comment && !@scores[user.id].latest_comment.processed_link_name.blank?) %>
+                                  <%= link_to url_for(:action => :mark, :id => @essay, :user => user),
+                                    {:class => "btn btn-warning btn-block ceas-button-margin-5",
+                                     :onclick => "openWindow1('" + url_for(:action => :return_file, :id => @essay, :score => @scores[user.id].latest_history.id) +"', 'gradeAssignmentEssay')"} do %>
+                                    <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE") %>
+                                  <% end %>
+                                <% elsif !@scores[user.id].link_name.blank? %>
+                                  <%= link_to url_for(:action => :mark, :id => @essay, :user => user),
+                                    {:class => "btn btn-warning btn-block ceas-button-margin-5",
+                                     :onclick => "openWindow1('" + url_for(:action => :file, :id => @essay, :score => @scores[user.id].latest_history.id) +"', 'gradeAssignmentEssay')"} do %>
+                                    <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE") %>
+                                  <% end %>
+                                <% end %>
+                              <% else %>
+                                <%= link_to t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE"),
+                                  {:action => :mark, :id => @essay, :user => user}, {:class => "btn btn-warning btn-block ceas-button-margin-5"} %>
+                              <% end %>
+                            <% end %>
+                          <% else %>
+                            <%= link_to t("common.COMMON_CONFIRM2"), {:action => :file_confirm, :id => @essay, :user => user}, :class => "btn btn-warning btn-block ceas-button-margin-5", :target => "_blank" %>
+                          <% end %>
+                        <% end %>
+                        <!-- 採点できる（通常） -->
+                        <% if @essay.report_cd == 2 %>
+                          <% if @essay.pre_grading_enable_flag == 1 || (@essay.pre_grading_enable_flag == 0 && (@essay.start_time < Time.zone.now && @essay.end_time < Time.zone.now)) %>
+                            <% if @scores[user.id] %>
+                              <% if (@scores[user.id].latest_comment && !@scores[user.id].latest_comment.processed_link_name.blank?) %>
+                                <%= link_to url_for(:action => :mark, :id => @essay, :user => user),
+                                  {:class => "btn btn-warning btn-block ceas-button-margin-5",
+                                   :onclick => "openWindow1('" + url_for(:action => :return_file, :id => @essay, :score => @scores[user.id].latest_history.id) +"', 'gradeAssignmentEssay')"} do %>
+                                  <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE") %>
+                                <% end %>
+                              <% elsif !@scores[user.id].link_name.blank? %>
+                                <%= link_to url_for(:action => :mark, :id => @essay, :user => user),
+                                  {:class => "btn btn-warning btn-block ceas-button-margin-5",
+                                   :onclick => "openWindow1('" + url_for(:action => :file, :id => @essay, :score => @scores[user.id].latest_history.id) +"', 'gradeAssignmentEssay')"} do %>
+                                  <%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE") %>
+                                <% end %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_RESULTANDGRADE"),
+                                {:action => :mark, :id => @essay, :user => user}, {:class => "btn btn-warning btn-block ceas-button-margin-5"} %>
+                            <% end %>
+                          <% else %>
+                            <%= link_to t("common.COMMON_CONFIRM2"), {:action => :file_confirm, :id => @essay, :user => user}, :class => "btn btn-warning btn-block ceas-button-margin-5", :target => "_blank" %>
+                          <% end %>
+                        <% end %>
+                      </td>
+
+                      <!--返却 -->
+                      <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+                      <td>
+                        <% if @scores[user.id] &&
+                              (!@scores[user.id].link_name.blank? ||
+                               (@scores[user.id].latest_comment && !@scores[user.id].latest_comment.processed_link_name.blank? && @scores[user.id].latest_comment.return_flag != 1)) %>
+                          <%= check_box_tag "users[]", user.id, false, {} %>
+                        <% else %>
+                          -
+                        <% end %>
+                      </td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<% if @users.count > 0 %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row col-xs-12">
+            <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION2_html") %>
+          </div>
+          <div class="row col-xs-12">
+            <br/>
+            <%= form_tag url_for({:action => :update_score, :id => @essay}), :method => :patch do %>
+            <div class="col-sm-4 col-sm-offset-4">
+              <fieldset>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_MARK1") %>
+                    </span>
+                    <%= text_field_tag :score, params[:score], {:class => "form-control", :maxlength => 3} %>
+                    <span class="input-group-btn">
+                      <%= submit_tag t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_PACKAGEDGRADE"), :name => "", :class => "btn btn-default" %>
+                    </span>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

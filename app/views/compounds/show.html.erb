@@ -1,0 +1,210 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONCOMPOUND") } %>
+
+<!-- 氏名、テスト/アンケートタイトル -->
+<% if @execute_flag %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!-- 氏名　-->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("common.COMMON_TARGETNAME") %>
+              </td>
+              <td class="col-xs-8">
+                <%= current_user.user_name %>
+              </td>
+            </tr>
+
+            <!-- テストタイトル　-->
+            <tr>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
+              </td>
+              <td>
+                <%= @generic_page.generic_page_title %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- 受験回数 -->
+<% if @execute_flag %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= t("execution.MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT", :param0 => @execution_count) %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- 添付資料閲覧 -->
+<% unless @generic_page.link_name.blank? %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= link_to t("common.COMMON_READ"), material_path(@generic_page.id), :class => "btn btn-default", :target => "_blank" %>
+          <%= t("execution.COMMONMATERIALSEXECUTION_ATTACHMENT") %>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= form_tag url_for(:controller => "/compounds", :action => :save, :id => @generic_page), {:class => "form-horizontal", :method => :patch} do %>
+<% if @execute_flag && @generic_page.parent_questions.count > 0 %>
+  <!-- 一時保存ボタン -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="pull-right">
+        <div class="text-center">
+          <div class="btn-group">
+            <% if current_user.student? %>
+              <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
+            <% else %>
+              <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- 問題一覧 -->
+<% if  @generic_page.parent_questions.count == 0 %>
+  <%= t("execution.MAT_EXE_MUL_EXECUTEMULTIPLEFIBMAIN_NOTFOUND") %>
+<% else %>
+  <% @generic_page.parent_questions.each.with_index(1) do |parent_question, i| %>
+    <!-- 大問 -->
+    <div class='row'>
+      <div class='col-xs-12'>
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            <h3 class='panel-title'>
+              <%= t("execution.COMMONMATERIALSEXECUTION_PARENTQUESTION") + i.to_s %>
+              <%== parent_question.content %>
+            </h3>
+          </div>
+          <div class='panel-body'>
+            <div class='row'>
+              <div class='col-xs-12'>
+                <div class='panel panel-default'>
+                  <div class='panel-body'>
+                    <%== parent_question.content %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 設問 -->
+            <% parent_question.questions.each.with_index(1) do |question, j| %>
+            <div class='row'>
+              <div class='col-xs-12'>
+                <div class='panel panel-info'>
+                  <div class='panel-heading'>
+                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
+                    <span class="pull-right"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %></span>
+                  </div>
+                  <div class='panel-body'>
+                    <div class='row'>
+                      <div class='col-xs-12'>
+                        <%== question.content %>
+                        <div class='panel panel-default'>
+                          <div class='panel-body'>
+                            <div><%= question.pattern_name %></div>
+
+                            <!-- ラジオボタンの時 -->
+                            <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
+                              <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
+                              <% question.select_quizzes.each do |quiz| %>
+                                <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                              <% end %>
+
+                            <!-- リストボックスの時 -->
+                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ONELIST %>
+                              <%= select_tag "answers[#{question.id}][select_answer_id]", quiz_options_options_for_select(question, @answers[question.id.to_s]), :include_blank => "--------" %>
+
+                            <!-- チェックボックスの時 -->
+                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
+                              <% question.select_quizzes.each do |quiz| %>
+                                <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                              <% end %>
+
+                            <!-- 記述の時 -->
+                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                              <%= text_area_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => question.text_row} %>
+
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<!--ボタン-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-center">
+      <div class="btn-group">
+        <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
+          <% if current_user.student? %>
+            <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
+          <% else %>
+            <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>
+          <% end %>
+          <%= link_to t("common.COMMON_CONFIRM"), 'javascript:void();', :id => "submit_execution", :class => "btn btn-default ceas-button-margin-5", :data => {:id => @generic_page.id} %>
+          <%= link_to t('execution.MAT_EXE_COM_EXECUTECOMPOUND_CANCEL'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5 btn_cancel_close', :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT2")} %>
+        <% else %>
+          <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();',
+            class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: compound_clear_password_path} %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

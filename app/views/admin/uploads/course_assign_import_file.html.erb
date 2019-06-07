@@ -1,0 +1,119 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_course_assign_upload_results %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("registerCourseAssignedList1.PRI_REG_UPLOADLIST_TITLE2") %>
+</h5>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%== @messages %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 確認リスト -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% if @error_code != 0 %>
+          <table class="table table-striped table-hover">
+            <!-- ファイル名 -->
+            <tr>
+              <td class="col-xs-4">
+                <%= t("registerCourseAssignedList1.PRI_REG_RESULTLIST_TABLELEFT1") %>
+              </td>
+              <td class="col-xs-12">
+                <%= @course_assigns.count %>
+              </td>
+            </tr>
+
+            <% if @error_code == 1 %>
+              <tr>
+                <td>
+                  <%= t("registerCourseAssignedList1.PRI_REG_RESULTLIST_TABLELEFT2") %>
+                </td>
+                <td>
+                  <%= @course_assigns.count %>
+                </td>
+              </tr>
+            <% end %>
+
+            <% if @error_code == 2 %>
+              <tr>
+                <td class="col-xs-4">
+                  <%= t("registerCourseAssignedList1.PRI_REG_RESULTLIST_TABLELEFT3") %>
+                </td>
+                <td class="col-xs-12">
+                  <%= @course_assigns.count - @errors.count %>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-xs-4">
+                  <%= t("registerCourseAssignedList1.PRI_REG_RESULTLIST_TABLELEFT4") %>
+                </td>
+                <td class="col-xs-12">
+                  <%= @errors.count %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 説明文 -->
+    <% if @error_code == 2 %>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="text-center">
+                <div class="btn-group">
+                  <%= link_to t("registerCourseAssignedList1.PRI_REG_RESULTLIST_EXPLANATION3"), {:controller => :uploads, :action => :course_assign_error_list}, :class => "btn btn-default ceas-button-margin-5", :target => "_blank" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <% if @error_code != 0 %>
+          <%= link_to t("common.COMMON_RETURN"), {:controller => :uploads, :action => :course_assign}, {:class => "btn btn-default ceas-button-margin-5"} %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

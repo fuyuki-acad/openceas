@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Azure iframe test</title>
+    <link href="//amp.azure.net/libs/amp/2.2.4/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+    <script src="//amp.azure.net/libs/amp/2.2.4/azuremediaplayer.min.js"></script>
+  </head>
+  <body>
+    <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"></video>
+  </body>
+  <script>
+    params = GetQueryString();
+
+    var myOptions = {
+      "nativeControlsForTouch": false,
+      controls: true,
+      autoplay: true,
+      width: params['width'],
+      height: params['height'],
+    }
+    myPlayer = amp("azuremediaplayer", myOptions);
+    myPlayer.src([
+      {
+        "src": params['url'],
+        "type": "application/vnd.ms-sstr+xml"
+      }
+    ]);
+
+    function GetQueryString() {
+      var result = {url: '', width: 640, helght:400};
+      if( 1 < window.location.search.length ) {
+        // 最初の1文字 (?記号) を除いた文字列を取得する
+        var query = window.location.search.substring( 1 );
+
+        // クエリの区切り記号 (&) で文字列を配列に分割する
+        var parameters = query.split( '&' );
+
+        for( var i = 0; i < parameters.length; i++ ) {
+          // パラメータ名とパラメータ値に分割する
+          var element = parameters[ i ].split( '=' );
+
+          var paramName = decodeURIComponent( element[ 0 ] );
+          var paramValue = decodeURIComponent( element[ 1 ] );
+
+          result[ paramName ] = paramValue;
+        }
+      }
+      return result;
+    }
+  </script>
+</html>

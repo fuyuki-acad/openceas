@@ -1,0 +1,319 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :open_courses %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("common.COMMON_TOPPAGE") } %>
+
+<!-- 科目検索 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_SEARCHCOURSE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-6">
+          <%= form_tag url_for({:action => :index}), :method => :get do %>
+            <div class="input-group">
+              <%= text_field_tag "key_word", params[:key_word], class: "form-control" %>
+              <span class="input-group-btn">
+                <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default" %>
+              </span>
+            </div>
+            <%= t("common.COMMON_SEARCHCOURSEEXPLANATION") %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文の表示 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%== t("open_course_list.OPE_OPENCOURSELIST_EXPLANATION＿html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 授業画面の表示 -->
+<%= form_tag url_for({:action => :assign}) do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+          <%= t("open_course_list.OPE_OPENCOURSELIST_NAVI") %>
+
+          <!-- 件数表示 -->
+          <div class="pull-right">
+            <div class="main">
+              <div class="page_sending">
+                <%= t("common.COMMON_HITCOURSE", :param0 => @courses.count) %>
+
+                <% if @courses.count > 0 %>
+                  <%= t("common.COMMON_PAGESTATE", :param0 => @courses.current_page || 1, :param1 => @courses.total_pages) %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </h3>
+      </div>
+
+      <div class="panel-body table-responsive">
+        <!-- 0件メッセージ -->
+        <% if @courses.count == 0 %>
+          <%= t("common.COMMON_NOTFOUND") %>
+        <% else %>
+
+          <!-- リスト表示 -->
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></td>
+                <th class="hidden-xs"><%= t("open_course_list.OPE_OPENCOURSELIST_ALLOCATION") %></td>
+                <th class="hidden-xs"><%= t("open_course_list.OPE_OPENCOURSELIST_PASSWORD") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_DAY") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSEOUTLINE") %></td>
+              </tr>
+            </thead>
+            <% @courses.each.with_index(1) do |course, index| %>
+              <tr>
+                <!-- No. -->
+                <td class="td-bold"><%= index %></td>
+
+                <!-- 割付 -->
+                <td class="td-bold">
+                  <% unless current_user.admin? %>
+                    <% if course.assigned?(current_user) %>
+                      -
+                    <% else %>
+                      <%= check_box_tag "assign[#{course.id}]", course.id, false, {} %>
+                    <% end %>
+                  <% end %>
+                </td>
+
+                <!-- パスワード -->
+                <td class="td-bold">
+                  <% unless course.open_course_pass.blank? %>
+                    <%= text_field_tag "password[#{course.id}]", "", :maxlength => 10 %>
+                  <% end %>
+                </td>
+
+                <!-- 曜日 -->
+                <td class="td-bold hidden-xs"><%= convert_day_cd(course.day_cd) %></td>
+
+                <!-- 時限 -->
+                <td class="td-bold hidden-xs"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                <!-- 年度 -->
+                <td class="td-bold hidden-xs"><%= course.school_year %></td>
+
+                <!-- 学期 -->
+                <td class="td-bold hidden-xs"><%= convert_season_cd(course.season_cd) %></td>
+
+                <!-- 科目名称 -->
+                <td class="td-bold"><%= course.course_name %></td>
+
+                <!-- 科目概要 -->
+                <td class="td-bold hidden-xs">
+                  <p class='hidden-xs'><%== convert_html(course.overview) %></p>
+                  <p class='visible-xs visible-sm'>
+                    <button type='button' class='btn btn-default center-block' data-toggle='modal' data-target='.bs-course#{info.indexNumber}-modal-sm'>
+                      <%= t("common.COMMON_COURSEOUTLINE") %>
+                    </button>
+                  </p>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @courses.count > 0 && !current_user.admin? %>
+      <!-- 割付ボタン -->
+      <div class="col-sm-12">
+        <%= submit_tag t("open_course_list.OPE_OPENCOURSELIST_ALLOCATION"),
+          :data => {:target => :assign, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")}, :class => "btn btn-primary center-block btn_assign_course" %>
+      </div>
+
+      <!-- アンカーボタン -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <a class="anchor" href="#anchor-top">
+              <%= t("common.COMMON_TOP") %>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<br />
+
+<!-- アンカー -->
+<a id="anchor-top2"></a>
+
+<!-- 割り付けた公開科目の表示 -->
+<% unless current_user.admin? %>
+  <%= form_tag url_for({:action => :assign}) do %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+            <%= t("open_course_list.OPE_OPENCOURSELIST_ALLOCATEDCOURSE") %>
+          </h3>
+        </div>
+
+        <div class="panel-body table-responsive">
+          <!-- 0件メッセージ -->
+          <% if @assigned_courses.count == 0 %>
+            <%= t("common.COMMON_NOTFOUND") %>
+          <% else %>
+
+            <!-- リスト表示 -->
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th class="hidden-xs"><%= t("common.COMMON_NO1") %></td>
+                  <th class="hidden-xs"><%= t("open_course_list.OPE_OPENCOURSELIST_RELEASE") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_DAY") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></td>
+                  <th class="hidden-xs"><%= t("common.COMMON_COURSEOUTLINE") %></td>
+                </tr>
+              </thead>
+              <% @assigned_courses.each.with_index(1) do |course, index| %>
+                <!-- No. -->
+                <td class="td-bold"><%= index %></td>
+
+                <!-- 解除 -->
+                <td class="td-bold">
+                  <% unless current_user.admin? %>
+                    <% if course.assigned?(current_user) %>
+                      -
+                    <% else %>
+                      <%= check_box_tag "release[#{course.id}]", course.id, false, {} %>
+                    <% end %>
+                  <% end %>
+                </td>
+
+                <!-- 曜日 -->
+                <td class="td-bold hidden-xs"><%= convert_day_cd(course.day_cd) %></td>
+
+                <!-- 時限 -->
+                <td class="td-bold hidden-xs"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                <!-- 年度 -->
+                <td class="td-bold hidden-xs"><%= course.school_year %></td>
+
+                <!-- 学期 -->
+                <td class="td-bold hidden-xs"><%= convert_season_cd(course.season_cd) %></td>
+
+                <!-- 科目名称 -->
+                <td class="td-bold"><%= course.course_name %></td>
+
+                <!-- 科目概要 -->
+                <td class="td-bold hidden-xs">
+                  <%== course.overview %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+      <% if @assigned_courses.count > 0 %>
+        <!-- 全選択・解除ボタン -->
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+              :data => {:target => :release, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+              class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+            <%= submit_tag t("open_course_list.OPE_OPENCOURSELIST_RELEASE"),
+              :data => {:target => :release, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")}, :class => "btn btn-warning ceas-button-margin-5 center-block multi_delete" %>
+          </div>
+        </div>
+
+        <!-- アンカーボタン -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <a class="anchor" href="#anchor-top2">
+                <%= t("common.COMMON_TOP") %>
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<!-- モーダル -->
+<% @courses.each.with_index(1) do |course, index| %>
+  <div class="modal fade bs-course#{index}-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h6 class="modal-title">
+            <%= course.course_name %>
+          </h6>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <%== course.overview %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

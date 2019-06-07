@@ -1,0 +1,79 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_course_upload_confirm %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("registerCourseAssignedList1.PRI_REG_UPLOADLIST_TITLE2") %>
+</h5>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("registerCourseAssignedList1.PRI_REG_IMPORTLIST_EXPLANATION1") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 確認リスト -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- ファイル名 -->
+          <tr>
+            <td class="col-xs-4">
+              <%= t("registerCourseAssignedList1.PRI_REG_IMPORTLIST_TABLELEFT1") %>
+            </td>
+            <td class="col-xs-12">
+              <%= @csv.file.original_filename %>
+            </td>
+          </tr>
+
+          <!-- ファイルサイズ -->
+          <tr>
+            <td>
+              <%= t("registerCourseAssignedList1.PRI_REG_IMPORTLIST_TABLELEFT2") %>
+            </td>
+            <td>
+              <%= @csv.file.size %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t("common.COMMON_REGISTER"), {:action => :course_assign_import_file}, {:class => "btn btn-primary ceas-button-margin-5"} %>
+        <%= link_to t("common.COMMON_RETURN"), :back, {:class => "btn btn-default ceas-button-margin-5"} %>
+      </div>
+    </div>
+  </div>
+</div>

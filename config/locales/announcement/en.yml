@@ -1,0 +1,45 @@
+en:
+  #####お知らせ#####
+  announcement:
+    #####お知らせ#####
+    #共通(お知らせ機能全般)
+    COMMONANNOUNCEMENT_NAVI: "Announcement/Email"
+    COMMONANNOUNCEMENT_PAGE1: "Add Announcement"
+    COMMONANNOUNCEMENT_PAGE2: "View/Delete Announcement"
+    COMMONANNOUNCEMENT_STATE: "Status"
+    COMMONANNOUNCEMENT_SCRIPT1: "Enter your message in less than 4096 characters."
+    COMMONANNOUNCEMENT_SCRIPT2: "Finished successfully."
+    COMMONANNOUNCEMENT_MAILSUBJECT: "Announcement on"
+    COMMONANNOUNCEMENT_MAILCONTENT1: "Announcement as follows:"
+    COMMONANNOUNCEMENT_MAILCONTENT2: "Course Title:"
+    COMMONANNOUNCEMENT_MAILCONTENT3: "Announcement Title"
+    COMMONANNOUNCEMENT_MAILCONTENT4: "Message"
+    #selectCourseAnnouncement.jsp
+    ANN_SELECTCOURSEANNOUNCEMENT_PAGETITLE: "List of courses (Announcement/email)"
+    ANN_SELECTCOURSEANNOUNCEMENT_PAST: "Past announcement"
+    ANN_REGISTERANNOUNCEMENT_RESULT: "It was registered announcements."
+    ANN_REGISTERANNOUNCEMENT_RESULT_SENDMAIL_html: "It was registered announcements. <br> mail transmission process may take a few minutes to a few tens of minutes. <br> transmission result, please check from the past of the content."
+    #registerAnnouncement.jsp
+    ANN_REGISTERANNOUNCEMENT_PAGETITLE: "Add new announcement"
+    ANN_REGISTERANNOUNCEMENT_SENDCHECK: "Send Email?"
+    ANN_REGISTERANNOUNCEMENT_MAILONLY: "Email only."
+    ANN_REGISTERANNOUNCEMENT_EXPLANATION_html: "You can send email to individual student's) when you choose the <strong> Email only </strong> option."
+    #selectSendUsr.jsp
+    ANN_SELECTSENDUSR_PAGETITLE: "Choose Email recipient."
+    ANN_SELECTSENDUSR_SEARCHUSR: "Advanced user search."
+    ANN_SELECTSENDUSR_TARGETALT: "Email message"
+    ANN_SELECTSENDUSR_SEND: "Send."
+    ANN_SELECTSENDUSR_SCRIPT1: "Choose the Email sender."
+    ANN_SELECTSENDUSR_SCRIPT2: "Are you sure to send this email?"
+    #editAnnouncement.jsp
+    ANN_EDITANNOUNCEMENT_PAGETITLE: "Edit Announcement"
+    ANN_EDITANNOUNCEMENT_IMAGEALT: "Who received Announcement?"
+    ANN_EDITANNOUNCEMENT_NOUSER: "If, after a while does not appear Sent user, there is a possibility that e-mail was not sent"
+    #announcementList.jsp
+    ANN_ANNOUNCEMENTLIST_PAGETITLE: "Read All"
+    #announcementTop.jsp
+    ANN_ANNOUNCEMENTTOP_PAGETITLE: "Announcement details page."
+    ANN_ANNOUNCEMENTTOP_THISPAGE: "View Announcement"
+    #announcementListTop.jsp
+    ANN_ANNOUNCEMENTLISTTOP_PAGETITLE: "List of Announcement Detail"
+    ANN_ANNOUNCEMENTLISTTOP_THISPAGE: "View list of Announcement"

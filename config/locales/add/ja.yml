@@ -1,0 +1,21 @@
+ja:
+  top:
+    COMMONTOP_TOKEN: "トークン管理"
+
+  token:
+    token_list: "トークン一覧"
+    description: "トークン詳細"
+    access_token: "トークン"
+    expire_date: "有効期限"
+
+    message:
+      presence_description: "トークン詳細を入力してください"
+      format_expire_date: "有効期限に誤りがあります"
+      confirm_delete: "本当に削除しても良いですか？"
+      confirm_regenerate: "トークンを再生成します。よろしいですか？"
+
+    button:
+      regenerate: "トークン再生成"
+
+  page_management:
+    extra_content: "追加情報"

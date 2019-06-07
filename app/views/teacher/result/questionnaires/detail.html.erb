@@ -1,0 +1,159 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :detail_result_questionnaire, @question %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_QUESTIONNAIREADMINISTRATION") } %>
+
+<!-- 担当科目名称欄　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 科目名称　-->
+          <tr>
+            <td>
+              <%= t("common.COMMON_COURSENAME") %>
+            </td>
+            <td>
+              <%= @generic_page.course.course_name %>
+            </td>
+          </tr>
+
+          <!-- アンケート名　-->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_QUESTIONNAIRETITLE") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+
+          <!-- 設問　-->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_QUESTION") %>
+            </td>
+            <td>
+              <%== @question.content %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!--一覧テーブル(記述回答がない)-->
+<% if @other_answers.count == 0 %>
+  <div class = "main">
+    <p>
+      <%= t("common.COMMON_NOTFOUND") %>
+    </p>
+  </div>
+<% else %>
+  <!--一覧テーブルいろいろ-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <% if @generic_page.anonymous_flag == Settings.GENERICPAGE_ANONYNOUSFLG_ON %>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <%= t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_EXPLANATION") %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+
+              <!-- CSVファイル出力 -->
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :detail_outputcsv, :id => @generic_page.id, :question_id => params[:id]}, :method => :post, class: "btn btn-default" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                    <th class="hidden-xs"><%= t("common.COMMON_TARGETNAME") %></th>
+                    <th class="hidden-xs"><%= t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_ANSWERDATE") %></th>
+                    <th class="hidden-xs"><%= t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_ANSWERCONTENT") %></th>
+                  </tr>
+                </thead>
+                <body>
+                  <% @other_answers.each.with_index(1) do |answer, index| %>
+                    <tr>
+                      <td class="td-bold">
+                        <%= index %>
+                      </td>
+                      <td class="td-bold">
+                        <% if @generic_page.anonymous_flag == Settings.GENERICPAGE_ANONYNOUSFLG_ON %>
+                          -
+                        <% else %>
+                          <%= answer.user.get_name_no_prefix %>
+                          <%= answer.user.user_name %>
+                        <% end %>
+                      </td>
+                      <td class="td-bold">
+                        <% if @generic_page.answered?(answer.user.id) %>
+                          <%= l(answer.created_at) %>
+                        <% end %>
+                      </td>
+                      <td class="td-bold">
+                        <%== answer.text_answer %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </body>
+              </table>
+            </div>
+          </div>
+
+          <!-- アンカーボタン -->
+          <div class="pull-right">
+            <a class="anchor" href="#anchor-top">
+              <%= t("common.COMMON_TOP") %>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

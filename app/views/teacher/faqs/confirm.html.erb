@@ -1,0 +1,188 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :teacher_confirm_faq, @faq %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("faq.COMMONFAQ_NAVI") } %>
+
+<!-- 科目名称 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= @faq.course.course_name %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION1") %>
+          <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY %>
+            <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION2") %>
+          <% elsif @faq.response_flag == Settings.FAQ_RESPONSEFLG_REPLIED && @faq.open_flag == Settings.FAQ_OPENFLG_PUBLIC %>
+            <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION3") %>
+          <% end %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+          <%= t("faq.FAQ_CONFIRMFAQ_IMAGEALT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 質問投稿者氏名 -->
+          <tr>
+            <td class="col-xs-4">
+              <%= t("faq.COMMONFAQ_CONTRIBUTOR") %>
+            </td>
+            <td class="col-xs-8">
+              <%= get_name_no_prefix(@faq.user.name_no_prefix) %>
+              <%= @faq.user.user_name %>
+            </td>
+          </tr>
+
+          <!-- メールアドレス -->
+          <tr>
+            <td>
+              <%= t("common.COMMON_MAIL") %>
+            </td>
+            <td>
+              <%= @faq.user.email %>
+            </td>
+          </tr>
+
+          <!-- タイトル -->
+          <tr>
+            <td>
+              <%= t("common.COMMON_SUBJECT") %>
+            </td>
+            <td>
+              <%= @faq.faq_title %>
+            </td>
+          </tr>
+
+          <!-- 質問内容 -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_QUESTIONCONTENT") %>
+            </td>
+            <td>
+              <%== convert_html(@faq.question) %>
+            </td>
+          </tr>
+
+          <!-- 返信タイトル  -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_REPLYSUBJECT") %>
+            </td>
+            <td>
+              <%= @faq.faq_answer_attributes["answer_title"] %>
+            </td>
+          </tr>
+
+          <!-- 回答内容  -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_ANSWERCONTENT") %>
+            </td>
+            <td>
+              <%== convert_html(@faq.faq_answer_attributes["answer"]) %>
+            </td>
+          </tr>
+
+          <!-- 公開用質問内容 -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_OPENQUESTION") %>
+            </td>
+            <td>
+              <%== convert_html(@faq.faq_answer_attributes["open_question"]) %>
+            </td>
+          </tr>
+
+          <!-- 公開用回答内容  -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_OPENANSWER") %>
+            </td>
+            <td>
+              <%== convert_html(@faq.faq_answer_attributes["open_answer"]) %>
+            </td>
+          </tr>
+
+          <!-- FAQ公開 -->
+          <tr>
+            <td>
+              <%= t("faq.COMMONFAQ_FAQOPEN") %>
+            </td>
+            <td>
+              <%= @faq.open_flag_title %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+
+    <%= form_for :user, :url => {:action => "update"}, :method => :patch do |form| %>
+      <!-- ボタン -->
+      <div class="text-center">
+        <div class="btn-group">
+          <!-- 登録ボタン -->
+          <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5 center-block" %>
+          <!-- 戻るボタン -->
+          <%= link_to t("common.COMMON_RETURN"), {:action => :edit, :id => @faq, :back => true}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

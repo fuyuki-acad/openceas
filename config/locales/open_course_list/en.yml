@@ -1,0 +1,14 @@
+en:
+  open_course_list:
+    #####公開科目#####
+    ##openCourseList.jsp
+    OPE_OPENCOURSELIST_TITLE: "Open Course Homepage"
+    OPE_OPENCOURSELIST_NAVI: "List of Open Courses"
+    OPE_OPENCOURSELIST_ALLOCATEDCOURSE: "Assigned Open Courses"
+    OPE_OPENCOURSELIST_EXPLANATION_html: "This list shows the description of each class session, course contents given at the session, and related URLs. <br> It will appear under the List of Open Courses on the Top Page by clicking \"Assign\" button. <br> Some open courses require password for assignment. <br> Note that your own courses (both as an instructor or a student) cannot be assigned."
+    OPE_OPENCOURSELIST_ERROR1: "Wrong password for the open course."
+    OPE_OPENCOURSELIST_ERROR2: "Enter password for the open course."
+    OPE_OPENCOURSELIST_ERROR3: "Select an open course for assignment to the list."
+    OPE_OPENCOURSELIST_PASSWORD: "Password for Open Course"
+    OPE_OPENCOURSELIST_ALLOCATION: "Assign an Open Course"
+    OPE_OPENCOURSELIST_RELEASE: "Delete an Open Course"

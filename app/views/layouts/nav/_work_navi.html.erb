@@ -1,0 +1,71 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<div class="row">
+  <div class="col-md-12">
+    <p class="visible-xs">
+      <a class="btn btn-default btn-lg global-navi-button-sm" role="button" data-toggle="collapse" href="#collapseMenu" aria-expanded="false" aria-controls="collapseMenu">
+        <%= t("common.COMMON_SELECTWORK") %>&nbsp;&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+      </a>
+    </p>
+
+    <div class="collapse" id="collapseMenu">
+      <div class="list-group">
+        <p class="list-group-item global-navi-list-headline">
+          <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+          <%= t("top.COMMONTOP_MATERIALREGISTRATION") %>
+        </p>
+
+        <!-- 教材作成および登録 -->
+        <%= link_to teacher_material_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_MATERIAL") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_compound_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_COMPOUNDREGISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_multiplefib_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_MULTIPLEFIBREGISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_essay_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ASSIGNMENTESSAYREGISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_questionnaire_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_QUESTIONNAIREREGISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_evaluation_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_EVALUATIONLIST_CREATE") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+
+        <!-- 教材の授業への割付 -->
+        <p class="list-group-item global-navi-list-headline"><span class="glyphicon glyphicon-check" aria-hidden="true"></span>&nbsp;<%= t("top.COMMONTOP_MATERIALALLOCATION") %></p>
+        <%= link_to teacher_course_specific_page_path(course_id), :class => "list-group-item global-navi-list-menu" do %><%= t("top.COMMONTOP_COURSESPECIFICPAGE") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span><% end %>
+
+        <!-- 授業データ管理 -->
+        <p class="list-group-item global-navi-list-headline"><span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>&nbsp;<%= t("top.COMMONTOP_MATERIALADMINISTRATION") %></p>
+        <%= link_to teacher_result_compound_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_COMPOUNDADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_result_multiplefib_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_MULTIPLEFIBADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_result_essay_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ASSIGNMENTESSAYADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_result_questionnaire_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_QUESTIONNAIREADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_result_evaluation_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_EVALUATIONLISTADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_attendance_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ATTENDANCEADMINISTRATION") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_combined_record_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_COMBINEDRECORD") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+
+        <!-- 授業補助ツール -->
+        <p class="list-group-item global-navi-list-headline"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>&nbsp;<%= t("top.COMMONTOP_CLASSSESSIONSUPPORT") %></p>
+        <%= link_to teacher_new_announcement_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.MENULIST_REGISTERANNOUNCEMENT") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_announcement_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.MENULIST_SELECTANNOUNCEMENT") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+        <%= link_to teacher_faq_path(course_id), {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_FAQANSWER") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+
+      </div>
+    </div>
+
+  </div>
+</div>

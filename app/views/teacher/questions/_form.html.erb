@@ -1,0 +1,243 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEQUESTION") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- テスト、アンケート、レポートのタイトル-->
+          <tr>
+            <td class="col-xs-2">
+              <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
+              <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE15") %>
+              <% end %>
+            </td>
+            <td class="col-xs-10">
+              <%= h(@generic_page.generic_page_title) %>
+            </td>
+          </tr>
+          <!-- 大問内容-->
+          <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+            <tr>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE2") %>
+              </td>
+              <td>
+                <%== @question.parent.content %>
+              </td>
+            </tr>
+          <% end %>
+
+          <!-- 設問文-->
+          <tr>
+            <td class="col-xs-2">
+              <%= t("common.COMMON_ATTENTION") %>
+              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE3") %>
+            </td>
+            <td class="col-xs-10">
+              <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>
+            </td>
+          </tr>
+          <!-- 配点、又はアンケートの入力条件-->
+          <tr>
+            <td>
+              <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE4") %>
+              <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE18") %>
+              <% end %>
+            </td>
+            <td>
+              <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                <%= form.select :score, option_range(1, 100) %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE4") %>
+              <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                <label><%= form.radio_button :must_flag, "0" %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE1') %></label>
+                <label><%= form.radio_button :must_flag, "1" %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE2') %></label>
+              <% end %>
+            </td>
+          </tr>
+          <!-- 設問タイプ-->
+          <tr>
+            <td>
+              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE5") %>
+            </td>
+            <td>
+              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_RADIO, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE1') %></label><br/>
+              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ONELIST, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE2') %></label><br/>
+              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_CHECK, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE3') %></label><br/>
+              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ESSAY, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE4') %></label>
+            </td>
+          </tr>
+          <!-- 選択肢の数-->
+          <tr id="selectCount"<% if @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+            <td>
+              <%= t("materials_registration.MAT_REG_REGISTERQUESTION_SELECTCOUNT") %>
+            </td>
+            <td>
+              <%= form.select :text_count, option_range(1, Question::MAX_SELECT_COUNT), {}, :class => "select-max-count", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <span id="max_count_comment"><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION7", :param0 => Question::MAX_SELECT_COUNT) %></span>
+              <br/>
+              <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION8") %>
+            </td>
+          </tr>
+          <!-- 選択肢-->
+          <% @question.select_quizzes.each.with_index(1) do |quiz, index| %>
+            <tr class="select_row"<% if @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+              <td class="col-xs-2">
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE6") + index.to_s %>
+              </td>
+              <td class="col-xs-10">
+                <div>
+                  <div class="col-xs-10">
+                    <%= hidden_field_tag 'question[quizzes_attributes]['+index.to_s+'][id]', quiz.id %>
+                    <%= text_area_tag 'question[quizzes_attributes]['+index.to_s+'][content]', quiz.content, {:class => "form-control", :rows => 2} %>
+                    <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                      <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', "1", question_checked(params['question'], index, quiz) %>
+                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE13")  %>
+                    <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                      <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', "1", question_checked(params['question'], index, quiz) %>
+                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE23")  %>
+                    <% end %>
+                  </div>
+                  <div class="col-xs-2">
+                    <% if @generic_page.answer_scores.count == 0 %>
+                      <%= link_to t("common.COMMON_DELETE"), "javascript:void();", {:class => "btn btn-danger pull-right btn-delete-question", :data => {:line => "#{index}"}} %>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          <% (@question.select_quizzes.count + 1).upto(Question::MAX_SELECT_COUNT) do |index| %>
+            <tr class="select_row"<% if index > @question.text_count.to_i || @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+              <td class="col-xs-2">
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE6") + index.to_s %>
+              </td>
+              <td class="col-xs-10">
+                <div>
+                  <div class="col-xs-10">
+                    <%= text_area_tag 'question[quizzes_attributes]['+index.to_s+'][content]', params['question'] ? params['question']['quizzes_attributes'][index.to_s]['content'] : "", {:class => "form-control", :rows => 2} %>
+                    <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                      <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', "1", question_checked(params['question'], index) %>
+                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE13")  %>
+                    <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                      <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', "1", question_checked(params['question'], index) %>
+                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE23")  %>
+                    <% end %>
+                  </div>
+                  <div class="col-xs-2">
+                    <%= link_to t("common.COMMON_DELETE"), "javascript:void();", {:class => "btn btn-danger pull-right btn-delete-question", :data => {:line => "#{index}"}} %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+            <!-- その他-->
+            <tr id="other">
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE7")  %>
+              </td>
+              <td>
+                <label><%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_NOTEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE11') %></label>
+                <label><%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_TEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE12') %></label>
+              </td>
+            </tr>
+            <!-- 解答文又は補足分-->
+            <tr>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE19")  %>
+              </td>
+              <td>
+                <%= form.cktext_area :answer_memo, {:class => "form-control", :rows => 5} %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+            <!-- 解説(正解時)-->
+            <tr id="commentAtRight"<% if @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE8")  %>
+              </td>
+              <td>
+                <%= form.cktext_area :correct_answer_memo, {:class => 'form-control', :rows => 5}%>
+              </td>
+            </tr>
+            <!-- 解説(不正解時)-->
+            <tr id="commentAtMistake"<% if @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE9")  %>
+              </td>
+              <td>
+                <%= form.cktext_area :wrong_answer_memo, {:class => 'form-control', :rows => 5}%>
+              </td>
+            </tr>
+            <!-- 解答文又は補足分-->
+            <tr id="answerRow"<% if @question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+              <td>
+                <%= t("common.COMMON_ATTENTION")  %>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE10")  %>
+              </td>
+              <td>
+                <%= form.text_area :answer_memo, {:class => "form-control", :rows => 5} %>
+              </td>
+            </tr>
+            <!-- 解答行数-->
+            <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+              <tr id="rowCount"<% if @question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
+                <td>
+                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE25")  %>
+                </td>
+                <td>
+                  <%= form.select :text_row, option_range(1, Question::MAX_ROWS) %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <% if @question.new_record? %>
+          <%= form.submit t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+        <% else %>
+          <%= form.submit t("common.COMMON_EDIT"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+        <% end %>
+        <%= form.button t("common.COMMON_CANCEL"), :type => :reset, :class => "btn btn-default ceas-button-margin-5 center-block clear_question_form" %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :show, :generic_page_id => @generic_page}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+      </div>
+    </div>
+  </div>
+</div>

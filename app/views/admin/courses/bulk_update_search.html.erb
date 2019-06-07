@@ -1,0 +1,236 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= javascript_include_tag 'admin/administrateCourse' %>
+<% breadcrumb :admin_user_bulk_update %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true" />
+  <%= t('admin.course.PRI_ADM_COU_COURSEBATCHUPDATE') %>
+</h5>
+
+<div class="row">
+  <%= form_tag url_for({:action => :bulk_update_search}), :method => :get do %>
+    <!-- 検索条件　-->
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t('common.COMMON_SEARCHCOURSE') %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!-- 曜日　-->
+            <tr>
+              <td class="col-xs-5">
+                <%= t('common.COMMON_DAY') %>
+              </td>
+              <td class="col-xs-5">
+                <%= select_tag :day, options_for_select(day_list, params[:day]), {:class => "selectDay", :onchange => "batchUpdate('courseBatchUpdate', false);"} %>
+              </td>
+            </tr>
+
+            <!-- 時限　-->
+            <tr>
+              <td class="col-xs-5">
+                <%= t('common.COMMON_HOUR') %>
+              </td>
+              <td class="col-xs-5">
+                <%= select_tag :hour, options_for_select(hour_list, params[:hour]), {:class => "selectHour", :onchange => "batchUpdate('courseBatchUpdate', false);"} %>
+              </td>
+            </tr>
+
+            <!-- 年度　-->
+            <tr>
+              <td class="col-xs-5">
+                <%= t('common.COMMON_SCHOOLYEAR') %>
+              </td>
+              <td class="col-xs-5">
+                <%= select_tag :school_year, options_for_select(school_year_list, params[:school_year]), {:class => "selectYear", :onchange => "batchUpdate('courseBatchUpdate', false);"} %>
+              </td>
+            </tr>
+
+            <!-- 学期　-->
+            <tr>
+              <td class="col-xs-5">
+                <%= t('common.COMMON_SEASON') %>
+              </td>
+              <td class="col-xs-5">
+                <%= select_tag :season, options_for_select(season_list, params[:season]), {:class => "selectSeason", :onchange => "batchUpdate('courseBatchUpdate', false);"} %>
+            </tr>
+          </table>
+
+          <!-- 検索ボタン -->
+          <div class="text-center">
+            <div class="btn-group">
+              <%= submit_tag t("common.COMMON_SEARCH"), {class: "btn btn-default", :onclick => "batchUpdate('courseBatchUpdate', true);", :name => ""} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 更新条件 -->
+  <%= form_tag url_for({:action => :bulk_update}), :method => :patch do %>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("admin.course.PRI_ADM_COU_COURSEBATCHUPDATE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!-- Topページからの利用 -->
+            <tr>
+              <td class="col-xs-5">
+                <%= t("admin.course.COMMON_ADMINISTRATECOURSE_TERMFLG_html") %>
+              </td>
+              <td class="col-xs-5">
+                <%= radio_button_tag :term_flag, Settings.COURSE_TERMFLG_EFFECTIVE, params[:term_flag] == Settings.COURSE_TERMFLG_EFFECTIVE %> <%= t('common.COMMON_USE') %>
+                <%= radio_button_tag :term_flag, Settings.COURSE_TERMFLG_INVALIDITY, params[:term_flag] == Settings.COURSE_TERMFLG_INVALIDITY %> <%= t('common.COMMON_NOTUSE') %>
+              </td>
+            </tr>
+
+            <!-- 未読レポート表示 -->
+            <tr>
+              <td>
+                <%= t("common.COMMON_NOTREAD_ASSIGNMENT") %>
+              </td>
+              <td>
+                <%= radio_button_tag :unread_assignment_display_cd, Settings.UNREAD_DISPLAYFLG_ON, params[:unread_assignment_display_cd] == Settings.UNREAD_DISPLAYFLG_ON %> <%= t('common.COMMON_DO_DISPLAY') %>
+                <%= radio_button_tag :unread_assignment_display_cd, Settings.UNREAD_DISPLAYFLG_OFF, params[:unread_assignment_display_cd] == Settings.UNREAD_DISPLAYFLG_OFF %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+              </td>
+            </tr>
+
+            <!-- 未読FAQ表示 -->
+            <tr>
+              <td>
+                <%= t("common.COMMON_NOTREAD_FAQ") %>
+              </td>
+              <td>
+                <%= radio_button_tag :unread_faq_display_cd, Settings.UNREAD_DISPLAYFLG_ON, params[:unread_faq_display_cd] == Settings.UNREAD_DISPLAYFLG_ON %> <%= t('common.COMMON_DO_DISPLAY') %>
+                <%= radio_button_tag :unread_faq_display_cd, Settings.UNREAD_DISPLAYFLG_OFF, params[:unread_faq_display_cd] == Settings.UNREAD_DISPLAYFLG_OFF %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+              </td>
+            </tr>
+          </table>
+
+          <%= hidden_field_tag "day", params[:day] %>
+          <%= hidden_field_tag "hour", params[:hour] %>
+          <%= hidden_field_tag "school_year", params[:school_year] %>
+          <%= hidden_field_tag "season", params[:season] %>
+          <% @courses.each do |course| %>
+            <%= hidden_field_tag "course[]", course.id %>
+          <% end %>
+
+          <!-- 更新ボタン -->
+          <div class="text-center">
+            <div class="btn-group">
+              <%= submit_tag t("common.COMMON_BATCH_REVISE"),
+                {:class => "btn btn-danger",
+                 :onclick => "return checkBatchUpdate('courseBatchUpdate','"+@courses.total_count.to_s+"',
+                  '"+t("admin.course.PRI_ADM_COU_BATCHUPDATE_NOTFOUND")+"','"+t("admin.course.PRI_ADM_COU_BATCHUPDATE_CONFIRM")+"')"} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 科目表示テーブル -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_COURSETABLEALT") %>
+          <p class="pull-right badge">
+            <span class="badge pull-right"><%= t('common.COMMON_HITCOURSE', :param0 => @courses.total_count.to_s(:delimited)) %></span>
+          </p>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <% if @courses.count == 0 %>
+          <p>
+            <%= t("common.COMMON_COURSE_NOTFOUND") %>
+          </p>
+        <% else %>
+          <table id="selectCourse:courseAdministration" class="table table-striped table-hover">
+            <tr>
+              <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
+            </tr>
+            <% @courses.each.with_index(1) do |course, index| %>
+              <tr>
+                <td><%= index %></td>
+                <!-- 曜日 -->
+                <td><%= convert_day_cd(course.day_cd) %></td>
+                <!-- 時限 -->
+                <td><%= convert_hour_cd(course.hour_cd) %></td>
+                <!-- 年度 -->
+                <td><%= course.school_year %></td>
+                <!-- 学期 -->
+                <td><%= convert_season_cd(course.season_cd) %></td>
+                <!-- 科目名称 -->
+                <td><%= course.course_name %></td>
+                <!-- 担任者 -->
+                <td><%= course.instructor_name %></td>
+              </tr>
+            <% end %>
+          </table>
+
+          <!-- 改ページボタン -->
+          <div class="pull-right">
+            <%= paginate(@courses) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカーボタン -->
+<div class="pull-right">
+  <a class="anchor" href="#anchor-top">
+    <%= t("common.COMMON_TOP") %>
+  </a>
+</div>
+
+<!-- 戻るボタン -->
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5"} %>
+  </div>
+</div>

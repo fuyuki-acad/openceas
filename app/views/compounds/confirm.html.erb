@@ -1,0 +1,178 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLECONFIRMCOMPOUND") } %>
+
+<!-- 氏名、テスト/アンケートタイトル -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 氏名　-->
+          <tr>
+            <td class="col-xs-4">
+              <%= t("common.COMMON_TARGETNAME") %>
+            </td>
+            <td class="col-xs-8">
+              <%= current_user.user_name %>
+            </td>
+          </tr>
+
+          <!-- テストタイトル　-->
+          <tr>
+            <td>
+              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+
+          <% if @question_composition_cd == Compound::QUESTIONCOMPOSITIONCD_NOTHING && @finish_cd == 2 %>
+            <tr>
+              <td>
+                <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_STATUS") %>
+              </td>
+              <td>
+                <%= @status %>
+                <%= @message %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 受験回数 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("execution.MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT", :param0 => @execution_count) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("execution.MAT_EXE_COM_CHECKEXECUTECOMPOUND_EXPLANATION1_html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @notExaminationFlg = 0 %>
+  <!-- 大問 -->
+  <% @generic_page.parent_questions.each.with_index(1) do |parent_question, i| %>
+  <div class='row'>
+    <div class='col-xs-12'>
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <h3 class='panel-title'>
+            <%= t("execution.COMMONMATERIALSEXECUTION_PARENTQUESTION") + i.to_s %>
+          </h3>
+        </div>
+        <div class='panel-body'>
+          <div class='row'>
+            <div class='col-xs-12'>
+              <div class='panel panel-default'>
+                <div class='panel-body'>
+                  <%== parent_question.content %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 設問 -->
+          <% parent_question.questions.each.with_index(1) do |question, j| %>
+          <div class='row'>
+            <div class='col-xs-12'>
+              <div class='panel panel-info'>
+                <div class='panel-heading'>
+                  <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                    <%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %>
+                  <% else %>
+                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
+                  <% end %>
+                </div>
+                <div class='panel-body'>
+                  <div class='row'>
+                    <div class='col-xs-12'>
+                      <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                        <%== question.content %>
+                      <% else %>
+                        <%= convert_html(question.content) %>
+                      <% end %>
+                      <div class='panel panel-default'>
+                        <div class='panel-body'>
+
+                          <!-- あなたの解答 -->
+                          <div class='col-xs-3'>
+                            <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %>
+                          </div>
+                          <div class='col-xs-9'>
+                            <%= compound_answer(question, @answers) %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<!--ボタン-->
+<% if @execute_flag && @generic_page.parent_questions.count > 0 %>
+  <%= form_tag url_for(:action => :save, :id => @generic_page), {:class => "form-horizontal", :method => :patch} do %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="text-center">
+        <div class="btn-group">
+          <% if current_user.student? %>
+            <%= submit_tag t("execution.MAT_EXE_COM_EXECUTECOMPOUND_REGISTER"), :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT1")}, :class => "btn btn-default ceas-button-margin-5 center-block" %>
+          <% else %>
+            <%= submit_tag t("execution.MAT_EXE_COM_EXECUTECOMPOUND_REGISTER"), :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5 center-block" %>
+          <% end %>
+          <%= link_to t("execution.MAT_EXE_COM_EXECUTECOMPOUND_CHANGE"), {:action => :show, :id => @generic_page, :back => true}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>

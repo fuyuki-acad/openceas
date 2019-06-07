@@ -1,0 +1,148 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :teacher_faqs %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("common.COMMON_FAQ") } %>
+
+<!-- 科目検索 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_SEARCHCOURSE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-6">
+          <%= form_tag url_for({:action => :index}), :method => :get do %>
+            <div class="input-group">
+              <%= text_field_tag "course_name", params[:course_name], class: "string required form-control" %>
+              <span class="input-group-btn">
+                <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default" %>
+              </span>
+            </div>
+            <span><%= t("common.COMMON_SEARCHCOURSEEXPLANATION") %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 科目表示テーブル -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_COURSETABLEALT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <% if @courses.count == 0 %>
+          <!-- 0件メッセージ -->
+          <p>
+            <%= t("common.COMMON_NOTFOUND") %>
+          </p>
+        <% else %>
+          <!-- リスト表示 -->
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_ANSWER") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_DAY") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></td>
+                <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></td>
+                <th class="hidden-xs"><%= t("faq.FAQ_SELECTCOURSEFAQ_FAQCOUNT") %></td>
+                <th class="hidden-xs"><%= t("faq.FAQ_SELECTCOURSEFAQ_ANSWERCOUNT") %></td>
+                <th class="hidden-xs"><%= t("faq.FAQ_SELECTCOURSEFAQ_NOTANSWERCOUNT") %></td>
+              </tr>
+            </thead>
+            <% @courses.each.with_index(1) do |course, index| %>
+              <tr>
+                <!-- No. -->
+                <td class="td-bold"><%= index %></td>
+
+                <!-- 回答 -->
+                <td class="td-bold"><%= link_to t("common.COMMON_ANSWER2"), {action: :show, course_id: course.id}, class: "btn btn-warning large" %></td>
+
+                <!-- 曜日 -->
+                <td class="td-bold hidden-xs"><%= convert_day_cd(course.day_cd) %></td>
+
+                <!-- 時限 -->
+                <td class="td-bold hidden-xs"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                <!-- 年度 -->
+                <td class="td-bold hidden-xs"><%= course.school_year %></td>
+
+                <!-- 学期 -->
+                <td class="td-bold hidden-xs"><%= convert_season_cd(course.season_cd) %></td>
+
+                <!-- 科目名称 -->
+                <td class="td-bold"><%= course.course_name %></td>
+
+                <!-- 担任者 -->
+                <td class="td-bold hidden-xs"><%= course.instructor_name %></td>
+
+                <!-- 系・学科・コース -->
+                <td class="td-bold"><%= course.major %></td>
+
+                <!-- 質問数 -->
+                <td class="td-bold"><%= course.faqs.count %></td>
+
+                <!-- 回答数 -->
+                <td class="td-bold"><%= course.faq_answer_count %></td>
+
+                <!-- 未回答数 -->
+                <td class="td-bold"><%= course.faq_not_answered_count %></td>
+              </tr>
+            <% end %>
+          </table>
+
+          <!-- 改ページボタン -->
+          <div class="pull-right">
+            <%= paginate(@courses) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+en:
+  specific_page:
+    #####科目独自のページ#####
+    #共通
+    COMMONSPECIFICPAGE_COURSESPECIFICPAGE: "Course page"
+    #registerSpecificPage.jsp
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_TITLE: "Add a course page"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_NAVI: "Course page"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION1: "1. Create (a) HTML file(s) with links within your local PC."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION2: "Note that the file name must not exceed 15 one-byte alphanumeric."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION3: "2. Name the file index.html with the one you want it as the top page."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION4: "(Other files should have relative path names.)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION5: "3. Make a folder with its name is less than 15 one-byte alphanumeric, put the HTML files prepared 1 and 2 above."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION6: "4. Compress the folder prepared in 3 in zip format."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION7: "5. Select the compressed file with Refer button, and upload it with Add button."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION8: "6. The links are automatically made from To the course page on the left side of the course session page."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION9: "Note that only one-byte alphanumeric letters are accepted as file names."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION10: "(eg.) How to make several HTML file links:"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION11: "When the files are in the same directory and the sub directory:"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION12: "(For Windows, when the files are in the same folder and the sub folder)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_NOWPAGE: "current page"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_CONFIRMNOWPAGE: "Confirm the current page"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_REGISTERFILE: "File to add"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION1: "(When you add a new page, the current page is deleted.)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION2: "* Specify a file from your PC with Refer button."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION3: "(Note that only one-byte alphanumeric letters are accepted as file names.)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION4: "Are you sure to upload the file?"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE1: "Choose a file."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE2: "The file chosen is not a compressed file (in zip)."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE3: "Invalid relation between the compressed file and the folder. Make the file again."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE4: "For both the file and the folder, the name must be in less than 15 letters."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE5: "Only one-byte alphanumeric letters are accepted as a file or folder name."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE6: "No index.html file is found in the compressed folder."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE7: "Only one-byte alphanumeric letters are accepted as a file name."
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_WIDTH: "760"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_HEIGHT: "500"
+    #index.jsp
+    MAT_ALL_COU_INDEX_NOTFOUND: "No course page available at the moment."

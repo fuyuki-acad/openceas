@@ -1,0 +1,11 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      general_announcement: "管理者からのお知らせ"
+
+    attributes:
+      general_announcement:
+        subject: "タイトル"
+        content: "内容"
+        created_at: "日付"

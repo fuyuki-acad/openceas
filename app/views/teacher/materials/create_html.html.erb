@@ -1,0 +1,94 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :new_material, @generic_page.course %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_NAVI") } %>
+
+<%= form_for :generic_page, :url => {:action => "create_html"}, :html => {:class => "form-horizontal"} do |form| %>
+<%= form.hidden_field :course_id %>
+<%= form.hidden_field :type_cd %>
+<%= form.hidden_field :upload_flag %>
+
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 担当科目名称 -->
+          <tr>
+            <td class="col-xs-3">
+               <%= t("common.COMMON_TARGETCOURSE") %>
+            </td>
+            <td class="col-xs-9">
+              <%= @generic_page.course.course_name %>
+            </td>
+          </tr>
+
+          <!-- 資料タイトル -->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN3") %>
+            </td>
+            <td class="col-xs-9">
+              <%= @generic_page.generic_page_title %>
+              <%= form.hidden_field :generic_page_title %>
+            </td>
+          </tr>
+
+          <!-- ファイル名 -->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN4") %>
+            </td>
+            <td class="col-xs-9">
+              <%= @generic_page.file_name %>
+              <%= form.hidden_field :file_name %>
+            </td>
+          </tr>
+
+          <!-- 授業資料HTML作成画面 -->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_CREATEHTMLPAGE") %>
+            </td>
+            <td class="col-xs-9">
+              <%= form.cktext_area :html_text, {:class => 'form-control', :rows => 50}%>
+            </td>
+          </tr>
+        </table>
+        <%= form.hidden_field :material_memo %>
+        <%= form.hidden_field :material_memo_closed %>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,233 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("admin.course.PRI_ADM_COU_REGISTERCOURSE_EDITCOURSE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!--科目名称-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t('common.COMMON_COURSENAME') %>
+              <code><%= t('common.COMMON_ESSENCIAL') %></code>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :course_name, {:class => 'form-control', :maxlength => '64'} %>
+            </td>
+          </tr>
+          <!--科目コード-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_COURSECD') %>
+            </td>
+            <td>
+              <%= @course.course_cd %>
+            </td>
+          </tr>
+          <!--科目概要-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_COURSEOUTLINE') %>
+            </td>
+            <td>
+              <%= f.cktext_area :overview, {:class => 'form-control', :rows => 5}%>
+            </td>
+          </tr>
+          <!--年度-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_SCHOOLYEAR') %>
+            </td>
+            <td>
+              <%= @course.school_year %>
+            </td>
+          </tr>
+          <!--学期-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_SEASON') %>
+            </td>
+            <td>
+              <%= convert_season_cd(@course.season_cd) %>
+            </td>
+          </tr>
+          <!--曜日-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_DAY') %>
+            </td>
+            <td>
+              <%= f.select :day_cd, day_list, {}, {:class => 'form-control'} %>
+            </td>
+          </tr>
+          <!--時限-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_HOUR') %>
+            </td>
+            <td>
+              <%= f.select :hour_cd, hour_list, {}, {:class => 'form-control'} %>
+            </td>
+          </tr>
+          <!--担任者名-->
+          <% if !@course.new_record?  %>
+          <tr>
+            <td>
+              <%= t('common.COMMON_INSTRUCTORNAME') %>
+            </td>
+            <td>
+              <%= @course.assignd_list.map { |user| user.user_name }.join(", ") %>
+            </td>
+          </tr>
+          <% end %>
+          <!--担任者表示名-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_INSTRUCTORNAME_DISP') %>
+            </td>
+            <td>
+              <%= f.text_field :instructor_name, {:class => 'form-control', :maxlength => 128} %>
+              <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INSTRUCTORNAMEEXAMPLE') %>
+            </td>
+          </tr>
+          <!--系・学科・コース-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_MAJOR') %>
+            </td>
+            <td>
+              <%= f.text_field :major, {:class => 'form-control', :maxlength => 64} %>
+              <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_MAJOREXAMPLE') %>
+            </td>
+          </tr>
+          <!--Topページからの利用（表示）-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_TERMFLG_html') %>
+            </td>
+            <td>
+              <%= f.radio_button :term_flag, "1" %> <%= t('common.COMMON_USE') %><br/>
+              <%= f.radio_button :term_flag, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
+              <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_TERMFLGEXPLANATION') %>
+            </td>
+          </tr>
+          <!--授業回数-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_CLASSSESSIONCOUNT') %>
+            </td>
+            <td>
+              <%= f.select :class_session_count, class_session_count_list, {}, {:class => 'form-control'} %>
+            </td>
+          </tr>
+          <!--グループフォルダ数-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_GROUPFOLDERCOUNT') %>
+            </td>
+            <td>
+              <%= f.select :group_folder_count, group_folder_count_list, {}, {:class => 'form-control'} %>
+            </td>
+          </tr>
+          <!--公開科目にする-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSE') %>
+            </td>
+            <td>
+              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PUBLIC, {:checked => true, :onclick => "changeRadio('registerCourse');"} %> <%= t('common.COMMON_OPEN') %><br/>
+              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PRIVATE, {:onclick => "changeRadio('registerCourse');"} %> <%= t('common.COMMON_NOTOPEN') %><br/>
+              <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_OPENCOURSEEXPLANATION') %>
+            </td>
+          </tr>
+          <!--公開パスワード-->
+          <tr>
+            <td>
+              <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEPASSWORD') %>
+            </td>
+            <td>
+              <%= f.password_field :open_course_pass, {:class => 'form-control', :maxlength => 64} %>
+            </td>
+          </tr>
+          <!--お知らせ-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_ANNOUNCEMENT') %>
+            </td>
+            <td>
+              <%= f.radio_button :announcement_cd, "1" %> <%= t('common.COMMON_USE') %><br/>
+              <%= f.radio_button :announcement_cd, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
+              <%= f.check_box :open_course_announcement_flag, {:checked => false}, true, false %> <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG') %>
+            </td>
+          </tr>
+          <!--ＦＡＱ-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_FAQ') %>
+            </td>
+            <td>
+              <%= f.radio_button :faq_cd, "1" %> <%= t('common.COMMON_USE') %><br/>
+              <%= f.radio_button :faq_cd, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
+              <%= f.check_box :open_course_faq_flag %> <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG') %>
+            </td>
+          </tr>
+          <!--未読レポート表示-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_NOTREAD_ASSIGNMENT') %>
+            </td>
+            <td>
+              <%= f.radio_button :unread_assignment_display_cd, "0" %> <%= t('common.COMMON_DO_DISPLAY') %><br/>
+              <%= f.radio_button :unread_assignment_display_cd, "1" %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+            </td>
+          </tr>
+          <!--未読FAQ表示-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_NOTREAD_FAQ') %>
+            </td>
+            <td>
+              <%= f.radio_button :unread_faq_display_cd, "0" %> <%= t('common.COMMON_DO_DISPLAY') %><br/>
+              <%= f.radio_button :unread_faq_display_cd, "1" %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= f.submit t("common.COMMON_REGISTER"), {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        <%= f.button t("common.COMMON_CANCEL"), {:class => "btn btn-default ceas-button-margin-5 center-block", :type => :reset} %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,434 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<body<% if controller.action_name == 'start_collect_attendance' || controller.action_name == 'start_collect_late' %> onload="startTimer(); showAbsentStudent('${pageContext.request.contextPath}/faces/attendance/execution/blankAbsentStudent.jsp'); anotherClassSession('<%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_ANOTHERSCRIPT1") %>');"<% end %>>
+
+<div class="container-fluid">
+  <!-- 科目名 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h5>
+            <%= @course.course_name %>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 出席収集画面の状態を表すフラグ -->
+  <!-- 出席情報収集画面Top／出席情報再収集 -->
+  <% if @attendance_cd == "collect" || @attendance_cd == "recollectAttendance" %>
+    <%= form_for "", :url => {:action => "start_collect_attendance", :course_id => @course.id, :session_no => @class_session.class_session_no}, :html => {:class => "form-horizontal"} do |form| %>
+      <%= hidden_field_tag "attendance_cd", @attendance_cd %>
+      <%= hidden_field_tag "attendance_count", @attendance.attendance_count %>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <% if @attendance %>
+                  <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_COLLECT1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+                <% end %>
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <table class="table table-striped table-hover">
+                <tr>
+                  <td>
+                    <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_ATTENDANCEPERIOD") %>
+                  </td>
+                  <td>
+                    <%= select_tag :attendance_period, attendance_options_for_select(@attendance_period) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_LATEPERIOD") %>
+                  </td>
+                  <td>
+                    <%= select_tag :late_period, attendance_options_for_select(@late_period) %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 説明文 -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <code>
+                <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_COLLECT2") %>
+                <br/>
+                <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_MEMO1_html") %>
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="btn-group">
+          <%= submit_tag t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_COLLECT3"), :class => "btn btn-primary ceas-button-margin-5" %>
+          <%= link_to t('attendance_execution.COMMONATTENDANCEEXECUTION_STOP'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: 'closeWindow(); return false;' %>
+        </div>
+      </div>
+
+      <!-- 説明文 -->
+      <% if @attendance && @attendance.attendance_count > 1 && @attendance_cd == "collect" %>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <code>
+                  <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_COLLECT4_html", :param0 => @attendance.attendance_count - 1) %>
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_COLLECT5"), {:action => :recollect_or_delete_attendance, :course_id => @course.id, :session_no => @class_session.class_session_no}, class: "btn btn-primary ceas-button-margin-5 center-block" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <!-- 出席情報収集中画面 -->
+  <% if @attendance_cd == 'attendance' %>
+    <%= form_for "", :url => {:action => "start_collect_late", :course_id => @course.id}, :html => {:class => "form-horizontal", :id => "start_collect_late"} do |form| %>
+      <%= hidden_field_tag "session_no", @class_session.class_session_no %>
+      <%= hidden_field_tag "attendance_cd", @attendance_cd %>
+      <%= hidden_field_tag "attendance_count", @attendance.attendance_count %>
+      <%= hidden_field_tag "late_period", @late_period %>
+      <%= hidden_field_tag "rest_time", @rest_time %>
+      <%= hidden_field_tag "rest_minute", @rest_minute %>
+<h:inputHidden id="stopFlg" value="#{collectAttendanceBean.stopFlg}"/>
+
+      <!-- 説明文 -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h5>
+                <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_ATTENDANCE1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+                <br />
+                <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_RESTMINUTE_html", :param0 => @rest_minute) %>
+              </h5>
+
+              <code>
+                <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_MEMO1_html") %>
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <table class="table table-striped table-hover">
+                <tr>
+                  <td>
+                    <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_LATEPERIOD") %>
+                  </td>
+                  <td>
+                    <%= select_tag :late_period, attendance_options_for_select(@late_period) %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="btn-group">
+          <%= submit_tag t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_ATTENDANCE2"), :class => "btn btn-default ceas-button-margin-5", data:{confirm: t('attendance_execution.ATT_EXE_COLLECTATTENDANCE_ATTENDANCESCRIPT1')} %>
+          <%= link_to t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_ATTENDANCE3"), {:action => :stop_collect_attendance, :course_id => @course.id, :session_no => @class_session.class_session_no, :attendance_count => @attendance.attendance_count}, class: "btn btn-default ceas-button-margin-5", :onclick => "if (window.confirm('#{t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_ATTENDANCESCRIPT2")}')){stopTimer();}" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <!-- 遅刻情報収集中画面 -->
+  <% if @attendance_cd == 'late' %>
+    <%= hidden_field_tag "session_no", @class_session.class_session_no %>
+    <%= hidden_field_tag "attendance_cd", @attendance_cd %>
+    <%= hidden_field_tag "attendance_count", @attendance.attendance_count %>
+    <%= hidden_field_tag "late_period", 0 %>
+    <%= hidden_field_tag "rest_time", @rest_time %>
+    <%= hidden_field_tag "rest_minute", @rest_minute %>
+<h:inputHidden id="stopFlg" value="#{collectAttendanceBean.stopFlg}"/>
+
+    <!-- 説明文 -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h5>
+              <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_LATE1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+              <br />
+              <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_RESTMINUTE_html", :param0 => @rest_minute) %>
+            </h5>
+
+            <code>
+              <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_MEMO1_html") %>
+            </code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_LATE2"), {:action => :stop_collect_attendance, :course_id => @course.id, :session_no => @class_session.class_session_no, :attendance_count => @attendance.attendance_count}, class: styleClass="btn btn-default ceas-button-margin-5 center-block", :onclick => "if (window.confirm('#{t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_LATESCRIPT1")}')){stopTimer();}" %>
+      </div>
+    </div>
+  <% end %>
+
+
+
+
+
+    <!-- 別の授業回数で出席情報収集中 -->
+	<div class="main_attendance">
+		<h1>
+			<h:outputFormat value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER1}" rendered="#{sessionScope.statusCd == 1}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_ATTENDANCE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+			<h:outputFormat value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER1}" rendered="#{sessionScope.statusCd == 2}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_LATE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+		</h1>
+	</div>
+
+	<div class="main_attendance">
+		<h1>
+			<h:outputFormat escape="false" value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER2}" rendered="#{sessionScope.statusCd == 1}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_ATTENDANCE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+			<h:outputFormat escape="false" value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER2}" rendered="#{sessionScope.statusCd == 2}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_LATE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+		</h1>
+	</div>
+
+	<div class="main_attendance">
+    <h:inputHidden id="anotherFlg" value="#{actionAttendanceBean.toAnotherFlg}"></h:inputHidden>
+    <h:commandButton id="button" action="#{actionAttendanceBean.collectAttendance}" onclick="javaScript:setAnotherFlg('1');"/>
+	</div>
+<!--********************************別の授業回数で出席情報収集中**************************************-->
+<!--********************************別のユーザで出席情報収集中**************************************-->
+	<div class="main_attendance">
+		<h1>
+			<h:outputFormat value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER1}" rendered="#{sessionScope.statusCd == 1}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_ATTENDANCE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+			<h:outputFormat value="#{bundle.ATT_EXE_COLLECTATTENDANCE_ANOTHER1}" rendered="#{sessionScope.statusCd == 2}">
+				<f:param value="#{sessionScope.collectAttendance.classSessionNo}"/>
+				<f:param value="#{bundle.COMMONATTENDANCEEXECUTION_LATE}"/>
+				<f:param value="#{sessionScope.collectAttendance.attendanceCount}"/>
+			</h:outputFormat>
+		</h1>
+	</div>
+
+	<div class="main_attendance">
+    <h:commandButton value="#{common.COMMON_CLOSE}" action="#{collectAttendanceBean.removeSession}" />
+	</div>
+<!--********************************別の授業回数で出席情報収集中**************************************-->
+
+
+
+
+
+  <!-- 出席情報収集終了 -->
+  <% if @attendance_cd == 'end' %>
+    <%= hidden_field_tag "session_no", @class_session.class_session_no %>
+    <%= hidden_field_tag "attendance_cd", @attendance_cd %>
+    <%= hidden_field_tag "attendance_count", @attendance.attendance_count %>
+    <!-- 説明文 -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h5>
+              <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_END1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5 center-block', onclick: 'closeWindow(); return false;' %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 出席・遅刻情報再収集／出席情報削除 -->
+  <% if @attendance_cd == 'recollectOrDelete' %>
+    <%= form_for "", :url => {:action => "delete_attendance", :course_id => @course.id, :session_no => @class_session.class_session_no}, :html => {:class => "form-horizontal"} do |form| %>
+      <%= hidden_field_tag "session_no", @class_session.class_session_no %>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_CLASSSESSIONNO", :param0 => @class_session.class_session_no) %>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTORDELETE2") %>
+                  <br />
+                  <code>
+                    <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTORDELETE3") %>
+                  </code>
+                </div>
+              </div>
+              <br />
+              <div class="text-center">
+                <div class="col-xs-12 col-sm-5">
+                  <%= select_tag :attendance_count, attendance_list_options_for_select(@attendances), :class => "form-control" %>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="col-xs-12 col-sm-7">
+                  <%= link_to t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTORDELETE4"), 'javascript:void();', class: "btn btn-danger ceas-button-margin-5", :onclick => "if (window.confirm('#{t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTORDELETESCRIPT3")}')){deleteAttendance();}" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="btn-group">
+          <%= link_to t('attendance_execution.COMMONATTENDANCEEXECUTION_STOP'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: 'closeWindow(); return false;' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <!-- 遅刻情報再収集 -->
+  <% if @attendance_cd == 'recollectLate' %>
+    <%= form_for "", :url => {:action => "start_collect_late", :course_id => @course.id}, :html => {:class => "form-horizontal", :id => "start_collect_late"} do |form| %>
+      <%= hidden_field_tag "session_no", @class_session.class_session_no %>
+      <%= hidden_field_tag "attendance_count", @attendance.attendance_count %>
+      <%= hidden_field_tag "late_period", @late_period %>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTLATE1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="text-center">
+                <div class="btn-group">
+                  <%= submit_tag t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_RECOLLECTLATE2"), :class => "btn btn-default ceas-button-margin-5" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="btn-group">
+          <%= link_to t('attendance_execution.COMMONATTENDANCEEXECUTION_STOP'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: 'closeWindow(); return false;' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <!-- 出席情報削除完了 -->
+  <% if @attendance_cd == 'delete' %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_DELETE1", :param0 => @class_session.class_session_no, :param1 => @attendance.attendance_count) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: 'closeWindow(); return false;' %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @attendance_cd == 'error' %>
+    <div class="main_attendance">
+		  <h1>
+        <%= t("attendance_execution.COMMONATTENDANCEEXECUTION_STOP") %>
+		  </h1>
+    </div>
+
+    <div class="main_attendance">
+      <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: 'closeWindow(); return false;' %>
+    </div>
+  <% end %>
+
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <code>
+            <%= t("attendance_execution.ATT_EXE_COLLECTATTENDANCE_MEMO2_html") %>
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<Files ~ "^\.ht">
+deny from all
+</Files>
+
+deny from all
+
+# AccessControl Extension
+<Files ~ "(\.html)$">
+allow from all
+</Files>
+

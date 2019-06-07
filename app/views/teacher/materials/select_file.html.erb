@@ -1,0 +1,104 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :new_material, @course %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_NAVI") } %>
+
+<%= form_for :generic_page, :url => {:action => "select_file"}, :html => {:class => "form-horizontal"} do |form| %>
+  <%= form.hidden_field :course_id %>
+  <%= form.hidden_field :type_cd %>
+  <%= form.hidden_field :upload_flag %>
+  <%= form.hidden_field :extract_flag %>
+  <%= form.hidden_field :file_name %>
+  <%= form.hidden_field :extract_path %>
+  <%= form.hidden_field :generic_page_title %>
+  <%= form.hidden_field :material_memo %>
+  <%= form.hidden_field :material_memo_closed %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="text-center">
+            <%= t("page_management.MAT_REG_MAT_HTMLMATERIAL_EXPLANATION1_html") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <tr>
+              <td class="col-xs-3">
+                <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_PAGETITLE") %>
+              </td>
+              <td class="col-xs-9">
+                <%= @generic_page.generic_page_title %>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-xs-3">
+                <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_UPFILE") %>
+              </td>
+              <td class="col-xs-9">
+                <%= @generic_page.file_name %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <% @generic_page.extracted_files.each do |file_name| %>
+              <tr>
+                <td class="col-xs-12">
+                  <%= form.radio_button :link_name, file_name %>
+                  <%= file_name %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
+    </div>
+  </div>
+
+<% end %>

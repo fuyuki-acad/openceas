@@ -1,0 +1,15 @@
+en:
+  error:
+    #####エラー画面#####
+    #error.jsp
+    ERROR_TITLE: "Error."
+    ERROR_EXPLANATION1: "Error."
+    ERROR_EXPLANATION2: "Don't use the Go Back button to return to the previous page(s). "
+    ERROR_EXPLANATION3: "To return the previous page(s), use the Global Navigation link."
+    ERROR_EXPLANATION4: "The Global Navigation link is the list of pages viewed at the top of the window."
+    ERROR_EXPLANATION5_html: "If you see this screen EVEN when you do not access for a long time OR you did not use the Return button, contact your CEAS administrator.<br>[When contacting the administrator] Briefly specify the problem as the subjecto of the email. Make sure to include your name, affiliation, the problem (course name, instructor name, how and when you had the problem) in the body of the email. See the log-in page for the contact information."
+    ERROR_TOTOP: "Back to Top Page"
+    ERROR_TOLOGIN: "Back to Log-in Page"
+    ERROR_FATAL_EXPLANATION1_html: "An unexpected error has occurred. <br> If this screen is displayed, please contact the CEAS administrator. <br> <br> fill briefly the problem of the content in the subject line of the e-mail <br> [When contact to CEAS administrator], <br> to the body of the email name / affiliation / failure of content (subject name, teacher Sha name, please <br> specify the operation and phenomenon, etc.). <br> In addition, contacts can be found on the login page."
+
+    ERROR_UNSUPPORTED_CHARACTER_IN_FILE_NAME: "There are unsupported characters in the file name."

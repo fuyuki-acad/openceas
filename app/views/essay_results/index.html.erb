@@ -1,0 +1,154 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :essay_results %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_TITLE2") } %>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- レポート一覧の表示 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <%= current_user.user_name %>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <!-- 0件メッセージ -->
+        <% if @essays.count == 0 %>
+          <%= t("common.COMMON_NOTFOUND") %>
+        <% else %>
+          <!-- リスト表示 -->
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
+                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_CLASSSESSIONNAME") %></th>
+                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_ASSIGNMENTTITLE") %></th>
+                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_PRESENTATIONLIMIT") %></th>
+                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_PRESENTATIONCOUNT") %></th>
+                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_STATUS") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_CONFIRM") %></th>
+              </tr>
+            </thead>
+            <% @essays.each.with_index(1) do |essay, index| %>
+              <tr>
+                <!-- No. -->
+                <td><%= index %></td>
+                <!-- 科目名称 -->
+                <td class="hidden-xs td-bold"><%= essay.course.course_name %></td>
+                <!-- 授業名 -->
+                <td class="hidden-xs td-bold"><%= essay.course.class_session(0) ? essay.course.class_session(0).class_session_title : "" %></td>
+                <!-- 課題タイトル -->
+                <td class="td-bold"><%= essay.generic_page_title %></td>
+                <!-- 提出期限 -->
+                <td class="hidden-xs td-bold">
+                  <%= t("common.COMMON_FROMTO", :param0 => l(essay.start_time, format: :short), :param1 => l(essay.end_time, format: :short)) %>
+                </td>
+                <!-- 提出回数 -->
+                <td class="hidden-xs td-bold">
+                  <%= essay.latest_answer_score ? essay.latest_answer_score.answer_count : 0 %>
+                </td>
+                <!-- ステータス -->
+                <td class="hidden-xs td-bold">
+                  <% if current_user.student? %>
+                    <% case essay.result_essay_status(current_user.id) %>
+                    <% when 0 %>
+                      <span class='badge badge-important'>
+                    <% when 1 %>
+                      <span class='badge badge-info'>
+                    <% when 2, 4 %>
+                      <span class='badge badge-important'>
+                    <% when 3 %>
+                      <span class='badge badge-success'>
+                    <% when 5 %>
+                      <span class='badge badge-success'>
+                    <% when 6 %>
+                      <span class='badge badge-important'>
+                    <% when 7 %>
+                      <span class='badge badge-success'>
+                    <% when 9 %>
+                      <span class='badge'>
+                    <% end %>
+                    <%= essay.essay_status_name(current_user.id) %>
+                  <% else %>
+                    <% case essay.confirm_status %>
+                    <% when 0 %>
+                      <span class='badge badge-important'>
+                    <% when 1 %>
+                      <span class='badge badge-info'>
+                    <% when 2, 4 %>
+                      <span class='badge badge-important'>
+                    <% when 3 %>
+                      <span class='badge badge-success'>
+                    <% when 5 %>
+                      <span class='badge badge-success'>
+                    <% when 6 %>
+                      <span class='badge badge-important'>
+                    <% when 7 %>
+                      <span class='badge badge-success'>
+                    <% when 9 %>
+                      <span class='badge'>
+                    <% end %>
+                    <%= essay.confirm_status_name %>
+                  <% end %>
+                  </span>
+                </td>
+                <!-- 確認 -->
+                <td class="td-bold">
+                  <% if current_user.student? %>
+                    <%= link_to t("common.COMMON_CONFIRM2"), "javascript:void();",
+                      {:onclick => "openWindow3('" + url_for(:controller => :essays, :action => :show, :id => essay) +"', 'executeAssignmentEssay', '800', '600')", :class => "btn btn-warning"} %>
+                  <% else %>
+                    <%= link_to t("common.COMMON_CONFIRM2"), {:action => :result, :id => essay}, {:class => "btn btn-warning"} %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+
+          <!-- 改ページボタン -->
+          <div class="pull-right">
+            <%= paginate(@essays) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+
+  </div>
+</div>

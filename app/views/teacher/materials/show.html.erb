@@ -1,0 +1,267 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :material, @course %>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- スマートフォンタイトル　-->
+    <%= render :partial => "shared/smartphone", :locals => { title: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_NAVI") } %>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <div class="btn-group">
+            <!-- 教材割付ボタン -->
+            <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_TOALLOCATION"), {controller: :allocations, action: :show, course_id: @course.id}, class: "btn btn-theme-a ceas-button-margin-5" %>
+            <!-- 他の作業ボタン -->
+            <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+            <!-- 科目選択ボタン -->
+            <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+              data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 作業中科目 -->
+    <%= render :partial => "shared/courses/course_information", :locals => { course: @course } %>
+
+    <br />
+
+    <!-- 説明文1 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLNAVIGATION_html", :param0 => "#anchor-url") } %>
+
+    <!-- 説明文2 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_EXPLANATION1_html") } %>
+
+    <!-- 説明文3 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_COPY_EXPLANATION1_html") } %>
+
+    <!-- 説明文4 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_ALLCOPY_EXPLANATION1_html") } %>
+
+    <!-- 新規作成、コピーボタン -->
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- 新規作成 -->
+        <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALNEWWINDOW"), {action: :new, course_id: @course.id}, class: "btn btn-primary" %>
+
+        <!-- 他の科目からコピー -->
+        <div class="pull-right">
+          <div class="text-center">
+            <div class="btn-group">
+              <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY"), {action: :select_course, course_id: @course.id}, class: "btn btn-primary ceas-button-margin-5" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <!-- 登録資料一覧 -->
+    <%= form_tag url_for(:action => "destroy", :course_id => @course.id), {:class => "form-horizontal", :method => "delete"} do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTTITLE") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <% if @course.materials.count == 0 %>
+              <p><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_NOMATERIALLIST") %></p>
+            <% else %>
+              <table class="table table-striped table-hover sortable_materials" title="<%= t('materials_registration.COMMONMATERIALSREGISTRATION_SORTEXPLANATION') %>">
+                <thead>
+                  <tr>
+                    <th><%= t("common.COMMON_DELETE") %></th>
+                    <th><%= t("common.COMMON_NO1") %></th>
+                    <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN3") %></th>
+                    <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN4") %></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @course.materials.each.with_index(1) do |material, index| %>
+                  <tr>
+                    <!-- 削除 -->
+                    <td class="td-bold"><%= check_box_tag "material[#{material.id}]", material.id, false, {} %></td>
+
+                    <!-- No. -->
+                    <td class="td-bold"><%= index %></td>
+
+                    <!-- 資料タイトル -->
+                    <td class="td-bold"><%= material.generic_page_title %></td>
+
+                    <!-- ファイル名 -->
+                    <td class="td-bold"><%= material.file_name %></td>
+
+                    <!-- 確認ボタン -->
+                    <td><%= link_to t("common.COMMON_CONFIRM"), material_path(material.id), {class: "btn btn-warning", target: "_blank"} %></td>
+
+                    <!-- 修正ボタン -->
+                    <td><%= link_to t("common.COMMON_EDIT"), {action: :edit, id: @course, id: material.id}, class: "btn btn-primary" %></td>
+
+                    <!-- 一括コピーボタン -->
+                    <td><%= link_to t("common.COMMON_ALLCOPY"), {action: :select_copy_to, id: material.id}, class: "btn btn-default" %></td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+              :data => {:target => :material, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+              class: "btn btn-default ceas-button-margin-5 check_selector" %>
+            <%= link_to t("common.COMMON_DELETE"), "javascript:void();",
+              :data => {:target => :material, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+              class: "btn btn-danger ceas-button-margin-5 multi_delete" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 説明文5 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_EXPLANATION2_html") } %>
+
+    <!-- 説明文6 -->
+    <%= render :partial => "shared/explanatory_box", :locals => { body_text: t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_COPY_EXPLANATION2_html") } %>
+
+    <!-- 新規作成、コピーボタン -->
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- 教材割付ボタン -->
+        <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLNEWWINDOW"), {:action => :new_url, :course_id => @course}, {class: "btn btn-primary"} %>
+
+        <!-- 他の科目からコピー -->
+        <div class="pull-right">
+          <div class="text-center">
+            <div class="btn-group">
+              <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY"), {action: :select_url_course, course_id: @course.id}, class: "btn btn-primary ceas-button-margin-5" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+
+    <!-- アンカー -->
+    <a id="anchor-url"></a>
+
+    <!-- 登録資料一覧 -->
+    <%= form_tag url_for(:action => "destroy", :course_id => @course.id), {:class => "form-horizontal", :method => "delete"} do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLLISTTITLE") %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <% if @course.urls.count == 0 %>
+              <p><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_NOURLLIST") %></p>
+            <% else %>
+              <table class="table table-striped table-hover sortable_urls">
+                <thead>
+                  <tr>
+                    <th><%= t("common.COMMON_DELETE") %></th>
+                    <th><%= t("common.COMMON_NO1") %></th>
+                    <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLLISTCOLUMN3") %></th>
+                    <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLLISTCOLUMN4") %></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @course.urls.each.with_index(1) do |url, index| %>
+                  <tr>
+                    <!-- 削除 -->
+                    <td class="td-bold"><%= check_box_tag "url[#{url.id}]", url.id, false, {} %></td>
+
+                    <!-- No. -->
+                    <td class="td-bold"><%= index %></td>
+
+                    <!-- 資料タイトル -->
+                    <td class="td-bold"><%= url.generic_page_title %></td>
+
+                    <!-- ファイル名 -->
+                    <td class="td-bold"><%= url.url_content %></td>
+
+                    <!-- 確認ボタン -->
+                    <td><%= link_to t("common.COMMON_CONFIRM"), url.url_content, {class: "btn btn-warning", target: "_blank"} %></td>
+
+                    <!-- 修正ボタン -->
+                    <td><%= link_to t("common.COMMON_EDIT"), {action: :edit_url, id: url}, class: "btn btn-primary" %></td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+              :data => {:target => :url, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+              class: "btn btn-default ceas-button-margin-5 check_selector" %>
+            <%= link_to t("common.COMMON_DELETE"), "javascript:void();",
+              :data => {:target => :url, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+              class: "btn btn-danger ceas-button-margin-5 multi_delete" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @course.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @course, :courses => @courses} %>

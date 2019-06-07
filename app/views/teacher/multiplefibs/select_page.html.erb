@@ -1,0 +1,158 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :select_page_multiplefib, @course, @origin %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONMULTIPLEFIB") %>
+  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONANDEDIT") %>
+</h5>
+
+<!-- 担当科目名称　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table table-striped table-hover">
+              <tr>
+                <td>
+                  <%= t("common.COMMON_TARGETCOURSE") %>
+                </td>
+                <td>
+                  <%= @course.course_name %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY_FROM_COURSENAME") %>
+                </td>
+                <td>
+                  <%= @origin.course_name %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY_EXPLANATION8_html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 登録済みページ一覧　-->
+<%= form_tag url_for(:action => "copy", :course_id => @course.id, :origin_id => @origin), {:class => "form-horizontal", :method => "post"} do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("materials_registration.COMMONMATERIALSREGISTRATION_REGISTEREDPAGE_FORCOPY") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="panel panel-default">
+          <% if @origin.multiplefibs.count == 0 %>
+            <p>
+              <%= t("common.COMMON_NOTFOUND") %>
+            </p>
+          <% else %>
+            <table class="table table-striped table-hover sortable_select_pages" title="<%= t('materials_registration.COMMONMATERIALSREGISTRATION_SORTEXPLANATION') %>">
+              <thead>
+                <tr>
+                  <th class="hidden-xs"><%= t("materials_registration.COMMONMATERIALSREGISTRATION_COPY") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_SUBJECT") %></th>
+                  <th class="hidden-xs"><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OPENCOMMENT") %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @origin.multiplefibs.each.with_index(1) do |multiplefib, index| %>
+                  <tr>
+                    <!-- コピー　-->
+                    <td class="td-bold">
+                      <%= check_box_tag "multiplefib[#{multiplefib.id}]", multiplefib.id, false, {} %>
+                    </td>
+                    <!-- No. -->
+                    <td class="td-bold"><%= index %></td>
+                    <!-- タイトル　-->
+                    <td class="td-bold"><%= multiplefib.generic_page_title %></td>
+                    <!-- 授業メモ（公開メモ）　-->
+                    <td class="td-bold"><%= convert_string(multiplefib.material_memo) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+
+    <!-- 説明文 -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= t("materials_registration.COMMONMATERIALSREGISTRATION_COPY_EXPLANATION") %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ボタン -->
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+          :data => {:target => :multiplefib, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+          class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_COPY"), "javascript:void();",
+          :data => {:target => :multiplefib, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+          class: "btn btn-danger ceas-button-margin-5 center-block multi_delete" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

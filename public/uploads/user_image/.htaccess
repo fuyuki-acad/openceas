@@ -1,0 +1,7 @@
+<Files ~ "^\.ht">
+deny from all
+</Files>
+
+Satisfy any
+Order Allow,Deny
+Allow from all

@@ -1,0 +1,51 @@
+ja:
+  #####お知らせ#####
+  announcement:
+    #共通(お知らせ機能全般)
+    COMMONANNOUNCEMENT_NAVI: "お知らせ／メール"
+    COMMONANNOUNCEMENT_PAGE1: "お知らせ登録"
+    COMMONANNOUNCEMENT_PAGE2: "お知らせ閲覧/削除"
+    COMMONANNOUNCEMENT_STATE: "状態"
+    COMMONANNOUNCEMENT_SCRIPT1: "内容は4096文字以内にしてください"
+    COMMONANNOUNCEMENT_SCRIPT2: "正常終了しました"
+    COMMONANNOUNCEMENT_MAILSUBJECT: "のお知らせ情報"
+    COMMONANNOUNCEMENT_MAILCONTENT1: "お知らせは以下のとおりです。"
+    COMMONANNOUNCEMENT_MAILCONTENT2: "●対象科目："
+    COMMONANNOUNCEMENT_MAILCONTENT3: "●お知らせタイトル："
+    COMMONANNOUNCEMENT_MAILCONTENT4: "●お知らせ本文："
+
+    #selectCourseAnnouncement.jsp
+    ANN_SELECTCOURSEANNOUNCEMENT_PAGETITLE: "科目一覧(お知らせ/メール)"
+    ANN_SELECTCOURSEANNOUNCEMENT_PAST: "過去の内容"
+    ANN_REGISTERANNOUNCEMENT_RESULT: "お知らせを登録しました。"
+    ANN_REGISTERANNOUNCEMENT_RESULT_SENDMAIL_html: "お知らせを登録しました。<br>メール送信処理は数分～数十分かかることがあります。<br>送信結果は、過去の内容から確認してください。"
+
+    #registerAnnouncement.jsp
+    ANN_REGISTERANNOUNCEMENT_PAGETITLE: "新規登録画面"
+    ANN_REGISTERANNOUNCEMENT_SENDCHECK: "メール送信の有無"
+    ANN_REGISTERANNOUNCEMENT_MAILONLY: "メールのみ"
+    ANN_REGISTERANNOUNCEMENT_EXPLANATION_html: "メール送信の有無で<strong>『メールのみ』</strong>を選択してメール送信した場合には、学生を選択してメール送信することが可能になります。学生に個別に連絡したい場合にはご利用ください。"
+
+    #selectSendUsr.jsp
+    ANN_SELECTSENDUSR_PAGETITLE: "送信ユーザ選択"
+    ANN_SELECTSENDUSR_SEARCHUSR: "条件別ユーザ検索"
+    ANN_SELECTSENDUSR_TARGETALT: "メール内容"
+    ANN_SELECTSENDUSR_SEND: "送信"
+    ANN_SELECTSENDUSR_SCRIPT1: "送信ユーザを選択してください。"
+    ANN_SELECTSENDUSR_SCRIPT2: "メールを送信してもよろしいですか？"
+
+    #editAnnouncement.jsp
+    ANN_EDITANNOUNCEMENT_PAGETITLE: "お知らせ編集"
+    ANN_EDITANNOUNCEMENT_IMAGEALT: "送信済みユーザ"
+    ANN_EDITANNOUNCEMENT_NOUSER: "しばらくしても送信済みユーザが表示されない場合は、メールが送られなかった可能性があります"
+
+    #announcementList.jsp
+    ANN_ANNOUNCEMENTLIST_PAGETITLE: "お知らせ一覧"
+
+    #announcementTop.jsp
+    ANN_ANNOUNCEMENTTOP_PAGETITLE: "お知らせ詳細ページ"
+    ANN_ANNOUNCEMENTTOP_THISPAGE: "お知らせ表示"
+
+    #announcementListTop.jsp
+    ANN_ANNOUNCEMENTLISTTOP_PAGETITLE: "お知らせ詳細一覧ページ"
+    ANN_ANNOUNCEMENTLISTTOP_THISPAGE: "お知らせ一覧表示"

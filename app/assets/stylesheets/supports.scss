@@ -1,0 +1,133 @@
+.conversations {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    display: block;
+}
+
+.balloon-warp {
+    width: 100%;
+    height: auto;
+    overflow: hidden; /*floatの解除*/
+    margin-bottom: 20px;
+}
+
+/*******************************
+* 左からの吹き出し
+********************************/
+.left_icon {
+    position: relative;
+    float: left;
+    margin-right: -70px;
+    z-index: 1;
+}
+.left_icon img {
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px #ddd;
+    height: 50px;
+    width: 50px;
+    z-index: -1;
+}
+.left_balloon_area {
+    position: relative;
+    width: 100%;
+    float: right;
+}
+.left_balloon {
+    position: relative;
+    background: #fff;
+    border: 1px solid #777;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: -40px;
+    margin-bottom: 10px;
+    margin-left: 70px;
+    margin-right: 20%;
+    clear: both;
+    max-width: 70%;
+    float: left;
+    word-break: break-all;
+}
+.left_balloon:after,
+.left_balloon:before {
+    right: 100%;
+    top: 22px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.left_balloon:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-right-color: #fff;
+    border-width: 7px;
+    margin-top: -7px;
+}
+.left_balloon:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: #000;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+/*******************************
+* 右からの吹き出し
+********************************/
+.right_balloon_area {
+    width: 100%;
+    float: left;
+}
+.right_balloon {
+    position: relative;
+    background: #85e249;
+    border: 1px solid #777;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-right: 70px;
+    margin-left: 20%;
+    clear: both;
+    max-width: 70%;
+    float: right;
+    word-break: break-all;
+}
+.right_balloon:after,
+.right_balloon:before {
+    left: 100%;
+    top: 22px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.right_balloon:after {
+    border-color: rgba(133, 226, 73, 0);
+    border-left-color: #85e249;
+    border-width: 7px;
+    margin-top: -7px;
+}
+.right_balloon:before {
+    border-color: rgba(119, 119, 119, 0);
+    border-left-color: #777;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+/*******************************
+* 割り込みを解除
+********************************/
+.clear_balloon{
+  clear: both;
+}

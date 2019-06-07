@@ -1,0 +1,336 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :result_result_evaluation, @generic_page %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_EVALUATIONLISTADMINISTRATION") } %>
+
+<!-- 担当科目名称　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_COURSENAME") %>
+            </td>
+            <td class="col-xs-9">
+              <%= @generic_page.course.course_name %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_EVALUATIONLISTTITLE") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION1") %>
+        <br/>
+        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION2") %>
+        <br/>
+        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION3") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-8">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon-user" aria-hidden="true" />
+              <%= t("common.COMMON_USRTABLEALT") %>
+            </h3>
+          </div>
+          <div class="col-xs-4">
+            <p class="pull-right badge">
+              <%= t("common.COMMON_HITCOURSE", :param0 => @generic_page.course.enrolled_users.count) %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <% if @generic_page.course.enrolled_users.count > 0 %>
+          <div class="row">
+            <!-- 作業用評価リスト(CSV)ダウンロード -->
+            <div class="col-md-4">
+              <%= link_to t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_BUTTON1"), {:action => :outputcsv}, :method => :post, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+            </div>
+
+            <!-- 作業用評価リスト(CSV)アップロード -->
+            <div class="col-md-4">
+              <%= link_to t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_BUTTON2"), {:action => :upload}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
+            </div>
+
+            <!-- 一括メール送信 -->
+            <div class="col-md-4">
+              <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON5"), "javascript:void();",
+                :class => "btn btn-primary btn-block ceas-button-margin-5 btn_send_mail",
+                :data => {:msg_confirm => t("materials_administration.COMMONMATERIALSADMINISTRATION_JAVASCRIPT5"),
+                          :msg_not_checked => t("materials_administration.MAT_ADM_CSV_MAILNOUSER"),
+                          :msg_no_mail_contet => t("materials_administration.MAT_ADM_CSV_MAILNOCONTENT")} %>
+            </div>
+          </div>
+        <% end %>
+
+        <div style="display: none">
+          <%= form_tag url_for(:action => "send_mail", :id => @generic_page.id), {:class => "form-horizontal form_send_mail", :method => "post"} do %>
+          <% end %>
+        </div>
+
+        <br />
+
+        <%= form_tag url_for({:action => :save, :id => @generic_page}), :method => :patch do %>
+        <!-- 入力フォーム -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <% if @generic_page.course.enrolled_users.count == 0 %>
+                            <p>
+                              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_NOUSER") %>
+                            </p>
+                          <% else %>
+                            <table class="table table-striped table-hover result_evaluations">
+                              <thead>
+                                <tr>
+                                  <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                                  <th class="hidden-xs"><%= t("common.COMMON_TARGETNAME") %></th>
+                                  <th class="hidden-xs"><%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDMAIL") %></th>
+                                  <th class="hidden-xs"><%= t("materials_administration.MAT_ADM_ASS_PASTASSIGNMENTESSAY_IMPORT_USREXPLANATION4") %></th>
+                                  <th class="hidden-xs"><%= t("materials_registration.MAT_EVALUATIONLIST_RATE") %><br/><%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_COMMENT") %></th>
+                                </tr>
+                              </thead>
+                              <% @generic_page.course.enrolled_users.each.with_index(1) do |user, index| %>
+                                <tr>
+                                  <!--No. -->
+                                  <td class="td-bold hidden-xs">
+                                    <%= index %>
+                                  </td>
+                                  <!--氏名 -->
+                                  <td class="td-bold">
+                                    <%= user.get_name_no_prefix %>
+                                    <%= user.user_name %>
+                                  </td>
+                                  <!--メール送信 -->
+                                  <td class="td-bold">
+                                    <%= check_box_tag "mail_flag[#{user.id}]", user.id, params[:mail_flag] && params[:mail_flag][user.id.to_s] ? true : false %>
+                                  </td>
+                                  <!-- ステータス -->
+                                  <td class="td-bold hidden-xs">
+                                    <% if @answer_scores[user.id] && @answer_scores[user.id].latest_comment %>
+                                      <% if @answer_scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON %>
+                                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_MAILSENDYET") %>
+                                      <% elsif @answer_scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_SENDED %>
+                                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_MAILSENDDONE") %>
+                                      <% elsif @answer_scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_SENDED_ON %>
+                                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_MAILRESENDYET") %>
+                                      <% elsif @answer_scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_RESENDED %>
+                                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_MAILRESENDDONE") %>
+                                      <% elsif @answer_scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_RESENDED_ON %>
+                                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_MAILRESENDYET") %>
+                                			<% end %>
+                                    <% end %>
+                                  </td>
+                                  <!-- 評価/コメント -->
+                                  <td class="td-bold">
+                                    <div class="row">
+                                      <div class="col-xs-12">
+                                        <!-- 評価 -->
+                                        <div class="row">
+                                          <div class="col-xs-12 col-sm-4">
+                                            <span class="visible-xs hidden-sm"><%= t("materials_registration.MAT_EVALUATIONLIST_RATE") %></span>
+                                            <%= text_field_tag "assignment_essay_score[#{user.id}]", get_evaluation_score(@answer_scores, user.id), :maxlength => 10, :class => "form-control" %>
+                                          </div>
+                                        </div>
+                                        <!-- コメント -->
+                                        <div class="row">
+                                          <div class="col-xs-12">
+                                            <span class="visible-xs hidden-sm"><%= t("materials_registration.MAT_EVALUATIONLIST_RATE") %></span>
+                                            <%= text_field_tag "memo[#{user.id}]", get_evaluation_comment(@answer_scores, user.id), :maxlength => 4096, :class => "form-control" %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              <% end %>
+                            </table>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pull-right">
+                  <a class="anchor" href="#anchor-top">
+                    <%= t("common.COMMON_TOP") %>
+                  </a>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <!--　一括選択 -->
+                        <tr>
+                          <td>
+                            <span><%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_HEAD1") %></span>
+                            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+                              :data => {:target => :mail_flag, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+                              class: "btn btn-default ceas-button-margin-5 center-block check_selector col-sm-1 pull-right" %>
+                          </td>
+                        </tr>
+
+                        <!-- 評価一括指定 -->
+                        <tr>
+                          <td>
+                            <span><%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_HEAD2") %></span>
+                            <div class="input-group">
+                              <%= text_field_tag "all_score", params[:score], :maxlength => 10, :class => "form-control" %>
+                              <span class="input-group-btn">
+                                <%= link_to t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_PACKAGEDGRADE"), "javascript:void();",
+                                  :data => {:confirm => t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EVALUATIONALL_CONFIRM"), :not_set => t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EVALUATIONALL_NOSET")},
+                                  :class => "btn btn-primary ceas-button-margin-5 btn_all_score" %>
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <!-- コメント一括指定 -->
+                        <tr>
+                          <td>
+                            <span><%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_HEAD3") %></span>
+                            <div class="input-group">
+                              <%= text_field_tag "all_comment", params[:comment], :maxlength => 4096, :class => "form-control" %>
+                              <span class="input-group-btn">
+                                <%= link_to t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_PACKAGEDGRADE"), "javascript:void();",
+                                  :data => {:confirm => t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_COMMENTALL_CONFIRM"), :not_set => t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_COMMENTALL_NOSET")},
+                                  :class => "btn btn-primary ceas-button-margin-5 btn_all_comment" %>
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+
+                    <!-- 登録ボタン -->
+                    <div class="text-center">
+                      <div class="btn-group">
+                        <%= submit_tag t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_BUTTON3"),
+                          :data => {:confirm => t("materials_administration.COMMONMATERIALSADMINISTRATION_JAVASCRIPT3")}, :class => "btn btn-primary ceas-button-margin-5" %>
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 説明文 -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION4") %>
+                        <br/>
+                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION5") %>
+                        <br/>
+                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION6") %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <%= form_tag url_for({:action => :save_content, :id => @generic_page}), :method => :patch do %>
+        <!-- 入力フォーム -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <!-- 説明文 -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_EXPLANATION7") %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <table class="table table-striped table-hover">
+                  <!-- メール送信文登録 -->
+                  <tr>
+                    <td>
+                      <%= t("materials_administration.MAT_ADM_ASS_EVALUATIONLISTTOTALRESULT_HEAD4") %>
+                      <%= text_area_tag :mail_content, @generic_page.content, {:class => "form-control", :rows => 5} %>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- 登録ボタン -->
+                <div class="text-center">
+                  <div class="btn-group">
+                    <%= submit_tag t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

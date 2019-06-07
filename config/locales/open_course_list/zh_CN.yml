@@ -1,0 +1,14 @@
+zh_CN:
+  open_course_list:
+    #####公開科目#####
+    ##openCourseList.jsp
+    OPE_OPENCOURSELIST_TITLE: "公开课程一览页面"
+    OPE_OPENCOURSELIST_NAVI: "公开课程一览"
+    OPE_OPENCOURSELIST_ALLOCATEDCOURSE: "安排公开课程一览"
+    OPE_OPENCOURSELIST_EXPLANATION_html: "这页是可以阅览每次的授课概要、授课资料、参考网址的课程一览表。<br>选择“安排”并登录后，“已登录的公开课程一览表便会显示在首页上。<br>对已设定公开密码的课程，请先输入密码再进行“安排”。<br>但是，对自己听讲或授课的课程不能进行“安排”。"
+    OPE_OPENCOURSELIST_ERROR1: "公开密码错误"
+    OPE_OPENCOURSELIST_ERROR2: "请输入公开密码"
+    OPE_OPENCOURSELIST_ERROR3: "请选择安排课程"
+    OPE_OPENCOURSELIST_PASSWORD: "密码"
+    OPE_OPENCOURSELIST_ALLOCATION: "安排"
+    OPE_OPENCOURSELIST_RELEASE: "解除"

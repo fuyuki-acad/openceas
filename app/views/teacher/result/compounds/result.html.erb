@@ -1,0 +1,386 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :result_result_compound, @generic_page %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_administration.COMMONMATERIALSADMINISTRATION_COMPOUNDADMINISTRATION") } %>
+
+<!-- 担当科目名称欄　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <!-- コース名　-->
+          <%= @generic_page.course.course_name %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- テストタイトル　-->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_TESTTITLE") %>
+            </td>
+            <td>
+              <%= @generic_page.generic_page_title %>
+            </td>
+          </tr>
+
+          <!-- 合格ライン　-->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_PASSGRADE") %>
+            </td>
+            <td>
+              <%= @generic_page.pass_grade %>
+            </td>
+          </tr>
+
+          <!-- 受験回数　-->
+          <tr>
+            <td>
+              <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_EXAMINATIONCOUNT") %>
+            </td>
+            <td>
+              <%= @generic_page.max_count %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 検索条件 -->
+<%= form_tag url_for({:action => :result}), :method => :get do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          <%= t("common.COMMON_SEARCHREQUIREMENT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <fieldset>
+            <div class="col-xs-12 col-sm-5">
+              <!-- 受験回選択 -->
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="col-xs-5 control-label">
+                    <%= t("materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_TARGETEXAMINATIONNO_SELECT") %>
+                  </label>
+                  <div class="col-xs-7">
+                    <%= select_tag :count, options_for_select(execution_count_list(@generic_page), params[:count] ? params[:count] : -1), :class => "form-control" %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ステータス選択 -->
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label class="col-xs-5 control-label">
+                    <%= t("materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_STATUS") %>
+                  </label>
+                  <div class="col-xs-7">
+                    <%= select_tag :status, options_for_select({
+                        t("materials_administration.COMMONMATERIALSADMINISTRATION_NOTEXAMINE") + "/" + t("materials_administration.COMMONMATERIALSADMINISTRATION_NOTEXAMINEYET") => "1",
+                        t("materials_administration.COMMONMATERIALSADMINISTRATION_NOTGRADEYET") => "2",
+                        t("materials_administration.COMMONMATERIALSADMINISTRATION_GRADED") => "3",
+                        t("materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_STATUS_1") => "-1"
+                      }, params[:status] ? params[:status] : -1), :class => "form-control" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-5">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <%= radio_button_tag :term_flag, "0", params[:term_flag] == "0" %><label><%= t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM1') %></label>
+                  <%= radio_button_tag :term_flag, "2", params[:term_flag] == "2" %><label><%= t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM3') %></label>
+                </div>
+              </div>
+
+              <div class="col-xs-12">
+                <div class="checkbox">
+                  <label>
+                    <%= check_box_tag :order, "1", params[:order] %>
+                    <%= t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_EXPLANATION1') %>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-2">
+              <div class="pull-right">
+                <div class="btn-group">
+                  <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default ceas-button-margin-5" %>
+                  <%= link_to t("materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_SEARCHCLEAR"), {:action => :result, :id => @generic_page}, {:class => "btn btn-default ceas-button-margin-5"} %>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_EXPLANATION1_html') %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-8">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              <%= t('common.COMMON_USRTABLEALT') %>
+            </h3>
+          </div>
+
+          <% if @users.count > 0 %>
+            <div class="col-xs-4">
+              <p class="pull-right badge">
+                <%= t('common.COMMON_HITCOURSE', :param0 => @users.count) %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="row table-responsive">
+          <div class="col-sm-12">
+            <% if @users.count == 0 %>
+              <p>
+                <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_NOUSER') %>
+              </p>
+            <% else %>
+              <table class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <!--学生 -->
+                    <td colspan="2">
+                      <%= t('common.COMMON_STUDENT') %>
+                    </td>
+
+                    <!--回数 -->
+                    <td colspan="<%= @average_list.count * 4 %>">
+                      <%= @generic_page.get_class_session_day %>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <!--No. -->
+                    <td rowspan="3">
+                      <%= t('common.COMMON_NO1') %>
+                    </td>
+
+                    <!--氏名 -->
+                    <td rowspan="3">
+                      <%= t('common.COMMON_TARGETNAME') %>
+                    </td>
+
+                    <% @average_list.each do |key, average| %>
+                      <td colspan="4">
+                        <nobr>
+                          <!-- 検索モードの場合 -->
+                          <% if params[:count] %>
+                            <% if params[:count] > "0" %>
+                              <%= key %>
+                              <%= t('common.COMMON_COUNT2') %>
+                            <% else %>
+                              <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_LASTANSWER') %>
+                            <% end %>
+
+                          <!-- 検索解除の場合 -->
+                          <% else %>
+                            <%= key %>
+                            <%= t('common.COMMON_COUNT2') %>
+                          <% end %>
+
+                          <!--素点と百分率の表示 -->
+                          <% if average[1] >= 0 %>
+                            <strong>
+                              <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_AVERAGE_PREFIX') %>
+                              <% if average[0] > -1 %>
+                                <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_RAW_SCORE') %>
+                                <%= average[0] %>&nbsp
+                              <% end %>
+                              <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_PERCENTAGE') %>
+                                <%= average[1] %>
+                              <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_AVERAGE_SUFFIX') %>
+                            </strong>
+                          <% end %>
+                        </nobr>
+                      </td>
+                    <% end %>
+                  </tr>
+
+                  <tr>
+                    <% @average_list.each do |average| %>
+                      <td colspan="2">
+                        <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_SCORE') %>
+                      </td>
+                      <td rowspan="2">
+                        <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_ORDER') %>
+                      </td>
+
+                      <!-- 検索モード　かつ　選択受験回が「最終解答」の場合 -->
+                      <% if params[:count] && params[:count] < "0" %>
+                        <td rowspan="2">
+                          <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_EXAMINATIONCOUNT') %>
+                        </td>
+                      <% end %>
+                      <td rowspan="2">
+                        <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_STATUS') %>
+                      </td>
+                    <% end %>
+                  </tr>
+
+                  <tr>
+                    <% @average_list.each do |average| %>
+                      <td>
+                        <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_RAW_SCORE') %>
+                      </td>
+                      <td>
+                        <%= t('materials_administration.MAT_ADM_COM_COMPOUNDTOTALRESULT_PERCENTAGE') %>
+                      </td>
+                    <% end %>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% @users.each.with_index(1) do |user, index| %>
+                    <tr>
+                      <td>
+                        <%= index %>
+                      </td>
+
+                      <td>
+                        <%= user.get_name_no_prefix %>
+                        <%= user.user_name %>
+                      </td>
+
+                      <% @results.each do |count, result| %>
+                        <!-- 素点 -->
+                        <td>
+                          <% if result[user.id] && result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
+                            <% if result[user.id].total_score < @generic_page.pass_grade %>
+                              <%= result[user.id].total_raw_score %>
+                            <% else %>
+                              <code>
+                                <%= result[user.id].total_raw_score %>
+                              </code>
+                            <% end %>
+                          <% end %>
+                        </td>
+
+                        <td>
+                          <% if result[user.id] && result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
+                            <% if result[user.id].total_score < @generic_page.pass_grade %>
+                              <%= result[user.id].total_score %>
+                            <% else %>
+                              <code>
+                                <%= result[user.id].total_score %>
+                              </code>
+                            <% end %>
+                          <% end %>
+                        </td>
+
+                        <td>
+                          <% if result[user.id] && result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
+                            <%= result[user.id].rank %>/<%= result.count %>
+                          <% end %>
+                        </td>
+
+                        <td>
+                          <% if result[user.id] %>
+                            <% if result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
+                              <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_GRADED') %>
+                              <%= link_to t("common.COMMON_CONFIRM2"), {:action => :mark, :id => @generic_page, :user => user, :count => count}, class: "btn btn-warning" %>
+
+                            <% else %>
+                              <!-- 未採点 -->
+                              <nobr>
+                                <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_NOTGRADEYET') %>
+                              </nobr>
+                              <%= link_to t("materials_administration.COMMONMATERIALSADMINISTRATION_GRADE")+t("common.COMMON_DO"), {:action => :mark, :id => @generic_page, :user => user, :count => count}, class: "btn btn-primary" %>
+                            <% end %>
+
+                          <% elsif @generic_page.expired? %>
+                            <!-- 不受験 -->
+                            <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_NOTEXAMINE') %>
+                              <!-- 1回目のみ「採点する」ボタンを表示する -->
+                              <% if count == 1 || @results.count == 1 %>
+                                <%= link_to t("materials_administration.COMMONMATERIALSADMINISTRATION_GRADE")+t("common.COMMON_DO"), {:action => :mark, :id => @generic_page, :user => user, :count => 1}, class: "btn btn-default center-block" %>
+                              <% end %>
+
+                          <% else %>
+                            <!-- 未受験 -->
+                            <%= t('materials_administration.COMMONMATERIALSADMINISTRATION_NOTEXAMINEYET') %>
+                            <!-- 1回目のみ「採点する」ボタンを表示する -->
+                            <% if count == 1 || @results.count == 1 %>
+                              <%= link_to t("materials_administration.COMMONMATERIALSADMINISTRATION_GRADE")+t("common.COMMON_DO"), {:action => :mark, :id => @generic_page, :user => user, :count => 1}, class: "btn btn-primary" %>
+                            <% end %>
+                          <% end %>
+                        </td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                <tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t("common.COMMON_TOP") %>
+      </a>
+    </div>
+  </div>
+</div>

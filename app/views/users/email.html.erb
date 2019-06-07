@@ -1,0 +1,94 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= render 'shared/error', :record => @user %>
+
+<%= form_for :user, :url => update_unset_email_users_path, :html => {:class => "form-horizontal"} do |form| %>
+  <!-- 名前欄 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%=t "common.COMMON_TARGETNAME" %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%= current_user.user_name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%=t "login.LOG_REGISTERMAIL_EXPLANATION_html" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- メール入力フォーム -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!--メールアドレス-->
+            <tr>
+              <td class="col-xs-3">
+                <%=t "login.LOG_REGISTERMAIL_MAIL" %>
+              </td>
+              <td class="col-xs-9">
+                <%= form.email_field :new_email, autofocus: true, class: 'string required form-control', maxlength: 256 %>
+                <%=t "login.LOG_REGISTERMAIL_RESTRICTION" %>
+              </td>
+            </tr>
+
+            <!--メールアドレス-->
+            <tr>
+              <td class="col-xs-3">
+                <%=t "login.LOG_REGISTERMAIL_MAILCONFIRM" %>
+              </td>
+              <td class="col-xs-9">
+                <%= form.email_field :email_confirmation, autofocus: false, class: 'string required form-control', maxlength: 256 %>
+                <%=t "login.LOG_REGISTERMAIL_RESTRICTION" %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <div class="btn-group">
+      <%= form.submit t('common.COMMON_CHANGE'), class: 'btn btn-primary ceas-button-margin-5' %>
+      <%= link_to t("common.COMMON_RETURN"), logout_path, {method: :delete, class: "btn btn-default ceas-button-margin-5"} %>
+      <%= link_to t("login.LOG_REGISTERMAIL_REGISTERAFTER"), root_path, {class: "btn btn-default ceas-button-margin-5"} %>
+    </div>
+  </div>
+<% end %>

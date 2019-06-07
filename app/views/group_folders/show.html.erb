@@ -1,0 +1,223 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :group_folder, @group_folder %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("group_folder.COMMONGROUPFOLDER_GROUPFOLDERLIST") %>
+</h5>
+
+<%= render 'shared/error', :record => @group_folder_material %>
+
+<!-- グループフォルダ名称 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= @group_folder.title %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= form_for :group_folder_material, :url => {:action => :upload, :id => @group_folder}, :html => {:class => "form-horizontal"} do |form| %>
+<!-- 入力フォーム -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <!-- タイトル -->
+        <div class="form-group">
+          <label class="col-xs-10">
+            <%= t("common.COMMON_SUBJECT") %>
+          </label>
+          <div class="col-xs-10">
+            <%= form.hidden_field :group_folder_id %>
+            <%= form.text_field :title, {:class => 'form-control', :maxlength => 50} %>
+          </div>
+        </div>
+
+        <!-- 閲覧／削除パスワード -->
+        <div class="form-group">
+          <label class="col-xs-10">
+            <%= t("group_folder.GRO_SELECTCONTENTS_PASSWORD") %>
+          </label>
+          <div class="col-xs-10">
+            <%= form.password_field :display_pass, {:class => 'form-control', :maxlength => 64} %>
+          </div>
+        </div>
+
+        <!-- 登録資料 -->
+        <div class="form-group">
+          <label class="col-xs-10">
+            <%= t("group_folder.GRO_SELECTCONTENTS_REGISTFILE") %>
+          </label>
+          <div class="col-xs-10">
+            <%= t("group_folder.GRO_SELECTCONTENTS_EXPLANATION1") %>
+            <%= t("group_folder.GRO_SELECTCONTENTS_EXPLANATION2") %>
+          </div>
+          <div class="col-xs-10">
+            <%= form.file_field :file %>
+          </div>
+          <!-- 登録ボタン -->
+          <div class="col-xs-2">
+            <div class="pull-right">
+            <%= form.submit t("common.COMMON_REGISTER"), :class => "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<br />
+
+<!-- 資料登録 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("group_folder.GRO_SELECTCONTENTS_EXPLANATION1") %>
+        <br/>
+        <%= t("group_folder.GRO_SELECTCONTENTS_EXPLANATION2") %>
+        <br/>
+        <%= t("group_folder.GRO_SELECTCONTENTS_EXPLANATION3_html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 検索フォーム -->
+<% if @group_folder.group_folder_materials.count > 0 %>
+  <%= form_tag url_for({:action => :show}), :method => :get do %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("group_folder.GRO_SELECTCONTENTS_REGISTFILE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <!-- 検索種類 -->
+          <div class="form-group">
+            <div class="col-xs-10">
+              <%= radio_button_tag :search_flag, GroupFolderMaterial::SEARCH_ALL, params[:search_flag] == GroupFolderMaterial::SEARCH_ALL, inline: true %> <label><%= t('group_folder.GRO_SELECTCONTENTS_SELECT1') %></label>
+              <%= radio_button_tag :search_flag, GroupFolderMaterial::SEARCH_TITLE, params[:search_flag] == GroupFolderMaterial::SEARCH_TITLE, inline: true %> <label><%= t('common.COMMON_SUBJECT') %></label>
+              <%= radio_button_tag :search_flag, GroupFolderMaterial::SEARCH_USER, params[:search_flag] == GroupFolderMaterial::SEARCH_USER, inline: true %> <label><%= t('group_folder.GRO_SELECTCONTENTS_SELECT2') %></label>
+            </div>
+          </div>
+
+          <!-- 表示順 -->
+          <div class="form-group">
+            <div class="col-xs-10">
+              <%= radio_button_tag :order, GroupFolderMaterial::ORDER_DSC, params[:order] == GroupFolderMaterial::ORDER_DSC, inline: true %> <label><%= t('group_folder.GRO_SELECTCONTENTS_SELECT4') %></label>
+              <%= radio_button_tag :order, GroupFolderMaterial::ORDER_ASC, params[:order] == GroupFolderMaterial::ORDER_ASC, inline: true %> <label><%= t('group_folder.GRO_SELECTCONTENTS_SELECT5') %></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="pull-right">
+              <div class="col-xs-12">
+                <div class="input-group">
+                  <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
+                  <span class="input-group-btn">
+                  <%= submit_tag t("common.COMMON_SEARCH"), :class => "btn btn-default" %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<!-- 検索結果 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% if @materials.count == 0 %>
+          <!-- 0件メッセージ -->
+          <p>
+            <%= t("group_folder.COMMONGROUPFOLDER_NOTFOUND2") %>
+          </p>
+        <% else %>
+          <!-- リスト表示 -->
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_SUBJECT") %></th>
+                <th class="hidden-xs"><%= t("group_folder.GRO_SELECTCONTENTS_DATATABLE1") %></th>
+                <th class="hidden-xs"><%= t("group_folder.GRO_SELECTCONTENTS_DATATABLE2") %></th>
+                <th class="hidden-xs"><%= t("group_folder.GRO_SELECTCONTENTS_DATATABLE3") %></th>
+                <th class="hidden-xs"><%= t("group_folder.GRO_SELECTCONTENTS_DATATABLE4") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_CONFIRM") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% @materials.each.with_index(1) do |material, index| %>
+                <!-- No. -->
+                <td class=""><%= index %></td>
+                <!-- タイトル -->
+                <td class="td-bold"><%= material.title %></td>
+                <!-- 登録者 -->
+                <td class="hidden-xs td-bold"><%= material.user.user_name %></td>
+                <!-- 登録日 -->
+                <td class="hidden-xs td-bold"><%= l(material.created_at) %></td>
+                <!-- 形式 -->
+                <td class="td-bold"><%= material.file_type %></td>
+                <!-- サイズ -->
+                <td class="hidden-xs td-bold"><%= material.file_size %></td>
+                <!-- 確認 -->
+                <td class="td-bold">
+                  <%= link_to t("common.COMMON_CONFIRM2"), {:action => :material, :id => material}, :class => "btn btn-warning", :target => "_top" %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 閉じるボタン -->
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to t("common.COMMON_CLOSE"), "javascript:void();", {:class => "btn btn-default center-block", onclick: "window.close()"} %>
+  </div>
+</div>
+<br />

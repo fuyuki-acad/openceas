@@ -1,0 +1,31 @@
+ja:
+  general_announcement:
+    #####システム情報・告知#####
+    #共通
+    COMMONGENERALINFO_GENERALINFOLIST: "告知一覧"
+    COMMONGENERALINFO_INFOMATION: "告知内容"
+    COMMONGENERALINFO_TITLE: "履修環境管理者からのお知らせ"
+    COMMONGENERALINFO_LOGIN_INFOMATION: "お知らせ内容"
+    #systemInfo.jsp
+    GEN_SYSTEMINFO_SYSTEMINFO: "システム情報"
+    GEN_SYSTEMINFO_EXPLANATION1_html: "ここに表示される情報は、システムの更新が行われた情報や、<br>システムが更新される予定などが書かれています。"
+    #generalInfo.jsp
+    GEN_GENERALINFO_GENERALINFO: "告知機能"
+    GEN_GENERALINFO_EXPLANATION1_html: "下記の入力フォームから入力することで告知を行うことができます。"
+    GEN_GENERALINFO_EXPLANATION2_html: "・ログインページから告知する<strong>『ログインページを利用しての告知</strong>』"
+    GEN_GENERALINFO_EXPLANATION3_html: "・担任者のメニューであるシステム情報から告知する『<strong>システム情報メニューを利用しての告知</strong>』"
+    GEN_GENERALINFO_STATE: "状態"
+    GEN_GENERALINFO_INFOMATIONWAY: "告知方法"
+    GEN_GENERALINFO_BYUSINGLOGIN: "ログインページを利用しての告知"
+    GEN_GENERALINFO_BYUSINGSYSTEMINFO: "システム情報メニューを利用しての告知"
+    GEN_GENERALINFO_HIDE: "非表示にする"
+    GEN_GENERALINFO_TOINSTRUCTOR: "先生への告知"
+    GEN_GENERALINFO_REGISTERED: "登録が終了しました。"
+    GEN_GENERALINFO_SCRIPT1: "タイトルが必要です。"
+    GEN_GENERALINFO_SCRIPT2: "告知内容が必要です。"
+    GEN_GENERALINFO_SCRIPT3: "告知内容は4096文字以内にしてください。"
+    GEN_GENERALINFO_SCRIPT4: "編集画面に移動します。"
+    #detailGeneralInfo.jsp
+    GEN_DETAILGENERALINFO_INFOMATION: "お知らせ"
+    #generalInfoList.jsp
+    GEN_GENERALINFOLIST_INFOMATIONLIST: "お知らせ一覧"

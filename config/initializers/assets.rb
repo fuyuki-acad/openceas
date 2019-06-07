@@ -1,0 +1,39 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
+# Be sure to restart your server when you modify this file.
+
+# Version of your assets, change this if you want to expire all your assets.
+Rails.application.config.assets.version = '1.0'
+
+# Add additional assets to the asset load path.
+# Rails.application.config.assets.paths << Emoji.images_path
+# Add Yarn node_modules folder to the asset load path.
+Rails.application.config.assets.paths << Rails.root.join('node_modules')
+
+# Precompile additional assets.
+# application.js, application.css, and all non-JS/CSS in the app/assets
+# folder are already added.
+# Rails.application.config.assets.precompile += %w( admin.js admin.css )
+Rails.application.config.assets.precompile += %w( admin/*.js )
+Rails.application.config.assets.precompile += %w( ckeditor/* )

@@ -1,0 +1,31 @@
+zh_TW:
+  general_announcement:
+    #####システム情報・告知#####
+    #共通
+    COMMONGENERALINFO_GENERALINFOLIST: "通知一覽"
+    COMMONGENERALINFO_INFOMATION: "通知內容"
+    COMMONGENERALINFO_TITLE: "來自選課環境管理者的新訊息"
+    COMMONGENERALINFO_LOGIN_INFOMATION: "新訊息內容"
+    #systemInfo.jsp
+    GEN_SYSTEMINFO_SYSTEMINFO: "系統資訊"
+    GEN_SYSTEMINFO_EXPLANATION1: "此處表示的是進行系統更新或系統預定更新的資訊"
+    #generalInfo.jsp
+    GEN_GENERALINFO_GENERALINFO: "通知機能"
+    GEN_GENERALINFO_EXPLANATION1: "輸入下列表格即可利用告知機能"
+    GEN_GENERALINFO_EXPLANATION2: "從進入頁告知的<strong>“利用進入頁的通知</strong>”"
+    GEN_GENERALINFO_EXPLANATION3: "從授課教師的菜單系統信息告知的“<strong>利用系統信息單的通知</strong>”"
+    GEN_GENERALINFO_STATE: "狀態"
+    GEN_GENERALINFO_INFOMATIONWAY: "通知方式"
+    GEN_GENERALINFO_BYUSINGLOGIN: "使用登錄頁面的通知"
+    GEN_GENERALINFO_BYUSINGSYSTEMINFO: "使用系統資訊主選單的通知"
+    GEN_GENERALINFO_HIDE: "不表示"
+    GEN_GENERALINFO_TOINSTRUCTOR: "教師通知"
+    GEN_GENERALINFO_REGISTERED: "登錄完成"
+    GEN_GENERALINFO_SCRIPT1: "需要標題"
+    GEN_GENERALINFO_SCRIPT2: "需要通知內容"
+    GEN_GENERALINFO_SCRIPT3: "通知內容請限制在4096字以內"
+    GEN_GENERALINFO_SCRIPT4: "移動至編輯畫面"
+    #detailGeneralInfo.jsp
+    GEN_DETAILGENERALINFO_INFOMATION: "新訊息"
+    #generalInfoList.jsp
+    GEN_GENERALINFOLIST_INFOMATIONLIST: "新訊息一覽"

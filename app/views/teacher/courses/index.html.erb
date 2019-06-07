@@ -1,0 +1,197 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :courses %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONEVALUATIONLIST") } %>
+
+<!-- 氏名 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5><%= current_user.user_name %></h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_DELETBYINSTRUCTOREPLANATION") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 -->
+<!-- 科目検索 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_SEARCHCOURSE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-6">
+          <%= form_tag url_for({:action => :index}), :method => :get do %>
+            <div class="input-group">
+              <%= text_field_tag "course_name", params[:course_name], class: "string required form-control" %>
+              <span class="input-group-btn">
+                <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default" %>
+              </span>
+            </div>
+            <span><%= t("common.COMMON_SEARCHCOURSEEXPLANATION") %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- コース一覧 -->
+<%= form_tag url_for(:action => "destroy"), {:class => "form-horizontal", :method => "delete"} do %>
+<div class="row" id="course_list">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_COURSETABLEALT") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <!-- 0件メッセージ -->
+        <% if @courses.count == 0 %>
+          <p><%= t("common.COMMON_NOTFOUND") %></p>
+        <% else %>
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th><%= t("common.COMMON_NO1") %></th>
+                <% if controller.controller_name == 'courses' %>
+                <th><%= t("common.COMMON_DELETE") %></th>
+                <% end %>
+                <th><%= t("common.COMMON_CONFIRMREVISE") %></th>
+                <th><%= t("common.COMMON_DAY") %></th>
+                <th><%= t("common.COMMON_HOUR") %></th>
+                <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                <th><%= t("common.COMMON_SEASON") %></th>
+                <th><%= t("common.COMMON_COURSENAME") %></th>
+                <th><%= t("common.COMMON_INSTRUCTOR") %></th>
+                <% if controller.controller_name == 'courses' %>
+                <th><%= t("admin.course.PRI_ADM_COU_SEARCHCOURSE_ENROLLMENTLIST") %></th>
+                <% else %>
+                <th><%= t("common.COMMON_MAJOR") %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <% @courses.each.with_index(1) do |course, index| %>
+              <tr>
+                <!-- No. -->
+                <td class="td-bold"><%= index %></td>
+
+                <!-- 削除チェックボックス -->
+                <% if controller.controller_name == 'courses' %>
+                  <td class="td-bold">
+                    <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
+                  </td>
+                <% end %>
+
+                <!-- 確認／修正 -->
+                <td><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
+
+                <!-- 曜日 -->
+                <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+
+                <!-- 時限 -->
+                <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+
+                <!-- 年度 -->
+                <td class="td-bold"><%= course.school_year %></td>
+
+                <!-- 学期 -->
+                <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+
+                <!-- 科目名称 -->
+                <td class="td-bold"><%= course.course_name %></td>
+
+                <!-- 担任者 -->
+                <td class="td-bold"><%= course.instructor_name %></td>
+
+                <% if controller.controller_name == 'courses' %>
+                  <!-- CSVダウンロード -->
+                  <td>
+                    <div class="image_block_orange_8">
+                      <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
+                    </div>
+                  </td>
+                <% else %>
+                  <!-- 系・学科・コース -->
+                  <td class="td-bold"><%= course.major %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+
+        <% if @courses.count > 0 %>
+          <!-- 改ページ -->
+          <div class="pull-right">
+            <%= paginate(@courses) %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if controller.controller_name == 'courses' %>
+        <!-- ボタン -->
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+              :data => {:target => :course, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+              class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+            <%= link_to t("admin.course.PRI_ADM_COU_CONFIRMCOURSEBATCHDELETE_EXECUTETITLE"), "javascript:void();",
+              :data => {:target => :course, :msg_confirm => t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_DELETBYINSTRUCTOREPLANATION"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+              class: "btn btn-danger ceas-button-margin-5 center-block multi_delete" %>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- アンカーボタン -->
+      <div class="pull-right">
+        <a class="anchor" href="#anchor-top">
+          <%= t("common.COMMON_TOP") %>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

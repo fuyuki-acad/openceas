@@ -1,0 +1,43 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+
+    attributes:
+      user:
+        email: "メールアドレス1"
+        email_confirmation: "メールアドレス1（確認）"
+        new_email: "新しいメールアドレス1"
+        email_mobile: "メールアドレス2"
+        email_mobile_confirmation: "メールアドレス2（確認）"
+        new_email_mobile: "新しいメールアドレス2"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        current_password: "古いパスワード"
+
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: "は%{count}文字以上に設定して下さい。"
+              too_long: "は%{count}文字以下に設定して下さい。"
+              confirmation: "新しいパスワードと確認パスワードが異なります"
+              blank: "が入力されていません。"
+            password_confirmation:
+              confirmation: "が一致しません。"
+              blank: "が入力されていません。"
+            current_password:
+              blank: "が入力されていません。"
+              invalid: "は現在のパスワードと一致しません。"
+            email:
+              blank: "が入力されていません。"
+            email_confirmation:
+              confirmation: "メールアドレス1とメールアドレス1（確認）が異なります"
+              blank: "が入力されていません。"
+            email_mobile:
+              blank: "が入力されていません。"
+            email_mobile_confirmation:
+              confirmation: "メールアドレス2とメールアドレス2（確認）が異なります"
+              blank: "が入力されていません。"

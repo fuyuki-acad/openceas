@@ -1,0 +1,45 @@
+zh_TW:
+  #####お知らせ#####
+  announcement:
+    #####お知らせ#####
+    #共通(お知らせ機能全般)
+    COMMONANNOUNCEMENT_NAVI: "登錄新訊息"
+    COMMONANNOUNCEMENT_PAGE1: "登錄新訊息"
+    COMMONANNOUNCEMENT_PAGE2: "閱讀／刪除訊息"
+    COMMONANNOUNCEMENT_STATE: "狀態"
+    COMMONANNOUNCEMENT_SCRIPT1: "內文請限制在4096字以內"
+    COMMONANNOUNCEMENT_SCRIPT2: "正常結束"
+    COMMONANNOUNCEMENT_MAILSUBJECT: "新訊息"
+    COMMONANNOUNCEMENT_MAILCONTENT1: "新訊息內容如下"
+    COMMONANNOUNCEMENT_MAILCONTENT2: "收件者"
+    COMMONANNOUNCEMENT_MAILCONTENT3: "新訊息標題"
+    COMMONANNOUNCEMENT_MAILCONTENT4: "新訊息內文"
+    #selectCourseAnnouncement.jsp
+    ANN_SELECTCOURSEANNOUNCEMENT_PAGETITLE: "科目一覽(新訊息／信件)"
+    ANN_SELECTCOURSEANNOUNCEMENT_PAST: "過去的內容"
+    ANN_REGISTERANNOUNCEMENT_RESULT: "It was registered announcements."
+    ANN_REGISTERANNOUNCEMENT_RESULT_SENDMAIL_html: "It was registered announcements. <br> mail transmission process may take a few minutes to a few tens of minutes. <br> transmission result, please check from the past of the content."
+    #registerAnnouncement.jsp
+    ANN_REGISTERANNOUNCEMENT_PAGETITLE: "新登錄畫面"
+    ANN_REGISTERANNOUNCEMENT_SENDCHECK: "是否有傳送郵件"
+    ANN_REGISTERANNOUNCEMENT_MAILONLY: "只傳送郵件"
+    ANN_REGISTERANNOUNCEMENT_EXPLANATION_html: "是否傳送郵件的選項中選擇了『只傳送郵件』，即可以選擇收件者。此功能適合個別連絡學生，請善加利用。"
+    #selectSendUsr.jsp
+    ANN_SELECTSENDUSR_PAGETITLE: "選擇送信使用者"
+    ANN_SELECTSENDUSR_SEARCHUSR: "依條件檢索使用者"
+    ANN_SELECTSENDUSR_TARGETALT: "郵件內容"
+    ANN_SELECTSENDUSR_SEND: "送信"
+    ANN_SELECTSENDUSR_SCRIPT1: "請選擇寄件者"
+    ANN_SELECTSENDUSR_SCRIPT2: "是否傳送郵件"
+    #editAnnouncement.jsp
+    ANN_EDITANNOUNCEMENT_PAGETITLE: "編輯新訊息"
+    ANN_EDITANNOUNCEMENT_IMAGEALT: "送信完成的使用者"
+    ANN_EDITANNOUNCEMENT_NOUSER: "If, after a while does not appear Sent user, there is a possibility that e-mail was not sent"
+    #announcementList.jsp
+    ANN_ANNOUNCEMENTLIST_PAGETITLE: "新訊息一覽"
+    #announcementTop.jsp
+    ANN_ANNOUNCEMENTTOP_PAGETITLE: "新訊息詳細頁面"
+    ANN_ANNOUNCEMENTTOP_THISPAGE: "新訊息顯示"
+    #announcementListTop.jsp
+    ANN_ANNOUNCEMENTLISTTOP_PAGETITLE: "新訊息詳細一覽頁面"
+    ANN_ANNOUNCEMENTLISTTOP_THISPAGE: "顯示新訊息一覽"

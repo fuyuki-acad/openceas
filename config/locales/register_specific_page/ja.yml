@@ -1,0 +1,38 @@
+ja:
+  specific_page:
+    #####科目独自のページ#####
+    #共通
+    COMMONSPECIFICPAGE_COURSESPECIFICPAGE: "科目独自のページ"
+    #registerSpecificPage.jsp
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_TITLE: "科目独自のページ登録"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_NAVI: "科目独自のページ"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION1: "１.　ローカルPC内でリンクをはった複数(もしくは単一)のHTMLファイルを作成してください。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION2: "なお、ファイル名は全て半角英数文字(15文字以内)を使用してください。そうでないファイルは登録されません。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION3: "２.　複数のHTMLファイルの中で、Topページに指定したいファイルの名前を「index.html」にしてください。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION4: "（他のファイルは相対パスで指定してください。）"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION5: "３.　名前が半角英数文字15文字以内のフォルダを作成し、１．２で作成したHTMLファイルをその中に入れます。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION6: "４.　フォルダを含めてZIPの形式で圧縮してください。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION7: "５.　「参照」ボタンで圧縮されたファイルを指定し、「登録」ボタンでアップロードを行います。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION8: "６.　授業実施画面の左側にある「科目別HPへ」から自動的にリンクが張られ、登録完了です。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION9: "※ファイル名は全て半角英数でないと登録できません。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION10: "例）複数のHTMLファイルリンク記載方法"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION11: "同一ディレクトリとサブディレクトリにファイルが存在する場合"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION12: "(Windowsでは、同一フォルダとサブフォルダにファイルが存在する場合)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_NOWPAGE: "現在のページ"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_CONFIRMNOWPAGE: "現在のページを確認する"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_REGISTERFILE: "登録ファイル"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION1: "(新しいページを登録すると、「現在のページ」は削除されます)"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION2: "※あなたのPC上のファイルを［参照］ボタンから指定してください"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION3: "（ファイル名は半角英数字のみ使用可能）"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION4: "本当にアップロードしてよろしいですか。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE1: "ファイルを選択してください"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE2: "指定したファイルは圧縮ファイル(zip)ではありません。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE3: "圧縮ファイルとフォルダの関係が正しくありません。もう一度ファイル作成を行ってください。"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE4: "ファイル、フォルダ名は15文字以内にしてください"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE5: "ファイル、フォルダ名は半角英数にしてください"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE6: "圧縮ファイルの中にindex.htmlが存在しません"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_ERRORTYPE7: "ファイル名は半角英数15文字にしてください"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_WIDTH: "760"
+    MAT_ALL_COU_REGISTERSPECIFICPAGE_HEIGHT: "500"
+    #index.jsp
+    MAT_ALL_COU_INDEX_NOTFOUND: "現在この科目独自のページは用意されていません"

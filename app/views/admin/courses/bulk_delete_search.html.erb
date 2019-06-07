@@ -1,0 +1,135 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= javascript_include_tag 'admin/administrateCourse' %>
+<% breadcrumb :admin_user_bulk_delete %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_CREATETARGETFILE') %>
+</h5>
+
+<!-- 検索条件　-->
+<%= form_tag url_for({:action => :create_delete_list}), :method => :post do %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_CREATETARGETFILE') %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <!-- 対象年度 -->
+          <tr>
+            <td class="col-xs-4">
+              <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_OBJECTSCHOOLYEAR') %>
+            </td>
+            <td class="col-xs-8">
+              <%= select_tag :school_year, options_for_select(school_year_list(:year), params[:school_year]) %>
+            </td>
+          </tr>
+
+          <!-- 対象科目 -->
+          <tr>
+            <td class="col-xs-4">
+              <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_OBJECTCOURSE') %>
+            </td>
+            <td class="col-xs-8">
+              <%= select_tag :course, options_for_select([[t("admin.course.PRI_ADM_COU_COURSEBATCHDELETE_OBJECTCOURSE0"), 0], [t("admin.course.PRI_ADM_COU_COURSEBATCHDELETE_OBJECTCOURSE1"), 1]], params[:school_year]) %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <%= t('common.COMMON_ATTENTION')+t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_CREATEFILEMESSAGE') %>
+
+    <div class="text-center">
+      <div class="btn-group">
+        <%= submit_tag t("common.COMMON_CREATE"), :class => "btn btn-default ceas-button-margin-5 center-block" %>
+        <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 削除対象リストのダウンロード　-->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_DOWNLOADFILEMESSAGE2_html') %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<!-- ファイルアップロード　-->
+<%= form_for :upload, :url => {:action => :upload_confirm} do |form| %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_LOADTARGETFILE') %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12">
+          <div class="col-xs-4">
+            <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_UPLOADFILEMESSAGE') %>
+          </div>
+          <div class="col-xs-8">
+            <%= form.file_field :file %>
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="btn-group">
+            <%= form.submit t('registerUsrList1.PRI_REG_UPLOADLIST_UPLOADEXPLANATION3'), class: 'btn btn-default' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<!-- ログファイルダウンロード用　-->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_LOGFILES') %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <%= t('common.COMMON_ATTENTION') %><%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_LOGFILEMESSAGE') %>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

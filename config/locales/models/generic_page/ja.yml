@@ -1,0 +1,23 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      generic_page: "授業資料"
+
+    attributes:
+      generic_page:
+        generic_page_title: "タイトル"
+        file_name: "ファイル名"
+        url_content: "URL"
+        material_memo: "授業メモ（公開メモ）"
+        material_memo_closed: "非公開メモ"
+        material:
+          generic_page: "登録資料"
+          material: "授業資料"
+          generic_page_title: "資料タイトル"
+          file_name: "登録ファイル"
+        url:
+          generic_page: "登録URL"
+          material: "URL教材資料"
+          generic_page_title: "資料タイトル"
+          url_content: "URL"

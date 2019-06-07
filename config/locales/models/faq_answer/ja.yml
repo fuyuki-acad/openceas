@@ -1,0 +1,12 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      faq_answer: "FAQ"
+
+    attributes:
+      faq_answer:
+        open_question: "質問内容"
+        open_answer: "回答内容"
+        created_at: "質問日"
+        updated_at: "回答日"

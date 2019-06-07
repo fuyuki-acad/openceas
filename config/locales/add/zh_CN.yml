@@ -1,0 +1,21 @@
+zh_CN:
+  top:
+    COMMONTOP_TOKEN: "Authentication Token"
+
+  token:
+    token_list: "Token List"
+    description: "Description"
+    access_token: "Access Token"
+    expire_date: "Expire Date"
+
+    message:
+      presence_description: "Input a description of token"
+      format_expire_date: "Expire date is invalid"
+      confirm_delete: "Can be deleted without harm?"
+      confirm_regenerate: "The token will be regenerated. Are you sure about this?"
+
+    button:
+      regenerate: "Regenerate"
+
+  page_management:
+    extra_content: "Extra Content"

@@ -1,0 +1,147 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_access_logs %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("access_log.ACC_ACCESSLOG_NAVITEXT1") %>
+</h5>
+
+<%= form_tag url_for({:action => :index}), :method => :get do %>
+  <!-- 検索フォーム -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("access_log.ACC_ACCESSLOG_NAVITEXT1") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!-- 選択ログリスト -->
+            <tr>
+              <td>
+                <div class="col-xs-12 col-sm-3">
+                  <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE1") %>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <%= select_tag :type, options_for_select(log_type_list, params[:type]), {:class => "form-control", :include_blank => true} %>
+                </div>
+              </td>
+            </tr>
+            <!-- 抽出期間 -->
+            <tr>
+              <td>
+                <div class="col-xs-12 col-sm-3">
+                  <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE2") %>
+                </div>
+                <div class="col-xs-12 col-sm-9 form-inline text-left">
+                  <div class="form-group">
+                    <%= text_field_tag :start_date, params[:start_date], {:class => "form-control"} %>
+                    <label class="control-label">
+                      <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE3") %>
+                    </label>
+                    <%= text_field_tag :end_date, params[:end_date], {:class => "form-control"} %>
+                    <label class="control-label">
+                      <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE4") %>
+                      <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE5") %>
+                    </label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="btn-group">
+          <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default ceas-button-margin-5", onclick: "$('#output').val('');" %>
+          <%= submit_tag t("common.COMMON_CSVOUTPUT"), :name => "", :class => "btn btn-default ceas-button-margin-5", onclick: "$('#output').val('csv');" %>
+          <%= hidden_field_tag "output", "", id: "output" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 検索結果 -->
+<% if @logs %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("access_log.ACC_ACCESSLOG_NAVITEXT2") %>
+          </h3>
+        </div>
+
+        <div class="panel-body">
+          <% if @logs.count == 0 %>
+            <p>
+              <%= t("common.COMMON_NOTFOUND") %>
+            </p>
+          <% else %>
+            <!-- 科目アクセスログ -->
+            <table id="selectCourse:courseAdministration" class="table table-striped table-hover">
+              <tr>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_TARGETNAME") %></th>
+                <th class="hidden-xs"><%= t("access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE2") %></th>
+                <th class="hidden-xs"><%= t("access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE7") %></th>
+                <th class="hidden-xs"><%= t("access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE3") %></th>
+              </tr>
+              <% @logs.each.with_index(1) do |log, index| %>
+                <tr>
+                  <td class="td-bold"><%= index %></td>
+                  <td class="td-bold"><%= h(get_name_no_prefix(log.user.name_no_prefix)) %><%= h(log.user.user_name) %></td>
+                  <td class="td-bold hidden-xs"><%= l(log.created_at) %></td>
+                  <td class="td-bold hidden-xs"></td>
+                  <td class="td-bold hidden-xs"><%= log.ip %></tr>
+                </tr>
+              <% end %>
+            </table>
+          <% end %>
+
+          <!-- 改ページボタン -->
+          <div class="pull-right">
+            <%= paginate(@logs) %>
+          </div>
+        </div>
+      </div>
+
+      <!-- アンカーボタン -->
+      <div class="pull-right">
+        <a class="anchor" href="#anchor-top">
+          <%= t("common.COMMON_TOP") %>
+        </a>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+zh_CN:
+  error:
+    #####エラー画面#####
+    #error.jsp
+    ERROR_TITLE: "错误"
+    ERROR_EXPLANATION1: "错了!"
+    ERROR_EXPLANATION2: "移动网页时，你点击浏览器的“返回”按钮了吧?"
+    ERROR_EXPLANATION3: "要回到以前显示过的页面请使用全球导航"
+    ERROR_EXPLANATION4: "全球导航是指页面上部的各页链接"
+    ERROR_EXPLANATION5_html: "长时间无法连接，在没有点击返回按钮的情况下出现此画面，请与CEAS管理员联系。【与CEAS管理员联络时】在邮件的题目中简洁的写明问题，邮件的正文中写明姓名/所属/问题（科目名，担任教师，操作和具体情况等）。另外，联络地址记载于登陆页面。"
+    ERROR_TOTOP: "返回首页"
+    ERROR_TOLOGIN: "返回进入页"
+    ERROR_FATAL_EXPLANATION1_html: "An unexpected error has occurred. <br> If this screen is displayed, please contact the CEAS administrator. <br> <br> fill briefly the problem of the content in the subject line of the e-mail <br> [When contact to CEAS administrator], <br> to the body of the email name / affiliation / failure of content (subject name, teacher Sha name, please <br> specify the operation and phenomenon, etc.). <br> In addition, contacts can be found on the login page."
+
+    ERROR_UNSUPPORTED_CHARACTER_IN_FILE_NAME: "There are unsupported characters in the file name."

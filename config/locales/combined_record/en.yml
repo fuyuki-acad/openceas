@@ -1,0 +1,34 @@
+en:
+  combinedRecord:
+    #####連結評価一覧表#####
+    #共通(連結評価全般)
+    COMMONCOMBINEDRECORD_COMBINEDRECORD: "List of Gradebooks"
+    #selectCourseCombinedRecord.jsp
+    COM_SELECTCOURSECOMBINEDRECORD_SEARCHTEXT: "Choose a course to show the gradebook. May take about a minute."
+    #combinedRecord.jsp
+    COM_COMBINEDRECORD_SEARCHTEXT_html: "Options for the gradebook: <br/>* indicates the self-mark results on mixed-format quiz. <br/> The number in parentheses in the essay field indicates number of times submitted."
+    COM_COMBINEDRECORD_COMPOUND: "Mixed-format quiz (Percentile score)"
+    COM_COMBINEDRECORD_COMPOUND2: "Mixed-format quiz (Raw score)"
+    COM_COMBINEDRECORD_COMPOUND_PERCENTAGE: "Percentile"
+    COM_COMBINEDRECORD_COMPOUND_RAW: "Raw"
+    COM_COMBINEDRECORD_MULTIPLEFIB: "Multiple choice quiz"
+    COM_COMBINEDRECORD_ASSIGNMENTESSAY: "Essay assignment"
+    COM_COMBINEDRECORD_QUESTIONNAIRE: "Survey"
+    COM_COMBINEDRECORD_ATTENDANCE: "Attendance"
+    COM_COMBINEDRECORD_DISPLAY: "Display"
+    COM_COMBINEDRECORD_COMPOUNDOMIT: "Mixed-format quiz"
+    COM_COMBINEDRECORD_MULTIPLEFIBOMIT: "Multiple choice quiz"
+    COM_COMBINEDRECORD_ASSIGNMENTESSAYOMIT: "Essay assignment"
+    COM_COMBINEDRECORD_QUESTIONNAIREOMIT: "Survey"
+    COM_COMBINEDRECORD_COMMON: "Legends"
+    COM_COMBINEDRECORD_NOTHING: "-"
+    COM_COMBINEDRECORD_CIRCLE: "○"
+    COM_COMBINEDRECORD_TRIANGLE: "△"
+    COM_COMBINEDRECORD_X: "×"
+    COM_COMBINEDRECORD_NOTGRADED: "Not marked yet"
+    COM_COMBINEDRECORD_SELFSCORE: "*"
+    COM_COMBINEDRECORD_JAVASCRIPT1: "May take some time to generate files."
+    COM_COMBINEDRECORD_EVALUATIONLIST: "Evaluation fill-in list"
+    COM_COMBINEDRECORD_EVALUATIONLISTOMIT: "Ev."
+    COM_COMBINEDRECORD_COMPOUNDOMIT_RAW: "Mixed-format (Raw score)"
+    COM_COMBINEDRECORD_COMPOUNDOMIT_PERCENTAGE: "Mixed-format (Percentile score)"

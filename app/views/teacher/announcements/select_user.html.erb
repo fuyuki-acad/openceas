@@ -1,0 +1,136 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :teacher_select_user_announcement, @course %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("announcement.COMMONANNOUNCEMENT_NAVI") } %>
+
+<!-- メール内容欄　-->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td>
+              <%= t("common.COMMON_SUBJECT") %>
+              <code>
+                <%= t("common.COMMON_ESSENCIAL") %>
+              </code>
+            </td>
+            <td>
+              <%= @announcement.subject %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= t("common.COMMON_CONTENT") %>
+              <code>
+                <%= t("common.COMMON_ESSENCIAL") %>
+              </code>
+            </td>
+            <td>
+              <%= @announcement.content %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 条件別ユーザ検索 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-6">
+          <div class="input-group">
+            <div class="input-group-addon"><%= t("announcement.ANN_SELECTSENDUSR_SEARCHUSR") %></div>
+            <%= text_field_tag "keyword", params[:course_name], class: "string required form-control" %>
+            <span class="input-group-btn">
+              <%= link_to t("common.COMMON_SEARCH"), {:action => :user, :course_id => @course}, :class => "btn btn-default search-user" %>
+            </span>
+          </div>
+          <span　class= "explanation_text"><%= t("common.COMMON_SERACHUSREXPLANATION") %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンカー -->
+<a id="anchor-top"></a>
+
+<!-- 送信ユーザ一覧 -->
+<%= form_tag url_for(:action => "send_mail", :course_id => @course.id), {:class => "form-horizontal", :method => "post"} do %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("common.COMMON_USRTABLEALT") %>
+
+          <!-- 件数表示 -->
+          <div class="pull-right">
+            <div class="main">
+              <div class="page_sending">
+                <%= t("common.COMMON_HITUSR", :param0 => @enrolled_users.count) %>
+              </div>
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <% if @enrolled_users.count == 0 %>
+          <p>
+            <%= t("common.COMMON_NOTFOUND") %>
+          </p>
+        <% else %>
+          <%= render 'users', :users => @enrolled_users %>
+        <% end %>
+
+        <!-- アンカーボタン -->
+        <div class="pull-right">
+          <a class="anchor" href="#anchor-top">
+            <%= t("common.COMMON_TOP") %>
+          </a>
+        </div>
+
+        <div class="text-center">
+          <div class="btn-group">
+            <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+              :data => {:target => :user, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+              class: "btn btn-primary ceas-button-margin-5 center-block check_selector" %>
+            <%= link_to t("announcement.ANN_SELECTSENDUSR_SEND"), "javascript:void();",
+              :data => {:target => :user, :msg_confirm => t("announcement.ANN_SELECTSENDUSR_SCRIPT2"), :msg_not_checked => t("announcement.ANN_SELECTSENDUSR_SCRIPT1")},
+              class: "btn btn-default ceas-button-margin-5 center-block send-mail" %>
+            <%= link_to t("common.COMMON_RETURN"), {action: :new, course_id: @course, :back => true}, class: "btn btn-default ceas-button-margin-5 center-block" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

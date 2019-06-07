@@ -1,0 +1,151 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :admin_users %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("access_log.ACC_ACCESSLOG_NAVITEXT1") %>
+</h5>
+
+<%= form_tag url_for({:action => :index}), :method => :get do %>
+  <!-- 検索／新規作成-->
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-xs-12 col-sm-6">
+            <%= radio_button_tag :type, "0", true %> <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION4') %>
+            <%= radio_button_tag :type, "1", params[:type] == "1" %> <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION5') %>
+            <div class="input-group">
+              <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
+              <span class="input-group-btn">
+                <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-primary ceas-button-margin-5" %>
+              </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION1') %>
+            <div class="input-group">
+              <%= select_tag :role,
+                options_for_select(Role::role_list, params[:role]), {:include_blank => '', :class => "form-control"}
+              %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= link_to t("common.COMMON_NEW"), {:action => :new}, {class: "btn btn-primary ceas-button-margin-5"} %>
+          <p>
+            <span class="administrateHeaderForm2"><%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION2_html') %></span>
+          </p>
+          <p>
+            <span class="administrateHeaderForm3"><%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION3') %></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- アンカー -->
+  <a id="anchor-top"></a>
+<% end %>
+
+<!-- リスト表示 -->
+<%= form_tag url_for({:action => :delete}) do %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('admin.user.PRI_ADM_USR_SELECTUSR_TITLE2') %>
+          <span class="badge pull-right"><%= t('common.COMMON_HITCOURSE', :param0 => @users.total_count.to_s(:delimited)) %></span>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <% if @users.count == 0 %>
+          <p>
+            <%= t('common.COMMON_NOTFOUND') %>
+          </p>
+        <% else %>
+          <%= hidden_field_tag :checkflg, "1" %>
+          <table id="administrateUsrTable:usrTable" class="table table-striped table-hover">
+            <tr>
+              <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_REGISTCHANGE") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_USRNAME") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_MAIL") %></th>
+              <th class="hidden-xs"><%= t("admin.user.PRI_ADM_USR_SELECTUSR_ENROLLMENTCOUNT") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_ADMINISTRATOR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_STUDENT") %></th>
+            </tr>
+            <% @users.each.with_index(@users.offset_value + 1) do |user, index| %>
+              <tr>
+                <td class="td-bold"><%= index %></td>
+                <td class="td-bold"><%= check_box_tag "check_delete[#{user.id}]", user.id, false, {} %></td>
+                <td class="td-bold"><%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => user.id}, {:class => "btn btn-warning", :target => '_top'} %></td>
+                <td class="td-bold"><%= h(get_name_no_prefix(user.name_no_prefix)) %><%= h(user.user_name) %></td>
+                <td class="td-bold"><%= h(user.email) %></td>
+                <td class="td-bold"></td>
+                <td class="td-bold"><%= circle(user.admin?) %></td>
+                <td class="td-bold"><%= circle(user.teacher?) %></td>
+                <td class="td-bold"><%= circle(user.student?) %></td>
+              </tr>
+            <% end %>
+          </table>
+
+          <!-- 改ページボタン -->
+          <div class="pull-right">
+            <%= paginate(@users) %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+    <!-- アンカーボタン -->
+    <div class="pull-right">
+      <a class="anchor" href="#anchor-top">
+        <%= t('common.COMMON_TOP') %>
+      </a>
+    </div>
+
+    <!-- ボタン -->
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+          :data => {:target => :check_delete, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+          class: "btn btn-default ceas-button-margin-5 check_selector" %>
+        <%= submit_tag t("common.COMMON_DELETE"),
+          :data => {:target => :check_delete, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")}, :class => "btn btn-danger ceas-button-margin-5 multi_delete" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

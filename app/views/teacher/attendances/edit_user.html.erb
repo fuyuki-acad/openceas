@@ -1,0 +1,105 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= javascript_include_tag 'admin/attendanceAdministration' %>
+
+<% breadcrumb :combined_records %>
+
+<!-- スマートフォンタイトル　-->
+<%= render :partial => "shared/smartphone", :locals => { title: t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ADMIN") } %>
+
+<!-- 科目名 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+          <%= @course.course_name %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 一覧テーブル -->
+<%= form_tag url_for({:action => :update_user, :course_id => @course.id}), :method => :patch do %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ATTENDANCEDATACDEXPLANATION") %>
+        </h3>
+      </div>
+      <div class="panel-body table-responsive">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td class="table_header_left_attendance_administration">
+              <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNCLASSSESSIONNO") %>
+            </td>
+            <% for class_session_count in 1..@course.class_session_count %>
+              <td class="table_header_right_upper_attendance_administration" width="<%= @attendance_count_list[class_session_count] * 35 %>" colspan="<%= @attendance_count_list[class_session_count] %>">
+                <%= class_session_name(class_session_count) %>
+              </td>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td class="table_header_left_attendance_administration">
+              <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNATTENDANCECOUNTNO") %>
+            </td>
+            <% for class_session_count in 1..@course.class_session_count %>
+              <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                <td id="col_<%= class_session_count %>_<%= attendance_count %>" class="table_header_right_under_attendance_administration">
+                  <%= attendance_count %>
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
+
+          <tr>
+            <td class="table_body_name2_attendance_administration">
+              <%= @user.get_name_no_prefix %>
+              <%= @user.user_name %>
+            </td>
+            <% for class_session_count in 1..@course.class_session_count %>
+              <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
+                <td class="table_body_mark_attendance_administration">
+                  <%= select_tag "attendance_data[#{class_session_count}][#{attendance_count}]", options_for_select(attendance_options(), :selected => @attendance_data[@user.id][class_session_count][attendance_count]) %>
+                </td>
+              <% end %>
+            <% end %>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <div class="btn-group">
+    <%= submit_tag t("common.COMMON_REGISTER"), :name => "", :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+    <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @course.id}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+  </div>
+</div>
+<% end %>
