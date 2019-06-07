@@ -8,7 +8,7 @@ OpenCEASはRuby言語で実装されたWebアプリケーション型のLMSで�
 1)データベースを作成してください。利用できるDBMSはMySQLとMariaDBです。
 
 2)configディレクトリの ".example" ファイルを参考に設定ファイルを作成してください。
-　
+
 3)データベースのテーブル定義処理を実行してください。
 $ bundle exec rake db:migrate
 
