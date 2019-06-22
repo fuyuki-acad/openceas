@@ -57,7 +57,7 @@
 <div class="row">
   <div class="col-xs-12">
     <% if @score && @score.link_name %>
-      <iframe id="assignmentEssayFile" width="100%" src="<%= url_for(:action => :file, :id => @essay, :score => @score.id) %>"></iframe>
+      <iframe id="assignmentEssayFile" width="100%" src="<%= url_for(:action => :file, :id => @essay, :score => @score.latest_history.id) %>"></iframe>
     <% else %>
       <%= t("materials_administration.MAT_ADM_ASS_NOTFOUND_EXPLANATION") %>
     <% end %>
