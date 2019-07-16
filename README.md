@@ -1,3 +1,4 @@
+![OpenCEAS Logo](app/assets/images/logo_s.png)
 # OpenCEAS
 ## What's OpenCEAS?
 OpenCEAS is an open-source LMS (Learning Management System) for higher education. It inherits the teaching/learning cycle support functions and the Teaching-Support User Interface from the original CEAS (the Web-Based Coordinated Education Activation System) first released in 2003.  
