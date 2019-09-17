@@ -25,6 +25,8 @@ class GenericPageClassSessionAssociation < ApplicationRecord
   belongs_to  :generic_page
   belongs_to  :class_session
 
+  XML_CONVERT_CEAS10 = {:class_session => {:tag => 'classSessionNo', :field => :class_session_no}, :generic_page_id => :pageId, :view_rank => :viewRank}
+
   before_save do
     if User.current_user
       if self.new_record?

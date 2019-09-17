@@ -1,0 +1,87 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :commit_upload_packaged_loadings, @course %>
+
+<%= render 'shared/error', :record => @material %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("packaged_loadings.COMMONPACKAGEDLOADING_PACKAGEDLOADING") %>
+</h5>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_EXPLANATION1_html") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 授業割り付け画面 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="pull-right">
+      <div class="btn-group">
+        <%= link_to t("common.COMMON_TOALLOCATION"), {controller: :allocations, action: :show, course_id: @course}, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<!-- 処理結果ファイル表示 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <tr>
+            <td>
+              <%= t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_EXPLANATION3_html") %>
+            </td>
+            <td>
+              <%= form_tag url_for({:action => :upload_log}), :method => :post do %>
+                <% @log.each do |data| %>
+                  <%= hidden_field_tag 'upload_log[]', data %>
+                <% end %>
+                <%= submit_tag t("common.COMMON_DOWNLOAD"), :class => "btn btn-default ceas-button-margin-5" %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to t("common.COMMON_RETURNTOP"), root_path, {:class => "btn btn-default"} %>
+  </div>
+</div>

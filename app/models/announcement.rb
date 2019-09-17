@@ -32,6 +32,9 @@ class Announcement < ApplicationRecord
 
   attr_accessor :announcement_state
 
+  XML_CONVERT_CEAS10 = {:subject => :subject, :content => :content, :mail_flag => :mailFlg,
+    :announcement_cd => :announcementCd, :insert_user_id => :insertUsr, :created_at => :insertDate}
+
   def check_data
     validate_presence(:subject, I18n.t("common.COMMON_SUBJECTCHECK"))
     validate_presence(:content, I18n.t("common.COMMON_CONTENTCHECK"))

@@ -1,0 +1,525 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<% breadcrumb :confirm_upload_packaged_loadings, @course %>
+
+<%= render 'shared/error', :record => @course %>
+
+<!-- スマートフォンタイトル　-->
+<h5 class="visible-xs visible-sm">
+  <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+  <%= t("packaged_loadings.COMMONPACKAGEDLOADING_PACKAGEDLOADING") %>
+</h5>
+
+<!-- 科目名 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h5>
+            <%= @course.course_name %>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION1") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明文 -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION2") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION3") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION4") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION5") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION6") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION7") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION8") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION9") %>
+        <br/>
+        <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EXPLANATION10") %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= form_tag url_for({:action => :commit_upload, :course_id => @course}), :class => "form-horizontal", :method => :post do %>
+<%= hidden_field_tag 'manifest[dummy]', "" %>
+<%= hidden_field_tag 'class_data[dummy]', "" %>
+
+<!-- 授業コースウェア素材 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_CLASSSESSIONCOURSEWARE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb1" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 上書き -->
+            <th><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_OVERWRITE") %></th>
+            <!-- 登録項目 -->
+            <th><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_REGISTERITEM") %></th>
+            <!-- 登録内容/登録に関する説明 -->
+            <th><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_REGISTEREXPLANATION") %></th>
+          </tr>
+
+          <% if @uploads['manifest'] %>
+          <tr>
+            <td>1</td>
+            <td><%= check_box_tag "manifest[course_name]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_COURSENAMEOVERWRITE") %></td>
+            <td><%= @uploads['manifest']['manifest']['courseName'] %></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><%= check_box_tag "manifest[overview]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_OVERVIEWOVERWRITE") %></td>
+            <td><%= @uploads['manifest']['manifest']['overview'] %></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><%= check_box_tag "manifest[course_other]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_COURSEOTHER") %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_COURSEOTHEREXPLANATION") %></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><%= check_box_tag "manifest[class_session]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_CLASSSESSION") %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_CLASSSESSIONEXPLANATION") %></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><%= check_box_tag "manifest[allocation]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_ALLOCATION") %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_ALLOCATIONEXPLANATION") %></td>
+          </tr>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :manifest, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 授業データ -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_CLASSSESSIONDATA") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb2" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- 登録内容 -->
+            <th><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_REGISTERCONTENT") %></th>
+          </tr>
+
+          <tr>
+            <td>1</td>
+            <td><%= check_box_tag "class_data[announcement]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_ANNOUNCEMENT") %></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><%= check_box_tag "class_data[faq]" %></td>
+            <td><%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_FAQ") %></td>
+          </tr>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :class_data, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 授業資料 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_MATERIAL") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb3" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['material'] && @uploads['material']['pages'] %>
+            <% @uploads['material']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "material[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :material, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- URL教材資料 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_URL") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb4" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['url'] && @uploads['url']['pages'] %>
+            <% @uploads['url']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "url[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :url, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 複合式テスト -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_COMPOUND") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb5" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['compound'] && @uploads['compound']['pages'] %>
+            <% @uploads['compound']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "compound[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :compound, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 記号入力式テスト -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_MULTIPLEFIB") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb6" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['multiple_fib'] && @uploads['compound']['pages'] %>
+            <% @uploads['multiple_fib']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "multiple_fib[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :multiple_fib, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- レポート  -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_ASSIGNMENTESSAY") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb7" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['essay'] && @uploads['compound']['pages'] %>
+            <% @uploads['essay']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "essay[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :essay, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- アンケート -->
+<h:inputHidden id="checkflgQuestionnaire" value="1"/>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_QUESTIONNAIRE") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb8" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['questionnaire'] && @uploads['compound']['pages'] %>
+            <% @uploads['questionnaire']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "questionnaire[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :questionnaire, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 評価記入リスト -->
+<h:inputHidden id="checkflgEvaluationlist" value="1"/>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t("packaged_loadings.PAC_CONFIRMUPLOADMATERIALS_EVALUATIONLIST") %>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <table id="tb9" class="table table-striped table-hover">
+          <tr>
+            <!-- No. -->
+            <th><%= t("common.COMMON_NO1") %></th>
+            <!-- 登録 -->
+            <th><%= t("common.COMMON_REGISTER") %></th>
+            <!-- タイトル-->
+            <th><%= t("common.COMMON_SUBJECT") %></th>
+          </tr>
+
+          <% if @uploads['evaluationlist'] && @uploads['compound']['pages'] %>
+            <% @uploads['evaluationlist']['pages']['page'].each.with_index(1) do |page, index| %>
+            <tr>
+              <!-- No.-->
+              <td><%= index %></td>
+              <!-- 登録 -->
+              <td><%= check_box_tag "evaluationlist[page_id][]", page['pageId'], false, {} %></td>
+              <!-- タイトル -->
+              <td><%= page['pageTitle'] %></td>
+            </tr>
+            <% end %>
+          <% end %>
+        </table>
+
+        <!-- 全選択 -->
+        <div class="pull-right">
+          <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+            :data => {:target => :evaluationlist, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+            class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+      :data => {:target => :all, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+      class: "btn btn-default ceas-button-margin-5 center-block check_all_selector" %>
+    <%= submit_tag t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+    <%= link_to t("common.COMMON_RETURN"), {:action => :select_upload_file, :course_id => @course}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+  </div>
+</div>
+<% end %>

@@ -52,6 +52,10 @@ class Multiplefib < GenericPage
     self.get_material_url_path + self.explanation_link_name.to_s
   end
 
+  def get_explanation_file_path
+    self.get_material_path + self.explanation_link_name.to_s
+  end
+
   def edit_file?
     if self.link_name.blank?
       false

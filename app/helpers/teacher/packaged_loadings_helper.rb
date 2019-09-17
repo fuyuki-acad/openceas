@@ -1,0 +1,2 @@
+module Teacher::PackagedLoadingsHelper
+end

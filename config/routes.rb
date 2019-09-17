@@ -587,6 +587,14 @@ Rails.application.routes.draw do
     get     'evaluations/:course_id/select_page/:origin_id',  to: 'evaluations#select_page',     as: 'select_page_evaluation'
     post    'evaluations/:course_id/copy/:origin_id',         to: 'evaluations#copy'
 
+    # 教材一括更新
+    get     'packaged_loadings',                  to: 'packaged_loadings#index'
+    get     'packaged_loadings/:course_id/select_upload_file',    to: 'packaged_loadings#select_upload_file',   as: 'select_upload_file_packaged_loadings'
+    post    'packaged_loadings/:course_id/confirm_upload',        to: 'packaged_loadings#confirm_upload',       as: 'confirm_upload_file_packaged_loadings'
+    post    'packaged_loadings/:course_id/commit_upload',         to: 'packaged_loadings#commit_upload',        as: 'commit_upload_file_packaged_loadings'
+    post    'packaged_loadings/:course_id/upload_log',            to: 'packaged_loadings#upload_log'
+    post    'packaged_loadings/:course_id/download_file',         to: 'packaged_loadings#download_file'
+
     # 出席管理
     get     'attendances',                                                                   to: 'attendances#index'
     get     'attendances/:course_id',                                                        to: 'attendances#show',              as: 'attendance'

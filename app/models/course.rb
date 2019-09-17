@@ -34,11 +34,12 @@ class Course < ApplicationRecord
   has_many  :materials, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_MATERIALCODE}"}, :class_name => "GenericPage"
   has_many  :urls, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_URLCODE}"}, :class_name => "GenericPage"
   has_many  :compounds, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_COMPOUNDCODE}"}, :class_name => "Compound"
-  has_many  :multiplefibs, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_MULTIPLEFIBCODE}"}, :class_name => "GenericPage"
+  has_many  :multiplefibs, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_MULTIPLEFIBCODE}"}, :class_name => "Multiplefib"
   has_many  :essays, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE}"}, :class_name => "Essay"
   has_many  :questionnaires, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE}"}, :class_name => "GenericPage"
   has_many  :evaluations, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_EVALUATIONLISTCODE}"}, :class_name => "GenericPage"
   has_many  :exams, -> { where "type_cd = #{Settings.GENERICPAGE_TYPECD_COMPOUNDCODE} OR type_cd = #{Settings.GENERICPAGE_TYPECD_MULTIPLEFIBCODE}"}, :class_name => "Compound"
+  has_many  :generic_pages, -> { order('type_cd ASC, id ASC') }
 
   has_many  :class_sessions
   has_many  :attendances
@@ -52,6 +53,11 @@ class Course < ApplicationRecord
   belongs_to  :parent_course, :class_name => 'Course', :foreign_key => :parent_course_id, optional: true
 
   attr_accessor :attendance_ip1, :attendance_ip2, :attendance_ip3, :attendance_ip4, :delete_flag, :delete_flag_was, :sv_course_cd, :sv_school_year, :sv_season_cd
+
+  XML_CONVERT_CEAS10 = {:chat_cd => :chatCd, :announcement_cd => :announcementCd, :faq_cd => :faqCd,
+    :group_folder_count => :groupfolderCount, :class_session_count => :classSessionCount}
+  XML_CONVERT_MANIFEST_CEAS10 = {:course_name => :courseName, :overview => :overview,
+    :generic_pages => {:tag => 'material', :xml_convertor => GenericPage::XML_CONVERT_MANIFEST_CEAS10}}
 
   class << self
     def get_year_list

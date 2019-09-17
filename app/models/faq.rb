@@ -33,6 +33,10 @@ class Faq < ApplicationRecord
 
   validate :check_data
 
+  XML_CONVERT_CEAS10 = {:user_id => :usrId, :faq_title => :faqTitle, :question => :question,
+    :open_flag => :openFlg, :response_flag => :responseFlg, :created_at => :insertDate,
+    :faq_answer => {:tag => :faqAnswer, :xml_convertor => FaqAnswer::XML_CONVERT_CEAS10}}
+
   def check_data
     validate_presence(:faq_title, I18n.t("common.COMMON_SUBJECTCHECK"))
     validate_max_length(:faq_title, I18n.t("common.COMMON_SUBJECTLENGTHCHECK"), 100)

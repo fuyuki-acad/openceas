@@ -26,6 +26,10 @@ class ClassSession < ApplicationRecord
   has_and_belongs_to_many :generic_pages, :class_name => "GenericPage",
     :join_table => :generic_page_class_session_associations, :foreign_key => :class_session_id, :association_foreign_key => :generic_page_id
   has_many    :attendances, :foreign_key => [:course_id, :class_session_no]
+  has_many  :generic_page_class_session_associations,  dependent: :delete_all
+
+  XML_CONVERT_CEAS10 = {:class_session_no => :classSessionNo, :class_session_title => :classSessionTitle, :overview => :overview,
+    :class_session_day => :classSessionDay, :class_session_memo => :classSessionMemoOpen, :class_session_memo_closed => :classSessionMemo}
 
   before_save do
     if User.current_user
