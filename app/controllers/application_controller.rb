@@ -127,27 +127,27 @@ class ApplicationController < ActionController::Base
       extname = File.extname(file_name)
       case extname.downcase
       when ".pdf"
-        ["application/pdf", true]
+        ["application/pdf", true, false]
       when ".xlsx", ".xls"
-        ["vnd.ms-excel", false]
+        ["vnd.ms-excel", false, false]
       when ".docx", ".doc"
-        ["vnd.msword", false]
+        ["vnd.msword", false, false]
       when ".pptx", ".ppt"
-        ["vnd.ms-powerpoint", false]
+        ["vnd.ms-powerpoint", false, false]
       when ".html", ".htm"
-        ["text/html", true]
+        ["text/html", true, true]
       when ".txt"
-        ["text/plain", true]
+        ["text/plain", true, true]
       when ".jpg"
-        ["image/jpeg", true]
+        ["image/jpeg", true, false]
       when ".png"
-        ["image/png", true]
+        ["image/png", true, false]
       when ".mp4", "mpg"
-        ["video/mp4", true]
+        ["video/mp4", true, false]
       when ".zip"
-        ["application/zip", false]
+        ["application/zip", false, false]
       else
-        ["application/octet-stream", false]
+        ["application/octet-stream", false, false]
       end
     end
 

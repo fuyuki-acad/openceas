@@ -76,7 +76,7 @@ class Teacher::PackagedLoadingsController < ApplicationController
       update_from_ceas10_xml(uploads, extract_file_path, @log)
     end
 
-    #remove_temporary_files(@course)
+    remove_temporary_files(@course)
 
   rescue => e
     logger.error e.backtrace.join("\n")

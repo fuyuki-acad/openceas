@@ -336,6 +336,11 @@ class GenericPage < ApplicationRecord
     end
   end
 
+  def get_explanation_file_path
+    return "" if self.explanation_link_name.blank?
+    self.get_material_path + self.explanation_link_name.to_s
+  end
+
   def destroy_file
     delete_file(self.link_name, get_material_path)
     self.file_name = ""

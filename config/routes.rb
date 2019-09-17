@@ -250,7 +250,9 @@ Rails.application.routes.draw do
   patch   "helps/:id/upload",             to: 'helps#upload'
 
   # マテリアル
-  resources :materials,   only: [:show]
+  resources :materials,   only: [:show] do
+    get   :explain_file,          on: :member
+  end
 
   # support
   get     "supports",               to: 'supports#index'
