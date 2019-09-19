@@ -181,8 +181,11 @@ module XmlConvertorModule
           else
             dest = path + "/#{generic_page.id}/#{MULTIPLEFIB_EXPPLANATION_PATH}/#{paths[0]}/"
           end
-          FileUtils.mkdir_p(dest)
-          FileUtils.cp_r generic_page.get_explanation_file_path, dest
+
+          if FileTest.exist?(generic_page.get_explanation_file_path)
+            FileUtils.mkdir_p(dest)
+            FileUtils.cp_r generic_page.get_explanation_file_path, dest
+          end
         end
 
         if generic_page.link_name
@@ -192,8 +195,11 @@ module XmlConvertorModule
           else
             dest = path + "/#{generic_page.id}/#{MULTIPLEFIB_LINK_PATH}/#{paths[0]}/"
           end
-          FileUtils.mkdir_p(dest)
-          FileUtils.cp_r generic_page.get_material_file_path, dest
+
+          if FileTest.exist?(generic_page.get_material_file_path)
+            FileUtils.mkdir_p(dest)
+            FileUtils.cp_r generic_page.get_material_file_path, dest
+          end
         end
 
       else
@@ -202,7 +208,6 @@ module XmlConvertorModule
           if generic_page.material?
             link_paths = generic_page.link_name.split("/")
             dest = path + "/#{generic_page.id}/"
-            FileUtils.mkdir_p(dest)
             if link_paths.size < 2
               src = generic_page.get_material_file_path
             else

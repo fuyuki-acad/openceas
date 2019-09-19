@@ -52,6 +52,11 @@ class MaterialsController < ApplicationController
     end
 
     def send_material_file(file_path, file_name)
+      unless FileTest.exist?(file_path)
+        render plain: t("common.COMMON_ERROR_NOTEXISTFILE")
+        return
+      end
+
       stat = File::stat(file_path)
 
       if file_name.blank?
