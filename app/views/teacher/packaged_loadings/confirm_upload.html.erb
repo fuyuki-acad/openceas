@@ -216,8 +216,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['material'] && @uploads['material']['pages'] %>
-            <% @uploads['material']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['material']) %>
+            <% get_pages(@uploads['material']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -261,8 +261,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['url'] && @uploads['url']['pages'] %>
-            <% @uploads['url']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['url']) %>
+            <% get_pages(@uploads['url']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -306,8 +306,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['compound'] && @uploads['compound']['pages'] %>
-            <% @uploads['compound']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['compound']) %>
+            <% get_pages(@uploads['compound']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -351,8 +351,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['multiple_fib'] && @uploads['compound']['pages'] %>
-            <% @uploads['multiple_fib']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['multiple_fib']) %>
+            <% get_pages(@uploads['multiple_fib']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -396,8 +396,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['essay'] && @uploads['compound']['pages'] %>
-            <% @uploads['essay']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['essay']) %>
+            <% get_pages(@uploads['essay']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -442,8 +442,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['questionnaire'] && @uploads['compound']['pages'] %>
-            <% @uploads['questionnaire']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['questionnaire']) %>
+            <% get_pages(@uploads['questionnaire']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>
@@ -488,8 +488,8 @@
             <th><%= t("common.COMMON_SUBJECT") %></th>
           </tr>
 
-          <% if @uploads['evaluationlist'] && @uploads['compound']['pages'] %>
-            <% @uploads['evaluationlist']['pages']['page'].each.with_index(1) do |page, index| %>
+          <% if has_pages(@uploads['evaluationlist']) %>
+            <% get_pages(@uploads['evaluationlist']).each.with_index(1) do |page, index| %>
             <tr>
               <!-- No.-->
               <td><%= index %></td>

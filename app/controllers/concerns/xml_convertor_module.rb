@@ -253,19 +253,22 @@ module XmlConvertorModule
 
     else
       dirs = generic_page.link_name.split('/')
-      dest = generic_page.get_material_path + dirs[0] + "/"
+      if dirs.size < 2
+        dest = generic_page.get_material_path
+      else
+        dest = generic_page.get_material_path + dirs[0] + "/"
+      end
       FileUtils.rm_rf(dest + "*", :secure => true) unless Dir.glob(dest + "*").empty?
       FileUtils.mkdir(dest) unless FileTest.exist?(dest)
 
       if generic_page.material?
         src = extract_file_path + BASE_DIR + "/" + category_path + "/" + orginal_page_id + "/*"
         Dir.glob(src).each do |file|
-          p file
           FileUtils.cp_r(file, dest)
         end
       else
         src = extract_file_path + BASE_DIR + "/" + category_path + "/" + orginal_page_id + "/" + generic_page.link_name
-        FileUtils.cp(src, dest) if FileTest.exist?(src)
+        FileUtils.cp_r(src, dest) if FileTest.exist?(src)
       end
     end
   end

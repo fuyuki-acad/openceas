@@ -251,8 +251,8 @@ module XmlCeas10Module
 
         next if record.generic_page_class_session_associations.count == 0
 
-        xml_alocation.tag!(TAG_ALLOCATION, tag_attributes) do |xml_item|
-          record.generic_page_class_session_associations.each do |allocation|
+        record.generic_page_class_session_associations.each do |allocation|
+          xml_alocation.tag!(TAG_ALLOCATION, tag_attributes) do |xml_item|
             set_xml_tag(allocation, xml_item, tag_convertor)
           end
         end
@@ -417,7 +417,7 @@ module XmlCeas10Module
     page.material_memo = item['materialMemo'] unless null?(item['materialMemo'])
     page.material_memo_closed = item['materialMemoClosed'] unless null?(item['materialMemoClosed'])
 
-    page.save!
+    page.save!(validate: false)
 
     @convert_page[item['pageId']] = page.id
 
@@ -505,7 +505,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_MATERIALLOG1")
 
     page_params(:material)[:page_id].each do |page_id|
-      xml_material['pages']['page'].each do |item|
+      get_pages(xml_material).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -526,7 +526,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_URLLOG1")
 
     page_params(:url)[:page_id].each do |page_id|
-      xml_url['pages']['page'].each do |item|
+      get_pages(xml_url).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -543,7 +543,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_COMPOUNDLOG1")
 
     page_params(:compound)[:page_id].each do |page_id|
-      xml_compound['pages']['page'].each do |item|
+      get_pages(xml_compound).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -564,7 +564,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_MULTIPLEFIBLOG1")
 
     page_params(:multiple_fib)[:page_id].each do |page_id|
-      xml_multiple_fib['pages']['page'].each do |item|
+      get_pages(xml_multiple_fib).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -585,7 +585,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_ASSIGNMENTESSAYLOG1")
 
     page_params(:essay)[:page_id].each do |page_id|
-      xml_essay['pages']['page'].each do |item|
+      get_pages(xml_essay).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -606,7 +606,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_QUESTIONNAIRELOG1")
 
     page_params(:questionnaire)[:page_id].each do |page_id|
-      xml_questionnaire['pages']['page'].each do |item|
+      get_pages(xml_questionnaire).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -627,7 +627,7 @@ module XmlCeas10Module
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_EVALUATIONLISTLOG1")
 
     page_params(:evaluationlist)[:page_id].each do |page_id|
-      xml_evaluationlist['pages']['page'].each do |item|
+      get_pages(xml_evaluationlist).each do |item|
         if item['pageId'] == page_id
           generic_page = create_generic_page(item)
 
@@ -638,38 +638,56 @@ module XmlCeas10Module
     end
   end
 
+  def get_pages(xml)
+    if xml['pages']['page'].instance_of?(Array)
+      xml['pages']['page']
+    else
+      [xml['pages']['page']]
+    end
+  end
+
   def update_allocation(xml_allocation, log)
     xml_allocation['allocations'].each do |key, value|
       next if key !~ /allocation[\w.]/
-      value['allocation'].each do |data|
-        if @convert_page.key?(data['pageId'])
-          page_id = @convert_page[data['pageId']]
-          page = GenericPage.where(id: page_id).first
-          if page
-            class_session = ClassSession.where(course_id: @course.id, class_session_no: data['classSessionNo']).first
-            if class_session.blank?
-              class_session = ClassSession.new(course)
-              class_session.course_id = @course.id
-              class_session.class_session_no = data['classSessionNo']
-              class_session.class_session_title = I18n.t("common.COMMON_NO2") + data['classSessionNo'] + I18n.t("common.COMMON_COUNT2")
-              class_session.overview = ''
-              class_session.class_session_day = I18n.t("common.COMMON_NO2") + data['classSessionNo'] + I18n.t("common.COMMON_COUNT2")
-              class_session.save!
-            end
+      next if value.blank? || value['allocation'].blank?
 
-            assigned = GenericPageClassSessionAssociation.where(:class_session_id => class_session.id, :generic_page_id => page.id).first
-            if assigned.blank?
-              assigned = GenericPageClassSessionAssociation.new
-              assigned.class_session_id = class_session.id
-              assigned.generic_page_id = page.id
-            end
-            assigned.view_rank = data["view_rank"] unless null_convert(data['view_rank']).blank?
-            assigned.save!
-          end
+      if value['allocation'].instance_of?(Array)
+        value['allocation'].each do |data|
+          update_allocation_data(data)
         end
+      else
+        update_allocation_data(value['allocation'])
       end
     end
 
     log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_ALLOCATIONLOG1")
+  end
+
+  def update_allocation_data(data)
+    return unless @convert_page.key?(data['pageId'])
+
+    page_id = @convert_page[data['pageId']]
+    page = GenericPage.where(id: page_id).first
+    if page
+      class_session = ClassSession.where(course_id: @course.id, class_session_no: data['classSessionNo']).first
+      if class_session.blank?
+        class_session = ClassSession.new(course)
+        class_session.course_id = @course.id
+        class_session.class_session_no = data['classSessionNo']
+        class_session.class_session_title = I18n.t("common.COMMON_NO2") + data['classSessionNo'] + I18n.t("common.COMMON_COUNT2")
+        class_session.overview = ''
+        class_session.class_session_day = I18n.t("common.COMMON_NO2") + data['classSessionNo'] + I18n.t("common.COMMON_COUNT2")
+        class_session.save!
+      end
+
+      assigned = GenericPageClassSessionAssociation.where(:class_session_id => class_session.id, :generic_page_id => page.id).first
+      if assigned.blank?
+        assigned = GenericPageClassSessionAssociation.new
+        assigned.class_session_id = class_session.id
+        assigned.generic_page_id = page.id
+      end
+      assigned.view_rank = data["view_rank"] unless null_convert(data['view_rank']).blank?
+      assigned.save!
+    end
   end
 end

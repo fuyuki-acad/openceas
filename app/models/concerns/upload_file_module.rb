@@ -177,10 +177,10 @@ module UploadFileModule
   def delete_file(target_file_name, path)
     if target_file_name.include?("/")
       delete_path = "#{path}/" + File.dirname(target_file_name)
-      FileUtils.rm_r(delete_path) if Dir.exist?(delete_path)
+      FileUtils.rm_rf(delete_path) if Dir.exist?(delete_path)
     else
       delete_f =  "#{path}/#{target_file_name}"
-      File.delete(delete_f) if File.exist?(delete_f)
+      FileUtils.rm_rf(delete_f) if File.exist?(delete_f)
     end
   end
 
