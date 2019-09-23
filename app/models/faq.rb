@@ -26,7 +26,7 @@ class Faq < ApplicationRecord
 
   belongs_to  :course
   belongs_to  :user, optional: true
-  has_many  :faq_answers, -> { order('id DESC') }
+  has_many  :faq_answers, -> { order('id DESC') }, dependent: :delete_all
   has_one   :faq_answer, -> { order('id DESC') }
 
   attr_accessor :faq_answer_attributes
