@@ -344,51 +344,67 @@ module XmlCeas10Module
     return if xml_announcement.blank?
 
     if class_data_params[:announcement] == '1'
-      xml_announcement['announcements']['announcement'].each do |item|
-        data = Announcement.new
-        data.course_id = @course.id
-        data.subject = item['subject']
-        data.content = item['content']
-        data.mail_flag = item['mailFlg']
-        data.announcement_state = item['announcementCd']
-        data.insert_user_id = item['insertUsr']
-
-        data.save!
+      if xml_announcement['announcements']['announcement'].instance_of?(Array)
+        xml_announcement['announcements']['announcement'].each do |item|
+          update_announcement_data(item)
+        end
+      else
+        update_announcement_data(xml_announcement['announcements']['announcement'])
       end
 
       log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_ANNOUNCEMENTLOG1")
     end
   end
 
+  def update_announcement_data(item)
+    data = Announcement.new
+    data.course_id = @course.id
+    data.subject = item['subject']
+    data.content = item['content']
+    data.mail_flag = item['mailFlg']
+    data.announcement_state = item['announcementCd']
+    data.insert_user_id = item['insertUsr']
+
+    data.save!
+  end
+
   def update_faq(xml_faq, log)
     return if xml_faq.blank?
 
     if class_data_params[:faq] == '1'
-      xml_faq['faqs']['faq'].each do |item|
-        data = Faq.new
-        data.course_id = @course.id
-        data.user_id = item['usrId']
-        data.faq_title = item['faqTitle']
-        data.question = item['question']
-        data.open_flag = item['openFlg']
-        data.response_flag = item['responseFlg']
-
-        data.save!
-
-        if item['faqAnswer']
-          answer = FaqAnswer.new
-          answer.faq_id = data.id
-          answer.answer_title = item['faqAnswer']['answerTitle']
-          answer.answer = item['faqAnswer']['answer']
-          answer.open_answer = item['faqAnswer']['openAnswer']
-          answer.open_question = item['faqAnswer']['openQuestion']
-          answer.insert_user_id = item['faqAnswer']['insertUsr']
-
-          answer.save!
+      if xml_faq['faqs']['faq'].instance_of?(Array)
+        xml_faq['faqs']['faq'].each do |item|
+          update_faq_data(item)
         end
+      else
+        update_faq_data(xml_faq['faqs']['faq'])
       end
 
       log << I18n.t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_FAQLOG1")
+    end
+  end
+
+  def update_faq_data(item)
+    data = Faq.new
+    data.course_id = @course.id
+    data.user_id = item['usrId']
+    data.faq_title = item['faqTitle']
+    data.question = item['question']
+    data.open_flag = item['openFlg']
+    data.response_flag = item['responseFlg']
+
+    data.save!
+
+    if item['faqAnswer']
+      answer = FaqAnswer.new
+      answer.faq_id = data.id
+      answer.answer_title = item['faqAnswer']['answerTitle']
+      answer.answer = item['faqAnswer']['answer']
+      answer.open_answer = item['faqAnswer']['openAnswer']
+      answer.open_question = item['faqAnswer']['openQuestion']
+      answer.insert_user_id = item['faqAnswer']['insertUsr']
+
+      answer.save!
     end
   end
 

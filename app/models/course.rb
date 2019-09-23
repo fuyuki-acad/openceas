@@ -162,7 +162,7 @@ class Course < ApplicationRecord
 
   def check_data
     errors.add(:course_name, I18n.t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR1")) if self.course_name.blank?
-    errors.add(:overview, I18n.t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR5")) if self.overview.size > 4096
+    errors.add(:overview, I18n.t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR5")) if self.overview && self.overview.size > 4096
   end
 
   def parent_course_name
