@@ -302,7 +302,6 @@ module XmlConvertorModule
           if entry_path != "."
             FileUtils.mkdir_p(extract_file_path + entry_path) unless Dir.exist?(extract_file_path + entry_path)
           end
-          p entry_name
           zip.extract(entry, extract_file_path + entry_name) {true}
           #ext = File.extname(entry.name).downcase
           #if ext == ".txt" || ext == ".html" || ext == ".htm"
@@ -312,9 +311,13 @@ module XmlConvertorModule
       end
 
     else
+      raise "extract error"
     end
 
     extract_file_path
+
+  rescue
+    raise I18n.t("common.COMMON_UPLOADFILECHECK")
   end
 
   def get_temporary_path(course)
