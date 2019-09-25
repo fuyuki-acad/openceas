@@ -681,6 +681,7 @@ module XmlCeas10Module
 
   def update_allocation_data(data)
     return unless @convert_page.key?(data['pageId'])
+    return if @course.class_session_count < data['classSessionNo'].to_i
 
     page_id = @convert_page[data['pageId']]
     page = GenericPage.where(id: page_id).first
