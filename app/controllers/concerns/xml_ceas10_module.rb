@@ -663,6 +663,8 @@ module XmlCeas10Module
   end
 
   def update_allocation(xml_allocation, log)
+    return unless manifest_params[:allocation] == '1'
+
     xml_allocation['allocations'].each do |key, value|
       next if key !~ /allocation[\w.]/
       next if value.blank? || value['allocation'].blank?
