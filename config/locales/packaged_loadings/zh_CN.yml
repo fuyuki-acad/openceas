@@ -6,11 +6,11 @@ zh_CN:
     COMMONPACKAGEDLOADING_TITLEUPLOADMATERIALS: "选择上传文件"
     COMMONPACKAGEDLOADING_TITLECONFIRMUPLOAD: "确认上传"
     COMMONPACKAGEDLOADING_UPLOADFILE: "上传文件"
-    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "指定要读取的教材文件。(仅限于CASE规定的方式。)"
+    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "指定要读取的教材文件。(仅限于OpenCASE规定的方式。)"
     ##selectCoursePackagedLoading.jsp
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD: "同时全部上传"
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD: "同时全部下载"
-    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1)登录在课程上的教材，可作为「<strong>授课课程软件</strong>」在PC上能同时全部下载。※作为「<strong>授课课程软件</strong>」保存的文件，可任意取名,不过，压缩方式请用lzh或者zip。(<strong>建议用zip</strong>）<br/>2)被下载在PC上的「<strong>授课课程软件</strong>」，可上传在CEAS上登录。"
+    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1)登录在课程上的教材，可作为「<strong>授课课程软件</strong>」在PC上能同时全部下载。※作为「<strong>授课课程软件</strong>」保存的文件，可任意取名,不过，压缩方式请用lzh或者zip。(<strong>建议用zip</strong>）<br/>2)被下载在PC上的「<strong>授课课程软件</strong>」，可上传在OpenCEAS上登录。"
     ##confirmUploadMaterials.jsp
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION1: "请挑选登录在此课程的授课内容或教材。"
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION2: "※从CEAS 2系更新数据时的注意事项"

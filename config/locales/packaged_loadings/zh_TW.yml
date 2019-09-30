@@ -6,11 +6,11 @@ zh_TW:
     COMMONPACKAGEDLOADING_TITLEUPLOADMATERIALS: "選擇上傳文件"
     COMMONPACKAGEDLOADING_TITLECONFIRMUPLOAD: "確認上傳"
     COMMONPACKAGEDLOADING_UPLOADFILE: "上傳文件"
-    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "請指定讀取的教材文件。只限CEAS上指定的檔案。"
+    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "請指定讀取的教材文件。只限OpenCEAS上指定的檔案。"
     ##selectCoursePackagedLoading.jsp
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD: "全上傳"
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD: "全下載"
-    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1)可將登錄於此科目的教材全數以「課程教育軟體」下戴至個人電腦。※儲存至「課程教育軟體」的文件可任意命名，但壓縮檔只限lzh或zip。2)將下載至個人電腦的課程教育軟體上傳到CEAS並登錄。"
+    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1)可將登錄於此科目的教材全數以「課程教育軟體」下戴至個人電腦。※儲存至「課程教育軟體」的文件可任意命名，但壓縮檔只限lzh或zip。2)將下載至個人電腦的課程教育軟體上傳到OpenCEAS並登錄。"
     ##confirmUploadMaterials.jsp
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION1: "請選擇想登錄至此科目的課程內容或教材"
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION2: "※與來自CEAS2系統的數據更新相同的注意事項"

@@ -6,11 +6,11 @@ ja:
     COMMONPACKAGEDLOADING_TITLEUPLOADMATERIALS: "アップロードファイル選択"
     COMMONPACKAGEDLOADING_TITLECONFIRMUPLOAD: "アップロード確認"
     COMMONPACKAGEDLOADING_UPLOADFILE: "アップロードファイル"
-    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "読み込む教材のファイルを指定してください。ただし、CEASで指定された形式に限ります。"
+    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "読み込む教材のファイルを指定してください。ただし、OpenCEASで指定された形式に限ります。"
     ##selectCoursePackagedLoading.jsp
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD: "一括アップロード"
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD: "一括ダウンロード"
-    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "１）科目に登録されている教材を一括し「<strong>授業コースウェア</strong>」としてPC上にダウンロードできます。<br/>※「<strong>授業コースウェア</strong>」として保存するファイル名は任意に付けられますが、圧縮形式はlzhもしくはzipにしてください。（<strong>zip推奨</strong>）<br/>２）PC上にダウンロードされている「<strong>授業コースウェア</strong>」をCEAS上にアップロードして登録します。"
+    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "１）科目に登録されている教材を一括し「<strong>授業コースウェア</strong>」としてPC上にダウンロードできます。<br/>※「<strong>授業コースウェア</strong>」として保存するファイル名は任意に付けられますが、圧縮形式はlzhもしくはzipにしてください。（<strong>zip推奨</strong>）<br/>２）PC上にダウンロードされている「<strong>授業コースウェア</strong>」をOpenCEAS上にアップロードして登録します。"
     ##confirmUploadMaterials.jsp
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION1: "この科目に登録したい授業内容や教材を選択してください。"
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION2: "※CEAS 2系からのデータ更新に伴う注意点"

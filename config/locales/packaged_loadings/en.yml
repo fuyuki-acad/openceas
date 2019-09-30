@@ -6,11 +6,11 @@ en:
     COMMONPACKAGEDLOADING_TITLEUPLOADMATERIALS: "Select upload file(s)"
     COMMONPACKAGEDLOADING_TITLECONFIRMUPLOAD: "Confirm upload"
     COMMONPACKAGEDLOADING_UPLOADFILE: "Uploaded file"
-    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "Specify the file format to upload. Note that some file formats are not available with CEAS."
+    COMMONPACKAGEDLOADING_UPLOADMATERIALSEXPLANATION1: "Specify the file format to upload. Note that some file formats are not available with OpenCEAS."
     ##selectCoursePackagedLoading.jsp
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD: "Package upload"
     PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD: "Package download"
-    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1. All the course contents registered to the course can be downloaded onto your PC as <strong> Package courseware </strong>. <br/> You can give any name to the package courseware, however, compress the file in lzh or zip only <strong> zip file preferred </strong>. <br/> 2. Upload <strong> the Package courseware </strong> from your PC back to CEAS."
+    PAC_SELECTCOURSEPACKAGEDLOADING_EXPLANATION1_html: "1. All the course contents registered to the course can be downloaded onto your PC as <strong> Package courseware </strong>. <br/> You can give any name to the package courseware, however, compress the file in lzh or zip only <strong> zip file preferred </strong>. <br/> 2. Upload <strong> the Package courseware </strong> from your PC back to OpenCEAS."
     ##confirmUploadMaterials.jsp
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION1: "Select the course contents to add to this course."
     PAC_CONFIRMUPLOADMATERIALS_EXPLANATION2: "Note: Uploading contents from CEAS2."
