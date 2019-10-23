@@ -23,4 +23,6 @@
 
 class SelectQuiz < ApplicationRecord
   belongs_to  :question
+
+  XML_CONVERT_CEAS10 = {:content => :content, :select_correct_flag => :selectCorrectFlg, :select_mark_flag => :selectMarkFlg, :text_row => :textRow}
 end

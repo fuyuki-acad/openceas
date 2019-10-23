@@ -26,12 +26,16 @@ class Faq < ApplicationRecord
 
   belongs_to  :course
   belongs_to  :user, optional: true
-  has_many  :faq_answers, -> { order('id DESC') }
+  has_many  :faq_answers, -> { order('id DESC') }, dependent: :delete_all
   has_one   :faq_answer, -> { order('id DESC') }
 
   attr_accessor :faq_answer_attributes
 
   validate :check_data
+
+  XML_CONVERT_CEAS10 = {:user_id => :usrId, :faq_title => :faqTitle, :question => :question,
+    :open_flag => :openFlg, :response_flag => :responseFlg, :created_at => :insertDate,
+    :faq_answer => {:tag => :faqAnswer, :xml_convertor => FaqAnswer::XML_CONVERT_CEAS10}}
 
   def check_data
     validate_presence(:faq_title, I18n.t("common.COMMON_SUBJECTCHECK"))

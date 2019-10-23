@@ -26,7 +26,7 @@ class GenericPage < ApplicationRecord
 
   belongs_to  :course
   has_many  :answer_scores,  :foreign_key => :page_id
-  has_many  :generic_page_class_session_associations
+  has_many  :generic_page_class_session_associations,  dependent: :delete_all
   has_many  :answer_score_histories,  :foreign_key => :page_id
 
   has_and_belongs_to_many :questions, :class_name => "Question",
@@ -44,6 +44,17 @@ class GenericPage < ApplicationRecord
   TYPE_CREATEHTML = '2'
 
   DEFAULT_PASS_GRADE = 60
+
+  XML_CONVERT_CEAS10 = {:tag_attributes => {:course_id => :courseId, :id => :pageId}, :type_cd => :typeCd,
+    :generic_page_title => :pageTitle, :start_pass => :startPass, :start_time => :startTime, :end_time => :endTime,
+    :file_name => :fileName, :link_name => :linkName, :explanation_file_name => :explanationFileName,
+    :max_count => :maxCount, :pass_grade => :passGrade, :self_flag => :selfFlg, :self_pass => :selfPass,
+    :edit_flag => :editFlg, :anonymous_flag => :anonymousFlg, :timelag_flag => :timelagFlg,
+    :url_content => :urlContent, :pre_grading_enable_flag => :preGradingEnableFlg,
+    :assignment_essay_return_method_cd => :assignmentEssayReturnMethodCd, :score_open_flag => :scoreOpenFlg,
+    :material_memo => :materialMemo, :material_memo_closed => :materialMemoClosed,
+    :parent_questions => {:tag => 'parentQuestion', :xml_convertor => Question::XML_CONVERT_PARENT_CEAS10}}
+  XML_CONVERT_MANIFEST_CEAS10 = {:type_cd => :typeCd, :id => :pageId, :generic_page_title => :pageTitle}
 
   after_initialize do
     if self.new_record?
@@ -323,6 +334,11 @@ class GenericPage < ApplicationRecord
     if type_cd != Settings.GENERICPAGE_TYPECD_URLCODE
       self.get_material_path + self.link_name.to_s
     end
+  end
+
+  def get_explanation_file_path
+    return "" if self.explanation_link_name.blank?
+    self.get_material_path + self.explanation_link_name.to_s
   end
 
   def destroy_file

@@ -90,7 +90,7 @@
   <% unless @generic_page.explanation_link_name.blank? %>
     <div class="text-center">
       <div class="btn-group">
-        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), @generic_page.get_explanation_link_url, :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
+        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), explain_file_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
       </div>
     </div>
   <% end %>

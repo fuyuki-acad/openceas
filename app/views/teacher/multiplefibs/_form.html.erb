@@ -133,7 +133,7 @@
         <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWERFILEEXPLANATION") %>
       <% else %>
         <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
-        <%= link_to t("common.COMMON_READ"), @generic_page.get_explanation_link_url, :class => "explanation", :target => "_blank" %>
+        <%= link_to t("common.COMMON_READ"), explain_file_material_path(@generic_page.id), :class => "explanation", :target => "_blank" %>
         <%= link_to t("common.COMMON_DELETE"), {:action => :destroy_file, id: @generic_page}, :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :class => "btn btn-danger", :method => :delete %>
       <% end %>
       <br/>

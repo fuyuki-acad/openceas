@@ -45,6 +45,13 @@ class Question < ApplicationRecord
   MAX_SELECT_COUNT = 100
   MAX_ROWS = 60
 
+  XML_CONVERT_CEAS10 = {:content => :content, :pattern_cd => :patternCd, :score => :score,
+    :correct_answer_memo => :correctAnswerMemo, :wrong_answer_memo => :wrongAnswerMemo, :answer_memo => :answerMemo,
+    :must_flag => :mustFlg, :otherFlg => :otherFlg, :random_cd => :randomCd, :answer_in_full_cd => :answerInFullCd, :text_row => :textRow,
+    :all_quizzes => {:tag => 'sel', :xml_convertor => SelectQuiz::XML_CONVERT_CEAS10}}
+
+  XML_CONVERT_PARENT_CEAS10 = {:content => :content, :questions => {:tag => 'question', :xml_convertor => Question::XML_CONVERT_CEAS10}}
+
   after_initialize do
     self.text_count = self.select_quizzes.count if self.text_count.blank?
     if self.select_ohters.count == 0
