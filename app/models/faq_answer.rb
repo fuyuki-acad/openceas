@@ -28,6 +28,9 @@ class FaqAnswer < ApplicationRecord
 
   validate :check_data
 
+  XML_CONVERT_CEAS10 = {:answer_title => :answerTitle, :answer => :answer, :open_answer => :openAnswer,
+    :open_question => :openQuestion, :insert_user_id => :insertUsrId, :created_at => :insertDate}
+
   def check_data
     validate_presence(:answer_title, I18n.t("faq.FAQ_ANSWERFAQ_SCRIPT1"))
     validate_max_length(:answer_title, I18n.t("faq.FAQ_ANSWERFAQ_SCRIPT2"), 128)

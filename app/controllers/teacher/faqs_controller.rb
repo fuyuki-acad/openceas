@@ -92,6 +92,13 @@ class Teacher::FaqsController < ApplicationController
     redirect_to teacher_faq_path(@faq.course_id), :notice => e.message
   end
 
+  def destroy
+    items = params[:faq].keys if params[:faq]
+    Faq.destroy(items)
+
+    redirect_to :action => :show, :course_id => params[:course_id]
+  end
+
   private
     def set_faq
       @faq = Faq.find(params[:id])

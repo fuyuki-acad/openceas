@@ -159,6 +159,19 @@ $(document).on 'click', '.check_selector', (e) ->
     $(this).text($(this).data('off-title'))
   @
 
+$(document).on 'click', '.check_all_selector', (e) ->
+  e.preventDefault()
+  e.stopPropagation()
+  if ($(this).attr('data-status') == 'on')
+    $('input[type="checkbox"]').prop('checked', false)
+    $(this).attr('data-status', 'off')
+    $(this).text($(this).data('on-title'))
+  else
+    $('input[type="checkbox"]').prop('checked', true)
+    $(this).attr('data-status', 'on')
+    $(this).text($(this).data('off-title'))
+  @
+
 $(document).on 'click', '.check_text', (e) ->
   e.preventDefault()
   e.stopPropagation()

@@ -83,8 +83,6 @@ en:
     MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_COPY_EXPLANATION1_html: "You can copy a course content which is used in other courses. Use the Copy from other course button."
     MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_COPY_EXPLANATION2_html: "You can copy an URL content which is used in other courses. Use the Copy from other course button."
     MAT_REG_MAT_PAGEMANAGEMENT_OTHER_MATERIAL_ALLCOPY_EXPLANATION1_html: "Collectively the lesson material that has been registered in a number of other subjects you can copy and register. Use the [bulk-copy] button."
-    MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION4: "※向选修者公开。"
-    MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION5: "※不向选修者公开。"
     MAT_REG_MAT_PAGEMANAGEMENT_CLOSEDCOMMENT: "Hidden memo"
     MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT2: "Hidden memo is up to 4096 letters."
     MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG2: "Hidden memo is too long (up to 4996 letters)."

@@ -656,3 +656,26 @@ crumb :not_read_assignment_essay_and_faqs do
   link t("top.INSTRUCTORTOP_NOTREADINFORMATION7"), teacher_not_read_assignment_essay_and_faqs_path
   parent :root
 end
+
+#
+# 教材一括更新
+#
+crumb :packaged_loadings do
+  link t("common.COMMON_COURSESELECT"), teacher_packaged_loadings_path
+  parent :root
+end
+
+crumb :select_upload_file_packaged_loadings do |course|
+  link t("packaged_loadings.COMMONPACKAGEDLOADING_TITLEUPLOADMATERIALS"), teacher_select_upload_file_packaged_loadings_path(course)
+  parent :packaged_loadings
+end
+
+crumb :confirm_upload_packaged_loadings do |course|
+  link t("packaged_loadings.COMMONPACKAGEDLOADING_TITLECONFIRMUPLOAD"), teacher_confirm_upload_file_packaged_loadings_path(course)
+  parent :select_upload_file_packaged_loadings, course
+end
+
+crumb :commit_upload_packaged_loadings do |course|
+  link t("packaged_loadings.PAC_FINISHUPLOADMATERIALS_FINISH"), teacher_commit_upload_file_packaged_loadings_path(course)
+  parent :select_upload_file_packaged_loadings, course
+end

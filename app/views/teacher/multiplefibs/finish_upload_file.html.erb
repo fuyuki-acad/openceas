@@ -112,7 +112,7 @@
             </td>
             <td>
               <% unless @generic_page.explanation_link_name.blank? %>
-                <%= link_to @generic_page.explanation_file_name, @generic_page.get_explanation_link_url, {target: "_blank"} %>
+                <%= link_to @generic_page.explanation_file_name, explain_file_material_path(@generic_page.id), {target: "_blank"} %>
               <% end %>
             </td>
           </tr>
