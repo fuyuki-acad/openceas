@@ -233,7 +233,7 @@
         <% if @question.new_record? %>
           <%= form.submit t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
         <% else %>
-          <%= form.submit t("common.COMMON_EDIT"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
+          <%= form.submit t("common.COMMON_REGISTER"), :class => "btn btn-primary ceas-button-margin-5 center-block" %>
         <% end %>
         <%= form.button t("common.COMMON_CANCEL"), :type => :reset, :class => "btn btn-default ceas-button-margin-5 center-block clear_question_form" %>
         <%= link_to t("common.COMMON_RETURN"), {:action => :show, :generic_page_id => @generic_page}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
