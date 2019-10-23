@@ -23,6 +23,7 @@
 
 class EssayResultsController < Teacher::Result::EssaysController
   before_action :require_teacher_permission, except: [:index]
+  before_action :set_courses, only: [:index]
 
   def index
     session[:essay_search] = nil
@@ -52,4 +53,13 @@ class EssayResultsController < Teacher::Result::EssaysController
 			end
     end
   end
+
+  private
+    def set_courses
+      if current_user.admin?
+        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd")
+      elsif current_user.teacher?
+        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true)
+      end
+    end
 end
