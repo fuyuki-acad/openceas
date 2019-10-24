@@ -40,7 +40,11 @@ class Teacher::Result::QuestionnairesController < ApplicationController
     @generic_page = @question.parent.generic_pages.first
     @other_answers = []
 
-    users = User.joins(:enrollment_courses => :questionnaires).where("generic_pages.id = ?", @generic_page.id)
+    if @generic_page.anonymous_flag == Settings.GENERICPAGE_ANONYNOUSFLG_ON
+      users = User.joins(:answer_scores).where("answer_scores.page_id = ?", @generic_page.id).order("answer_scores.created_at")
+    else
+      users = User.joins(:enrollment_courses => :questionnaires).where("generic_pages.id = ?", @generic_page.id)
+    end
 
     if @question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY
       users.each do |user|
