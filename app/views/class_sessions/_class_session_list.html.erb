@@ -116,7 +116,7 @@
             <% if @class_session && @class_session.class_session_no > 0 %>
               <%= link_to t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ATTENDANCETABLE"), "javascript:void();",
                 {:class => "btn btn-default btn-block ceas-button-margin-5",
-                 :onclick => "openWindow2('" + teacher_attendance_path(@course, :session_no => @class_session.class_session_no) +"', 'registerAttendanceWindow', '500', '300')"} %>
+                 :onclick => "openWindow1('" + teacher_attendance_path(@course, :session_no => @class_session.class_session_no) +"', 'registerAttendanceWindow', '500', '300')"} %>
             <% end %>
           </div>
         <% end %>
