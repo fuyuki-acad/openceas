@@ -35,11 +35,11 @@
           </span>
 
           <span class='badge badge-info'>
-            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ATTENDANCE_ICON", :param0 => @course.attendance_count_by_late(current_user), :param1 => @course.attendance_count_all(current_user)) %>
+            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_LATE_ICON", :param0 => @course.attendance_count_by_late(current_user), :param1 => @course.attendance_count_all(current_user)) %>
           </span>
 
           <span class='badge badge-info'>
-            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ATTENDANCE_ICON", :param0 => @course.attendance_count_by_absent(current_user), :param1 => @course.attendance_count_all(current_user)) %>
+            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ABSENCE_ICON", :param0 => @course.attendance_count_by_absent(current_user), :param1 => @course.attendance_count_all(current_user)) %>
           </span>
         </h3>
       </div>
