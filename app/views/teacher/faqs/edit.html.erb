@@ -161,9 +161,9 @@
             <td>
               <%= t("faq.COMMONFAQ_REPLYSUBJECT") %>
               <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY %>
-                <code>
+                <span class='badge badge-essencial'>
                   <%= t("common.COMMON_ESSENCIAL") %>
-                </code>
+                </span>
               <% end %>
             </td>
             <td>
@@ -182,9 +182,9 @@
             <td>
               <%= t("faq.COMMONFAQ_ANSWERCONTENT") %>
               <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY %>
-                <code>
+                <span class='badge badge-essencial'>
                   <%= t("common.COMMON_ESSENCIAL") %>
-                </code>
+                </span>
               <% end %>
             </td>
             <td>

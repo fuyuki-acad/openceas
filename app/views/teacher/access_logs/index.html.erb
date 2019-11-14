@@ -46,6 +46,7 @@
               <td>
                 <div class="col-xs-12 col-sm-3">
                   <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE1") %>
+                  <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                   <%= select_tag :type, options_for_select(log_type_list, params[:type]), {:class => "form-control", :include_blank => true} %>

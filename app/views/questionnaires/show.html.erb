@@ -155,7 +155,7 @@
                   <div class='panel-heading'>
                     <%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %>
                     <% if question.must_flag == Settings.QUESTION_MUSTFLG_MUST %>
-                      <strong><%= t("common.COMMON_ESSENCIAL") %></strong>
+                      <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
                     <% end %>
                   </div>
                   <div class='panel-body'>

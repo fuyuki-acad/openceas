@@ -113,25 +113,34 @@
               <div class="form-group">
                 <label for="current-Password" class="col-xs-10">
                   <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE1") %>
+                  <span class='badge badge-essencial'>
+                    <%= t("common.COMMON_ESSENCIAL") %>
+                  </span>
                 </label>
                 <div class="col-xs-10">
-                  <%= form.password_field :current_password, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                  <%= form.password_field :current_password, autocomplete: "off", id: 'pass', class: 'form-control form-password' %>
                 </div>
               </div>
               <div class="form-group">
                 <label for="new-Password" class="col-xs-10">
                   <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE2") %>
+                  <span class='badge badge-essencial'>
+                    <%= t("common.COMMON_ESSENCIAL") %>
+                  </span>
                 </label>
                 <div class="col-xs-10">
-                  <%= form.password_field :password, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                  <%= form.password_field :password, autocomplete: "off", id: 'pass', class: 'form-control form-password' %>
                 </div>
               </div>
               <div class="form-group">
                 <label for="new-Password-re-enter" class="col-xs-10">
                   <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_PASSWORDTABLE3") %>
+                  <span class='badge badge-essencial'>
+                    <%= t("common.COMMON_ESSENCIAL") %>
+                  </span>
                 </label>
                 <div class="col-xs-10">
-                  <%= form.password_field :password_confirmation, autocomplete: "off", id: 'pass', class: 'form-control' %>
+                  <%= form.password_field :password_confirmation, autocomplete: "off", id: 'pass', class: 'form-control form-password' %>
                 </div>
               </div>
               <div class="form-group">
@@ -199,17 +208,23 @@
                   </div>
                   <label for="new-Email-1" class="col-xs-10">
                     <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_MAILADDRESS2") %>
+                    <span class='badge badge-essencial'>
+                      <%= t("common.COMMON_ESSENCIAL") %>
+                    </span>
                   </label>
                   <div class="col-xs-10">
-                    <%= form.email_field :new_email, autofocus: false, class: 'string required form-control' %>
+                    <%= form.email_field :new_email, autofocus: false, class: 'string required form-control form-mail' %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="new-Email-1-re-enter" class="col-xs-10">
                     <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_MAILADDRESS3") %>
+                    <span class='badge badge-essencial'>
+                      <%= t("common.COMMON_ESSENCIAL") %>
+                    </span>
                   </label>
                   <div class="col-xs-10">
-                    <%= form.email_field :email_confirmation, autofocus: false, class: 'string required form-control' %>
+                    <%= form.email_field :email_confirmation, autofocus: false, class: 'string required form-control form-mail' %>
                   </div>
                 </div>
                 <div class="form-group">
@@ -256,17 +271,23 @@
                   </div>
                   <label for="new-Email-2" class="col-xs-10">
                     <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_CELLULARPHONEMAILADDRESS2") %>
+                    <span class='badge badge-essencial'>
+                      <%= t("common.COMMON_ESSENCIAL") %>
+                    </span>
                   </label>
                   <div class="col-xs-10">
-                    <%= form.email_field :new_email_mobile, autofocus: false, class: 'string required form-control' %>
+                    <%= form.email_field :new_email_mobile, autofocus: false, class: 'string required form-control form-mail' %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="new-Email-2-re-enter" class="col-xs-10">
                     <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_CELLULARPHONEMAILADDRESS3") %>
+                    <span class='badge badge-essencial'>
+                      <%= t("common.COMMON_ESSENCIAL") %>
+                    </span>
                   </label>
                   <div class="col-xs-10">
-                    <%= form.email_field :email_mobile_confirmation, autofocus: false, class: 'string required form-control' %>
+                    <%= form.email_field :email_mobile_confirmation, autofocus: false, class: 'string required form-control form-mail' %>
                   </div>
                 </div>
                 <div class="form-group">
