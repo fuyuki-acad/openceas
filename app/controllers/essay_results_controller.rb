@@ -60,6 +60,8 @@ class EssayResultsController < Teacher::Result::EssaysController
         @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd")
       elsif current_user.teacher?
         @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true)
+      else
+        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ?", current_user.id, false, true, false)
       end
     end
 end
