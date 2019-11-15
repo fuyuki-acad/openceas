@@ -47,7 +47,7 @@ zh_CN:
     COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1: "请点“参照”按钮,指定你电脑上的文件。"
     COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION2: "(请在使用所附资料时指定。)"
     COMMONMATERIALSREGISTRATION_STARTPASSWORDEXPLANATION: "(如果不输入,开始时不要求填密码)"
-    COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION1: "请指定要读取的教材文件。但仅限于CEAS规定的方式。"
+    COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION1: "请指定要读取的教材文件。但仅限于OpenCEAS规定的方式。"
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION2: "以下文件就要上传,如果可以,请点击“登录开始”按钮。"
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION3_html: "教材登录完毕。<br>下面的一览是制作的网页和问题(课题)的予览。<br>这些登录信息，可以在各自的编辑页面晶形修改。"
     COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION: "(已经有人解答,不能删除。)"
@@ -86,7 +86,7 @@ zh_CN:
     COMMONMATERIALSREGISTRATION_TABLE17: "设定"
     COMMONMATERIALSREGISTRATION_TABLE18: "答复条件"
     COMMONMATERIALSREGISTRATION_TABLE19: "补充的内容"
-    COMMONMATERIALSREGISTRATION_TABLE20: "要读取的CEAS教材的上传文件"
+    COMMONMATERIALSREGISTRATION_TABLE20: "要读取的OpenCEAS教材的上传文件"
     COMMONMATERIALSREGISTRATION_TABLE21: "文件名"
     COMMONMATERIALSREGISTRATION_TABLE22: "文件大小(KB)"
     COMMONMATERIALSREGISTRATION_TABLE23: "如果事先选择此可选项请打勾"
@@ -261,7 +261,7 @@ zh_CN:
 
     ##help.jsp
     MAT_REG_MUL_HELP_EXPLANATION1_html: "<span class: \"explanation_text\">关于制作解答填写栏</span><br>①请在“大问题序号”中输入数字。<br>②在相同的大问题中，对“顺序不同”列中<strong>输入同样号码的行的解答</strong>，为“顺序不同”的正确解答。<br>③在相同的大问题中,对“需要全部解答”行<strong>输入同样号码处的解答</strong>，只有全部行解答正确才视为全部正确。(得分的<strong>输入值中的最大值</strong>。)"
-    MAT_REG_MUL_HELP_EXPLANATION2_html: "<span class: \"explanation_text\">关于问题纸张文件</span><br>在这个页面上即使编辑・保存了问题纸张文件，也不能改变登录在CEAS的文件内容。<br>如果进行编辑，可以点所“F12”键来保存在所使用的电脑上。请从「登录完毕页一览」选择相符合的考试，然后通过“页编辑”页面<strong>再次上传文件</strong>。"
+    MAT_REG_MUL_HELP_EXPLANATION2_html: "<span class: \"explanation_text\">关于问题纸张文件</span><br>在这个页面上即使编辑・保存了问题纸张文件，也不能改变登录在OpenCEAS的文件内容。<br>如果进行编辑，可以点所“F12”键来保存在所使用的电脑上。请从「登录完毕页一览」选择相符合的考试，然后通过“页编辑”页面<strong>再次上传文件</strong>。"
 
     #####レポート課題作成#####
     ##registerAssignmentEssay.jsp
@@ -278,7 +278,7 @@ zh_CN:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION9: "将消息告知学生"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION10: "办理结束之前的得分"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION11: "（每个读书报告的退还／或者是得分时能够指定。）"
-    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "关于读书报告的退还，<br>报告是退还中的时候，学生可以从CEAS下载退还的读书报告。（也可以通过邮件通知学生。）"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "关于读书报告的退还，<br>报告是退还中的时候，学生可以从OpenCEAS下载退还的读书报告。（也可以通过邮件通知学生。）"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION13_html: "请按年→月→日的顺序设定报告书的受理时间。到了所设定的受理截止时间，报告书的受理将自动结束。"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT: "制作问题"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_SCRIPT: "密码请用半角英数字"

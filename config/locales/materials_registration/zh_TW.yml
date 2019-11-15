@@ -47,7 +47,7 @@ zh_TW:
     COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1: "請由您電腦上文件的「參照」來進行指定"
     COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION2: "（使用附加資料時請指定）"
     COMMONMATERIALSREGISTRATION_STARTPASSWORDEXPLANATION: "（未輸入密碼的話，開始進行時將不需要填入密碼）"
-    COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION1: "請指定讀取的教材文件。只限於CEAS上指定的形式。"
+    COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION1: "請指定讀取的教材文件。只限於OpenCEAS上指定的形式。"
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION2: "將以下文件上傳。確認上傳請按「登錄開始」鍵"
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION3_html: "教材登錄完成。預覽網頁。以上登錄資訊可從編輯進行更改。"
     COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION: "（已有解答者。無法進行刪除。）"
@@ -86,7 +86,7 @@ zh_TW:
     COMMONMATERIALSREGISTRATION_TABLE17: "設定"
     COMMONMATERIALSREGISTRATION_TABLE18: "回答條件"
     COMMONMATERIALSREGISTRATION_TABLE19: "補充"
-    COMMONMATERIALSREGISTRATION_TABLE20: "CEAS教材的上傳文件"
+    COMMONMATERIALSREGISTRATION_TABLE20: "OpenCEAS教材的上傳文件"
     COMMONMATERIALSREGISTRATION_TABLE21: "文件名稱"
     COMMONMATERIALSREGISTRATION_TABLE22: "文件大小"
     COMMONMATERIALSREGISTRATION_TABLE23: "事前將此選項做記號的話將會打勾"
@@ -261,7 +261,7 @@ zh_TW:
 
     ##help.jsp
     MAT_REG_MUL_HELP_EXPLANATION1_html: "有關製作填入解答的部份①請於「第～大問題」中輸入數字。②在相同大問題內「順序不同」列裡輸入相同號碼行的解答，為「順序不同」的正確解答。③在相同的大問題內「完整解答」行中輸入相同號碼的解答，只有全數的行都為正確解答時才算全數達對。（得分為輸入各小問題的最大數值）"
-    MAT_REG_MUL_HELP_EXPLANATION2_html: "有關問題卷文件  即使在此畫面上進行編輯˙儲存仍無法更改已登錄在CEAS上的文件內容。要進行編輯時請按「F12」存在您的個人電腦裡，再從「登錄頁面一覽」中選擇該測驗，於「頁面編輯」的畫面再次進行文件的上傳。"
+    MAT_REG_MUL_HELP_EXPLANATION2_html: "有關問題卷文件  即使在此畫面上進行編輯˙儲存仍無法更改已登錄在OpenCEAS上的文件內容。要進行編輯時請按「F12」存在您的個人電腦裡，再從「登錄頁面一覽」中選擇該測驗，於「頁面編輯」的畫面再次進行文件的上傳。"
 
     #####レポート課題作成#####
     ##registerAssignmentEssay.jsp
@@ -278,7 +278,7 @@ zh_TW:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION9: "將消息告知學生"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION10: "辦理結束之前的得分"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION11: "（每個報告書的退還／或者是得分時能够指定。）"
-    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "關於報告書的退還，<br>報告書是退還中的時候，学生可以從CEAS下載退還的報告書。（也可以通過郵件通知學生。）"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "關於報告書的退還，<br>報告書是退還中的時候，学生可以從OpenCEAS下載退還的報告書。（也可以通過郵件通知學生。）"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION13_html: "請按年→月→日的順序設定報告書的受理時間。到了所設定的受理截止時間，報告書的受理將自動結束。"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT: "製作習題"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_SCRIPT: "密碼請輸入半角英數字"
