@@ -130,22 +130,22 @@
                 <td><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
 
                 <!-- 曜日 -->
-                <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
                 <!-- 時限 -->
-                <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
                 <!-- 年度 -->
-                <td class="td-bold"><%= course.school_year %></td>
+                <td class="td-bold td-nowrap"><%= course.school_year %></td>
 
                 <!-- 学期 -->
-                <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
 
                 <!-- 科目名称 -->
                 <td class="td-bold"><%= course.course_name %></td>
 
                 <!-- 担任者 -->
-                <td class="td-bold"><%= course.instructor_name %></td>
+                <td class="td-bold td-nowrap"><%= course.instructor_name %></td>
 
                 <% if controller.controller_name == 'courses' %>
                   <!-- CSVダウンロード -->
@@ -156,7 +156,7 @@
                   </td>
                 <% else %>
                   <!-- 系・学科・コース -->
-                  <td class="td-bold"><%= course.major %></td>
+                  <td class="td-bold td-nowrap"><%= course.major %></td>
                 <% end %>
               </tr>
             <% end %>

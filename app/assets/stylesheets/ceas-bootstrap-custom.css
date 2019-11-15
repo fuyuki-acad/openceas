@@ -338,6 +338,13 @@ span.badge {
 	font-weight: normal;
 }
 
+th.th-nowrap {
+  white-space: nowrap;
+}
+td.td-nowrap {
+  white-space: nowrap;
+}
+
 @media (min-width: 768px) {
   .form-username {
     width: 250px;

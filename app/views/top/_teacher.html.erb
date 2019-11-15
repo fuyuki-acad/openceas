@@ -231,25 +231,25 @@
                   <td class="td-bold"><%= index %></td>
 
                   <!-- 曜日 -->
-                  <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
                   <!-- 時限 -->
-                  <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
                   <!-- 年度 -->
-                  <td class="td-bold"><%= course.school_year %></td>
+                  <td class="td-bold td-nowrap"><%= course.school_year %></td>
 
                   <!-- 学期 -->
-                  <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
 
                   <!-- 科目名称 -->
                   <td class="td-bold"><%= course.course_name %></td>
 
                   <!-- 担任者 -->
-                  <td class="td-bold"><%= course.instructor_name %></td>
+                  <td class="td-bold td-nowrap"><%= course.instructor_name %></td>
 
                   <!-- 系・学科・コース -->
-                  <td class="td-bold"><%= course.major %></td>
+                  <td class="td-bold td-nowrap"><%= course.major %></td>
 
                   <!-- 授業実施画面 -->
                   <td class="td-bold"><%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %></td>
@@ -306,19 +306,19 @@
                   <!-- No. -->
                   <td class="td-bold"><%= index %></td>
                   <!-- 曜日 -->
-                  <td class="td-bold"><%= convert_day_cd(open_course.day_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_day_cd(open_course.day_cd) %></td>
                   <!-- 時限 -->
-                  <td class="td-bold"><%= convert_hour_cd(open_course.hour_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_hour_cd(open_course.hour_cd) %></td>
                   <!-- 年度 -->
-                  <td class="td-bold"><%= open_course.school_year %></td>
+                  <td class="td-bold td-nowrap"><%= open_course.school_year %></td>
                   <!-- 学期 -->
-                  <td class="td-bold"><%= convert_season_cd(open_course.season_cd) %></td>
+                  <td class="td-bold td-nowrap"><%= convert_season_cd(open_course.season_cd) %></td>
                   <!-- 科目名称 -->
                   <td class="td-bold"><%= open_course.course_name %></td>
                   <!-- 担任者 -->
-                  <td class="td-bold"><%= open_course.instructor_name %></td>
+                  <td class="td-bold td-nowrap"><%= open_course.instructor_name %></td>
                   <!-- 系・学科・コース -->
-                  <td class="td-bold"><%= open_course.major %></td>
+                  <td class="td-bold td-nowrap"><%= open_course.major %></td>
                   <!-- 授業実施画面へボタン -->
                   <td class="td-bold"><%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary ceas-button-margin-5", :onclick => "javaScript:setGoCdInstructor('2')" %></td>
                 </tr>
