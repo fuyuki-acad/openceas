@@ -29,6 +29,54 @@
 <!-- アンカー -->
 <a id="anchor-top" />
 
+<!-- 検索 -->
+<div class="row">
+  <% if current_user.admin? %>
+    <%= form_tag url_for({:action => :index}), :method => :get do %>
+      <div class="col-xs-12 col-sm-10">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="col-xs-12 col-sm-6">
+              <%= radio_button_tag :type1, "0", true %> <%= t('common.COMMON_COURSENAME') %>
+              <%= radio_button_tag :type1, "1", params[:type1] == "1" %> <%= t('common.COMMON_INSTRUCTORNAME') %>
+              <%= radio_button_tag :type1, "2", params[:type1] == "2" %> <%= t('common.COMMON_COURSECD') %>
+
+              <div class="input-group">
+                <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
+                <span class="input-group-btn">
+                  <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default" %>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <%= t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_SEARCHEXPLANATION") %>
+              <div class="input-group">
+                <div class="col-xs-3">
+                  <%= t("common.COMMON_DAY") %>
+                  <%= select_tag :day, options_for_select(day_list, params[:day]), {:class => "selectDay"} %>
+                </div>
+                <div class="col-xs-3">
+                  <%= t("common.COMMON_HOUR") %>
+                  <%= select_tag :hour, options_for_select(hour_list, params[:hour]), {:class => "selectHour"} %>
+                </div>
+                <div class="col-xs-3">
+                  <%= t("common.COMMON_SCHOOLYEAR") %>
+                  <%= select_tag :school_year, options_for_select(school_year_list, params[:school_year]), {:class => "selectYear"} %>
+                </div>
+                <div class="col-xs-3">
+                  <%= t("common.COMMON_SEASON") %>
+                  <%= select_tag :season, options_for_select(season_list, params[:season]), {:class => "selectSeason"} %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
 <%= render 'shared/announcements/list' %>
 
 <!-- アンカーボタン -->

@@ -25,12 +25,64 @@ class FaqsController < ApplicationController
   before_action :set_course, only: [:course, :new]
 
   def index
+    sql_texts = []
+    sql_params = {}
+
+    if !params[:keyword].blank?
+      case params[:type1]
+      when "1"
+        sql_texts.push("courses.instructor_name like :keyword")
+        sql_params[:keyword] = "%" + params[:keyword] + "%"
+      when "2"
+        sql_texts.push("courses.course_cd like :keyword")
+        sql_params[:keyword] = "%" + params[:keyword] + "%"
+      else
+        sql_texts.push("courses.course_name like :keyword")
+        sql_params[:keyword] = "%" + params[:keyword] + "%"
+      end
+    end
+
+    if params[:day] && params[:day] != "0"
+      sql_texts.push("courses.day_cd = :day")
+      sql_params[:day] = params[:day]
+    end
+
+    if params[:hour] && params[:hour] != "0"
+      sql_texts.push("courses.hour_cd = :hour")
+      sql_params[:hour] = params[:hour]
+    end
+
+    if params[:school_year] && params[:school_year] != "0"
+      sql_texts.push("courses.school_year = :school_year")
+      sql_params[:school_year] = params[:school_year]
+    end
+
+    if params[:season] && params[:season] != "0"
+      sql_texts.push("courses.season_cd = :season")
+      sql_params[:season] = params[:season]
+    end
+
+    sql_texts.push("courses.courseware_flag = :courseware_flag")
+    sql_params[:courseware_flag] = "0"
+
+    sql_texts.push("faqs.open_flag = :open_flag AND faqs.response_flag = :response_flag")
+    sql_params[:open_flag] = true
+    sql_params[:response_flag] = true
+
     if current_user.admin?
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => :course}).where("open_flag = ? AND response_flag = ?", true, true)
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => :course}).where(sql_texts.join(" AND "), sql_params)
+
     elsif current_user.teacher?
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_assigned_users}}).where("course_assigned_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
+      sql_texts.push("course_assigned_users.user_id = :user_id")
+      sql_params[:user_id] = current_user.id
+
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_assigned_users}}).where(sql_texts.join(" AND "), sql_params)
+
     else
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_enrollment_users}}).where("course_enrollment_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
+      sql_texts.push("course_enrollment_users.user_id = :user_id")
+      sql_params[:user_id] = current_user.id
+
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_enrollment_users}}).where(sql_texts.join(" AND "), sql_params)
     end
   end
 
