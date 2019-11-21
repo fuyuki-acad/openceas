@@ -42,20 +42,19 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h5>
-          <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION1") %>
-          <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY %>
-            <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION2") %>
-          <% elsif @faq.response_flag == Settings.FAQ_RESPONSEFLG_REPLIED && @faq.open_flag == Settings.FAQ_OPENFLG_PUBLIC %>
-            <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION3") %>
-          <% end %>
-        </h5>
-      </div>
+    <div class="annotation">
+      <h5>
+        <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION1") %>
+        <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY %>
+          <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION2") %>
+        <% elsif @faq.response_flag == Settings.FAQ_RESPONSEFLG_REPLIED && @faq.open_flag == Settings.FAQ_OPENFLG_PUBLIC %>
+          <%= t("faq.FAQ_CONFIRMFAQ_EXPLANATION3") %>
+        <% end %>
+      </h5>
     </div>
   </div>
 </div>
+<p/>
 
 <!-- アンカー -->
 <a id="anchor-top"></a>

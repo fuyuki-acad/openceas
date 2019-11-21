@@ -49,27 +49,29 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h5>
-          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION11_html") %>
-          <br/>
-          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION13_html") %>
-          <br/>
-          <br/>
-          <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION12_html") %>
-          <br/>
+    <h5>
+      <p class="annotation">
+        <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION11_html") %>
+      </p>
+    </h5>
+    <h5>
+      <p class="annotation">
+        <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION13_html") %>
+      </p>
+    </h5>
+    <h5>
+      <p class="annotation">
+        <%= t("attendanceAdministration.ATT_ADM_ATTENDANCE_EXPLANATION12_html") %>
+      <p/>
+    </h5>
 
-          <% if @course.enrolled_users.count > 0 %>
-            <div class="text-center">
-              <div class="btn-group">
-                <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :output_csv, :course_id => @course.id, :format => 'csv'}, :data => {:confirm => t("common.COMMON_DOWNLOADMESSAGE")}, :class => "btn btn-primary ceas-button-margin-5 center-block", :target => "_blank" %>
-              </div>
-            </div>
-          <% end %>
-        </h5>
+    <% if @course.enrolled_users.count > 0 %>
+      <div class="text-center">
+        <div class="btn-group">
+          <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :output_csv, :course_id => @course.id, :format => 'csv'}, :data => {:confirm => t("common.COMMON_DOWNLOADMESSAGE")}, :class => "btn btn-primary ceas-button-margin-5 center-block", :target => "_blank" %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
 

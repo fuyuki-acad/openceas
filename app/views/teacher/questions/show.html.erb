@@ -69,17 +69,15 @@
         <!-- 説明文 -->
         <div class="row">
           <div class="col-sm-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
-                <% if @generic_page.answer_scores.count == 0 %>
-                  <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE || @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
-                    <%= t("common.COMMON_BR_html") %>
-                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_UPLOADQUESTIONSEXPLANATION4_html") %>
-                  <% end %>
+            <p class="annotation">
+              <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
+              <% if @generic_page.answer_scores.count == 0 %>
+                <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE || @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                  <%= t("common.COMMON_BR_html") %>
+                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_UPLOADQUESTIONSEXPLANATION4_html") %>
                 <% end %>
-              </div>
-            </div>
+              <% end %>
+            </p>
           </div>
         </div>
 
@@ -182,13 +180,11 @@
           <!-- 説明文 -->
           <div class="row">
             <div class="col-sm-12">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <% if @generic_page.answer_scores.count == 0 %>
-                    <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION13_html") %>&nbsp;&nbsp;
-                  <% end %>
-                </div>
-              </div>
+              <% if @generic_page.answer_scores.count == 0 %>
+                <p class="annotation">
+                  <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION13_html") %>&nbsp;&nbsp;
+                </p>
+              <% end %>
             </div>
           </div>
 
@@ -210,7 +206,7 @@
                             <div class="panel-body">
                               <%== parent_question.content %>
                             </div>
-
+                            
                             <div class="row">
                               <div class="col-xs-12">
                                 <div class="pull-right">

@@ -44,26 +44,25 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h5>
-          <% if @faq.response_flag != Settings.FAQ_RESPONSEFLG_REPLIED %>
-            <%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION1") %>
-            <br><%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION2") %>
-            <br><%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION3") %>
-          <% elsif @faq.open_flag == Settings.FAQ_OPENFLG_PUBLIC %>
-            <%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION1") %>
-            <br><%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION2") %>
-            <br><%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION3") %>
-          <% else %>
-            <%= t("faq.FAQ_ANSWERFAQ_CLOSEDEXPLANATION1") %>
-            <br><%= t("faq.FAQ_ANSWERFAQ_CLOSEDEXPLANATION2") %>
-          <% end %>
-        </h5>
-      </div>
+    <div class="annotation">
+      <h5>
+        <% if @faq.response_flag != Settings.FAQ_RESPONSEFLG_REPLIED %>
+          <%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION1") %>
+          <br><%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION2") %>
+          <br><%= t("faq.FAQ_ANSWERFAQ_NOTANSWEREXPLANATION3") %>
+        <% elsif @faq.open_flag == Settings.FAQ_OPENFLG_PUBLIC %>
+          <%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION1") %>
+          <br><%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION2") %>
+          <br><%= t("faq.FAQ_ANSWERFAQ_OPENEXPLANATION3") %>
+        <% else %>
+          <%= t("faq.FAQ_ANSWERFAQ_CLOSEDEXPLANATION1") %>
+          <br><%= t("faq.FAQ_ANSWERFAQ_CLOSEDEXPLANATION2") %>
+        <% end %>
+      </h5>
     </div>
   </div>
 </div>
+<p/>
 
 <!-- アンカー -->
 <a id="anchor-top"></a>

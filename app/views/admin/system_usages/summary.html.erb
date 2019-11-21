@@ -56,35 +56,35 @@
   <!-- 説明文 -->
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= params[:school_year] %><%= t("common.COMMON_SCHOOLYEAR") %>
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN1",
-            :param0 => t("common.COMMON_SEASONCD5"), :param1 => l(@term1_start_date), :param2 => l(@term1_end_date)) %>
-          <br/>
-          <%= params[:school_year] %><%= t("common.COMMON_SCHOOLYEAR") %>
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN1",
-            :param0 => t("common.COMMON_SEASONCD6"), :param1 => l(@term2_start_date), :param2 => l(@term2_end_date)) %>
-          <br/>
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN2",
-            :param0 => l(@term1_start_date), :param1 => l(@term2_end_date)) %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= params[:school_year] %><%= t("common.COMMON_SCHOOLYEAR") %>
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN1",
+          :param0 => t("common.COMMON_SEASONCD5"), :param1 => l(@term1_start_date), :param2 => l(@term1_end_date)) %>
+      </p>
+      <p class="annotation">
+        <%= params[:school_year] %><%= t("common.COMMON_SCHOOLYEAR") %>
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN1",
+          :param0 => t("common.COMMON_SEASONCD6"), :param1 => l(@term2_start_date), :param2 => l(@term2_end_date)) %>
+      </p>
+      <p class="annotation">
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN2",
+          :param0 => l(@term1_start_date), :param1 => l(@term2_end_date)) %>
+      </p>
     </div>
   </div>
 
   <!-- 説明文 -->
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN3") %>
-          <br/>
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN4") %>
-          <br/>
-          <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN5") %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN3") %>
+      </p>
+      <p class="annotation">
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN4") %>
+      </p>
+      <p class="annotation">
+        <%= t("access_log.ACC_ACCESSTOTALINFO_EXPLAIN5") %>
+      </p>
     </div>
   </div>
 

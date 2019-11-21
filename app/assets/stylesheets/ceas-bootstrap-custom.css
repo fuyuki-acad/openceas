@@ -345,6 +345,12 @@ td.td-nowrap {
   white-space: nowrap;
 }
 
+.annotation {
+  padding: 0.25em 0.5em;
+  background: transparent;
+  border-left: solid 5px #1995dc;
+}
+
 @media (min-width: 768px) {
   .form-username {
     width: 250px;
