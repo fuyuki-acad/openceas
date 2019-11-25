@@ -59,7 +59,7 @@
                 <th class="hidden-xs"><%= t("common.COMMON_CONFIRM") %></th>
               </tr>
             </thead>
-            <% @essays.each.with_index(1) do |essay, index| %>
+            <% @essays.each.with_index(@essays.offset_value + 1) do |essay, index| %>
               <tr>
                 <!-- No. -->
                 <td><%= index %></td>

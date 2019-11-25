@@ -30,7 +30,7 @@
     <th><%= t("support.SUPPORT_DATE") %></th>
     <th><%= t("support.SUPPORT_SCORE") %></th>
   </tr>
-<% @results.each.with_index(1) do |result, index| %>
+<% @results.each.with_index(@results.offset_value + 1) do |result, index| %>
   <tr>
     <td>
       <% if result.qna_responses.count > 0 %>

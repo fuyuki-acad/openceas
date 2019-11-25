@@ -118,7 +118,7 @@
                 <th class="hidden-xs"><%= t("access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE7") %></th>
                 <th class="hidden-xs"><%= t("access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE3") %></th>
               </tr>
-              <% @logs.each.with_index(1) do |log, index| %>
+              <% @logs.each.with_index(@logs.offset_value + 1) do |log, index| %>
                 <tr>
                   <td class="td-bold"><%= index %></td>
                   <td class="td-bold"><%= h(get_name_no_prefix(log.user.name_no_prefix)) %><%= h(log.user.user_name) %></td>

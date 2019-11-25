@@ -102,7 +102,7 @@
                 <th><%= t("common.COMMON_MAJOR") %></th>
               </tr>
             </thead>
-            <% @other_courses.each.with_index(1) do |course, index| %>
+            <% @other_courses.each.with_index(@other_courses.offset_value + 1) do |course, index| %>
               <tr>
                 <!-- No. -->
                 <td class="td-bold"><%= index %></td>
