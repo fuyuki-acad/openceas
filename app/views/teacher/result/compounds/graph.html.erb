@@ -155,8 +155,8 @@
 <% if @scores.count > 0 %>
   <div class="row">
     <div class="col-xs-12">
-      <div class="panel panel-default">
-        <% @generic_page.parent_questions.each.with_index(1) do |parent, i| %>
+      <% @generic_page.parent_questions.each.with_index(1) do |parent, i| %>
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
               <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE1") %>
@@ -169,32 +169,30 @@
 
           <div class="panel-body">
             <% parent.questions.each.with_index(1) do |question, j| %>
+              <h4 class="panel_title">
+                <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE2") %>
+                <%= j %>
+                <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE5") %>
+                <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE9") %>
+                <%= question.score %>
+              </h4>
+
               <div class="row">
                 <div class="col-xs-12">
-                  <div class="panel panel-info">
-                    <div class="panel-heading">
-                      <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE2") %>
-                      <%= j %>
-                      <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE5") %>
-                      <%= t("material_result_view.MAT_RESULTVIEW_MATEEIALRESULTVIEW_COMPOUNDANSWERTABLE9") %>
-                      <%= question.score %>
-                    </div>
-                    <div class="panel-body">
-                      <div class="text-center"><%= t("common.COMMON_BARCHARTTITLE") %></div>
-                      <%=
-                        column_chart question.compound_chart_data.map {|key, value| [key.to_s + "\n(#{value}#{t("common.COMMON_BARCHARTPEOPLE")})", value]},
-                        label: t("common.COMMON_BARCHARTHORIZONTALAXIS"),
-                        ytitle: t("common.COMMON_BARCHARTVERTICALAXIS"),
-                        xtitle: t("common.COMMON_BARCHARTHORIZONTALAXIS")
-                      %>
-                    </div>
-                  </div>
+                  <div class="text-center"><%= t("common.COMMON_BARCHARTTITLE") %></div>
+                  <%=
+                    column_chart question.compound_chart_data.map {|key, value| [key.to_s + "\n(#{value}#{t("common.COMMON_BARCHARTPEOPLE")})", value]},
+                    label: t("common.COMMON_BARCHARTHORIZONTALAXIS"),
+                    ytitle: t("common.COMMON_BARCHARTVERTICALAXIS"),
+                    xtitle: t("common.COMMON_BARCHARTHORIZONTALAXIS")
+                  %>
                 </div>
               </div>
+              <br/>
             <% end %>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>

@@ -351,6 +351,13 @@ td.td-nowrap {
   border-left: solid 5px #1995dc;
 }
 
+.panel_title {
+  padding: 0.5em;
+  color: #010101;
+  background: #eaf3ff;
+  border-bottom: solid 3px #003399;
+}
+
 @media (min-width: 768px) {
   .form-username {
     width: 250px;
