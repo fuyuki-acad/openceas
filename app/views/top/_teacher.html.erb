@@ -153,7 +153,7 @@
                   <td class="td-bold">
                     <div class='row'>
                       <div class='col-xs-12 col-sm-6'>
-                        <% if info.unread_assignment_essay_count_views.count > 0 %>
+                        <% if info.unread_assignment_display_cd = 0 && info.unread_assignment_essay_count_views.count > 0 %>
                           <%= link_to teacher_result_essay_path(info.id), {:class => "btn btn-default btn-block ceas-button-margin-5"} do %>
                             <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                             <%= t("top.INSTRUCTORTOP_NOTREADREPORT") %>
@@ -164,7 +164,7 @@
                         <% end %>
                       </div>
                       <div class='col-xs-12 col-sm-6'>
-                        <% if info.non_answer_faq_count_view && info.non_answer_faq_count_view.non_answer_count > 0 %>
+                        <% if info.unread_faq_display_cd = 0 && info.non_answer_faq_count_view && info.non_answer_faq_count_view.non_answer_count > 0 %>
                           <%= link_to teacher_faq_path(info.id), {:class => "btn btn-default btn-block ceas-button-margin-5"} do %>
                             <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                             <%= t("top.INSTRUCTORTOP_NOTREADINFORMATION2") %>
