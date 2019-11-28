@@ -42,7 +42,7 @@
 
       <div class="panel-body">
         <!-- 0件メッセージ -->
-        <% if @essays.count == 0 %>
+        <% if !@essays || @essays.count == 0 %>
           <%= t("common.COMMON_NOTFOUND") %>
         <% else %>
           <!-- リスト表示 -->
