@@ -42,25 +42,25 @@ class TopController < ApplicationController
       end
 
       @announcements = Announcement.eager_load(:course)
-        .where("announcements.announcement_cd = ? AND courses.term_flag = ? AND courses.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO, true, true)
+        .where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO)
         .order("announcements.updated_at desc").page(params[:page])
         .limit(OPEN_ANNOUNCEMENT_COUNT_LIMIT)
       @faq_answers = FaqAnswer.order("faq_answers.updated_at desc")
         .joins({:faq => :course})
-        .where("open_flag = ? AND courses.term_flag = ? AND courses.faq_cd = ?", true, true, true).limit(OPEN_FAQ_COUNT_LIMIT)
+        .where("open_flag = ?", true).limit(OPEN_FAQ_COUNT_LIMIT)
       @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd")
         .where(sql_texts.join(" AND "), sql_params).page(params[:page])
 
     elsif current_user.teacher?
       @announcements = Announcement.eager_load(:course)
-        .where("announcements.announcement_cd = ? AND courses.term_flag = ? AND courses.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO, true, true)
+        .where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO)
         .order("announcements.updated_at desc")
         .joins({:course => :course_assigned_users})
         .where("user_id = ?", current_user.id)
         .limit(OPEN_ANNOUNCEMENT_COUNT_LIMIT)
       @faq_answers = FaqAnswer.order("faq_answers.updated_at desc")
         .joins({:faq => {:course => :course_assigned_users}})
-        .where("course_assigned_users.user_id = ? AND open_flag = ? AND response_flag = ? AND courses.term_flag = ? AND courses.faq_cd = ?", current_user.id, true, true, true, true)
+        .where("course_assigned_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
         .limit(OPEN_FAQ_COUNT_LIMIT)
 
       sql_texts = []
@@ -111,12 +111,12 @@ class TopController < ApplicationController
 
     else
       @announcements = Announcement.eager_load(:course)
-        .where("announcements.announcement_cd = ? AND courses.term_flag = ? AND courses.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO, true, true)
+        .where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO)
         .order("announcements.updated_at desc").joins({:course => :course_enrollment_users}).where("course_enrollment_users.user_id = ?", current_user.id)
         .limit(OPEN_ANNOUNCEMENT_COUNT_LIMIT)
       @faq_answers = FaqAnswer.order("faq_answers.updated_at desc")
         .joins({:faq => {:course => :course_enrollment_users}})
-        .where("course_enrollment_users.user_id = ? AND open_flag = ? AND response_flag = ? AND courses.term_flag = ? AND courses.faq_cd = ?", current_user.id, true, true, true, true)
+        .where("course_enrollment_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
         .limit(OPEN_FAQ_COUNT_LIMIT)
 
       sql_params = {}
