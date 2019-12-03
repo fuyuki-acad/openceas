@@ -155,6 +155,10 @@ a.global-navi-list-menu:hover, a.global-navi-list-menu:focus {
   width: 90%;
 }
 
+.navbar {
+  border-radius: 0px; 
+}
+
 .navbar-brand>img {
   background-size: contain;
   width: 140px;
