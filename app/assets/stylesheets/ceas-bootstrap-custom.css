@@ -156,7 +156,7 @@ a.global-navi-list-menu:hover, a.global-navi-list-menu:focus {
 }
 
 .navbar {
-  border-radius: 0px; 
+  border-radius: 0px;
 }
 
 .navbar-brand>img {
@@ -340,6 +340,14 @@ span.badge {
 	color: #0000ff;
 	line-height: 150%;
 	font-weight: normal;
+}
+
+.table .v-middle {
+  vertical-align: middle;
+}
+
+tr.even {
+  background: #f9f9f9;
 }
 
 th.th-nowrap {
