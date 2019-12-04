@@ -235,7 +235,7 @@
             <% else %>
               <table class="table table-hover">
                 <thead>
-                  <tr class="even">
+                  <tr class="hidden-xs even">
                     <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
                     <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
                     <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
@@ -245,19 +245,6 @@
                     <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
                     <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
                     <th class="hidden-xs"><%= t("top.COMMONTOP_CLASSSESSIONEXECUTION") %></th>
-                    <td class="visible-xs td-bold" rowspan="3"><%= t("common.COMMON_NO1") %></td>
-                    <td class="visible-xs td-bold"><%= t("common.COMMON_DAY") %></td>
-                    <td class="visible-xs td-bold"><%= t("common.COMMON_HOUR") %></td>
-                    <td class="visible-xs td-bold"><%= t("common.COMMON_SCHOOLYEAR") %></td>
-                    <td class="visible-xs td-bold"><%= t("common.COMMON_SEASON") %></td>
-                    <td class="visible-xs td-bold" rowspan="3"><%= t("top.COMMONTOP_CLASSSESSIONEXECUTION") %></td>
-                  </tr>
-                  <tr class="visible-xs even">
-                    <td class="visible-xs td-bold" colspan="4"><%= t("common.COMMON_COURSENAME") %></td>
-                  </tr>
-                  <tr class="visible-xs even">
-                    <td class="visible-xs td-bold" colspan="2"><%= t("common.COMMON_INSTRUCTOR") %></td>
-                    <td class="visible-xs td-bold" colspan="2"><%= t("common.COMMON_MAJOR") %></td>
                   </tr>
                 </thead>
                 <% @courses.each.with_index(1) do |course, index| %>
