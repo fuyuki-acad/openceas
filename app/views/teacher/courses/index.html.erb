@@ -24,7 +24,7 @@
 <% breadcrumb :courses %>
 
 <!-- スマートフォンタイトル　-->
-<%= render :partial => "shared/smartphone", :locals => { title: t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONEVALUATIONLIST") } %>
+<%= render :partial => "shared/smartphone", :locals => { title: t("top.COMMONTOP_COURSEENVIRONMENT") } %>
 
 <!-- 氏名 -->
 <div class="row">
@@ -91,9 +91,9 @@
         <% if @courses.count == 0 %>
           <p><%= t("common.COMMON_NOTFOUND") %></p>
         <% else %>
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
             <thead>
-              <tr>
+              <tr class="hidden-xs even">
                 <th><%= t("common.COMMON_NO1") %></th>
                 <% if controller.controller_name == 'courses' %>
                 <th><%= t("common.COMMON_DELETE") %></th>
@@ -113,19 +113,27 @@
               </tr>
             </thead>
             <% @courses.each.with_index(@courses.offset_value + 1) do |course, index| %>
-              <tr>
+              <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                 <!-- No. -->
-                <td class="td-bold"><%= index %></td>
+                <td class="td-bold hidden-xs"><%= index %></td>
+                <td class="visible-xs" rowspan="3">
+                  <%= index %>
+                  <!-- 削除チェックボックス -->
+                  <% if controller.controller_name == 'courses' %>
+                    <br/>
+                    <span><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></span>
+                  <% end %>
+                </td>
 
                 <!-- 削除チェックボックス -->
                 <% if controller.controller_name == 'courses' %>
-                  <td class="td-bold">
+                  <td class="td-bold hidden-xs">
                     <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
                   </td>
                 <% end %>
 
                 <!-- 確認／修正 -->
-                <td><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
+                <td class="hidden-xs"><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
 
                 <!-- 曜日 -->
                 <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
@@ -140,22 +148,36 @@
                 <td class="td-bold td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
 
                 <!-- 科目名称 -->
-                <td class="td-bold"><%= course.course_name %></td>
+                <td class="td-bold hidden-xs"><%= course.course_name %></td>
 
                 <!-- 担任者 -->
-                <td class="td-bold td-nowrap"><%= course.instructor_name %></td>
+                <td class="td-bold td-nowrap hidden-xs"><%= course.instructor_name %></td>
 
                 <% if controller.controller_name == 'courses' %>
                   <!-- CSVダウンロード -->
-                  <td>
+                  <td class="hidden-xs">
                     <div class="image_block_orange_8">
                       <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
                     </div>
                   </td>
+                  <td class="visible-xs v-middle" rowspan="3">
+                    <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
+                  </td>
                 <% else %>
                   <!-- 系・学科・コース -->
-                  <td class="td-bold td-nowrap"><%= course.major %></td>
+                  <td class="td-bold td-nowrap hidden-xs"><%= course.major %></td>
                 <% end %>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <!-- 科目名称 -->
+                <td class="td-bold visible-xs" colspan="4"><%= course.course_name %></td>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <!-- 担任者 -->
+                <td class="td-bold visible-xs" colspan="2"><%= course.instructor_name %>&nbsp;</td>
+
+                <!-- 系・学科・コース -->
+                <td class="td-bold visible-xs" colspan="2"><%= course.major %></td>
               </tr>
             <% end %>
           </table>
