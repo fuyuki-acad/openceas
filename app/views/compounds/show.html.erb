@@ -93,7 +93,7 @@
       <div class="pull-right">
         <div class="text-center">
           <div class="btn-group">
-            <% if current_user.student? %>
+            <% if current_user.student? %>
               <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
             <% else %>
               <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default" %>
@@ -189,7 +189,7 @@
     <div class="text-center">
       <div class="btn-group">
         <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
-          <% if current_user.student? %>
+          <% if current_user.student? %>
             <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
           <% else %>
             <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>
