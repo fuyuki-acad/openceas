@@ -356,6 +356,12 @@ th.th-nowrap {
 td.td-nowrap {
   white-space: nowrap;
 }
+td.td-center {
+  text-align: center;
+}
+td.td-right {
+  text-align: right;
+}
 
 .annotation {
   padding: 0.25em 0.5em;
