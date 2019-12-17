@@ -210,7 +210,7 @@
                   <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- No. -->
                     <td class="hidden-xs"><%= index %></td>
-                    <td class="visible-xs v-middle" rowspan="3"><%= index %></td>
+                    <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
                     <!-- 曜日 -->
                     <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
@@ -239,11 +239,6 @@
                         <span class='glyphicon glyphicon-blackboard' aria-hidden='true'></span><%= t("top.COMMONTOP_CLASSSESSIONEXECUTION") %>
                       <% end %>
                     </td>
-                    <td class="visible-xs v-middle" rowspan="3">
-                      <%= link_to url_for(:controller => :class_sessions, :action => :index, :course_id => course.id), {:class => "btn btn-primary"} do %>
-                        <span class='glyphicon glyphicon-blackboard' aria-hidden='true'></span><%= t("top.COMMONTOP_CLASSSESSIONEXECUTION") %>
-                      <% end %>
-                    </td>
                   </tr>
                   <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- 科目名称 -->
@@ -255,6 +250,14 @@
 
                     <!-- 系・学科・コース -->
                     <td class="visible-xs" colspan="2"><%= course.major %></td>
+                  </tr>
+                  <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                    <!-- 授業実施画面へ -->
+                    <td class="visible-xs v-middle" colspan="4">
+                      <%= link_to url_for(:controller => :class_sessions, :action => :index, :course_id => course.id), {:class => "btn btn-primary col-xs-12"} do %>
+                        <span class='glyphicon glyphicon-blackboard' aria-hidden='true'></span><%= t("top.COMMONTOP_CLASSSESSIONEXECUTION") %>
+                      <% end %>
+                    </td>
                   </tr>
                 <% end %>
               </table>

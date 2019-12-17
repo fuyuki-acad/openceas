@@ -251,7 +251,7 @@
                   <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- No. -->
                     <td class="td-bold hidden-xs"><%= index %></td>
-                    <td class="td-bold visible-xs v-middle" rowspan="3"><%= index %></td>
+                    <td class="td-bold visible-xs v-middle" rowspan="4"><%= index %></td>
 
                     <!-- 曜日 -->
                     <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
@@ -278,9 +278,6 @@
                     <td class="td-bold hidden-xs">
                       <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %>
                     </td>
-                    <td class="td-bold visible-xs v-middle" rowspan="3">
-                      <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %>
-                    </td>
                   </tr>
                   <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- 科目名称 -->
@@ -292,6 +289,12 @@
 
                     <!-- 系・学科・コース -->
                     <td class="td-bold td-nowrap visible-xs" colspan="2"><%= course.major %></td>
+                  </tr>
+                  <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                    <!-- 授業実施画面へボタン -->
+                    <td class="td-bold visible-xs v-middle" colspan="4">
+                      <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-12" %>
+                    </td>
                   </tr>
                 <% end %>
               </table>
@@ -345,7 +348,7 @@
                 <tr>
                   <!-- No. -->
                   <td class="td-bold hidden-xs"><%= index %></td>
-                  <td class="visible-xs v-middle td-bold" rowspan="3"><%= index %></td>
+                  <td class="visible-xs v-middle td-bold" rowspan="4"><%= index %></td>
 
                   <!-- 曜日 -->
                   <td class="td-bold td-nowrap"><%= convert_day_cd(open_course.day_cd) %></td>
@@ -370,10 +373,7 @@
 
                   <!-- 授業実施画面へボタン -->
                   <td class="td-bold hidden-xs">
-                    <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary ceas-button-margin-5", :onclick => "javaScript:setGoCdInstructor('2')" %>
-                  </td>
-                  <td class="td-bold visible-xs v-middle" rowspan="3">
-                    <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary ceas-button-margin-5", :onclick => "javaScript:setGoCdInstructor('2')" %>
+                    <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary", :onclick => "javaScript:setGoCdInstructor('2')" %>
                   </td>
                 </tr>
                 <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
@@ -386,6 +386,12 @@
 
                   <!-- 系・学科・コース -->
                   <td class="visible-xs td-bold" colspan="2"><%= open_course.major %></td>
+                </tr>
+                <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                  <!-- 授業実施画面へボタン -->
+                  <td class="td-bold visible-xs v-middle" colspan="4">
+                    <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary col-xs-12", :onclick => "javaScript:setGoCdInstructor('2')" %>
+                  </td>
                 </tr>
               <% end %>
             </table>
