@@ -97,7 +97,7 @@
               <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                 <!-- No. -->
                 <td class="td-bold hidden-xs"><%= index %></td>
-                <td class="visible-xs" rowspan="3"><%= index %></td>
+                <td class="visible-xs" rowspan="4"><%= index %></td>
 
                 <!-- 曜日 -->
                 <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
@@ -136,23 +136,6 @@
                       </span>
                     <% end %>
                 </td>
-                <td class="visible-xs v-middle" rowspan="3">
-                  <%= form_tag url_for({:action => :download_file, :course_id => course.id}), :method => :post do %>
-                    <!-- 一括アップロード -->
-                    <span>
-                      <%= link_to t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD"),
-                        {:action => :select_upload_file, :course_id => course.id}, class: "btn btn-default ceas-button-margin-5" %>
-                    </span>
-                    <br/>
-
-                    <!-- 一括ダウンロード -->
-                    <span>
-                      <%= submit_tag t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD"), :class => "btn btn-default ceas-button-margin-5" %>
-                      <%#= link_to t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD"),
-                        {:action => :download_file, :course_id => course.id}, class: "btn btn-default ceas-button-margin-5" %>
-                    </span>
-                  <% end %>
-                </td>
               </tr>
               <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                 <!-- 科目名称 -->
@@ -164,6 +147,20 @@
 
                 <!-- 系・学科・コース -->
                 <td class="td-bold visible-xs" colspan="2"><%= course.major %></td>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <td class="visible-xs v-middle" colspan="4">
+                  <%= form_tag url_for({:action => :download_file, :course_id => course.id}), :method => :post do %>
+                    <!-- 一括アップロード -->
+                    <%= link_to t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDUPLOAD"),
+                      {:action => :select_upload_file, :course_id => course.id}, class: "btn btn-default col-xs-6" %>
+
+                    <!-- 一括ダウンロード -->
+                    <%= submit_tag t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD"), :class => "btn btn-default col-xs-6" %>
+                    <%#= link_to t("packaged_loadings.PAC_SELECTCOURSEPACKAGEDLOADING_PACKAGEDDOWNLOAD"),
+                      {:action => :download_file, :course_id => course.id}, class: "btn btn-default ceas-button-margin-5" %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </table>

@@ -24,7 +24,7 @@
 <% breadcrumb :teacher_announcements %>
 
 <!-- スマートフォンタイトル　-->
-<%= render :partial => "shared/smartphone", :locals => { title: t("common.COMMON_COURSESELECT") } %>
+<%= render :partial => "shared/smartphone", :locals => { title: t("top.COMMONTOP_ANNOUNCEMENTMAIL") } %>
 
 <!-- 科目検索 -->
 <div class="row">
@@ -88,7 +88,7 @@
             <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
               <!-- No. -->
               <td class="td-bold hidden-xs"><%= index %></td>
-              <td class="visible-xs" rowspan="3"><%= index %></td>
+              <td class="visible-xs" rowspan="4"><%= index %></td>
 
               <!-- 曜日 -->
               <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
@@ -119,15 +119,6 @@
                   <%= link_to t("common.COMMON_READ2"), {action: :show, course_id: course.id}, class: "btn btn-default" %>
                 </span>
               </td>
-              <td class="td-bold visible-xs v-middle" rowspan="3">
-                <span>
-                  <%= link_to t("common.COMMON_REGISTER2"), {action: :new, course_id: course.id}, class: "btn btn-primary" %>
-                </span>
-                <br/>
-                <span>
-                  <%= link_to t("common.COMMON_READ2"), {action: :show, course_id: course.id}, class: "btn btn-default" %>
-                </span>
-              </td>
             </tr>
             <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
               <!-- 科目名称 -->
@@ -139,6 +130,12 @@
 
               <!-- 系・学科・コース -->
               <td class="td-bold visible-xs" colspan="2"><%= course.major %></td>
+            </tr>
+            <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+              <td class="td-bold visible-xs v-middle" colspan="4">
+                <%= link_to t("common.COMMON_REGISTER2"), {action: :new, course_id: course.id}, class: "btn btn-primary col-xs-6" %>
+                <%= link_to t("common.COMMON_READ2"), {action: :show, course_id: course.id}, class: "btn btn-default col-xs-6" %>
+              </td>
             </tr>
           <% end %>
         </table>

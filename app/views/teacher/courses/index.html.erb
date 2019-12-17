@@ -94,21 +94,21 @@
           <table class="table table-hover">
             <thead>
               <tr class="hidden-xs even">
-                <th><%= t("common.COMMON_NO1") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
                 <% if controller.controller_name == 'courses' %>
-                <th><%= t("common.COMMON_DELETE") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
                 <% end %>
-                <th><%= t("common.COMMON_CONFIRMREVISE") %></th>
-                <th><%= t("common.COMMON_DAY") %></th>
-                <th><%= t("common.COMMON_HOUR") %></th>
-                <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
-                <th><%= t("common.COMMON_SEASON") %></th>
-                <th><%= t("common.COMMON_COURSENAME") %></th>
-                <th><%= t("common.COMMON_INSTRUCTOR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_CONFIRMREVISE") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
                 <% if controller.controller_name == 'courses' %>
-                <th><%= t("admin.course.PRI_ADM_COU_SEARCHCOURSE_ENROLLMENTLIST") %></th>
+                <th class="hidden-xs"><%= t("admin.course.PRI_ADM_COU_SEARCHCOURSE_ENROLLMENTLIST") %></th>
                 <% else %>
-                <th><%= t("common.COMMON_MAJOR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
                 <% end %>
               </tr>
             </thead>
@@ -116,7 +116,7 @@
               <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                 <!-- No. -->
                 <td class="td-bold hidden-xs"><%= index %></td>
-                <td class="visible-xs" rowspan="3">
+                <td class="visible-xs" rowspan="4">
                   <%= index %>
                   <!-- 削除チェックボックス -->
                   <% if controller.controller_name == 'courses' %>
@@ -156,11 +156,6 @@
                 <% if controller.controller_name == 'courses' %>
                   <!-- CSVダウンロード -->
                   <td class="hidden-xs">
-                    <div class="image_block_orange_8">
-                      <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
-                    </div>
-                  </td>
-                  <td class="visible-xs v-middle" rowspan="3">
                     <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
                   </td>
                 <% else %>
@@ -178,6 +173,16 @@
 
                 <!-- 系・学科・コース -->
                 <td class="td-bold visible-xs" colspan="2"><%= course.major %></td>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <td class="visible-xs" colspan="4">
+                  <% if controller.controller_name == 'courses' %>
+                    <%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning col-xs-6" %>
+                    <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default col-xs-6" %>
+                  <% else %>
+                    <%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning col-xs-12" %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </table>

@@ -162,7 +162,7 @@
                   <td class="hidden-xs"><%= index %></td>
                   <td class="hidden-xs"><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></td>
                   <td class="hidden-xs"><%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => course.id}, {:class => "btn btn-warning ceas-button-margin-5"} %></td>
-                  <td class="visible-xs" rowspan="3">
+                  <td class="visible-xs" rowspan="4">
                     <%= index %><br/>
                     <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
                   </td>
@@ -185,12 +185,6 @@
                       <span><%= t("common.COMMON_CSVOUTPUT") %></span>
                     <% end %>
                   </td>
-                  <td class="visible-xs v-middle" rowspan="3">
-                    <span><%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => course.id}, {:class => "btn btn-warning ceas-button-margin-5"} %></span>
-                    <%= link_to url_for(:action => :outputcsv_enrollment, :id => course.id), {:method => :post, :class => "btn btn-default ceas-button-margin-5"} do %>
-                      <span><%= t("common.COMMON_CSVOUTPUT_S") %></span>
-                    <% end %>
-                  </td>
                 </tr>
                 <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                   <!-- 科目名称 -->
@@ -202,6 +196,14 @@
 
                   <!-- 系・学科・コース -->
                   <td class="visible-xs" colspan="2"><%= course.major %></td>
+                </tr>
+                <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                  <td class="visible-xs v-middle" colspan="4">
+                    <%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => course.id}, {:class => "btn btn-warning col-xs-6"} %>
+                    <%= link_to url_for(:action => :outputcsv_enrollment, :id => course.id), {:method => :post, :class => "btn btn-default col-xs-6"} do %>
+                      <span><%= t("common.COMMON_CSVOUTPUT_S") %></span>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </table>
