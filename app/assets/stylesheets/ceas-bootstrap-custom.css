@@ -380,6 +380,18 @@ td.td-right {
   color: #2fa4e7;
 }
 
+.list_no {
+  width: 60px;
+}
+
+.list_user_icon {
+  width: 30px;
+}
+
+.list_session_count {
+  width: 45px;
+}
+
 @media (min-width: 768px) {
   .form-username {
     width: 250px;

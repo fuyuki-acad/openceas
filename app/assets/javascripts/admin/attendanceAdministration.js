@@ -10,13 +10,13 @@
 		background_cell_colors = {};
 		$("[id^='cell'][id*='_"+id+"']").filter(function(i, e) {
 			background_cell_colors[e.id] = $(this).css('background-color');
+			$(this).css('background-color', "#FFCCCC");
 		});
 
 		document.getElementById("col_"+id ).style.backgroundColor="#FFCCCC";
 		document.getElementById("col0_"+id ).style.backgroundColor="#FFCCCC";
 		document.getElementById("col1_"+id ).style.backgroundColor="#FFCCCC";
 		document.getElementById("col2_"+id ).style.backgroundColor="#FFCCCC";
-		$("[id^='cell'][id*='_"+id+"']").css('background-color', "#FFCCCC");
 	}
 
 	function mouseOutRow( id ){

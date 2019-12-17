@@ -121,7 +121,7 @@
                 <%= t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_COLUMNCLASSSESSIONNO") %>
               </td>
               <% for class_session_count in 1..@course.class_session_count %>
-                <td class="td-nowrap td-center" width="<%= @attendance_count_list[class_session_count] * 45 %>px" colspan="<%= @attendance_count_list[class_session_count] %>">
+                <td class="td-nowrap td-center" colspan="<%= @attendance_count_list[class_session_count] %>">
                   <%= class_session_name(class_session_count) %>
                 </td>
               <% end %>
@@ -133,7 +133,7 @@
               </td>
               <% for class_session_count in 1..@course.class_session_count %>
                 <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
-                  <td id="col_<%= class_session_count %>_<%= attendance_count %>" class="td-nowrap td-right"
+                  <td id="col_<%= class_session_count %>_<%= attendance_count %>" class="td-nowrap td-right list_session_count"
                     onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
                     onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
                     onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
@@ -149,7 +149,7 @@
               </td>
               <% for class_session_count in 1..@course.class_session_count %>
                 <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
-                  <td id="col0_<%= class_session_count %>_<%= attendance_count %>" width="45px" class="td-nowrap td-right"
+                  <td id="col0_<%= class_session_count %>_<%= attendance_count %>" width="45px" class="td-nowrap td-right list_session_count"
                     onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
                     onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
                     onClick="prepareClassSessionAttendance(<%= @course.id %>, <%= class_session_count %>, <%= attendance_count %>)">
@@ -194,10 +194,10 @@
             <% @course.enrolled_users.each.with_index(1) do |user, user_index| %>
 <!-- i= user_index -->
               <tr id="row<%= user_index %>" onMouseOver="mouseOverCol(<%= user_index %>)" onMouseOut="mouseOutCol(<%= user_index %>)" onClick="preparePersonalAttendance(<%= @course.id%>, <%= user.id %>)">
-                <td>
+                <td class="list_no">
                   <%= user_index %>
                 </td>
-                <td>
+                <td class="list_user_icon">
                   <% if user.user_image.count > 0 %>
                     <%= link_to user.get_user_image(UserImage::IMAGE_TYPE_EXPRESSION), :class => "preview" do %>
                       <%= image_tag user.get_user_image(UserImage::IMAGE_TYPE_ICON), :width => "20x20", :alt => '' %>
@@ -212,7 +212,9 @@
                   <% for attendance_count in 1..@attendance_count_list[class_session_count] %>
 <!-- j= class_session_count -->
 <!-- k= attendance_count -->
-                    <td id="cell<%= user_index %>_<%= class_session_count %>_<%= attendance_count %>" class="td-right">
+                    <td id="cell<%= user_index %>_<%= class_session_count %>_<%= attendance_count %>" class="td-right"
+                      onMouseOver="mouseOverRow(<%= class_session_count %>+'_'+<%= attendance_count %>)"
+                      onMouseOut="mouseOutRow(<%= class_session_count %>+'_'+<%= attendance_count %>)">
                       <% if @attendance_data[user.id][class_session_count] %>
                         <% if @attendance_data[user.id][class_session_count][attendance_count] == 0 %>
                           &nbsp;
