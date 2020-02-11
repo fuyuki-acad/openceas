@@ -23,14 +23,25 @@
 
 class AnnouncementsController < ApplicationController
   def index
+    sql_texts = []
+    sql_params = {}
+
+    if !params[:keyword].blank?
+      sql_texts.push("courses.course_name like :keyword or announcements.subject like :keyword or announcements.content like :keyword")
+      sql_params[:keyword] = "%" + params[:keyword] + "%"
+    end
+
+    sql_texts.push("announcements.announcement_cd = :announcement_cd")
+    sql_params[:announcement_cd] = Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO
+
     if current_user.admin?
-      @announcements = Announcement.eager_load(:course).where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO).
+      @announcements = Announcement.eager_load(:course).where(sql_texts.join(" AND "), sql_params).
         order("announcements.updated_at desc").page(params[:page]).page(params[:page])
     elsif current_user.teacher?
-      @announcements = Announcement.eager_load(:course).where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO).
+      @announcements = Announcement.eager_load(:course).where(sql_texts.join(" AND "), sql_params).
         order("announcements.updated_at desc").joins({:course => :course_assigned_users}).where("user_id = ?", current_user.id).page(params[:page])
     else
-      @announcements = Announcement.eager_load(:course).where("announcements.announcement_cd = ?", Settings.ANNOUNCEMENT_ANNOUNCEMENTCD_INFO).
+      @announcements = Announcement.eager_load(:course).where(sql_texts.join(" AND "), sql_params).
         order("announcements.updated_at desc").joins({:course => :course_enrollment_users}).where("user_id = ?", current_user.id).page(params[:page])
     end
   end

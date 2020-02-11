@@ -109,64 +109,61 @@
               <!-- 設問 -->
               <div class='row'>
                 <div class='col-xs-12'>
-                  <div class='panel panel-info'>
-                    <div class='panel-heading'>
-                      <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_QUESTION2", :param0 => j.to_s) %>
-                    </div>
-                    <div class='panel-body'>
-                      <div class='row'>
-                        <div class='col-xs-12 col-sm-4'>
-                          <div class='panel panel-default'>
-                            <div class='panel-body'>
-                              <%== question.content %>
-                              <br />
-                              <%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_QUESTIONPATTERN") %>
-                              <%= question.pattern_name %>
+                  <h4 class='panel_title'>
+                    <%= t("materials_administration.COMMONMATERIALSADMINISTRATION_QUESTION2", :param0 => j.to_s) %>
+                  </h4>
 
-                              <% if question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %>
-                                <!-- 「記述」でない時は選択肢 -->
-                                <table width="100%">
-                                  <% question.select_quizzes.each.with_index(1) do |quiz, k| %>
-                                    <tr><td><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_SELECTCONTENT", :param0 => k, :param1 => quiz.content) %></td></tr>
-                                  <% end %>
-                                  <% if question.select_ohters.count > 0 %>
-                                    <tr><td><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_SELECTCONTENT", :param0 => question.select_quizzes.count + 1, :param1 => t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER")) %></td></tr>
-                                  <% end %>
-                                </table>
-                              <% else %>
-                                <!-- 「記述」の時はメッセージ -->
-                                <%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_NOSELECT") %>
+                  <div class='row'>
+                    <div class='col-xs-12 col-sm-4'>
+                      <div class='panel panel-default'>
+                        <div class='panel-body'>
+                          <%== question.content %>
+                          <br />
+                          <%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_QUESTIONPATTERN") %>
+                          <%= question.pattern_name %>
+
+                          <% if question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %>
+                            <!-- 「記述」でない時は選択肢 -->
+                            <table width="100%">
+                              <% question.select_quizzes.each.with_index(1) do |quiz, k| %>
+                                <tr><td><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_SELECTCONTENT", :param0 => k, :param1 => quiz.content) %></td></tr>
                               <% end %>
-                            </div>
-                          </div>
+                              <% if question.select_ohters.count > 0 %>
+                                <tr><td><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_SELECTCONTENT", :param0 => question.select_quizzes.count + 1, :param1 => t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER")) %></td></tr>
+                              <% end %>
+                            </table>
+                          <% else %>
+                            <!-- 「記述」の時はメッセージ -->
+                            <%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_NOSELECT") %>
+                          <% end %>
                         </div>
+                      </div>
+                    </div>
 
-                        <div class='col-xs-12 col-sm-8'>
-                          <div class='panel panel-default'>
-                            <div class='panel-body'>
-                              <% if question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %>
-                                <% if question.chart_data(@generic_page.id).count == 0 %>
-                                  <%= t("common.COMMON_NOTFOUND") %>
-                                <% else %>
-                                  <div class="text-center"><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTTITLE") %></div>
-                                  <%=
-                                    column_chart question.chart_data(@generic_page.id),
-                                    label: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTDATASET"),
-                                    ytitle: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTVERTICALAXIS"),
-                                    xtitle: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTHORIZONTALAXIS")
-                                  %>
-                                <% end %>
+                    <div class='col-xs-12 col-sm-8'>
+                      <div class='panel panel-default'>
+                        <div class='panel-body'>
+                          <% if question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %>
+                            <% if question.chart_data(@generic_page.id).count == 0 %>
+                              <%= t("common.COMMON_NOTFOUND") %>
+                            <% else %>
+                              <div class="text-center"><%= t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTTITLE") %></div>
+                              <%=
+                                column_chart question.chart_data(@generic_page.id),
+                                label: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTDATASET"),
+                                ytitle: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTVERTICALAXIS"),
+                                xtitle: t("materials_administration.MAT_ADM_QUE_QUESTIONNAIRERESULT_BARCHARTHORIZONTALAXIS")
+                              %>
+                            <% end %>
 
-                                <!-- ボタン -->
-                                <% if question.select_ohters.count > 0 %>
-                                  <%= link_to t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_TEXTANSWERRESULT"), {:action => :detail, :id => question}, :class => "btn btn-default ceas-button-margin-5" %>
-                                <% end %>
-                              <% else %>
-                                <!-- ボタン -->
-                                <%= link_to t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_TEXTANSWERRESULT"), {:action => :detail, :id => question}, :class => "btn btn-default ceas-button-margin-5" %>
-                              <% end %>
-                            </div>
-                          </div>
+                            <!-- ボタン -->
+                            <% if question.select_ohters.count > 0 %>
+                              <%= link_to t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_TEXTANSWERRESULT"), {:action => :detail, :id => question}, :class => "btn btn-default ceas-button-margin-5" %>
+                            <% end %>
+                          <% else %>
+                            <!-- ボタン -->
+                            <%= link_to t("materials_administration.MAT_ADM_QUE_TEXTANSWERRESULT_TEXTANSWERRESULT"), {:action => :detail, :id => question}, :class => "btn btn-default ceas-button-margin-5" %>
+                          <% end %>
                         </div>
                       </div>
                     </div>

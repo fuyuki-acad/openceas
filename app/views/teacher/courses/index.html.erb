@@ -24,7 +24,7 @@
 <% breadcrumb :courses %>
 
 <!-- スマートフォンタイトル　-->
-<%= render :partial => "shared/smartphone", :locals => { title: t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONEVALUATIONLIST") } %>
+<%= render :partial => "shared/smartphone", :locals => { title: t("top.COMMONTOP_COURSEENVIRONMENT") } %>
 
 <!-- 氏名 -->
 <div class="row">
@@ -40,11 +40,9 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_DELETBYINSTRUCTOREPLANATION") %>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_DELETBYINSTRUCTOREPLANATION") %>
+    </p>
   </div>
 </div>
 
@@ -93,71 +91,98 @@
         <% if @courses.count == 0 %>
           <p><%= t("common.COMMON_NOTFOUND") %></p>
         <% else %>
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
             <thead>
-              <tr>
-                <th><%= t("common.COMMON_NO1") %></th>
+              <tr class="hidden-xs even">
+                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
                 <% if controller.controller_name == 'courses' %>
-                <th><%= t("common.COMMON_DELETE") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
                 <% end %>
-                <th><%= t("common.COMMON_CONFIRMREVISE") %></th>
-                <th><%= t("common.COMMON_DAY") %></th>
-                <th><%= t("common.COMMON_HOUR") %></th>
-                <th><%= t("common.COMMON_SCHOOLYEAR") %></th>
-                <th><%= t("common.COMMON_SEASON") %></th>
-                <th><%= t("common.COMMON_COURSENAME") %></th>
-                <th><%= t("common.COMMON_INSTRUCTOR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_CONFIRMREVISE") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
                 <% if controller.controller_name == 'courses' %>
-                <th><%= t("admin.course.PRI_ADM_COU_SEARCHCOURSE_ENROLLMENTLIST") %></th>
+                <th class="hidden-xs"><%= t("admin.course.PRI_ADM_COU_SEARCHCOURSE_ENROLLMENTLIST") %></th>
                 <% else %>
-                <th><%= t("common.COMMON_MAJOR") %></th>
+                <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
                 <% end %>
               </tr>
             </thead>
-            <% @courses.each.with_index(1) do |course, index| %>
-              <tr>
+            <% @courses.each.with_index(@courses.offset_value + 1) do |course, index| %>
+              <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                 <!-- No. -->
-                <td class="td-bold"><%= index %></td>
+                <td class="td-bold hidden-xs"><%= index %></td>
+                <td class="visible-xs" rowspan="4">
+                  <%= index %>
+                  <!-- 削除チェックボックス -->
+                  <% if controller.controller_name == 'courses' %>
+                    <br/>
+                    <span><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></span>
+                  <% end %>
+                </td>
 
                 <!-- 削除チェックボックス -->
                 <% if controller.controller_name == 'courses' %>
-                  <td class="td-bold">
+                  <td class="td-bold hidden-xs">
                     <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
                   </td>
                 <% end %>
 
                 <!-- 確認／修正 -->
-                <td><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
+                <td class="hidden-xs"><%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning" %></td>
 
                 <!-- 曜日 -->
-                <td class="td-bold"><%= convert_day_cd(course.day_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
                 <!-- 時限 -->
-                <td class="td-bold"><%= convert_hour_cd(course.hour_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
                 <!-- 年度 -->
-                <td class="td-bold"><%= course.school_year %></td>
+                <td class="td-bold td-nowrap"><%= course.school_year %></td>
 
                 <!-- 学期 -->
-                <td class="td-bold"><%= convert_season_cd(course.season_cd) %></td>
+                <td class="td-bold td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
 
                 <!-- 科目名称 -->
-                <td class="td-bold"><%= course.course_name %></td>
+                <td class="td-bold hidden-xs"><%= course.course_name %></td>
 
                 <!-- 担任者 -->
-                <td class="td-bold"><%= course.instructor_name %></td>
+                <td class="td-bold td-nowrap hidden-xs"><%= course.instructor_name %></td>
 
                 <% if controller.controller_name == 'courses' %>
                   <!-- CSVダウンロード -->
-                  <td>
-                    <div class="image_block_orange_8">
-                      <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
-                    </div>
+                  <td class="hidden-xs">
+                    <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default ceas-button-margin-5" %>
                   </td>
                 <% else %>
                   <!-- 系・学科・コース -->
-                  <td class="td-bold"><%= course.major %></td>
+                  <td class="td-bold td-nowrap hidden-xs"><%= course.major %></td>
                 <% end %>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <!-- 科目名称 -->
+                <td class="td-bold visible-xs" colspan="4"><%= course.course_name %></td>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <!-- 担任者 -->
+                <td class="td-bold visible-xs" colspan="2"><%= course.instructor_name %>&nbsp;</td>
+
+                <!-- 系・学科・コース -->
+                <td class="td-bold visible-xs" colspan="2"><%= course.major %></td>
+              </tr>
+              <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
+                <td class="visible-xs" colspan="4">
+                  <% if controller.controller_name == 'courses' %>
+                    <%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning col-xs-6" %>
+                    <%= link_to t("common.COMMON_CSVOUTPUT"), {:action => :outputcsv, :course_id => course.id}, :method => :post, class: "btn btn-default col-xs-6" %>
+                  <% else %>
+                    <%= link_to t("common.COMMON_CONFIRM"), {action: :show, course_id: course.id}, class: "btn btn-warning col-xs-12" %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </table>

@@ -62,11 +62,9 @@
 <% if @question_count >= 0 %>
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION1_html") %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION1_html") %>
+      </p>
     </div>
   </div>
 <% end %>
@@ -75,11 +73,9 @@
 <!-- 一覧テーブル(採点できる設問が登録されていない)-->
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION3") %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION3") %>
+      </p>
     </div>
   </div>
 
@@ -165,7 +161,7 @@
                                 <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ALLOTMENT", :param0 => question.score) %>
                               </td>
                               <td class="col-xs-9">
-                                <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score), @user_answers[question.id] ? @user_answers[question.id].score : 0), :class => "answer_score" %>
+                                <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score), @user_answers[question.id] ? @user_answers[question.id].score : 0), :class => "form-control form-number-3" %>
                               </td>
                             </tr>
                           </table>
@@ -185,10 +181,12 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="col-xs-12">
-                <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_MULTIPLESUM") %>
-                <%= text_field_tag :multiple_total_score, @multiple_total_score, :size => 5, :read_only => true %>
-                <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ESSAYSUM") %>
-                <%= text_field_tag :essay_total_score, @essay_total_score, :size => 5, :read_only => true %>
+                <div class="form-group">
+                  <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_MULTIPLESUM") %>
+                  <%= text_field_tag :multiple_total_score, @multiple_total_score, :size => 5, :readonly => true %>
+                  <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ESSAYSUM") %>
+                  <%= text_field_tag :essay_total_score, @essay_total_score, :size => 5, :readonly => true %>
+                </div>
               </div>
 
               <div class="col-xs-12">
@@ -218,11 +216,9 @@
   <!-- 説明文 -->
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION2_html") %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION2_html") %>
+      </p>
     </div>
   </div>
 <% end %>
@@ -256,7 +252,7 @@
                   <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_TOTALSCORE") %>
                 </label>
                 <div class="col-xs-7">
-                  <%= text_field_tag :total_score, @total_score, :size => 5, :class => "form-control" %>
+                  <%= text_field_tag :total_score, @total_score, :size => 5, :class => "form-control form-number-3" %>
                 </div>
               </div>
             </div>
@@ -280,11 +276,9 @@
   <!-- 説明文 -->
   <div class="row">
     <div class="col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION5_html") %>
-        </div>
-      </div>
+      <p class="annotation">
+        <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_EXPLANATION5_html") %>
+      </p>
     </div>
   </div>
 <% end %>

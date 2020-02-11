@@ -93,7 +93,7 @@
       <div class="pull-right">
         <div class="text-center">
           <div class="btn-group">
-            <% if current_user.student? %>
+            <% if current_user.student? %>
               <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
             <% else %>
               <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default" %>
@@ -135,43 +135,40 @@
             <% parent_question.questions.each.with_index(1) do |question, j| %>
             <div class='row'>
               <div class='col-xs-12'>
-                <div class='panel panel-info'>
-                  <div class='panel-heading'>
-                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
-                    <span class="pull-right"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %></span>
-                  </div>
-                  <div class='panel-body'>
-                    <div class='row'>
-                      <div class='col-xs-12'>
-                        <%== question.content %>
-                        <div class='panel panel-default'>
-                          <div class='panel-body'>
-                            <div><%= question.pattern_name %></div>
+                <h4 class='panel_title'>
+                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
+                  <span class="pull-right"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %></span>
+                </h4>
 
-                            <!-- ラジオボタンの時 -->
-                            <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
-                              <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
-                              <% question.select_quizzes.each do |quiz| %>
-                                <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
-                              <% end %>
+                <div class='row'>
+                  <div class='col-xs-12'>
+                    <%== question.content %>
+                    <div class='panel panel-default'>
+                      <div class='panel-body'>
+                        <div><%= question.pattern_name %></div>
 
-                            <!-- リストボックスの時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ONELIST %>
-                              <%= select_tag "answers[#{question.id}][select_answer_id]", quiz_options_options_for_select(question, @answers[question.id.to_s]), :include_blank => "--------" %>
+                        <!-- ラジオボタンの時 -->
+                        <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
+                          <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
+                          <% question.select_quizzes.each do |quiz| %>
+                            <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                          <% end %>
 
-                            <!-- チェックボックスの時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
-                              <% question.select_quizzes.each do |quiz| %>
-                                <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
-                              <% end %>
+                        <!-- リストボックスの時 -->
+                        <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ONELIST %>
+                          <%= select_tag "answers[#{question.id}][select_answer_id]", quiz_options_options_for_select(question, @answers[question.id.to_s]), :include_blank => "--------" %>
 
-                            <!-- 記述の時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                              <%= text_area_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => question.text_row} %>
+                        <!-- チェックボックスの時 -->
+                        <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
+                          <% question.select_quizzes.each do |quiz| %>
+                            <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                          <% end %>
 
-                            <% end %>
-                          </div>
-                        </div>
+                        <!-- 記述の時 -->
+                        <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                          <%= text_area_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => question.text_row} %>
+
+                        <% end %>
                       </div>
                     </div>
                   </div>
@@ -192,7 +189,7 @@
     <div class="text-center">
       <div class="btn-group">
         <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
-          <% if current_user.student? %>
+          <% if current_user.student? %>
             <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
           <% else %>
             <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>

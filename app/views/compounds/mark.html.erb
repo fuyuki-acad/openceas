@@ -116,156 +116,153 @@
             <% parent_question.questions.each.with_index(1) do |question, j| %>
               <div class='row'>
                 <div class='col-xs-12'>
-                  <div class='panel panel-info'>
-                    <div class='panel-heading'>
-                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
-                    </div>
-                    <div class='panel-body'>
-                      <div class='row'>
-                        <div class='col-xs-12'>
+                  <h4 class='panel_title'>
+                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
+                  </h4>
+
+                  <div class='row'>
+                    <div class='col-xs-12'>
+                      <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                        <%== question.content %>
+                      <% else %>
+                        <%= convert_html(question.content) %>
+                      <% end %>
+                      <div class='panel panel-default'>
+                        <div class='panel-body'>
                           <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                            <%== question.content %>
-                          <% else %>
-                            <%= convert_html(question.content) %>
-                          <% end %>
-                          <div class='panel panel-default'>
-                            <div class='panel-body'>
-                              <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                                <!-- 記述式 -->
-                                <table class="table table-striped table-hover">
-                                  <tr>
-                                    <!-- 設問内容 -->
-                                    <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
-                                    <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%== question.content %></span></td>
-                                  </tr>
-                                  <tr>
-                                    <!-- 正解 -->
-                                    <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></td>
-                                    <td class="col-xs-10"><%= convert_html(question.answer_memo) %></td>
-                                  </tr>
-                                  <tr>
-                                    <!-- あなたの解答 -->
-                                    <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>
-                                    <td class="col-xs-10"><%= compound_answer(question, @answers) %></td>
-                                  </tr>
-                                  <tr>
-                                    <!-- 自己採点得点or得点、配点 -->
-                                    <% if @latest_score.self_total_score < Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
+                            <!-- 記述式 -->
+                            <table class="table table-striped table-hover">
+                              <tr>
+                                <!-- 設問内容 -->
+                                <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
+                                <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%== question.content %></span></td>
+                              </tr>
+                              <tr>
+                                <!-- 正解 -->
+                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></td>
+                                <td class="col-xs-10"><%= convert_html(question.answer_memo) %></td>
+                              </tr>
+                              <tr>
+                                <!-- あなたの解答 -->
+                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>
+                                <td class="col-xs-10"><%= compound_answer(question, @answers) %></td>
+                              </tr>
+                              <tr>
+                                <!-- 自己採点得点or得点、配点 -->
+                                <% if @latest_score.self_total_score < Settings.ANSWERSCORE_TMP_SAVED_SCORE %>
 
-                                      <!-- 自己採点時 -->
-                                      <% if @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_SELF ||
-                              					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL ||
-                              					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL2 %></td>
-                                        <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SELFSCORE") %></td>
-                                      <% else %>
-                                        <td class="col-xs-2"></td>
-                                      <% end %>
+                                  <!-- 自己採点時 -->
+                                  <% if @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_SELF ||
+                          					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL ||
+                          					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL2 %>
+                                    <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SELFSCORE") %></td>
+                                  <% else %>
+                                    <td class="col-xs-2"></td>
+                                  <% end %>
 
-                                      <td class="col-xs-10">
-                                        <span class="right">
-                                        <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score)), :class => "right" %>
-                                        <span class="right"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %></span>
-                                      </td>
+                                  <td class="col-xs-10">
+                                    <span class="right">
+                                    <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score)), :class => "right" %>
+                                    <span class="right"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %></span>
+                                  </td>
 
-                                    <% else %>
+                                <% else %>
 
-                                      <!-- 結果表示時 -->
-                                      <% if @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_NONE %>
-                                        <!-- 自己採点なし -->
-                                        <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_GETSCORE") %></td>
-                                        <td class="col-xs-10">
-                                          <% if compound_answer_score(question, @answers) %>
-                                            <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_TOTALSCOREFORMAT2", :param0 => compound_answer_score(question, @answers)) %>
-                                          <% else %>
-                                            -
-                                          <% end %>
-                                          <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %>
-                                        </td>
-
-                                      <% elsif @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_SELF ||
-                              					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL ||
-                              					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL2 %>
-
-                                        <td class="col-xs-2">
-                                          <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SELFSCORE") %>
-                                        </td>
-                                        <td col="col-xs-10">
-                                          <% if @latest_score.total_score >= 0 || @latest_score.self_total_score >= 0 %>
-                                            <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
-                                          <% else %>
-                                            <!-- イレギュラー：「未解答時に担任が採点画面を開く→その間に学生が解答→担任が採点」の場合answer.scoreはnull -->
-                                            <% if compound_answer_score(question, @answers) %>
-                                              <%= t("common.COMMON_PARANTHESISLEFT") %>
-                                              <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
-                                              <%= t("common.COMMON_PARANTHESISRIGHT") %>
-                                            <% else %>
-                                              -
-                                            <% end %>
-                                          <% end %>
-                                          <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %>
-                                        </td>
-                                      <% end %>
-                                    <% end %>
-                                  </tr>
-                                  <tr>
-                                    <td col="col-xs-2">
-                                      <% if compound_answer_score(question, @answers) %>
-                                        <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
-                                      <% else %>
-                                        <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => "-") %>
-                                      <% end %>
-                                    </td>
-                                    <td col="col-xs-10"></td>
-                                  </tr>
-                                </table>
-                              <% else %>
-                                <!-- 選択式の時 -->
-                                <table class="table table-striped table-hover">
-                                  <tr>
-                                    <!-- 設問内容 -->
-                                    <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
-                                    <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%= convert_html(question.content) %></span></td>
-                                  </tr>
-                                  <tr>
-                                    <!-- 正解 -->
-                                    <td class="col-xs-2"><%= t("common.COMMON_CORRECTANSWER") %></td>
-                                    <td class="col-xs-10">
-                                      <%== convert_html(question.correct_values.map { |value| value.content }.join("\n")) %>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <!-- あなたの解答 -->
-                                    <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>
-                                    <td class="col-xs-10">
-                                      <%= compound_answer(question, @answers) %>
-                                      <% if compound_answer_correct?(question, @answers) %>
-                                        <span class='badge badge-info'><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></span>
-                                      <% else %>
-                                        <span class='badge badge-important'><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_WRONG") %></span>
-                                      <% end %>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <!-- 解説 -->
-                                    <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_COMMENT") %></td>
-                                    <% if compound_answer_correct?(question, @answers) %>
-                                      <td class="col-xs-10"><%= convert_html(question.correct_answer_memo) %></td>
-                                    <% else %>
-                                      <td class="col-xs-10"><%= convert_html(question.wrong_answer_memo) %></td>
-                                    <% end %>
-                                  </tr>
-                                  <tr>
-                                    <!-- 得点と配点 -->
+                                  <!-- 結果表示時 -->
+                                  <% if @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_NONE %>
+                                    <!-- 自己採点なし -->
                                     <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_GETSCORE") %></td>
                                     <td class="col-xs-10">
-                                      <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
+                                      <% if compound_answer_score(question, @answers) %>
+                                        <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_TOTALSCOREFORMAT2", :param0 => compound_answer_score(question, @answers)) %>
+                                      <% else %>
+                                        -
+                                      <% end %>
                                       <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %>
                                     </td>
-                                  </tr>
-                                </table>
-                              <% end %>
-                            </div>
-                          </div>
+
+                                  <% elsif @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_SELF ||
+                          					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL ||
+                          					    @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL2 %>
+
+                                    <td class="col-xs-2">
+                                      <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SELFSCORE") %>
+                                    </td>
+                                    <td col="col-xs-10">
+                                      <% if @latest_score.total_score >= 0 || @latest_score.self_total_score >= 0 %>
+                                        <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
+                                      <% else %>
+                                        <!-- イレギュラー：「未解答時に担任が採点画面を開く→その間に学生が解答→担任が採点」の場合answer.scoreはnull -->
+                                        <% if compound_answer_score(question, @answers) %>
+                                          <%= t("common.COMMON_PARANTHESISLEFT") %>
+                                          <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
+                                          <%= t("common.COMMON_PARANTHESISRIGHT") %>
+                                        <% else %>
+                                          -
+                                        <% end %>
+                                      <% end %>
+                                      <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %>
+                                    </td>
+                                  <% end %>
+                                <% end %>
+                              </tr>
+                              <tr>
+                                <td col="col-xs-2">
+                                  <% if compound_answer_score(question, @answers) %>
+                                    <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
+                                  <% else %>
+                                    <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => "-") %>
+                                  <% end %>
+                                </td>
+                                <td col="col-xs-10"></td>
+                              </tr>
+                            </table>
+                          <% else %>
+                            <!-- 選択式の時 -->
+                            <table class="table table-striped table-hover">
+                              <tr>
+                                <!-- 設問内容 -->
+                                <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
+                                <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%= convert_html(question.content) %></span></td>
+                              </tr>
+                              <tr>
+                                <!-- 正解 -->
+                                <td class="col-xs-2"><%= t("common.COMMON_CORRECTANSWER") %></td>
+                                <td class="col-xs-10">
+                                  <%== convert_html(question.correct_values.map { |value| value.content }.join("\n")) %>
+                                </td>
+                              </tr>
+                              <tr>
+                                <!-- あなたの解答 -->
+                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>
+                                <td class="col-xs-10">
+                                  <%= compound_answer(question, @answers) %>
+                                  <% if compound_answer_correct?(question, @answers) %>
+                                    <span class='badge badge-info'><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></span>
+                                  <% else %>
+                                    <span class='badge badge-important'><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_WRONG") %></span>
+                                  <% end %>
+                                </td>
+                              </tr>
+                              <tr>
+                                <!-- 解説 -->
+                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_COMMENT") %></td>
+                                <% if compound_answer_correct?(question, @answers) %>
+                                  <td class="col-xs-10"><%= convert_html(question.correct_answer_memo) %></td>
+                                <% else %>
+                                  <td class="col-xs-10"><%= convert_html(question.wrong_answer_memo) %></td>
+                                <% end %>
+                              </tr>
+                              <tr>
+                                <!-- 得点と配点 -->
+                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_GETSCORE") %></td>
+                                <td class="col-xs-10">
+                                  <%= t("execution.MAT_EXE_COM_FINISHEXECUTECOMPOUND_RESULTFORM", :param0 => compound_answer_score(question, @answers)) %>
+                                  <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_SCOREFORMAT", :param0 => question.score) %>
+                                </td>
+                              </tr>
+                            </table>
+                          <% end %>
                         </div>
                       </div>
                     </div>

@@ -7,6 +7,11 @@
     background_col_color0 = $("#col_"+id).css("backgroundColor");
     background_col_color1 = $("#col_"+id).css("backgroundColor");
     background_col_color2 = $("#col_"+id).css("backgroundColor");
+		background_cell_colors = {};
+		$("[id^='cell'][id*='_"+id+"']").filter(function(i, e) {
+			background_cell_colors[e.id] = $(this).css('background-color');
+			$(this).css('background-color', "#FFCCCC");
+		});
 
 		document.getElementById("col_"+id ).style.backgroundColor="#FFCCCC";
 		document.getElementById("col0_"+id ).style.backgroundColor="#FFCCCC";
@@ -19,13 +24,16 @@
     $("#col0_"+id).css("backgroundColor", background_col_color0);
     $("#col1_"+id).css("backgroundColor", background_col_color1);
     $("#col2_"+id).css("backgroundColor", background_col_color2);
+		$("[id^='cell'][id*='_"+id+"']").filter(function(i, e) {
+			$(this).css('background-color', background_cell_colors[e.id]);
+		});
 
 //		document.getElementById("col_"+id ).style.backgroundColor="#dce1f0";
 //		document.getElementById("col0_"+id ).style.backgroundColor="white";
 //		document.getElementById("col1_"+id ).style.backgroundColor="white";
 //		document.getElementById("col2_"+id ).style.backgroundColor="white";
 	}
-	
+
 	function mouseOverCol( id ){
     background_row_color = $("#row"+id).css("backgroundColor");
 
@@ -37,7 +45,7 @@
 
 //		document.getElementById("row"+id).style.backgroundColor="white";
 	}
-	
+
 	function preparePersonalAttendance(course_id, id) {
 //	  var personalNo = document.getElementById("attendance:personalNo");
 //	  var personalButton = document.getElementById("attendance:personalButton");
@@ -45,7 +53,7 @@
 //	  personalButton.click();
 	  location.href = course_id + '/edit_user/' + id;
 	}
-	
+
 	function prepareClassSessionAttendance(course_id, class_session_count, attendance_count) {
 //	  var str = id.split("_");
 //	  var classSessionNo = document.getElementById("attendance:classSessionNo");
@@ -151,7 +159,7 @@
 				document.getElementById("attendanceData"+i+"_"+j).value = personalAttendanceData.charAt(2*num);
 				num++;
 			}
-		}		
+		}
 	}
 	/*** personalAttendanceTable ***/
 

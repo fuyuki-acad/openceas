@@ -192,7 +192,7 @@
               <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
               <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
             </tr>
-            <% @courses.each.with_index(1) do |course, index| %>
+            <% @courses.each.with_index(@courses.offset_value + 1) do |course, index| %>
               <tr>
                 <td><%= index %></td>
                 <!-- 曜日 -->

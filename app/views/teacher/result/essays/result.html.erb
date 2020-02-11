@@ -152,23 +152,19 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION3_html") %>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION3_html") %>
+    </p>
   </div>
 </div>
 
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION4") %>
-        <span class="explanation_text"><%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION5") %></span>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION4") %>
+      <span class="explanation_text"><%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_EXPLANATION5") %></span>
+    </p>
   </div>
 </div>
 
@@ -508,6 +504,22 @@
             <% end %>
           </div>
         </div>
+
+        <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- ボタン -->
+              <div class="pull-right">
+                <div class="btn-group">
+                  <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+                    :data => {:target => :users, :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+                    class: "btn btn-default ceas-button-margin-5 center-block check_selector" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
       </div>
     </div>
 

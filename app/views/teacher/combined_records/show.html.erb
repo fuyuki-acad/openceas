@@ -56,11 +56,9 @@
         <!-- 説明文 -->
         <div class="row">
           <div class="col-xs-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <%= t("combinedRecord.COM_COMBINEDRECORD_SEARCHTEXT_html") %>
-              </div>
-            </div>
+            <p class="annotation">
+              <%= t("combinedRecord.COM_COMBINEDRECORD_SEARCHTEXT_html") %>
+            </p>
           </div>
 
           <div class="col-xs-12">
@@ -122,28 +120,28 @@
             <table class="table table-bordered table-striped">
               <!-- ヘッダ1 (学生、共通、n回目) -->
               <tr>
-                <td colspan="2" class="table_header_upper_student_combinedrecord">
+                <td colspan="2" class="td-nowrap">
                   <%= t("common.COMMON_STUDENT") %>
                 </td>
-                <td colspan="<%= calculate_column([@classSessionColumnCount[0][0], @classSessionColumnCount[0][1], @classSessionColumnCount[0][2], @classSessionColumnCount[0][3], @classSessionColumnCount[0][4], @classSessionColumnCount[0][5], @classSessionColumnCount[0][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                <td colspan="<%= calculate_column([@classSessionColumnCount[0][0], @classSessionColumnCount[0][1], @classSessionColumnCount[0][2], @classSessionColumnCount[0][3], @classSessionColumnCount[0][4], @classSessionColumnCount[0][5], @classSessionColumnCount[0][6]]) %>" class="td-nowrap">
                   <%= t("combinedRecord.COM_COMBINEDRECORD_COMMON") %>
                 </td>
 
                 <% for class_session_count in 1..@course.class_session_count %>
                   <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="td-nowrap">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="td-nowrap">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="td-nowrap">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% else %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="td-nowrap">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% end %>
@@ -152,16 +150,16 @@
 
               <!-- ヘッダ2 (No.、氏名、[-、複合、記号、レ、ア、出]) -->
               <tr>
-                <td class="table_header_under_no_combinedrecord" rowspan="2">
+                <td class="td-nowrap">
                   <%= t("common.COMMON_NO1") %>
                 </td>
-                <td class="table_header_under_name_combinedrecord" rowspan="2">
+                <td class="td-nowrap">
                   <%= t("common.COMMON_TARGETNAME") %>
                 </td>
 
                 <% for class_session_count in 0..@course.class_session_count %>
                   <% if calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) == 0 %>
-                    <td class="table_header_under_score_combiedrecord" rowspan="2">
+                    <td class="td-nowrap">
                       <%= t("combinedRecord.COM_COMBINEDRECORD_NOTHING") %>
                     </td>
                   <% end %>
@@ -170,19 +168,19 @@
                     <% if @classSessionColumnCount[class_session_count][0] > 0 || @classSessionColumnCount[class_session_count][6] > 0 %>
                       <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
-                          <td class="table_header_under_score_combiedrecord2" colspan="2">
+                          <td class="td-nowrap">
                             <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
                           </td>
                         <% end %>
                       <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
-                          <td class="table_header_under_score_combiedrecord2">
+                          <td class="td-nowrap">
                             <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
                           </td>
                         <% end %>
                       <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
-                          <td class="table_header_under_score_combiedrecord2">
+                          <td class="td-nowrap">
                             <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUNDOMIT") %>
                           </td>
                         <% end %>
@@ -193,7 +191,7 @@
                   <% if @multiple_fibs %>
                     <% if @classSessionColumnCount[class_session_count][1] > 0 %>
                       <% for count in 0..@classSessionColumnCount[class_session_count][1] - 1 %>
-                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                        <td class="td-nowrap">
                           <%= t("combinedRecord.COM_COMBINEDRECORD_MULTIPLEFIBOMIT") %>
                         </td>
                       <% end %>
@@ -203,7 +201,7 @@
                   <% if @assignment_essays %>
                     <% if @classSessionColumnCount[class_session_count][2] > 0 %>
                       <% for count in 0..@classSessionColumnCount[class_session_count][2] - 1 %>
-                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                        <td class="td-nowrap">
                           <%= t("combinedRecord.COM_COMBINEDRECORD_ASSIGNMENTESSAYOMIT") %>
                         </td>
                       <% end %>
@@ -213,7 +211,7 @@
                   <% if @questionnaires %>
                     <% if @classSessionColumnCount[class_session_count][3] > 0 %>
                       <% for count in 0..@classSessionColumnCount[class_session_count][3] - 1 %>
-                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                        <td class="td-nowrap">
                           <%= t("combinedRecord.COM_COMBINEDRECORD_QUESTIONNAIREOMIT") %>
                         </td>
                       <% end %>
@@ -223,7 +221,7 @@
                   <% if @evaluations %>
                     <% if @classSessionColumnCount[class_session_count][5] > 0 %>
                       <% for count in 0..@classSessionColumnCount[class_session_count][5] - 1 %>
-                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                        <td class="td-nowrap">
                           <%= t("combinedRecord.COM_COMBINEDRECORD_EVALUATIONLISTOMIT") %>
                         </td>
                       <% end %>
@@ -233,41 +231,9 @@
                   <% if @attendances %>
                     <% if @classSessionColumnCount[class_session_count][4] > 0 %>
                       <% for count in 0..@classSessionColumnCount[class_session_count][4] - 1 %>
-                        <td class="table_header_under_score_combiedrecord" rowspan="2">
+                        <td class="td-nowrap">
                           <%= t("combinedRecord.COM_COMBINEDRECORD_ATTENDANCE") %>
                         </td>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </tr>
-
-              <!-- 複合式テスト2段目 -->
-              <tr>
-                <% for class_session_count in 0..@course.class_session_count %>
-                  <% if @compounds %>
-                    <% if @classSessionColumnCount[class_session_count][0] > 0 || @classSessionColumnCount[class_session_count][6] > 0 %>
-                      <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
-                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
-                          <td class="table_header_under_score_combiedrecord">
-                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_RAW") %>
-                          </td>
-                          <td class="table_header_under_score_combiedrecord">
-                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_PERCENTAGE") %>
-                          </td>
-                        <% end %>
-                      <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
-                        <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
-                          <td class="table_header_under_score_combiedrecord">
-                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_PERCENTAGE") %>
-                          </td>
-                        <% end %>
-                      <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
-                        <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
-                          <td class="table_header_under_score_combiedrecord">
-                            <%= t("combinedRecord.COM_COMBINEDRECORD_COMPOUND_RAW") %>
-                          </td>
-                        <% end %>
                       <% end %>
                     <% end %>
                   <% end %>
@@ -277,17 +243,17 @@
               <!-- 学生ごと -->
               <% @course.enrolled_users.each.with_index(1) do |user, user_index| %>
                 <tr>
-                  <td class="table_body_no_combinedrecord">
+                  <td class="td-nowrap">
                     <%= user_index %>
                   </td>
-                  <td class="table_body_name_combinedrecord">
+                  <td class="td-nowrap">
                     <%= user.get_name_no_prefix %>
                     <%= user.user_name %>
                   </td>
 
                   <% for class_session_count in 0..@course.class_session_count %>
                     <% if calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) == 0 %>
-                      <td class="table_body_score_combinedrecord"></td>
+                      <td class="td-nowrap"></td>
                     <% end %>
 
                     <% if @compounds %>
@@ -296,7 +262,7 @@
                           <% for count in 0..@classSessionColumnCount[class_session_count][0] - 1 %>
                             <!--  素点合計 -->
                             <% if @classSessionColumnCount[class_session_count][6] > 0 %>
-                              <td class="table_body_score_combinedrecord">
+                              <td class="td-nowrap">
                                 <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
                                   <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalRawScore<0)-->
                                   <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
@@ -313,7 +279,7 @@
                             <% end %>
 
                             <!--  百分率 -->
-                            <td class="table_body_score_combinedrecord">
+                            <td class="td-nowrap">
                               <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
                                 <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalScore<0)-->
                                 <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
@@ -334,7 +300,7 @@
                         <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
                           <% for count in 0..@classSessionColumnCount[class_session_count][6] - 1 %>
                             <!-- 素点合計 -->
-                            <td class="table_body_score_combinedrecord">
+                            <td class="td-nowrap">
                               <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
                                 <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalRawScore<0)-->
                                 <% if @compounds[class_session_count][count][user.id].self_total_score >= 0 && @compounds[class_session_count][count][user.id].total_score < 0 %>
@@ -351,7 +317,7 @@
 
                             <!-- 百分率 -->
                             <% if @classSessionColumnCount[class_session_count][0] > 0 %>
-                              <td class="table_body_score_combinedrecord">
+                              <td class="td-nowrap">
                                 <% unless @compounds[class_session_count][count][user.id].nil? || @compounds[class_session_count][count][user.id].self_total_score.blank? %>
                                   <!--未採点(自己採点済)(selfFlg==1or2,selfTotalScore>=0,totalScore<0)-->
                                   <% if @self_flags[class_session_count][count] == 1 || @self_flags[class_session_count][count] == 2 || @self_flags[class_session_count][count] == 3 %>
@@ -376,7 +342,7 @@
                     <% if @multiple_fibs %>
                       <% if @classSessionColumnCount[class_session_count][1] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][1] - 1 %>
-                          <td class="table_body_score_combinedrecord">
+                          <td class="td-nowrap">
                             <% if @multiple_fibs[class_session_count][count][user.id] %>
                               <% if @multiple_fibs[class_session_count][count][user.id].total_score >= 0 %>
                                 <%= @multiple_fibs[class_session_count][count][user.id].total_score %>
@@ -390,20 +356,19 @@
                     <% if @assignment_essays %>
                       <% if @classSessionColumnCount[class_session_count][2] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][2] - 1 %>
-                          <td class="table_body_score_combinedrecord">
+                          <td class="td-nowrap">
                             <% if @assignment_essays[class_session_count][count][user.id] %>
                               <% if @return_method_cds[class_session_count][count].assignment_essay_return_method_cd != 0 %>
                                 <% if @assignment_essays[class_session_count][count][user.id].assignment_essay_score.nil? %>
                                   <%= t("combinedRecord.COM_COMBINEDRECORD_NOTGRADED") %>
                                 <% else %>
-                                  <%= @assignment_essays[class_session_count][count][user.id].assignment_essay_score %>
+                                  <%= tooltip_text(@assignment_essays[class_session_count][count][user.id].assignment_essay_score) %>
                                   <%= t("common.COMMON_PARANTHESISLEFT2") %>
                                   <%= @assignment_essays[class_session_count][count][user.id].answer_count %>
                                   <%= t("common.COMMON_PARANTHESISRIGHT2") %>
                                 <% end %>
-                              <% end %>
 
-                              <% if @return_method_cds[class_session_count][count].assignment_essay_return_method_cd == 0 %>
+                              <% elsif @return_method_cds[class_session_count][count].assignment_essay_return_method_cd == 0 %>
                                 <!-- assignmentEssayScoreを優先する -->
                                 <% if @assignment_essays[class_session_count][count][user.id].assignment_essay_score.nil? %>
                                   <% if @assignment_essays[class_session_count][count][user.id].total_score < 0 %>
@@ -415,7 +380,7 @@
                                     <%= t("common.COMMON_PARANTHESISRIGHT2") %>
                                   <% end %>
                                 <% else %>
-                                  <%= @assignment_essays[class_session_count][count][user.id].assignment_essay_score %>
+                                  <%= tooltip_text(@assignment_essays[class_session_count][count][user.id].assignment_essay_score) %>
                                   <%= t("common.COMMON_PARANTHESISLEFT2") %>
                                   <%= @assignment_essays[class_session_count][count][user.id].answer_count %>
                                   <%= t("common.COMMON_PARANTHESISRIGHT2") %>
@@ -430,7 +395,7 @@
                     <% if @questionnaires %>
                       <% if @classSessionColumnCount[class_session_count][3] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][3] - 1 %>
-                          <td class="table_body_score_combinedrecord">
+                          <td class="td-nowrap">
                             <% if @questionnaires[class_session_count][count][user.id] %>
                               <% unless @questionnaires[class_session_count][count][user.id].nil? %>
                                 <span class="color_pattern1"><%= t("combinedRecord.COM_COMBINEDRECORD_CIRCLE") %></span>
@@ -444,10 +409,10 @@
                     <% if @evaluations %>
                       <% if @classSessionColumnCount[class_session_count][5] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][5] - 1 %>
-                          <td class="table_body_score_combinedrecord">
+                          <td class="td-nowrap">
                             <% if @evaluations[class_session_count][count][user.id] %>
                               <% unless @evaluations[class_session_count][count][user.id].nil? %>
-                                <%= @evaluations[class_session_count][count][user.id].assignment_essay_score %>
+                                <%= tooltip_text(@evaluations[class_session_count][count][user.id].assignment_essay_score) %>
                               <% end %>
                             <% end %>
                           </td>
@@ -458,7 +423,7 @@
                     <% if @attendances %>
                       <% if @classSessionColumnCount[class_session_count][4] > 0 %>
                         <% for count in 0..@classSessionColumnCount[class_session_count][4] - 1 %>
-                          <td class="table_body_score_combinedrecord">
+                          <td class="td-nowrap">
                             <% if @attendances[class_session_count][count][user.id] %>
                               <% if @attendances[class_session_count][count][user.id] == 1 %>
                                 <span class="color_pattern1"><%= t("combinedRecord.COM_COMBINEDRECORD_CIRCLE") %></span>

@@ -49,38 +49,35 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION1") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION2") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION3") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION4") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION5") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION6") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION7") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION8") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION9") %>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION1") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION2") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION3") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION4") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION5") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION6") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION7") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION8") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION9") %>
+    </p>
   </div>
 </div>
 
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <span class="bigText"><%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION10") %></span><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION11") %><br />
-        <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION12") %><br />
-        <p>
-          <%= image_tag "relative_path.jpg", :class => "hidden-xs" %>
-          <%= image_tag "relative_path.jpg", :class => "visible-xs width-100" %>
-        </p>
-      </div>
+    <div class="annotation">
+      <span class="bigText"><%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION10") %></span><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION11") %><br />
+      <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_EXPLANATION12") %><br />
+      <p>
+        <%= image_tag "relative_path.jpg", :class => "hidden-xs" %>
+        <%= image_tag "relative_path.jpg", :class => "visible-xs width-100" %>
+      </p>
     </div>
   </div>
 </div>
+<p/>
 
 <%= form_tag url_for(:action => "upload"), {:class => "form-horizontal", :multipart => true} do %>
 <!-- 入力フォーム -->

@@ -36,15 +36,17 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("helptop.HELPTOP_MANUALEXPLANATION1_html") %>
+    <p class="annotation">
+      <%= t("helptop.HELPTOP_MANUALEXPLANATION1_html") %>
       <% if current_user.admin? %>
-        <br/><%= t("helptop.HELPTOP_MANUALEXPLANATION_ADMIN1") %>
-        <br/><%= t("helptop.HELPTOP_MANUALEXPLANATION_ADMIN2") %>
+        </p>
+        <p class="annotation">
+          <%= t("helptop.HELPTOP_MANUALEXPLANATION_ADMIN1") %>
+        </p>
+        <p class="annotation">
+          <%= t("helptop.HELPTOP_MANUALEXPLANATION_ADMIN2") %>
       <% end %>
-      </div>
-    </div>
+    </p>
   </div>
 </div>
 
@@ -101,7 +103,6 @@
                       <%= t("common.COMMON_UPLOAD") %>
                     <% end %>
                   </td>
-                </tr>
                 </tr>
               <% end %>
             </table>
