@@ -26,9 +26,9 @@
   <tr>
     <td class="input_left">
       <%= t("common.COMMON_SUBJECT") %>
-      <code>
+      <span class='badge badge-essencial'>
         <%= t("common.COMMON_ESSENCIAL") %>
-      </code>
+      </span>
     </td>
     <td class="input_right">
       <%= form.text_field :generic_page_title, {:class => 'form-control', :maxlength => 128} %>
@@ -66,7 +66,7 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTPASSWORD") %>
     </td>
     <td class="input_right">
-      <%= form.text_field :start_pass, {:class => 'form-control', :maxlength => 64} %>
+      <%= form.text_field :start_pass, {:class => 'form-control form-password', :maxlength => 64} %>
     </td>
   </tr>
 
@@ -76,17 +76,15 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTTIME") %>
     </td>
     <td class="input_right">
-      <div class="col-xs-5">
+      <div class="col-xs-12">
         <div class="form-group">
-          <div class='input-group date datetimepicker'>
+          <div class='input-group date datetimepicker form-datetime'>
             <%= form.text_field :start_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
-      </div>
-      <div class="col-xs-7">
       </div>
     </td>
   </tr>
@@ -97,17 +95,15 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DEADLINE") %>
     </td>
     <td class="input_right">
-      <div class="col-xs-5">
+      <div class="col-xs-12">
         <div class="form-group">
-          <div class='input-group date datetimepicker'>
+          <div class='input-group date datetimepicker form-datetime'>
             <%= form.text_field :end_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
-      </div>
-      <div class="col-xs-7">
       </div>
     </td>
   </tr>

@@ -27,7 +27,7 @@
     <% if @announcements.count == 0 %>
       <p><%= t("common.COMMON_NOTFOUND") %></p>
     <% else %>
-      <% @announcements.each.with_index(1) do |announcement, index| %>
+      <% @announcements.each.with_index(@announcements.offset_value + 1) do |announcement, index| %>
         <div class="panel panel-default">
           <div class="panel-body">
             <table class="table table-striped table-hover ">

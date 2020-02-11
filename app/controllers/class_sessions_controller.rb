@@ -41,7 +41,7 @@ class ClassSessionsController < ApplicationController
   def announcement
     @announcements = Announcement.
       where("announcements.course_id = ? AND announcements.announcement_cd = ?", @course.id, Settings.COURSE_ANNOUNCEMENTCD_NORMAL).
-      order("announcements.updated_at desc")
+      order("announcements.updated_at desc").page(params[:page])
   end
 
   def specific_page

@@ -25,12 +25,32 @@ class FaqsController < ApplicationController
   before_action :set_course, only: [:course, :new]
 
   def index
+    sql_texts = []
+    sql_params = {}
+
+    if !params[:keyword].blank?
+      sql_texts.push("courses.course_name like :keyword or faq_answers.open_question like :keyword or faq_answers.open_answer like :keyword")
+      sql_params[:keyword] = "%" + params[:keyword] + "%"
+    end
+
+    sql_texts.push("faqs.open_flag = :open_flag AND faqs.response_flag = :response_flag")
+    sql_params[:open_flag] = true
+    sql_params[:response_flag] = true
+
     if current_user.admin?
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => :course}).where("open_flag = ? AND response_flag = ?", true, true)
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => :course}).where(sql_texts.join(" AND "), sql_params)
+
     elsif current_user.teacher?
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_assigned_users}}).where("course_assigned_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
+      sql_texts.push("course_assigned_users.user_id = :user_id")
+      sql_params[:user_id] = current_user.id
+
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_assigned_users}}).where(sql_texts.join(" AND "), sql_params)
+
     else
-      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_enrollment_users}}).where("course_enrollment_users.user_id = ? AND open_flag = ? AND response_flag = ?", current_user.id, true, true)
+      sql_texts.push("course_enrollment_users.user_id = :user_id")
+      sql_params[:user_id] = current_user.id
+
+      @faq_answers = FaqAnswer.order("faq_answers.updated_at desc").joins({:faq => {:course => :course_enrollment_users}}).where(sql_texts.join(" AND "), sql_params)
     end
   end
 

@@ -112,7 +112,7 @@
         <div class="text-center">
           <div class="btn-group">
             <% if !@is_view_only && @generic_page.can_edit?(current_user) %>
-              <% if current_user.student? %>
+              <% if current_user.student? %>
                 <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
               <% else %>
                 <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>
@@ -151,63 +151,60 @@
             <!-- 設問 -->
             <div class='row'>
               <div class='col-xs-12'>
-                <div class='panel panel-info'>
-                  <div class='panel-heading'>
+                  <h4 class='panel_title'>
                     <%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %>
                     <% if question.must_flag == Settings.QUESTION_MUSTFLG_MUST %>
-                      <strong><%= t("common.COMMON_ESSENCIAL") %></strong>
+                      <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
                     <% end %>
-                  </div>
-                  <div class='panel-body'>
-                    <div class='row'>
-                      <div class='col-xs-12'>
-                        <%== question.content %>
-                        <div class='panel panel-default'>
-                          <div class='panel-body'>
-                            <!-- ラジオボタンの時 -->
-                            <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
-                              <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
-                              <% question.select_quizzes.each do |quiz| %>
-                                <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
-                              <% end %>
-                              <% if question.text_flag == 1 %>
-                                <%= radio_button_tag "answers[#{question.id}][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
-                                <!-- その他の時の入力フィールド -->
-                                <%= text_field_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
-                              <% end %>
+                  </h4>
 
-                            <!-- リストボックスの時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ONELIST %>
-                              <%= select_tag "answers[#{question.id}][select_answer_id]", quiz_options_options_for_select(question, @answers[question.id.to_s]), :include_blank => "--------" %>
+                  <div class='row'>
+                    <div class='col-xs-12'>
+                      <%== question.content %>
+                      <div class='panel panel-default'>
+                        <div class='panel-body'>
+                          <!-- ラジオボタンの時 -->
+                          <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
+                            <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
+                            <% question.select_quizzes.each do |quiz| %>
+                              <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                            <% end %>
                             <% if question.text_flag == 1 %>
+                              <%= radio_button_tag "answers[#{question.id}][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
                               <!-- その他の時の入力フィールド -->
                               <%= text_field_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
                             <% end %>
 
-                            <!-- チェックボックスの時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
-                              <%= hidden_field_tag "answers[#{question.id}][]" %>
-                              <% question.select_quizzes.each do |quiz| %>
-                                <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
-                              <% end %>
-                              <% if question.text_flag == 1 %>
-                                <%= check_box_tag "answers[#{question.id}][][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
-                                <!-- その他の時の入力フィールド -->
-                                <%= text_field_tag "answers[#{question.id}][][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
-                              <% end %>
+                          <!-- リストボックスの時 -->
+                          <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ONELIST %>
+                            <%= select_tag "answers[#{question.id}][select_answer_id]", quiz_options_options_for_select(question, @answers[question.id.to_s]), :include_blank => "--------" %>
+                          <% if question.text_flag == 1 %>
+                            <!-- その他の時の入力フィールド -->
+                            <%= text_field_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
+                          <% end %>
 
-                            <!-- 記述の時 -->
-                            <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                              <%= text_area_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 5} %>
-
+                          <!-- チェックボックスの時 -->
+                          <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
+                            <%= hidden_field_tag "answers[#{question.id}][]" %>
+                            <% question.select_quizzes.each do |quiz| %>
+                              <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                            <% end %>
+                            <% if question.text_flag == 1 %>
+                              <%= check_box_tag "answers[#{question.id}][][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
+                              <!-- その他の時の入力フィールド -->
+                              <%= text_field_tag "answers[#{question.id}][][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
                             <% end %>
 
-                          </div>
+                          <!-- 記述の時 -->
+                          <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                            <%= text_area_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 5} %>
+
+                          <% end %>
+
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
             </div>
           <% end %>
@@ -223,7 +220,7 @@
     <div class="text-center">
       <div class="btn-group">
         <% if !@is_view_only && @generic_page.can_edit?(current_user) %>
-          <% if current_user.student? %>
+          <% if current_user.student? %>
             <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
           <% else %>
             <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>

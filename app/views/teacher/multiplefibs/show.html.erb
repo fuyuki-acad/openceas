@@ -50,11 +50,9 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_EXPLANATION1") %>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_EXPLANATION1") %>
+    </p>
   </div>
 </div>
 
@@ -82,12 +80,10 @@
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY_EXPLANATION7_html") %>
-        <%= t("materials_registration.COMMONMATERIALSREGISTRATION_REGISTEREDPAGEEXAMINATION_html") %>
-      </div>
-    </div>
+    <p class="annotation">
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER_MATERIAL_COPY_EXPLANATION7_html") %>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_REGISTEREDPAGEEXAMINATION_html") %>
+    </p>
   </div>
 </div>
 
@@ -140,7 +136,7 @@
                     <td class="td-bold">
                       <%= multiplefib.generic_page_title %>
                       <% if multiplefib.answer_scores.count > 0 %>
-                        <br/><code><%= t("materials_registration.COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION") %></code></span>
+                        <br/><code><%= t("materials_registration.COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION") %></code>
                       <% end %>
                     </td>
                     <!-- 受験回数 -->
@@ -159,7 +155,7 @@
                       </div>
                       <!-- 大問作成 -->
                       <div class='col-xs-12 col-sm-4'>
-                        <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPARENTQUESTION"), {controller: :multiplefib_questions, action: :index, generic_page_id: multiplefib.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                        <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPARENTQUESTION"), {controller: :multiplefib_questions, action: :index, generic_page_id: multiplefib.id}, class: "btn btn-primary ceas-button-margin-5" %>
                       </div>
                       <!-- 教材ダウンロード -->
                       <div class='col-xs-12 col-sm-4'>
@@ -185,11 +181,9 @@
           <!-- 説明文 -->
           <div class="row">
             <div class="col-sm-12">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DELETE") %>
-                </div>
-              </div>
+              <p class="annotation">
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DELETE") %>
+              </p>
             </div>
           </div>
 

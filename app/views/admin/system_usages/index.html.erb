@@ -92,7 +92,7 @@
               <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTORNAME") %></th>
               <th class="hidden-xs"><%= t("common.COMMON_SUBJECT") %></th>
             </tr>
-            <% @logs.each.with_index(1) do |log, index| %>
+            <% @logs.each.with_index(@logs.offset_value + 1) do |log, index| %>
               <tr>
                 <!-- No. -->
                 <td><%= index %></td>

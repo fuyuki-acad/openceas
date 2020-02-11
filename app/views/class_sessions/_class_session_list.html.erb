@@ -48,7 +48,7 @@
     <div class="panel-body">
       <div class="row">
         <!-- お知らせ -->
-        <% if @course.announcement_cd == 1 %>
+        <% if @course.term_flag == 1 && @course.announcement_cd == 1 %>
           <div class="col-md-6">
             <%= link_to "javascript:void();",
               {:class => "btn btn-default btn-block ceas-button-margin-5",
@@ -59,7 +59,7 @@
         <% end %>
 
         <!-- FAQ -->
-        <% if @course.faq_cd == 1 %>
+        <% if @course.term_flag == 1 && @course.faq_cd == 1 %>
           <div class="col-md-6">
             <%= link_to "javascript:void();",
               {:class => "btn btn-default btn-block ceas-button-margin-5",

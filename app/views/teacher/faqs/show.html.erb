@@ -45,24 +45,21 @@
 <!-- 作業中科目 -->
 <%= render :partial => "shared/courses/course_information", :locals => { course: @course } %>
 
-<br />
-
 <!-- 説明文 -->
 <div class="row">
   <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h5>
-          <%= t("faq.FAQ_SELECTFAQ_EXPLANATION1") %>
-          <br/>
-          <%= t("faq.FAQ_SELECTFAQ_EXPLANATION2") %>
-          <br/>
-          <%= t("faq.FAQ_SELECTFAQ_EXPLANATION3") %>
-        </h5>
-      </div>
+    <div class="annotation">
+      <h5>
+        <%= t("faq.FAQ_SELECTFAQ_EXPLANATION1") %>
+        <br/>
+        <%= t("faq.FAQ_SELECTFAQ_EXPLANATION2") %>
+        <br/>
+        <%= t("faq.FAQ_SELECTFAQ_EXPLANATION3") %>
+      </h5>
     </div>
   </div>
 </div>
+<p/>
 
 <!-- アンカー -->
 <a id="anchor-top"></a>
@@ -144,7 +141,7 @@
                 </td>
               </tr>
             <% end %>
-            </body>
+            </tbody>
           </table>
         <% end %>
       </div>

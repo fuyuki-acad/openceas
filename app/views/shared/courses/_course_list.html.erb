@@ -77,15 +77,14 @@
               </tr>
 
               <!-- 未選択科目一覧 -->
-              <% index = 1%>
-              <% @courses.each do |other_course| %>
+              <% @courses.each.with_index(@courses.offset_value + 1) do |other_course, index| %>
                 <% if other_course.id != @course.id %>
                 <tr>
                   <!-- 確認／修正 -->
                   <td><%= link_to t("common.COMMON_SELECT"), {controller: "/teacher/"+params[:controller_name], action: :show, course_id: other_course.id}, class: "btn btn-warning" %></td>
 
                   <!-- No. -->
-                  <td class="td-bold"><%= index += 1 %></td>
+                  <td class="td-bold"><%= index %></td>
 
                   <!-- 曜日 -->
                   <td class="td-bold"><%= convert_day_cd(other_course.day_cd) %></td>

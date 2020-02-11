@@ -25,9 +25,9 @@
   <tr>
     <td class="col-xs-3">
       <%= t("common.COMMON_SUBJECT") %>
-      <code>
+      <span class='badge badge-essencial'>
         <%= t("common.COMMON_ESSENCIAL") %>
-      </code>
+      </span>
     </td>
     <td class="col-xs-9">
       <%= form.text_field :subject, {:class => 'form-control', :maxlength => 128} %>
@@ -36,9 +36,9 @@
   <tr>
     <td>
       <%= t("common.COMMON_CONTENT") %>
-      <code>
+      <span class='badge badge-essencial'>
         <%= t("common.COMMON_ESSENCIAL") %>
-      </code>
+      </span>
     </td>
     <td>
       <%= form.text_area :content, {:class => 'form-control', :rows => 10} %>

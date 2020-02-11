@@ -29,6 +29,33 @@
 <!-- アンカー -->
 <a id="anchor-top" />
 
+<% if current_user.admin? %>
+<!-- 科目検索 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("common.COMMON_SEARCHCOURSE") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-xs-12 col-sm-6">
+            <%= form_tag url_for({:action => :index}), :method => :get do %>
+              <div class="input-group">
+                <%= text_field_tag "keyword", params[:keyword], class: "string required form-control" %>
+                <span class="input-group-btn">
+                  <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default" %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= render 'shared/announcements/list' %>
 
 <!-- アンカーボタン -->

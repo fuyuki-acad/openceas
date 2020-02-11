@@ -115,33 +115,30 @@
           <% parent_question.questions.each.with_index(1) do |question, j| %>
           <div class='row'>
             <div class='col-xs-12'>
-              <div class='panel panel-info'>
-                <div class='panel-heading'>
-                  <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                    <%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %>
-                  <% else %>
-                    <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
-                  <% end %>
-                </div>
-                <div class='panel-body'>
-                  <div class='row'>
-                    <div class='col-xs-12'>
-                      <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
-                        <%== question.content %>
-                      <% else %>
-                        <%= convert_html(question.content) %>
-                      <% end %>
-                      <div class='panel panel-default'>
-                        <div class='panel-body'>
+              <h4 class='panel_title'>
+                <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                  <%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %>
+                <% else %>
+                  <%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") + j.to_s %>
+                <% end %>
+              </h4>
 
-                          <!-- あなたの解答 -->
-                          <div class='col-xs-3'>
-                            <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %>
-                          </div>
-                          <div class='col-xs-9'>
-                            <%= compound_answer(question, @answers) %>
-                          </div>
-                        </div>
+              <div class='row'>
+                <div class='col-xs-12'>
+                  <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
+                    <%== question.content %>
+                  <% else %>
+                    <%= convert_html(question.content) %>
+                  <% end %>
+                  <div class='panel panel-default'>
+                    <div class='panel-body'>
+
+                      <!-- あなたの解答 -->
+                      <div class='col-xs-3'>
+                        <%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %>
+                      </div>
+                      <div class='col-xs-9'>
+                        <%= compound_answer(question, @answers) %>
                       </div>
                     </div>
                   </div>

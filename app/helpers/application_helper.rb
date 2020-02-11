@@ -436,4 +436,17 @@ module ApplicationHelper
 
     ret.html_safe
   end
+
+  def tooltip_text(text, max_length = 5, separator = "...")
+    retrun "" if text.nil?
+
+    if text.length > max_length
+      short_text = text[0, max_length] + separator
+      ret = "<span class=\"tooltip_text\" data-toggle=\"tooltip\" data-html=\"true\" title=\"#{text}\">#{short_text}</span>"
+    else
+      ret = text
+    end
+
+    ret.html_safe
+  end
 end

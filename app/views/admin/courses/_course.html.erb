@@ -83,19 +83,19 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th><%= t("common.COMMON_NO1") %></td>
-                  <th><%= t("admin.course.PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSE_CHOOSE") %></td>
-                  <th class="hidden-xs"><%= t("common.COMMON_DAY") %></td>
-                  <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></td>
-                  <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></td>
-                  <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></td>
-                  <th><%= t("common.COMMON_COURSENAME") %></td>
-                  <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></td>
+                  <th><%= t("common.COMMON_NO1") %></th>
+                  <th><%= t("admin.course.PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSE_CHOOSE") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+                  <th><%= t("common.COMMON_COURSENAME") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
                   <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
                 </tr>
               </thead>
               <tbody>
-              <% @courses.each.with_index(1) do |course, index| %>
+              <% @courses.each.with_index(@courses.offset_value + 1) do |course, index| %>
                 <tr>
                   <!-- No. -->
                   <td class="td-bold"><%= index %></td>
