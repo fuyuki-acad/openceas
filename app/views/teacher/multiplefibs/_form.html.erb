@@ -26,9 +26,9 @@
   <tr>
     <td class="col-xs-3">
       <%= t("common.COMMON_SUBJECT") %>
-      <code>
+      <span class='badge badge-essencial'>
         <%= t("common.COMMON_ESSENCIAL") %>
-      </code>
+      </span>
     </td>
     <td class="col-xs-9">
       <%= form.text_field :generic_page_title, {:class => 'form-control', :maxlength => 128} %>
@@ -40,8 +40,8 @@
     <td>
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_EXAMINATIONCOUNT") %>
     </td>
-    <td>
-      <%= form.select :max_count, option_range(1, 100), {:class => "form-control"} %>
+    <td class="col-xs-9">
+      <%= form.select :max_count, option_range(1, 100), {}, {:class => "form-control form-number-3"} %>
     </td>
   </tr>
 
@@ -51,7 +51,7 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_PASSINGMARK") %>
     </td>
     <td>
-      <%= form.select :pass_grade, option_range(1, 100), {:class => "form-control"} %>
+      <%= form.select :pass_grade, option_range(1, 100), {}, {:class => "form-control form-number-3"} %>
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_POINT") %>
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_PASSINGMARKEXPLANATION2") %>
     </td>
@@ -62,9 +62,9 @@
     <td>
       <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_QUESTIONFILE") %>
       <% if @generic_page.new_record? %>
-        <code>
+        <span class='badge badge-essencial'>
           <%= t("common.COMMON_ESSENCIAL") %>
-        </code>
+        </span>
       <% end %>
     </td>
     <td>
@@ -147,7 +147,7 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTPASSWORD") %>
     </td>
     <td>
-      <%= form.text_field :start_pass, {:class => 'form-control', :maxlength => 64} %>
+      <%= form.text_field :start_pass, {:class => 'form-control form-password', :maxlength => 64} %>
     </td>
   </tr>
 
@@ -157,17 +157,15 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DEADLINE") %>
     </td>
     <td>
-      <div class="col-xs-5">
+      <div class="col-sm-12">
         <div class="form-group">
-            <div class='input-group date datetimepicker'>
-              <%= form.text_field :end_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
+          <div class='input-group date datetimepicker form-datetime'>
+            <%= form.text_field :end_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="col-xs-7">
       </div>
     </td>
   </tr>

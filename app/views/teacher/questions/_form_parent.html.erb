@@ -30,14 +30,14 @@
     <table class="table table-striped table-hover">
       <!--テスト/アンケートタイトル-->
       <tr>
-        <td>
+        <td class="col-xs-2">
           <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
             <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
           <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
             <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE15") %>
           <% end %>
         </td>
-        <td>
+        <td class="col-xs-10">
           <%= h(@generic_page.generic_page_title) %>
         </td>
       </tr>
@@ -45,8 +45,8 @@
       <!--問題記述部-->
       <tr>
         <td>
-          <%= t("common.COMMON_ATTENTION") %>
           <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE2") %>
+          <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
         </td>
         <td>
           <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>

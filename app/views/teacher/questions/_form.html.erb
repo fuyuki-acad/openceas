@@ -60,8 +60,8 @@
           <!-- 設問文-->
           <tr>
             <td class="col-xs-2">
-              <%= t("common.COMMON_ATTENTION") %>
               <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE3") %>
+              <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
             </td>
             <td class="col-xs-10">
               <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>
@@ -78,7 +78,7 @@
             </td>
             <td>
               <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
-                <%= form.select :score, option_range(1, 100) %>
+                <%= form.select :score, option_range(1, 100), {}, {:class => "form-control form-number-3"} %>
                 <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE4") %>
               <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
                 <label><%= form.radio_button :must_flag, "0" %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE1') %></label>
@@ -104,7 +104,7 @@
               <%= t("materials_registration.MAT_REG_REGISTERQUESTION_SELECTCOUNT") %>
             </td>
             <td>
-              <%= form.select :text_count, option_range(1, Question::MAX_SELECT_COUNT), {}, :class => "select-max-count", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.select :text_count, option_range(1, Question::MAX_SELECT_COUNT), {}, :class => "form-control form-number-3", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
               <span id="max_count_comment"><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION7", :param0 => Question::MAX_SELECT_COUNT) %></span>
               <br/>
               <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION8") %>
@@ -205,8 +205,8 @@
             <!-- 解答文又は補足分-->
             <tr id="answerRow"<% if @question.pattern_cd != Settings.QUESTION_PATTERNCD_ESSAY %> style="display: none;"<% end %>>
               <td>
-                <%= t("common.COMMON_ATTENTION")  %>
                 <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE10")  %>
+                <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
               </td>
               <td>
                 <%= form.text_area :answer_memo, {:class => "form-control", :rows => 5} %>

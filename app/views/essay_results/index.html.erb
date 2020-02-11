@@ -49,13 +49,13 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
+                <th class="hidden-xs th-nowrap"><%= t("common.COMMON_NO1") %></th>
                 <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
                 <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_CLASSSESSIONNAME") %></th>
                 <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_ASSIGNMENTTITLE") %></th>
                 <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_PRESENTATIONLIMIT") %></th>
-                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_PRESENTATIONCOUNT") %></th>
-                <th class="hidden-xs"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_STATUS") %></th>
+                <th class="hidden-xs th-nowrap"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_PRESENTATIONCOUNT") %></th>
+                <th class="hidden-xs th-nowrap"><%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_STATUS") %></th>
                 <th class="hidden-xs"><%= t("common.COMMON_CONFIRM") %></th>
               </tr>
             </thead>
@@ -70,7 +70,7 @@
                 <!-- 課題タイトル -->
                 <td class="td-bold"><%= essay.generic_page_title %></td>
                 <!-- 提出期限 -->
-                <td class="hidden-xs td-bold">
+                <td class="hidden-xs td-bold td-nowrap">
                   <%= t("common.COMMON_FROMTO", :param0 => l(essay.start_time, format: :short), :param1 => l(essay.end_time, format: :short)) %>
                 </td>
                 <!-- 提出回数 -->
