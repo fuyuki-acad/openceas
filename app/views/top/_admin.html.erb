@@ -209,19 +209,19 @@
                     <!-- No. -->
                     <td><%= index %></td>
                     <!-- 曜日 -->
-                    <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+                    <td><%= convert_day_cd(course.day_cd) %></td>
                     <!-- 時限 -->
-                    <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                    <td><%= convert_hour_cd(course.hour_cd) %></td>
                     <!-- 年度 -->
-                    <td class="td-nowrap"><%= course.school_year %></td>
+                    <td><%= course.school_year %></td>
                     <!-- 学期 -->
-                    <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                    <td><%= convert_season_cd(course.season_cd) %></td>
                     <!-- 科目名称 -->
                     <td><%= course.course_name %></td>
                     <!-- 担任者 -->
-                    <td class="td-nowrap"><%= course.instructor_name %></td>
+                    <td><%= course.instructor_name %></td>
                     <!-- 系・学科・コース -->
-                    <td class="td-nowrap"><%= course.major %></td>
+                    <td><%= course.major %></td>
                     <!-- 授業実施画面へ -->
                     <td>
                       <%= link_to url_for(:controller => :class_sessions, :action => :index, :course_id => course.id), {:class => "btn btn-primary"} do %>
@@ -285,19 +285,19 @@
                   <!-- No. -->
                   <td><%= index %></td>
                   <!-- 曜日 -->
-                  <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+                  <td><%= convert_day_cd(course.day_cd) %></td>
                   <!-- 時限 -->
-                  <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                  <td><%= convert_hour_cd(course.hour_cd) %></td>
                   <!-- 年度 -->
-                  <td class="td-nowrap"><%= course.school_year %></td>
+                  <td><%= course.school_year %></td>
                   <!-- 学期 -->
-                  <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                  <td><%= convert_season_cd(course.season_cd) %></td>
                   <!-- 科目名称 -->
                   <td><%= course.course_name %></td>
                   <!-- 担任者 -->
-                  <td class="td-nowrap"><%= course.instructor_name %></td>
+                  <td><%= course.instructor_name %></td>
                   <!-- 系・学科・コース -->
-                  <td class="td-nowrap"><%= course.major %></td>
+                  <td><%= course.major %></td>
                   <!-- 授業実施画面へ -->
                   <td>
                     <%= link_to url_for(:controller => :class_sessions, :action => :index, :course_id => course.id), {:class => "btn btn-primary"} do %>

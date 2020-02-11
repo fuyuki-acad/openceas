@@ -25,11 +25,6 @@
 <html>
 <head>
   <title>Open CEAS</title>
-  <script>
-    var config = {
-      ai_bot: <%== Settings.USEAGE_AI_BOT.to_s.downcase == 'yes' ? true : false %>
-    }
-  </script>
   <%= action_cable_meta_tag %>
   <%#= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>

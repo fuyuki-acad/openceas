@@ -75,18 +75,10 @@ class ApplicationController < ActionController::Base
         end
 #          @courses = Course.all.order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
       elsif current_user.teacher?
-        if params[:course_name].blank?
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true).page(params[:page])
-        else
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
-        end
+        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
       else
 #        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
-        if params[:course_name].blank?
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ?", current_user.id, false, true, false).page(params[:page])
-        else
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, false, "%#{params[:course_name]}%").page(params[:page])
-        end
+        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, false, "%#{params[:course_name]}%").page(params[:page])
       end
     end
 

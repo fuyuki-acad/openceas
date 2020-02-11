@@ -125,25 +125,25 @@
                 <td colspan="2" class="table_header_upper_student_combinedrecord">
                   <%= t("common.COMMON_STUDENT") %>
                 </td>
-                <td colspan="<%= calculate_column([@classSessionColumnCount[0][0], @classSessionColumnCount[0][1], @classSessionColumnCount[0][2], @classSessionColumnCount[0][3], @classSessionColumnCount[0][4], @classSessionColumnCount[0][5], @classSessionColumnCount[0][6]]) %>" class="table_header_upper_classsesssion_combinedrecord td-nowrap">
+                <td colspan="<%= calculate_column([@classSessionColumnCount[0][0], @classSessionColumnCount[0][1], @classSessionColumnCount[0][2], @classSessionColumnCount[0][3], @classSessionColumnCount[0][4], @classSessionColumnCount[0][5], @classSessionColumnCount[0][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
                   <%= t("combinedRecord.COM_COMBINEDRECORD_COMMON") %>
                 </td>
 
                 <% for class_session_count in 1..@course.class_session_count %>
                   <% if @classSessionColumnCount[class_session_count][0] > 0 && @classSessionColumnCount[class_session_count][6] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord td-nowrap">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% elsif @classSessionColumnCount[class_session_count][0] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord td-nowrap">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][0], @classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% elsif @classSessionColumnCount[class_session_count][6] > 0 %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord td-nowrap">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5], @classSessionColumnCount[class_session_count][6]]) %>" class="table_header_upper_classsesssion_combinedrecord">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% else %>
-                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord td-nowrap">
+                    <td colspan="<%= calculate_column([@classSessionColumnCount[class_session_count][1], @classSessionColumnCount[class_session_count][2], @classSessionColumnCount[class_session_count][3], @classSessionColumnCount[class_session_count][4], @classSessionColumnCount[class_session_count][5]]) %>" class="table_header_upper_classsesssion_combinedrecord">
                       <%= class_session_name(class_session_count) %>
                     </td>
                   <% end %>
@@ -280,7 +280,7 @@
                   <td class="table_body_no_combinedrecord">
                     <%= user_index %>
                   </td>
-                  <td class="table_body_name_combinedrecord td-nowrap">
+                  <td class="table_body_name_combinedrecord">
                     <%= user.get_name_no_prefix %>
                     <%= user.user_name %>
                   </td>

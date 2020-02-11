@@ -87,10 +87,6 @@ a.global-navi-list-menu:hover, a.global-navi-list-menu:focus {
   background-color: #df4a32;
 }
 
-.badge-essencial {
-  background-color: #c7254e;
-}
-
 .badge-beige-ver1{
   background-color: #F3E2A9;
 }
@@ -336,59 +332,4 @@ span.badge {
 	color: #0000ff;
 	line-height: 150%;
 	font-weight: normal;
-}
-
-th.th-nowrap {
-  white-space: nowrap;
-}
-td.td-nowrap {
-  white-space: nowrap;
-}
-
-@media (min-width: 768px) {
-  .form-username {
-    width: 250px;
-  }
-  .form-mail {
-    width: 400px;
-  }
-  .form-password {
-    width: 250px;
-  }
-  .form-date {
-    width: 200px;
-  }
-  .form-datetime {
-    width: 250px;
-  }
-  .form-course-name {
-    width: 600px;
-  }
-  .form-course-code {
-    width: 300px;
-  }
-  .form-course-year {
-    width: 100px;
-  }
-  .form-course-season {
-    width: 100px;
-  }
-  .form-course-day {
-    width: 100px;
-  }
-  .form-course-hour {
-    width: 100px;
-  }
-  .form-instructor {
-    width: 400px;
-  }
-  .form-major {
-    width: 600px;
-  }
-  .form-number-3 {
-    width: 80px;
-  }
-  .form-text-15 {
-    width: 180px;
-  }
 }

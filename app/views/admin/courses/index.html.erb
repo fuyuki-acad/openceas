@@ -165,17 +165,17 @@
                   <td><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></td>
                   <td><%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => course.id}, {:class => "btn btn-warning ceas-button-margin-5"} %></td>
                   <!-- 曜日 -->
-                  <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+                  <td><%= convert_day_cd(course.day_cd) %></td>
                   <!-- 時限 -->
-                  <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                  <td><%= convert_hour_cd(course.hour_cd) %></td>
                   <!-- 年度 -->
-                  <td class="td-nowrap"><%= course.school_year %></td>
+                  <td><%= course.school_year %></td>
                   <!-- 学期 -->
-                  <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                  <td><%= convert_season_cd(course.season_cd) %></td>
                   <!-- 科目名称 -->
                   <td><%= course.course_name %></td>
                   <!-- 担任者 -->
-                  <td class="td-nowrap"><%= course.instructor_name %></td>
+                  <td><%= course.instructor_name %></td>
                   <td>
                     <%= link_to url_for(:action => :outputcsv_enrollment, :id => course.id), {:method => :post, :class => "btn btn-default ceas-button-margin-5"} do %>
                       <span class="hidden-xs"><%= t("common.COMMON_CSVOUTPUT") %></span>
