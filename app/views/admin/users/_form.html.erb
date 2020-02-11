@@ -39,11 +39,11 @@
           <!--氏名（漢字）-->
           <tr>
             <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
               <%= t("common.COMMON_USRNAME") %>
-              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :user_name, {:class => 'form-control form-username', :maxlength => '64'} %>
+              <%= f.text_field :user_name, {:class => 'form-control', :maxlength => '64'} %>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION2") %>
             </td>
           </tr>
@@ -54,7 +54,7 @@
               <%= t("common.COMMON_KANANAME") %>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :kana_name, {:class => 'form-control form-username', :maxlength => '64'} %>
+              <%= f.text_field :kana_name, {:class => 'form-control', :maxlength => '64'} %>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION3") %>
             </td>
           </tr>
@@ -65,7 +65,7 @@
               <%= t("common.COMMON_MAIL_1") %>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :email, {:class => 'form-control form-mail', :style => "ime-mode:disabled;", :maxlength => '256'} %>
+              <%= f.text_field :email, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '256'} %>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION4") %>
             </td>
           </tr>
@@ -76,7 +76,7 @@
               <%= t("common.COMMON_MAIL_2") %>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :email_mobile, {:class => 'form-control form-mail', :style => "ime-mode:disabled;", :maxlength => '256'} %>
+              <%= f.text_field :email_mobile, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '256'} %>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION5") %>
             </td>
           </tr>
@@ -84,8 +84,8 @@
           <!--性別-->
           <tr>
             <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
               <%= t("common.COMMON_SEXCD") %>
-              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
             </td>
             <td class="col-xs-9">
               <%= f.radio_button :sex_cd, Settings.USR_SEXCD_MALE %> <%= t('common.COMMON_MALE') %><br/>
@@ -100,7 +100,7 @@
             </td>
             <td class="col-xs-9">
               <div class="form-group">
-                  <div class='input-group date datetimepicker form-date'>
+                  <div class='input-group date datetimepicker'>
                     <%= f.text_field :birth_date, :data => {:date_format => 'YYYY/MM/DD'}, :class => 'form-control', placeholder: 'YYYY/MM/DD'  %>
                     <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
@@ -114,11 +114,11 @@
           <!--アカウント-->
           <tr>
             <td class="col-xs-3">
+              <code><%= t("common.COMMON_ATTENTION") %></code>
               <%= t("common.COMMON_ACCOUNT") %>
-              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :account, {:class => 'form-control form-username', :style => "ime-mode:disabled;", :maxlength => '64'} %>
+              <%= f.text_field :account, {:class => 'form-control', :style => "ime-mode:disabled;", :maxlength => '64'} %>
               <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
             </td>
           </tr>
@@ -126,13 +126,13 @@
           <!--パスワード-->
           <tr>
             <td class="col-xs-3">
-              <%= t("common.COMMON_PASSWORD") %>
               <% if @user.new_record? %>
-                <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
+                <code><%= t("common.COMMON_ATTENTION") %></code>
               <% end %>
+              <%= t("common.COMMON_PASSWORD") %>
             </td>
             <td class="col-xs-9">
-              <%= f.password_field :password, {:class => 'form-control form-password', autocomplete: "off", :maxlength => '128'} %>
+              <%= f.password_field :password, {:class => 'form-control', autocomplete: "off", :maxlength => '128'} %>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION7") %><br />
               <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %><br />
               <% if !@user.new_record? %>
@@ -173,7 +173,6 @@
             <td class="col-xs-9">
               <%= f.radio_button :delete_flag, "1" %> <%= t('common.COMMON_ON') %><br/>
               <%= f.radio_button :delete_flag, "0" %> <%= t('common.COMMON_OFF') %>
-            </td>
           </tr>
 
           <!--移動コード -->

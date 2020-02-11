@@ -165,7 +165,7 @@
                                 <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ALLOTMENT", :param0 => question.score) %>
                               </td>
                               <td class="col-xs-9">
-                                <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score), @user_answers[question.id] ? @user_answers[question.id].score : 0), :class => "form-control form-number-3" %>
+                                <%= select_tag "score[#{question.id}]", options_for_select(get_score_list(@generic_page, question.score), @user_answers[question.id] ? @user_answers[question.id].score : 0), :class => "answer_score" %>
                               </td>
                             </tr>
                           </table>
@@ -185,12 +185,10 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="col-xs-12">
-                <div class="form-group">
-                  <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_MULTIPLESUM") %>
-                  <%= text_field_tag :multiple_total_score, @multiple_total_score, :size => 5, :readonly => true %>
-                  <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ESSAYSUM") %>
-                  <%= text_field_tag :essay_total_score, @essay_total_score, :size => 5, :readonly => true %>
-                </div>
+                <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_MULTIPLESUM") %>
+                <%= text_field_tag :multiple_total_score, @multiple_total_score, :size => 5, :read_only => true %>
+                <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_ESSAYSUM") %>
+                <%= text_field_tag :essay_total_score, @essay_total_score, :size => 5, :read_only => true %>
               </div>
 
               <div class="col-xs-12">
@@ -258,7 +256,7 @@
                   <%= t("materials_administration.MAT_ADM_COM_GRADECOMPOUND_TOTALSCORE") %>
                 </label>
                 <div class="col-xs-7">
-                  <%= text_field_tag :total_score, @total_score, :size => 5, :class => "form-control form-number-3" %>
+                  <%= text_field_tag :total_score, @total_score, :size => 5, :class => "form-control" %>
                 </div>
               </div>
             </div>

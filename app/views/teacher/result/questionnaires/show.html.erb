@@ -108,11 +108,11 @@
                     <%= questionnaire.generic_page_title %>
                   </td>
                   <!-- 受付終了時間 -->
-                  <td class="td-bold hidden-xs td-nowrap">
+                  <td class="td-bold hidden-xs">
                     <%= questionnaire.end_time ? l(questionnaire.end_time) : "" %>
                   </td>
                   <!-- 回答状況 -->
-                  <td class="td-bold hidden-xs td-nowrap">
+                  <td class="td-bold hidden-xs">
                     <%= t("materials_administration.MAT_ADM_QUE_ADMINISTRATEQUESTIONNAIRE_REPLYCOUNT", :param0 => questionnaire.answerd_user_count(@course.id), :param1 => @course.course_enrollment_users.count) %>
                   </td>
                   <td class="td-bold">

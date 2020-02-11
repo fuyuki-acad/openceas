@@ -33,8 +33,8 @@ class GenericPage < ApplicationRecord
     :join_table => :generic_page_question_associations, :foreign_key => :generic_page_id, :association_foreign_key => :question_id
   has_and_belongs_to_many :parent_questions, -> { where "pattern_cd = ?", Settings.QUESTION_PATTERNCD_PARENTQUESTION}, :class_name => "Question",
     :join_table => :generic_page_question_associations, :foreign_key => :generic_page_id, :association_foreign_key => :question_id
-  #has_and_belongs_to_many :class_sessions, :class_name => "ClassSession",
-  #  :join_table => :generic_page_class_session_associations, :foreign_key => :generic_page_id, :association_foreign_key => :class_session_id
+  has_and_belongs_to_many :class_sessions, :class_name => "ClassSession",
+    :join_table => :generic_page_class_session_associations, :foreign_key => :generic_page_id, :association_foreign_key => :class_session_id
   has_and_belongs_to_many :class_sessions, :join_table => :generic_page_class_session_associations
 
   attr_accessor :upload_flag, :current_file, :html_text, :self_type, :edit_essay_flag, :answer_file
@@ -154,7 +154,7 @@ class GenericPage < ApplicationRecord
   def check_data
     case type_cd.to_s
     when Settings.GENERICPAGE_TYPECD_EVALUATIONLISTCODE.to_s
-      validate_presence(:generic_page_title, I18n.t("materials_registration.MAT_REG_EVA_EVALUATIONLIST_ERROR_NOTITLE"))
+      validate_presence(:generic_page_title, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE6"))
       validate_max_length(:material_memo, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG"), 4096)
     when Settings.GENERICPAGE_TYPECD_MATERIALCODE.to_s
       validate_presence(:generic_page_title, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE1"))

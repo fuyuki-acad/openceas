@@ -36,10 +36,10 @@
           <tr>
             <td class="col-xs-3">
               <%= t('common.COMMON_COURSENAME') %>
-              <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
+              <code><%= t('common.COMMON_ESSENCIAL') %></code>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :course_name, {:class => 'form-control form-course-name', :maxlength => '64'} %>
+              <%= f.text_field :course_name, {:class => 'form-control', :maxlength => '64'} %>
             </td>
           </tr>
           <!--科目コード-->
@@ -84,7 +84,7 @@
               <%= t('common.COMMON_DAY') %>
             </td>
             <td>
-              <%= f.select :day_cd, day_list, {}, {:class => 'form-control form-course-day'} %>
+              <%= f.select :day_cd, day_list, {}, {:class => 'form-control'} %>
             </td>
           </tr>
           <!--時限-->
@@ -93,7 +93,7 @@
               <%= t('common.COMMON_HOUR') %>
             </td>
             <td>
-              <%= f.select :hour_cd, hour_list, {}, {:class => 'form-control form-course-hour'} %>
+              <%= f.select :hour_cd, hour_list, {}, {:class => 'form-control'} %>
             </td>
           </tr>
           <!--担任者名-->
@@ -113,7 +113,7 @@
               <%= t('common.COMMON_INSTRUCTORNAME_DISP') %>
             </td>
             <td>
-              <%= f.text_field :instructor_name, {:class => 'form-control form-instructor', :maxlength => 128} %>
+              <%= f.text_field :instructor_name, {:class => 'form-control', :maxlength => 128} %>
               <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INSTRUCTORNAMEEXAMPLE') %>
             </td>
           </tr>
@@ -123,7 +123,7 @@
               <%= t('common.COMMON_MAJOR') %>
             </td>
             <td>
-              <%= f.text_field :major, {:class => 'form-control form-major', :maxlength => 64} %>
+              <%= f.text_field :major, {:class => 'form-control', :maxlength => 64} %>
               <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_MAJOREXAMPLE') %>
             </td>
           </tr>
@@ -144,7 +144,7 @@
               <%= t('admin.course.COMMON_ADMINISTRATECOURSE_CLASSSESSIONCOUNT') %>
             </td>
             <td>
-              <%= f.select :class_session_count, class_session_count_list, {}, {:class => 'form-control form-number-3'} %>
+              <%= f.select :class_session_count, class_session_count_list, {}, {:class => 'form-control'} %>
             </td>
           </tr>
           <!--グループフォルダ数-->
@@ -153,7 +153,7 @@
               <%= t('admin.course.COMMON_ADMINISTRATECOURSE_GROUPFOLDERCOUNT') %>
             </td>
             <td>
-              <%= f.select :group_folder_count, group_folder_count_list, {}, {:class => 'form-control form-number-3'} %>
+              <%= f.select :group_folder_count, group_folder_count_list, {}, {:class => 'form-control'} %>
             </td>
           </tr>
           <!--公開科目にする-->
@@ -173,7 +173,7 @@
               <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEPASSWORD') %>
             </td>
             <td>
-              <%= f.password_field :open_course_pass, {:class => 'form-control form-password', :maxlength => 64} %>
+              <%= f.password_field :open_course_pass, {:class => 'form-control', :maxlength => 64} %>
             </td>
           </tr>
           <!--お知らせ-->

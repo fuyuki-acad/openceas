@@ -77,8 +77,10 @@
           <!--　問題記述部-->
           <tr>
             <td>
+              <code>
+                <%= t("common.COMMON_ATTENTION") %>
+              </code>
               <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %>
-              <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
             </td>
             <td>
               <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>

@@ -53,7 +53,7 @@
                 <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_BATCHREGISTER") %>
               </td>
               <td class="col-xs-9">
-                <div class="input-group form-text-15">
+                <div class="input-group">
                   <%= select_tag "attendance_data_cd", options_for_select(attendance_long_options()), :class => "form-control" %>
                   <span class="input-group-btn">
                     <%= submit_tag t("common.COMMON_EXECUTE"), :name => "update", :class => "btn btn-danger" %>
@@ -181,7 +181,7 @@
                   <%= user.user_name %>
                 </td>
                 <td class="table_body_mark_attendance_administration">
-                  <%= select_tag "attendance_data[#{user.id}]", options_for_select(attendance_options(), :selected => @attendance_data[user.id][@class_session_count][@attendance_count]), :class => "form-control form-number-3" %>
+                  <%= select_tag "attendance_data[#{user.id}]", options_for_select(attendance_options(), :selected => @attendance_data[user.id][@class_session_count][@attendance_count]) %>
                 </td>
               </tr>
             <% end %>
