@@ -40,7 +40,7 @@ class Admin::GeneralAnnouncementsController < ApplicationController
     if @announcement.save
       redirect_to action: :index
     else
-      @announcements = GeneralAnnouncement.all
+      @announcements = GeneralAnnouncement.all.order("created_at desc")
       render action: :index
     end
   end
