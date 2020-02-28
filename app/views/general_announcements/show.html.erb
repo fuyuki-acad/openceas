@@ -47,7 +47,7 @@
               <!-- content -->
               <tr>
                 <td class="td-header"><%= t("common.COMMON_CONTENT") %></td>
-                <td><%= @general_announcement.content %></td>
+                <td><%= convert_html(@general_announcement.content) %></td>
               </tr>
             </table>
           </div>
