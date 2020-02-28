@@ -26,7 +26,7 @@ class Admin::GeneralAnnouncementsController < ApplicationController
 
   def index
     @announcement = GeneralAnnouncement.new
-    @announcements = GeneralAnnouncement.all
+    @announcements = GeneralAnnouncement.all.order("created_at desc")
   end
 
   def new
