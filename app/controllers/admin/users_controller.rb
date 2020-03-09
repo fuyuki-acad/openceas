@@ -158,6 +158,9 @@ class Admin::UsersController < ApplicationController
       sql_texts = []
       sql_params = {}
 
+      sql_texts.push("role_id IN (:roles)")
+      sql_params[:roles] = Role.all.map { |role| role.id }
+
       if !params[:keyword].blank?
         if params[:type] == "0"
           sql_texts.push("user_name like :keyword")
