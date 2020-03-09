@@ -34,7 +34,7 @@ ja:
       COMMON_ADMINISTRATEUSR_CSVNAME: deleteUsr
       #selectUsr.jsp
       PRI_ADM_USR_SELECTUSR_TITLE: "ユーザ選択画面"
-      PRI_ADM_USR_SELECTUSR_EXPLANATION1: "ユーザ別に表示"
+      PRI_ADM_USR_SELECTUSR_EXPLANATION1: "権限別に表示"
       PRI_ADM_USR_SELECTUSR_EXPLANATION2_html: "新規作成の場合はボタンを押してください<br>"
       PRI_ADM_USR_SELECTUSR_EXPLANATION3: "新規ユーザーは一覧の最下位に登録されます"
       PRI_ADM_USR_SELECTUSR_EXPLANATION4: "個人名"
