@@ -224,41 +224,16 @@ class Admin::CoursesController < ApplicationController
   end
 
   def bulk_update_search
-    sql_texts = []
-    sql_params = {}
-
-    if params[:day] != "0"
-      sql_texts.push("day_cd = :day")
-      sql_params[:day] = params[:day]
-    end
-
-    if params[:hour] != "0"
-      sql_texts.push("hour_cd = :hour")
-      sql_params[:hour] = params[:hour]
-    end
-
-    if params[:school_year] != "0"
-      sql_texts.push("school_year = :school_year")
-      sql_params[:school_year] = params[:school_year]
-    end
-
-    if params[:season] != "0"
-      sql_texts.push("season_cd = :season")
-      sql_params[:season] = params[:season]
-    end
-
-    params[:term_flag] = Settings.COURSE_TERMFLG_INVALIDITY
-    params[:unread_assignment_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
-    params[:unread_faq_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
-
-    @courses = Course.where(sql_texts.join(" AND "), sql_params).page(params[:page])
+    @courses = get_bulk_courses(true)
   end
 
   def bulk_update
-    if params[:course] && params[:course].count > 0
+    @courses = get_bulk_courses(false)
+
+    if @courses && @courses.count > 0
       ActiveRecord::Base.transaction do
-        params[:course].each do |course_id|
-          course = Course.find(course_id)
+        @courses.each do |course|
+          course = Course.find(course.id)
           course.term_flag = params[:term_flag]
           course.unread_assignment_display_cd = params[:unread_assignment_display_cd]
           course.unread_faq_display_cd = params[:unread_faq_display_cd]
@@ -613,5 +588,42 @@ class Admin::CoursesController < ApplicationController
 
     def csv_params
       params.require(:upload).permit(:file)
+    end
+
+    def get_bulk_courses(is_paginate)
+      sql_texts = []
+      sql_params = {}
+
+      if params[:day] != "0"
+        sql_texts.push("day_cd = :day")
+        sql_params[:day] = params[:day]
+      end
+
+      if params[:hour] != "0"
+        sql_texts.push("hour_cd = :hour")
+        sql_params[:hour] = params[:hour]
+      end
+
+      if params[:school_year] != "0"
+        sql_texts.push("school_year = :school_year")
+        sql_params[:school_year] = params[:school_year]
+      end
+
+      if params[:season] != "0"
+        sql_texts.push("season_cd = :season")
+        sql_params[:season] = params[:season]
+      end
+
+      params[:term_flag] = Settings.COURSE_TERMFLG_INVALIDITY
+      params[:unread_assignment_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
+      params[:unread_faq_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
+
+      if is_paginate
+        courses = Course.where(sql_texts.join(" AND "), sql_params).page(params[:page])
+      else
+        courses = Course.where(sql_texts.join(" AND "), sql_params)
+      end
+
+      courses
     end
 end
