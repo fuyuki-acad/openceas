@@ -224,6 +224,10 @@ class Admin::CoursesController < ApplicationController
   end
 
   def bulk_update_search
+    params[:term_flag] = Settings.COURSE_TERMFLG_INVALIDITY
+    params[:unread_assignment_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
+    params[:unread_faq_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
+    
     @courses = get_bulk_courses(true)
   end
 
@@ -233,7 +237,6 @@ class Admin::CoursesController < ApplicationController
     if @courses && @courses.count > 0
       ActiveRecord::Base.transaction do
         @courses.each do |course|
-          course = Course.find(course.id)
           course.term_flag = params[:term_flag]
           course.unread_assignment_display_cd = params[:unread_assignment_display_cd]
           course.unread_faq_display_cd = params[:unread_faq_display_cd]
@@ -613,10 +616,6 @@ class Admin::CoursesController < ApplicationController
         sql_texts.push("season_cd = :season")
         sql_params[:season] = params[:season]
       end
-
-      params[:term_flag] = Settings.COURSE_TERMFLG_INVALIDITY
-      params[:unread_assignment_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
-      params[:unread_faq_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
 
       if is_paginate
         courses = Course.where(sql_texts.join(" AND "), sql_params).page(params[:page])
