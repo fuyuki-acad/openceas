@@ -59,6 +59,37 @@
             </td>
           </tr>
 
+          <!--アカウント-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_ACCOUNT") %>
+              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
+            </td>
+            <td class="col-xs-9">
+              <%= f.text_field :account, {:class => 'form-control form-username', :style => "ime-mode:disabled;", :maxlength => '64'} %>
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
+            </td>
+          </tr>
+
+          <!--パスワード-->
+          <tr>
+            <td class="col-xs-3">
+              <%= t("common.COMMON_PASSWORD") %>
+              <% if @user.new_record? %>
+                <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
+              <% end %>
+            </td>
+            <td class="col-xs-9">
+              <%= f.password_field :password, {:class => 'form-control form-password', autocomplete: "off", :maxlength => '128'} %>
+              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION7") %><br />
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %><br />
+              <% if !@user.new_record? %>
+                <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION2") %><br />
+              <% end %>
+              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION3") %>
+            </td>
+          </tr>
+
           <!--メールアドレス１-->
           <tr>
             <td class="col-xs-3">
@@ -108,37 +139,6 @@
                   </div>
               </div>
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION6") %>
-            </td>
-          </tr>
-
-          <!--アカウント-->
-          <tr>
-            <td class="col-xs-3">
-              <%= t("common.COMMON_ACCOUNT") %>
-              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
-            </td>
-            <td class="col-xs-9">
-              <%= f.text_field :account, {:class => 'form-control form-username', :style => "ime-mode:disabled;", :maxlength => '64'} %>
-              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
-            </td>
-          </tr>
-
-          <!--パスワード-->
-          <tr>
-            <td class="col-xs-3">
-              <%= t("common.COMMON_PASSWORD") %>
-              <% if @user.new_record? %>
-                <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
-              <% end %>
-            </td>
-            <td class="col-xs-9">
-              <%= f.password_field :password, {:class => 'form-control form-password', autocomplete: "off", :maxlength => '128'} %>
-              <%= t("admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION7") %><br />
-              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %><br />
-              <% if !@user.new_record? %>
-                <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION2") %><br />
-              <% end %>
-              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION3") %>
             </td>
           </tr>
 
