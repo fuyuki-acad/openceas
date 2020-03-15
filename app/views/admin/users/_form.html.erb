@@ -63,11 +63,17 @@
           <tr>
             <td class="col-xs-3">
               <%= t("common.COMMON_ACCOUNT") %>
-              <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
+              <% if @user.new_record? %>
+                <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
+              <% end %>
             </td>
             <td class="col-xs-9">
-              <%= f.text_field :account, {:class => 'form-control form-username', :style => "ime-mode:disabled;", :maxlength => '64'} %>
-              <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
+              <% if @user.new_record? %>
+                <%= f.text_field :account, {:class => 'form-control form-username', :style => "ime-mode:disabled;", :maxlength => '64'} %>
+                <%= t("common.COMMON_ATTENTION")+t("admin.user.PRI_ADM_USR_REGISTERUST_EXPLANATION1") %>
+              <% else %>
+              <%= f.text_field :account, {:class => 'form-control form-username', :readonly => "readonly"} %>
+              <% end %>
             </td>
           </tr>
 
