@@ -28,10 +28,35 @@ class AssignmentEssayComment < ApplicationRecord
   belongs_to  :answer_score_history, primary_key: :answer_score_id , foreign_key: :answer_score_id
 
   before_save do
+    throw(:abort) unless create_historty
+  end
+
+  def create_historty
     if self.new_record?
       self.insert_user_id = User.current_user.id
     end
     self.update_user_id = User.current_user.id
+
+    if self.answer_score.latest_history
+      history = self.answer_score.latest_history.latest_comment
+      history = AssignmentEssayCommentHistory.new(answer_score_history_id: self.answer_score.latest_history.id) unless history
+
+      history.memo = self.memo
+      history.mail_flag = self.mail_flag
+      history.mailsend_date = self.mailsend_date
+      history.return_flag = self.return_flag
+      history.processed_file_name = self.processed_file_name
+      history.return_file_name = self.return_file_name
+      history.return_link_name = self.return_link_name
+      history.effective_date = self.effective_date
+      history.effective_memo = self.effective_memo
+      history.insert_memo = self.insert_memo
+      history.insert_user_id = self.insert_user_id
+      history.update_memo = self.update_memo
+      history.update_user_id = self.update_user_id
+
+      return history.save
+    end
   end
 
   def set_return_file(new_file)
