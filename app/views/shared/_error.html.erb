@@ -26,7 +26,11 @@
   <div id="error_explanation">
     <ul>
     <% record.errors.messages.each do |key, msg| %>
-      <li><%= msg.join("") %></li>
+      <% if key.to_s == 'base' %>
+        <li><%= msg.join("") %></li>
+      <% else %>
+        <li><%= t("activerecord.attributes.#{record.class.name.downcase}.#{key}") %><%= msg.join("") %></li>
+      <% end %>
     <% end %>
     </ul>
   </div>

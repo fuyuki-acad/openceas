@@ -71,6 +71,20 @@ class User < ApplicationRecord
     validate_mail_address(:email, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR7")) unless self.email.blank?
     validate_date(:birth_date, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR8")) unless self.birth_date.blank?
     validate_presence(:sex_cd, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR10")) if self.sex_cd.blank?
+
+    unless self.email.blank?
+      if self.email_was.blank?
+        count = self.class.where("email_mobile = ?", self.email).count
+      else
+        count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", self.email, self.email, self.id).count
+      end
+      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
+    end
+
+    unless self.email_mobile.blank?
+      count = self.class.where("email = ? OR (email_mobile = ? AND id != ?)", self.email_mobile, self.email_mobile, self.id).count
+      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile")) if count > 0
+    end
   end
 
   after_initialize do
@@ -158,14 +172,16 @@ class User < ApplicationRecord
       self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE14")
     end
 
+    unless self.email.blank?
+      count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", params[:new_email], params[:new_email], self.id).count
+      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
+    end
+
     if self.errors.messages.count > 0
-      assign_attributes(params)
       result = false
     else
-      params.delete(:email_confirmation)
-      params[:email] = params.delete(:new_email)
-      update_attributes(params)
-      result = true
+      result = update_columns(email: params[:new_email])
+      assign_attributes(email: self.email_was) unless result
     end
 
     result
@@ -182,14 +198,14 @@ class User < ApplicationRecord
       self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE15")
     end
 
+    count = self.class.where("email = ? OR (email_mobile = ? AND id != ?)", params[:new_email_mobile], params[:new_email_mobile], self.id).count
+    self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile")) if count > 0
+
     if self.errors.messages.count > 0
-      assign_attributes(params)
       result = false
     else
-      params.delete(:email_mobile_confirmation)
-      params[:email_mobile] = params.delete(:new_email_mobile)
-      update_attributes(params)
-      result = true
+      result = update_columns(email_mobile: params[:new_email_mobile])
+      assign_attributes(email_mobile: self.email_mobile_was) unless result
     end
 
     result
@@ -207,13 +223,9 @@ class User < ApplicationRecord
     end
 
     if self.errors.messages.count > 0
-      assign_attributes(params)
       result = false
     else
-      params.delete(:email_confirmation)
-      params[:email] = params.delete(:new_email)
-      update_attributes(params)
-      result = true
+      result = update_attributes(email: params[:new_email])
     end
 
     result

@@ -8,6 +8,8 @@ ja:
       previous: "&lsaquo;"
       next: "&rsaquo;"
       truncate: "..."
+    message:
+      exist: "%{item}はすでに存在します"
 
   date:
     view:
