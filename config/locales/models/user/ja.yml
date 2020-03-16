@@ -15,6 +15,7 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         current_password: "古いパスワード"
+        name_no_prefix: "名前番号順"
 
     errors:
       models:

@@ -28,16 +28,19 @@ module CustomValidationModule
 
   def validate_presence(target, message)
     value = self.send target.to_sym
-    errors.add(target.to_sym, message) if value.blank?
+    #errors.add(target.to_sym, message) if value.blank?
+    errors[:base] << message if value.blank?
   end
 
   def validate_length(target, message, min, max = nil)
     value = self.send target.to_sym
     unless value.blank?
       if max.nil?
-        errors.add(target.to_sym, message) if value.length < min
+        #errors.add(target.to_sym, message) if value.length < min
+        errors[:base] << message if value.length < min
       else
-        errors.add(target.to_sym, message) if value.length < min || value.length > max
+        #errors.add(target.to_sym, message) if value.length < min || value.length > max
+        errors[:base] << message if value.length < min || value.length > max
       end
     end
   end
@@ -45,7 +48,8 @@ module CustomValidationModule
   def validate_max_length(target, message, length)
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value.length > length
+      #errors.add(target.to_sym, message) if value.length > length
+      errors[:base] << message if value.length > length
     end
   end
 
@@ -53,7 +57,8 @@ module CustomValidationModule
     valid_password = /[^0-9A-Za-z\.\_\-]+/
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value =~ valid_password
+      #errors.add(target.to_sym, message) if value =~ valid_password
+      errors[:base] << message if value =~ valid_password
     end
   end
 
@@ -61,7 +66,8 @@ module CustomValidationModule
     valid_account = /[^0-9A-Za-z\.\_\-]+/
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value =~ valid_account
+      #errors.add(target.to_sym, message) if value =~ valid_account
+      errors[:base] << message if value =~ valid_account
     end
   end
 
@@ -69,7 +75,17 @@ module CustomValidationModule
     valid_name = /[^0-9A-Za-z\.\_\-]+/
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value =~ valid_name
+      #errors.add(target.to_sym, message) if value =~ valid_name
+      errors[:base] << message if value =~ valid_name
+    end
+  end
+
+  def validate_name_no_prefix(target, message)
+    valid_name = /[^0-9A-Za-z\-]+/
+    value = self.send target.to_sym
+    unless value.blank?
+      #errors.add(target.to_sym, message) if value =~ valid_name
+      self.errors[:base] << message if value =~ valid_name
     end
   end
 
@@ -77,7 +93,8 @@ module CustomValidationModule
     valid_value = /[^0-9A-Za-z]+/
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value =~ valid_value
+      #errors.add(target.to_sym, message) if value =~ valid_value
+      errors[:base] << message if value =~ valid_value
     end
   end
 
@@ -85,7 +102,8 @@ module CustomValidationModule
     valid_value = /[^0-9]+/
     value = self.send target.to_sym
     unless value.blank?
-      errors.add(target.to_sym, message) if value =~ valid_value
+      #errors.add(target.to_sym, message) if value =~ valid_value
+      errors[:base] << message if value =~ valid_value
     end
   end
 
@@ -97,13 +115,15 @@ module CustomValidationModule
       else
         count = self.class.where("#{target.to_s} = ? AND id != ?", value, self.id).count
       end
-      errors.add(target.to_sym, message) if count != 0
+      #errors.add(target.to_sym, message) if count != 0
+      errors[:base] << message if count != 0
     end
   end
 
   def validate_mail_address(target, message)
     value = self.send target.to_sym
-    errors.add(target.to_sym, message) unless value =~ VALID_ADDRESS
+    #errors.add(target.to_sym, message) unless value =~ VALID_ADDRESS
+    errors[:base] << message unless value =~ VALID_ADDRESS
   end
 
   def validate_date(target, message)
@@ -112,7 +132,8 @@ module CustomValidationModule
       begin
         date = value.to_date
       rescue ArgumentError
-        errors.add(target.to_sym, message)
+        #errors.add(target.to_sym, message)
+        errors[:base] << message
       end
     end
   end
