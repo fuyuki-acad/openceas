@@ -62,7 +62,7 @@ ja:
       PRI_ADM_USR_REGISTERUST_ERROR8: "生年月日はyyyy/MM/ddの形式で入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR9: "このアカウントはすでに登録済みです。変更してください。"
       PRI_ADM_USR_REGISTERUST_ERROR10: "性別を選択してください"
-      PRI_ADM_USR_REGISTERUST_ERROR11: "名前番号順は半角英数で入力してください"
+      PRI_ADM_USR_REGISTERUST_ERROR11: "名列番号順は半角英数で入力してください"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "100科目を超える表示はできません。"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索により絞込みを行ってください。"
       #editUsr.jsp
