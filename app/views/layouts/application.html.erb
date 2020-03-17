@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Open CEAS</title>
+  <title><%= Settings.APPLICATION_NAME %></title>
   <script>
     var config = {
       ai_bot: <%== Settings.USEAGE_AI_BOT.to_s.downcase == 'yes' ? true : false %>
