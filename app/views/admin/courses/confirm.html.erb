@@ -60,6 +60,15 @@
               <%= @course.course_name %>
             </td>
           </tr>
+          <!--科目コード-->
+          <tr>
+            <td>
+              <%= t('common.COMMON_COURSECD') %>
+            </td>
+            <td>
+              <%= @course.course_cd %>
+            </td>
+          </tr>
           <!--年度-->
           <tr>
             <td>
@@ -76,15 +85,6 @@
             </td>
             <td>
               <%= convert_season_cd(@course.season_cd) %>
-            </td>
-          </tr>
-          <!--科目コード-->
-          <tr>
-            <td>
-              <%= t('common.COMMON_COURSECD') %>
-            </td>
-            <td>
-              <%= @course.course_cd %>
             </td>
           </tr>
           <!--科目の利用-->
