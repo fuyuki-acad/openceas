@@ -334,6 +334,10 @@ class Admin::UploadsController < ApplicationController
           @errors[lineno] = I18n.t('registerUsrList1.PRI_REG_RESULTLIST_ACCOUNTDUPLICATIONERROR')+"("+line["account"]+")"
           next
         end
+        if !User.where("(email_mobile = ?) OR (email = ?)", line["mail"], line["mail"]).blank?
+          @errors[lineno] = I18n.t('registerUsrList1.PRI_REG_RESULTLIST_MAILDUPLICATIONERROR')+"("+line["account"]+")"
+          next
+        end
       when BUS_SER_IMP_IMP_UPDATESTATUSCD,
            BUS_SER_IMP_IMP_NAMENOPREFIXUPDATESTATUSCD,
            BUS_SER_IMP_IMP_LOGICALDELETESTATUSCD,
@@ -342,6 +346,13 @@ class Admin::UploadsController < ApplicationController
           @errors[lineno] = I18n.t('registerUsrList1.PRI_REG_RESULTLIST_ACCOUNTNOTFOUNDERROR')
           next
         end
+        if line["status_cd"] == BUS_SER_IMP_IMP_UPDATESTATUSCD
+          if !User.where("id != ? AND ((email_mobile = ?) OR (email = ?))", find_user.id, line["mail"], line["mail"]).blank?
+            @errors[lineno] = I18n.t('registerUsrList1.PRI_REG_RESULTLIST_MAILDUPLICATIONERROR')+"("+line["account"]+")"
+            next
+          end
+        end
+
       end
 
       accounts << line["account"]

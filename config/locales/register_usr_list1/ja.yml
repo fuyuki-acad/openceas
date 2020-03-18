@@ -61,6 +61,7 @@ ja:
     PRI_REG_RESULTLIST_AUTHCDERROR: "管理権限が不正です。"
     PRI_REG_RESULTLIST_SEXCDERROR: "性別コードが不正です。"
     PRI_REG_RESULTLIST_BIRTHDATEFORMATERROR: "誕生日のフォーマットが不正です。"
+    PRI_REG_RESULTLIST_MAILDUPLICATIONERROR: "同じメールアドレスが既に登録されています。"
     PRI_REG_RESULTLIST_MAILFORMATERROR: "メールアドレスに不正な文字が含まれています。"
     PRI_REG_RESULTLIST_MAILLONGERROR: "メールアドレスの文字数がオーバーしています。"
     PRI_REG_RESULTLIST_MOVECDERROR: "移動コードが不正です。"
