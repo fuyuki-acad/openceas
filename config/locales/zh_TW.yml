@@ -8,6 +8,8 @@ zh_TW:
       previous: "&lsaquo;"
       next: "&rsaquo;"
       truncate: "..."
+    message:
+      exist: "%{item} is already exist."
 
   date:
     view:

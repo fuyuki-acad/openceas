@@ -50,6 +50,8 @@ en:
       PRI_ADM_USR_REGISTERUST_EXPLANATION1: "One-byte period(.), hyphen(-) underscore(_) and alphanumeric characters only."
       PRI_ADM_USR_REGISTERUST_EXPLANATION2: "Blank No change"
       PRI_ADM_USR_REGISTERUST_EXPLANATION3: "6 or more letters"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION4: "One-byte hyphen(-) and alphanumeric characters only."
+      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "Using for an order of user list."
       PRI_ADM_USR_REGISTERUST_ERROR1: "Enter your name."
       PRI_ADM_USR_REGISTERUST_ERROR2: "Enter your account."
       PRI_ADM_USR_REGISTERUST_ERROR3: "Enter your password."
@@ -60,6 +62,7 @@ en:
       PRI_ADM_USR_REGISTERUST_ERROR8: "Enter your date of birth in yyyy/mm/dd."
       PRI_ADM_USR_REGISTERUST_ERROR9: "The account you entered is already taken. Change to something else."
       PRI_ADM_USR_REGISTERUST_ERROR10: "Sex must be selected."
+      PRI_ADM_USR_REGISTERUST_ERROR11: "Use only one-byte alphanumeric letters for name no prefix."
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "Maximum number of courses shown is 100."
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "Narrow down your search."
       #editUsr.jsp

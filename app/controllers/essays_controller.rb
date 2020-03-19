@@ -27,9 +27,6 @@ class EssaysController < ApplicationController
   def show
 		## レポートを取得する
 		@answer_scores = @essay.answer_score_histories.where("user_id = ?", current_user.id).order("answer_count ASC")
-		## レポートのコメントを取得する
-    @comments = AssignmentEssayComment.joins(:answer_score).
-      where("answer_scores.page_id = ? AND answer_scores.user_id = ?", @essay.id, current_user.id)
 
 		## 今回取得した配列には一人のユーザについてのレポートの状態だけが入っている。その配列の末尾(=最新のもの)を現在の状態として取得
 		@assignmentEssayStatus = @essay.essay_status(current_user.id)

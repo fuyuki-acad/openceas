@@ -2,10 +2,17 @@ $(document).on 'click', '.search_unassigned_course', (e) ->
   e.preventDefault()
   e.stopPropagation()
 
-  role_id = $("input[name*='role_id']:checked").val()
+  params = "role_id=" + $("input[name*='role_id']:checked").val() +
+      "&keyword=" + $("#keyword").val() +
+      "&type1=" + $("input[name*='type1']:checked").val() +
+      "&day=" + $("#day").val() +
+      "&hour=" + $("#hour").val() +
+      "&school_year=" + $("#school_year").val() +
+      "&season=" + $("#season").val()
+
   $.ajax $(this).attr("href"),
     type: "POST",
-    data: "role_id="+role_id+"&keyword="+$("#keyword").val(),
+    data: params,
     dataType: "html",
     success: (data, textStatus, jqXHR) ->
       $('#unassigned_courses').html(data)

@@ -34,7 +34,9 @@
     <%= link_to admin_access_logs_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ACCESSLOG") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
     <%= link_to admin_system_usages_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ALLOCATEDINFO") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
     <%= link_to summary_admin_system_usages_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_ACCESSTOTALINFO") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
-    <%= link_to admin_supports_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_SUPPORT_MANAGEMENT") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+    <% if Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
+      <%= link_to admin_supports_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_SUPPORT_MANAGEMENT") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
+    <% end %>
     <%= link_to admin_tokens_path, {class: "list-group-item global-navi-list-menu"} do %><%= t("top.COMMONTOP_TOKEN") %><span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true" /><% end %>
 
     <!-- 一括登録メニュー -->

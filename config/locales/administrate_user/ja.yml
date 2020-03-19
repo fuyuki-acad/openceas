@@ -34,7 +34,7 @@ ja:
       COMMON_ADMINISTRATEUSR_CSVNAME: deleteUsr
       #selectUsr.jsp
       PRI_ADM_USR_SELECTUSR_TITLE: "ユーザ選択画面"
-      PRI_ADM_USR_SELECTUSR_EXPLANATION1: "ユーザ別に表示"
+      PRI_ADM_USR_SELECTUSR_EXPLANATION1: "権限別に表示"
       PRI_ADM_USR_SELECTUSR_EXPLANATION2_html: "新規作成の場合はボタンを押してください<br>"
       PRI_ADM_USR_SELECTUSR_EXPLANATION3: "新規ユーザーは一覧の最下位に登録されます"
       PRI_ADM_USR_SELECTUSR_EXPLANATION4: "個人名"
@@ -50,6 +50,8 @@ ja:
       PRI_ADM_USR_REGISTERUST_EXPLANATION1: "半角英数、ピリオド（.）、ファイフン（-）、アンダースコア（_）"
       PRI_ADM_USR_REGISTERUST_EXPLANATION2: "空欄は変更なし"
       PRI_ADM_USR_REGISTERUST_EXPLANATION3: "6文字以上"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION4: "半角英数字、ファイフン（-）"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "ユーザ一覧表のソートに用いられます。"
       PRI_ADM_USR_REGISTERUST_ERROR1: "氏名(漢字)を入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR2: "アカウントを入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR3: "パスワードを入力してください"
@@ -60,6 +62,7 @@ ja:
       PRI_ADM_USR_REGISTERUST_ERROR8: "生年月日はyyyy/MM/ddの形式で入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR9: "このアカウントはすでに登録済みです。変更してください。"
       PRI_ADM_USR_REGISTERUST_ERROR10: "性別を選択してください"
+      PRI_ADM_USR_REGISTERUST_ERROR11: "名列番号順は半角英数で入力してください"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "100科目を超える表示はできません。"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索により絞込みを行ってください。"
       #editUsr.jsp
