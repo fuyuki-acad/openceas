@@ -27,7 +27,7 @@ class AnswerScoreHistory < ApplicationRecord
   belongs_to  :generic_page,  :foreign_key => :page_id
   belongs_to  :answer_score
   has_many    :answer_histories, primary_key: :answer_score_id , foreign_key: :answer_score_id
-  has_one     :latest_comment, -> { order('id DESC') }, class_name: "AssignmentEssayComment", primary_key: :answer_score_id , foreign_key: :answer_score_id
+  has_one     :latest_comment, -> { order('id DESC') }, class_name: "AssignmentEssayCommentHistory"
 
   attr_accessor :rank
 

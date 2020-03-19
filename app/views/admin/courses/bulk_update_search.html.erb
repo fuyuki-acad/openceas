@@ -142,9 +142,6 @@
           <%= hidden_field_tag "hour", params[:hour] %>
           <%= hidden_field_tag "school_year", params[:school_year] %>
           <%= hidden_field_tag "season", params[:season] %>
-          <% @courses.each do |course| %>
-            <%= hidden_field_tag "course[]", course.id %>
-          <% end %>
 
           <!-- 更新ボタン -->
           <div class="text-center">

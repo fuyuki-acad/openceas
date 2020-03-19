@@ -50,6 +50,8 @@ zh_TW:
       PRI_ADM_USR_REGISTERUST_EXPLANATION1: "半型英數字, period(.), hyphen(-) and underscore(_)"
       PRI_ADM_USR_REGISTERUST_EXPLANATION2: "Blank No change"
       PRI_ADM_USR_REGISTERUST_EXPLANATION3: "6 or more letters"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION4: "One-byte hyphen(-) and alphanumeric characters only."
+      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "Using for an order of user list."
       PRI_ADM_USR_REGISTERUST_ERROR1: "請輸入姓名(漢字)"
       PRI_ADM_USR_REGISTERUST_ERROR2: "請輸入帳戶"
       PRI_ADM_USR_REGISTERUST_ERROR3: "請輸入密碼"
@@ -60,6 +62,7 @@ zh_TW:
       PRI_ADM_USR_REGISTERUST_ERROR8: "出生年月日請依yyyy／MM／dd的形式輸入"
       PRI_ADM_USR_REGISTERUST_ERROR9: "此帳戶已使用。請更改"
       PRI_ADM_USR_REGISTERUST_ERROR10: "Sex must be selected."
+      PRI_ADM_USR_REGISTERUST_ERROR11: "Use only one-byte alphanumeric letters for name no prefix."
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "超過100個科目則不予顯示"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "進階搜尋"
       #editUsr.jsp

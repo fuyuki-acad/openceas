@@ -61,6 +61,7 @@ en:
     PRI_REG_RESULTLIST_AUTHCDERROR: "Invalid authorization code."
     PRI_REG_RESULTLIST_SEXCDERROR: "Invalid sex code."
     PRI_REG_RESULTLIST_BIRTHDATEFORMATERROR: "Invalid date of birth format."
+    PRI_REG_RESULTLIST_MAILDUPLICATIONERROR: "Found duplicate Email."
     PRI_REG_RESULTLIST_MAILFORMATERROR: "Email address includes invalid character(s)."
     PRI_REG_RESULTLIST_MAILLONGERROR: "Email address too long."
     PRI_REG_RESULTLIST_MOVECDERROR: "Invalid transfer code."

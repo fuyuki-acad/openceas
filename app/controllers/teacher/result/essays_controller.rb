@@ -757,8 +757,10 @@ class Teacher::Result::EssaysController < ApplicationController
   def comment
     score = AnswerScoreHistory.find(params[:score])
     comment = score.latest_comment
+    comment = AssignmentEssayCommentHistory.new(answer_score_history_id: score.id) unless comment
 
-    comment.update!(comment_params)
+    comment.memo = comment_params[:memo]
+    comment.save!
     redirect_to teacher_result_result_essay_history_path(@essay, user: score.user_id)
 
   rescue => e

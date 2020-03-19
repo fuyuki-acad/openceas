@@ -31,7 +31,7 @@
 <%= @announcement.subject %>
 
 <%= t("announcement.COMMONANNOUNCEMENT_MAILCONTENT4") %>
-<%= @announcement.content %>
+<%= convert_html(@announcement.content) %>
 
 ********************************************************
 

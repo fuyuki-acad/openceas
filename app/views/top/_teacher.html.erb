@@ -210,25 +210,6 @@
 
           <!-- 検索フォーム -->
           <div class="col-xs-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <%= form_tag url_for({:action => 'index'}), :method => :get do %>
-                  <div class="col-xs-12 col-sm-6">
-                    <div class="input-group">
-                      <%= text_field_tag :suggest, params[:suggest], {:class => "form-control"} %>
-                      <span class="input-group-btn">
-                        <%= submit_tag t("common.COMMON_SEARCH"), :name => "", :class => "btn btn-default center-block" %>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-6">
-                    <label><%= radio_button_tag :type, "0", true %> <%= t('common.COMMON_COURSENAME') %></label>
-                    <label><%= radio_button_tag :type, "1", params[:type] == "1" %> <%= t('common.COMMON_INSTRUCTOR') %></label>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-
             <!-- 0件メッセージ -->
             <% if @courses.count == 0 %>
               <p><%= t("common.COMMON_NOTFOUND") %></p>

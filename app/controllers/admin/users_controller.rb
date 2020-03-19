@@ -158,6 +158,9 @@ class Admin::UsersController < ApplicationController
       sql_texts = []
       sql_params = {}
 
+      sql_texts.push("role_id IN (:roles)")
+      sql_params[:roles] = Role.all.map { |role| role.id }
+
       if !params[:keyword].blank?
         if params[:type] == "0"
           sql_texts.push("user_name like :keyword")
@@ -179,7 +182,7 @@ class Admin::UsersController < ApplicationController
     def user_params
       params.require(:user).permit(
         :user_name, :kana_name, :email, :email_mobile, :sex_cd, :birth_date, :account,
-        :password, :role_id, :term_flag, :delete_flag, :move_cd, :role_id,
+        :password, :name_no_prefix, :role_id, :term_flag, :delete_flag, :move_cd, :role_id,
         :add_courses => [], :delete_courses => [])
     end
 
@@ -193,13 +196,41 @@ class Admin::UsersController < ApplicationController
         sql_texts.push('courses.id NOT IN (' + CourseEnrollmentUser.where(user_id: @user.id).select(:course_id).to_sql + ')') if @user
       end
 
-      unless params[:keyword].blank?
-        sql_texts.push("courses.course_name like :keyword")
-        sql_params[:keyword] = "%" + params[:keyword].to_s + "%"
+      if !params[:keyword].blank?
+        case params[:type1]
+        when "1"
+          sql_texts.push("instructor_name like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        when "2"
+          sql_texts.push("course_cd like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        else
+          sql_texts.push("course_name like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        end
       end
 
-      @courses = Course.
-        where(sql_texts.join(" AND "), sql_params).
-        order("school_year DESC, day_cd, hour_cd, season_cd")
+      if params[:day] && params[:day] != "0"
+        sql_texts.push("day_cd = :day")
+        sql_params[:day] = params[:day]
+      end
+
+      if params[:hour] && params[:hour] != "0"
+        sql_texts.push("hour_cd = :hour")
+        sql_params[:hour] = params[:hour]
+      end
+
+      if params[:school_year] && params[:school_year] != "0"
+        sql_texts.push("school_year = :school_year")
+        sql_params[:school_year] = params[:school_year]
+      end
+
+      if params[:season] && params[:season] != "0"
+        sql_texts.push("season_cd = :season")
+        sql_params[:season] = params[:season]
+      end
+
+      @courses = Course.where(sql_texts.join(" AND "), sql_params).
+        order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
     end
 end

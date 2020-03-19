@@ -124,7 +124,7 @@
                           <%= t("general_announcement.COMMONGENERALINFO_INFOMATION") %>
                         </td>
                         <td class="col-xs-7">
-                          <%= h(announcement.content) %>
+                          <%= convert_html(announcement.content) %>
                         </td>
                       </tr>
                     </table>
