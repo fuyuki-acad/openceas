@@ -44,7 +44,7 @@ ja:
       PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSE_HELP_PDF: "CourseDivide_ja.pdf"
       PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSEIDEXPLANATION1: "（新規作成している科目が分割後科目の場合，「分割前科目」を検索して指定します）"
       PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSEIDEXPLANATION2: "（編集している科目が，合併前科目の場合には「合併後科目」を，分割後科目の場合には「分割前科目」を指定します）"
-      PRI_ADM_COU_REGISTERCOURSE_INSTRUCTORNAMEEXAMPLE: "(例：山田　太郎)"
+      PRI_ADM_COU_REGISTERCOURSE_INSTRUCTORNAMEEXAMPLE: "山田太郎、担任グループ１、など担任者欄への表示を指定"
       PRI_ADM_COU_REGISTERCOURSE_MAJOREXAMPLE: "(例：システムマネジメント)"
       PRI_ADM_COU_REGISTERCOURSE_TERMFLGEXPLANATION: "(利用すると設定すると、学生および担任者のTopページおよび科目一覧画面に表示され選択可能となります。ただし、科目環境設定を行う科目や教材をコピーする際のコピー元科目を選択する場合の科目一覧には、ここの指定に関係なく登録している科目がすべて表示されます)"
       PRI_ADM_COU_REGISTERCOURSE_OPENCOURSEEXPLANATION: "（公開に設定すると科目履修学生以外にも授業資料等の参照が可能になります）"
