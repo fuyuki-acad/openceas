@@ -8,7 +8,7 @@
 (function() {
   this.App || (this.App = {});
 
-  if (config.ai_bot) {
+  //if (config.ai_bot) {
     App.cable = ActionCable.createConsumer();
-  }
+  //}
 }).call(this);
