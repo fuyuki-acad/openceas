@@ -51,7 +51,7 @@ ja:
       PRI_ADM_USR_REGISTERUST_EXPLANATION2: "空欄は変更なし"
       PRI_ADM_USR_REGISTERUST_EXPLANATION3: "6文字以上"
       PRI_ADM_USR_REGISTERUST_EXPLANATION4: "半角英数字、ファイフン（-）"
-      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "ユーザ一覧表のソートに用いられます。"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "ユーザ一覧表のソートに用いられます。学生権限のユーザは指定が有効です。"
       PRI_ADM_USR_REGISTERUST_ERROR1: "氏名(漢字)を入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR2: "アカウントを入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR3: "パスワードを入力してください"
