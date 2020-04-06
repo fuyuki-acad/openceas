@@ -449,4 +449,15 @@ module ApplicationHelper
 
     ret.html_safe
   end
+
+  def course_name_with_prefix(course)
+    prefix = course.school_year.to_s
+    unless course.season_cd.blank?
+      season = convert_season_cd(course.season_cd)
+      prefix += "/" + season unless season.blank?
+    end
+    prefix += "/" + course.course_cd.to_s
+
+    "[#{prefix}] #{course.course_name}"
+  end
 end
