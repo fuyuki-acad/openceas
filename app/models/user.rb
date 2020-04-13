@@ -71,16 +71,7 @@ class User < ApplicationRecord
     validate_mail_address(:email, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR7")) unless self.email.blank?
     validate_date(:birth_date, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR8")) unless self.birth_date.blank?
     validate_presence(:sex_cd, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR10")) if self.sex_cd.blank?
-    validate_name_no_prefix(:name_no_prefix, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR11")) unless self.name_no_prefix.blank?
-
-    unless self.email.blank?
-      if self.email_was.blank?
-        count = self.class.where("email_mobile = ?", self.email).count
-      else
-        count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", self.email, self.email, self.id).count
-      end
-      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
-    end
+    #validate_name_no_prefix(:name_no_prefix, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR11")) unless self.name_no_prefix.blank?
 
     unless self.email_mobile.blank?
       count = self.class.where("email = ? OR (email_mobile = ? AND id != ?)", self.email_mobile, self.email_mobile, self.id).count
@@ -354,7 +345,7 @@ class User < ApplicationRecord
 			ret = self.name_no_prefix
 		end
 
-		return ret;
+		return ret
   end
 
   def assigned?(course_id)
