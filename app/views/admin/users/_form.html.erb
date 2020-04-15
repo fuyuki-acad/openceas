@@ -244,16 +244,8 @@
         </div>
 
         <div class="col-xs-12 col-sm-6">
-          <%= t("admin.course.PRI_ADM_COU_ADMINSEARCHCOURSE_SEARCHEXPLANATION") %>
+          <%= t("admin.user.PRI_ADM_USR_REGISTERUSR_SEARCHEXPLANATION") %>
           <div class="input-group">
-            <div class="col-xs-3">
-              <%= t("common.COMMON_DAY") %>
-              <%= select_tag :day, options_for_select(day_list, params[:day]), {:class => "selectDay"} %>
-            </div>
-            <div class="col-xs-3">
-              <%= t("common.COMMON_HOUR") %>
-              <%= select_tag :hour, options_for_select(hour_list, params[:hour]), {:class => "selectHour"} %>
-            </div>
             <div class="col-xs-3">
               <%= t("common.COMMON_SCHOOLYEAR") %>
               <%= select_tag :school_year, options_for_select(school_year_list, params[:school_year]), {:class => "selectYear"} %>
@@ -261,6 +253,14 @@
             <div class="col-xs-3">
               <%= t("common.COMMON_SEASON") %>
               <%= select_tag :season, options_for_select(season_list, params[:season]), {:class => "selectSeason"} %>
+            </div>
+            <div class="col-xs-3">
+              <%= t("common.COMMON_DAY") %>
+              <%= select_tag :day, options_for_select(day_list, params[:day]), {:class => "selectDay"} %>
+            </div>
+            <div class="col-xs-3">
+              <%= t("common.COMMON_HOUR") %>
+              <%= select_tag :hour, options_for_select(hour_list, params[:hour]), {:class => "selectHour"} %>
             </div>
           </div>
         </div>
