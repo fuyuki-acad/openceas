@@ -82,7 +82,7 @@ ja:
     FAQ_OPENFAQLIST_EXPLANATION3: "本人には直接e-mailで回答しますが、受講者全員にとって参考となる質問は、内容を必要に応じ修正したうえでFAQに掲示しますので参考にしてください。"
     FAQ_OPENFAQLIST_QUESTION: "質問する"
     FAQ_OPENFAQLIST_TEXT1: "質問はこちらからお願いします"
-    FAQ_OPENFAQLIST_TEXT2: "過去の質問が見つかりませんでした"
+    FAQ_OPENFAQLIST_TEXT2: "回答待ちの質問が見つかりませんでした"
     FAQ_OPENFAQLIST_TEXT3: "以下に回答待ちの質問を表示します"
     FAQ_OPENFAQLIST_TEXT4: "(あなたが送信した質問)"
     FAQ_OPENFAQLIST_TEXT5: "以下に過去質問を受けた回答を表示します"
