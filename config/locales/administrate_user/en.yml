@@ -63,8 +63,9 @@ en:
       PRI_ADM_USR_REGISTERUST_ERROR9: "The account you entered is already taken. Change to something else."
       PRI_ADM_USR_REGISTERUST_ERROR10: "Sex must be selected."
       PRI_ADM_USR_REGISTERUST_ERROR11: "Use only one-byte alphanumeric letters for name no prefix."
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "Maximum number of courses shown is 100."
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "%{count} courses were found. Maximum number of courses shown is 100."
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "Narrow down your search."
+      PRI_ADM_USR_REGISTERUSR_SEARCHEXPLANATION: "If you search with the course code, no search option is available."
       #editUsr.jsp
       PRI_ADM_USR_EDITUSR_FORMTITLE1: "Edit user info."
       #confirmRegisterUsr.jsp

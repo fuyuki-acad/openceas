@@ -63,8 +63,9 @@ ja:
       PRI_ADM_USR_REGISTERUST_ERROR9: "このアカウントはすでに登録済みです。変更してください。"
       PRI_ADM_USR_REGISTERUST_ERROR10: "性別を選択してください"
       PRI_ADM_USR_REGISTERUST_ERROR11: "名列番号順は半角英数で入力してください"
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "100科目を超える表示はできません。"
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索により絞込みを行ってください。"
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "%{count}科目見つかりましたが、100科目を越える表示はできません。"
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索文字・条件で絞り込んでください。"
+      PRI_ADM_USR_REGISTERUSR_SEARCHEXPLANATION: "科目コード以外をチェックした場合には、指定した条件下での検索が有効です"
       #editUsr.jsp
       PRI_ADM_USR_EDITUSR_FORMTITLE1: "ユーザ情報変更"
       #confirmRegisterUsr.jsp

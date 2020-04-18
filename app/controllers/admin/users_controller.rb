@@ -235,7 +235,7 @@ class Admin::UsersController < ApplicationController
       end
 
       @courses = Course.where(sql_texts.join(" AND "), sql_params).
-        order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+        order("school_year DESC, day_cd, hour_cd, season_cd")
     end
 
     def get_assigned_courses(user)

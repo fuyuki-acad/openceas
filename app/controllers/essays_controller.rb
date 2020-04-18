@@ -196,7 +196,7 @@ class EssaysController < ApplicationController
 
   def return_file
     if params[:count].blank?
-      score = @essay.latest_score(current_user.id)
+      score = @essay.answer_score_histories.where("user_id = ?", current_user.id).order("answer_count DESC").first
     else
       score = @essay.answer_score_histories.where("user_id = ? AND answer_count = ?", current_user.id, params[:count]).first
     end
