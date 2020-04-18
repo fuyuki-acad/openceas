@@ -50,7 +50,7 @@
           <tr>
             <td>
               <%= t('common.COMMON_COURSECD') %>
-              <% if @course.new_record? %><span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span><% end %>
+              <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
             </td>
             <td>
               <%= f.text_field :course_cd, {:class => 'form-control form-course-code', :maxlength => '128'} %>

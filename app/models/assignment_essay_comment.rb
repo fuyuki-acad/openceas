@@ -46,6 +46,7 @@ class AssignmentEssayComment < ApplicationRecord
       history.mailsend_date = self.mailsend_date
       history.return_flag = self.return_flag
       history.processed_file_name = self.processed_file_name
+      history.processed_link_name = self.processed_link_name
       history.return_file_name = self.return_file_name
       history.return_link_name = self.return_link_name
       history.effective_date = self.effective_date

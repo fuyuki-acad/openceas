@@ -25,7 +25,8 @@ class AnnouncementMailer < ApplicationMailer
   def new_registration(announcement, user)
     @announcement = announcement
     user_email = user.email
-    user_email += ", " + user.email_mobile unless user.email_mobile.blank? 
+    user_email += ", " + user.email_mobile unless user.email_mobile.blank?
+    return if user_email.blank?
     mail reply_to: User.current_user.email, to: user_email, subject: announcement.course.course_name + I18n.t("announcement.COMMONANNOUNCEMENT_MAILSUBJECT")
   end
 end

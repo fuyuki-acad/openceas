@@ -32,6 +32,7 @@ class EssayMailer < ApplicationMailer
 
     user_email = user.email
     user_email += ", " + user.email_mobile unless user.email_mobile.blank?
+    return if user_email.blank?
     mail reply_to: User.current_user.email, to: user_email, subject: subject
   end
 end

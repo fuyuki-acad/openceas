@@ -28,6 +28,7 @@ class AnswerScoreHistory < ApplicationRecord
   belongs_to  :answer_score
   has_many    :answer_histories, primary_key: :answer_score_id , foreign_key: :answer_score_id
   has_one     :latest_comment, -> { order('id DESC') }, class_name: "AssignmentEssayCommentHistory"
+  belongs_to  :user
 
   attr_accessor :rank
 

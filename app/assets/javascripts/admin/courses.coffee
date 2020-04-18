@@ -1,4 +1,4 @@
-$(document).on 'click', '.search_unassigned_course', (e) ->
+$(document).on 'click', '.search_user_course', (e) ->
   e.preventDefault()
   e.stopPropagation()
 
@@ -12,7 +12,17 @@ $(document).on 'click', '.search_unassigned_course', (e) ->
 
   $.ajax $(this).attr("href"),
     type: "POST",
-    data: params,
+    data: params + "&type=assign",
+    dataType: "html",
+    success: (data, textStatus, jqXHR) ->
+      $('#assigned_courses').html(data)
+    error: (data, textStatus, jqXHR) ->
+      alert(data.responseText)
+    @
+
+  $.ajax $(this).attr("href"),
+    type: "POST",
+    data: params + "&type=unassign",
     dataType: "html",
     success: (data, textStatus, jqXHR) ->
       $('#unassigned_courses').html(data)

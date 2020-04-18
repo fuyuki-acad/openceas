@@ -145,7 +145,11 @@ class Admin::UsersController < ApplicationController
 
   def course
     set_user if params[:id]
-    get_unassigned_courses(@user ? @user.role_id : nil)
+    if params[:type] == "unassign"
+      get_unassigned_courses(@user ? @user.role_id : nil)
+    else
+      get_assigned_courses(@user)
+    end
     render :layout => false
   end
 
@@ -231,6 +235,53 @@ class Admin::UsersController < ApplicationController
       end
 
       @courses = Course.where(sql_texts.join(" AND "), sql_params).
-        order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+        order("school_year DESC, day_cd, hour_cd, season_cd")
+    end
+
+    def get_assigned_courses(user)
+      sql_params = {}
+      sql_texts = []
+
+      if !params[:keyword].blank?
+        case params[:type1]
+        when "1"
+          sql_texts.push("instructor_name like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        when "2"
+          sql_texts.push("course_cd like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        else
+          sql_texts.push("course_name like :keyword")
+          sql_params[:keyword] = "%" + params[:keyword] + "%"
+        end
+      end
+
+      if params[:day] && params[:day] != "0"
+        sql_texts.push("day_cd = :day")
+        sql_params[:day] = params[:day]
+      end
+
+      if params[:hour] && params[:hour] != "0"
+        sql_texts.push("hour_cd = :hour")
+        sql_params[:hour] = params[:hour]
+      end
+
+      if params[:school_year] && params[:school_year] != "0"
+        sql_texts.push("school_year = :school_year")
+        sql_params[:school_year] = params[:school_year]
+      end
+
+      if params[:season] && params[:season] != "0"
+        sql_texts.push("season_cd = :season")
+        sql_params[:season] = params[:season]
+      end
+
+      if user.teacher?
+        @courses = user.assigned_courses.where(sql_texts.join(" AND "), sql_params).
+          order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+      elsif @user.student?
+        @courses = user.enrollment_courses.where(sql_texts.join(" AND "), sql_params).
+          order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+      end
     end
 end
