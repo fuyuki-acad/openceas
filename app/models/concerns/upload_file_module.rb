@@ -28,10 +28,10 @@ require 'kconv'
 module UploadFileModule
   extend ActiveSupport::Concern
 
-  included do
-    EXTRACT_TYPES = ['.zip']
-    HTML_TYPES = ['.html', '.htm']
+  EXTRACT_TYPES = ['.zip']
+  HTML_TYPES = ['.html', '.htm']
 
+  included do
     attr_accessor :file, :extract_flag, :original_filename, :store_filename, :extract_path
   end
 

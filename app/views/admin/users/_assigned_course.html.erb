@@ -21,8 +21,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %>
 
-<% if params[:type] == "unassign" %>
-<%= render 'unassigned_course', :courses => @courses %>
-<% else %>
-<%= render 'assigned_course', :courses => @courses %>
-<% end %>
+<div id="assigned_courses">
+  <% if courses %>
+    <%= select_tag 'user[delete_courses]', options_for_select(courses.map{ |course| [course_name_with_prefix(course), course.id] }), {:multiple => true, :class => "form-control", :size => 15} %>
+  <% end %>
+</div>

@@ -188,7 +188,7 @@
             </td>
             <td>
               <% if @faq.response_flag == Settings.FAQ_RESPONSEFLG_REPLIED %>
-                <%= @faq.faq_answer.answer %>
+                <%= convert_html(@faq.faq_answer.answer) %>
                 <%= hidden_field_tag "faq[faq_answer_attributes][answer]", @faq.faq_answer_attributes["answer"] %>
               <% else %>
                 <%= text_area_tag "faq[faq_answer_attributes][answer]", @faq.faq_answer_attributes["answer"], {:class => 'form-control', :rows => 10} %>

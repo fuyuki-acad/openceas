@@ -104,7 +104,7 @@
               <%= t("materials_registration.MAT_REG_REGISTERQUESTION_SELECTCOUNT") %>
             </td>
             <td>
-              <%= form.select :text_count, option_range(1, Question::MAX_SELECT_COUNT), {}, :class => "form-control form-number-3", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.select :text_count, option_range(1, Question::MAX_SELECT_COUNT), {}, :class => "form-control form-number-3 select-max-count", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
               <span id="max_count_comment"><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION7", :param0 => Question::MAX_SELECT_COUNT) %></span>
               <br/>
               <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION8") %>

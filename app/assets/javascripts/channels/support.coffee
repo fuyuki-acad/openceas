@@ -1,4 +1,4 @@
-if (config.ai_bot)
+#if (config.ai_bot)
   App.support = App.cable.subscriptions.create "SupportChannel",
     connected: ->
       # Called when the subscription is ready for use on the server

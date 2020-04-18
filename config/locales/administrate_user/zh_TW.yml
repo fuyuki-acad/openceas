@@ -63,8 +63,9 @@ zh_TW:
       PRI_ADM_USR_REGISTERUST_ERROR9: "此帳戶已使用。請更改"
       PRI_ADM_USR_REGISTERUST_ERROR10: "Sex must be selected."
       PRI_ADM_USR_REGISTERUST_ERROR11: "Use only one-byte alphanumeric letters for name no prefix."
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "超過100個科目則不予顯示"
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "%{count} courses were found. 超過100個科目則不予顯示"
       PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "進階搜尋"
+      PRI_ADM_USR_REGISTERUSR_SEARCHEXPLANATION: "If you search with the course code, no search option is available."
       #editUsr.jsp
       PRI_ADM_USR_EDITUSR_FORMTITLE1: "變更使用者資料"
       #confirmRegisterUsr.jsp

@@ -26,6 +26,7 @@ class FaqMailer < ApplicationMailer
     @faq = faq
     user_email = recieve_user.email
     user_email += ", " + recieve_user.email_mobile unless recieve_user.email_mobile.blank?
+    return if user_email.blank?
     mail reply_to: @faq.user.email, to: user_email, subject: @faq.user.user_name + I18n.t("faq.PRE_BEA_CONFIRMFAQQUESTIONBEAN_MAILSUBJECT")
   end
 
@@ -33,6 +34,7 @@ class FaqMailer < ApplicationMailer
     @answer = answer
     user_email = recieve_user.email
     user_email += ", " + recieve_user.email_mobile unless recieve_user.email_mobile.blank?
+    return if user_email.blank?
     mail reply_to: answer.answerer.email, to: user_email, subject: I18n.t("faq.PRE_BEA_CONFIRMFAQBEAN_MAILSUBJECT")
   end
 end

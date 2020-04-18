@@ -51,7 +51,7 @@ ja:
       PRI_ADM_USR_REGISTERUST_EXPLANATION2: "空欄は変更なし"
       PRI_ADM_USR_REGISTERUST_EXPLANATION3: "6文字以上"
       PRI_ADM_USR_REGISTERUST_EXPLANATION4: "半角英数字、ファイフン（-）"
-      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "ユーザ一覧表のソートに用いられます。"
+      PRI_ADM_USR_REGISTERUST_EXPLANATION5: "ユーザ一覧表のソートに用いられます。学生権限のユーザは指定が有効です。"
       PRI_ADM_USR_REGISTERUST_ERROR1: "氏名(漢字)を入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR2: "アカウントを入力してください"
       PRI_ADM_USR_REGISTERUST_ERROR3: "パスワードを入力してください"
@@ -63,8 +63,9 @@ ja:
       PRI_ADM_USR_REGISTERUST_ERROR9: "このアカウントはすでに登録済みです。変更してください。"
       PRI_ADM_USR_REGISTERUST_ERROR10: "性別を選択してください"
       PRI_ADM_USR_REGISTERUST_ERROR11: "名列番号順は半角英数で入力してください"
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "100科目を超える表示はできません。"
-      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索により絞込みを行ってください。"
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR1: "%{count}科目見つかりましたが、100科目を越える表示はできません。"
+      PRI_ADM_USR_REGISTERUSR_SELECTCOURSEERROR2: "検索文字・条件で絞り込んでください。"
+      PRI_ADM_USR_REGISTERUSR_SEARCHEXPLANATION: "科目コード以外をチェックした場合には、指定した条件下での検索が有効です"
       #editUsr.jsp
       PRI_ADM_USR_EDITUSR_FORMTITLE1: "ユーザ情報変更"
       #confirmRegisterUsr.jsp
