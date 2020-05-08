@@ -228,7 +228,7 @@
                     <td class="hidden-xs"><%= course.course_name %></td>
 
                     <!-- 担任者 -->
-                    <td class="td-nowrap hidden-xs"><%= course.instructor_name %></td>
+                    <td class="td-nowrap hidden-xs"><%= tooltip_text(course.instructor_name, 8) %></td>
 
                     <!-- 系・学科・コース -->
                     <td class="td-nowrap hidden-xs"><%= course.major %></td>
@@ -330,7 +330,7 @@
                   <td class="hidden-xs"><%= course.course_name %></td>
 
                   <!-- 担任者 -->
-                  <td class="td-nowrap hidden-xs"><%= course.instructor_name %></td>
+                  <td class="td-nowrap hidden-xs"><%= tooltip_text(course.instructor_name, 8) %></td>
 
                   <!-- 系・学科・コース -->
                   <td class="td-nowrap hidden-xs"><%= course.major %></td>
