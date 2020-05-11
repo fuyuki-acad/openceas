@@ -128,7 +128,7 @@
                   <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
                     <%== question.content %>
                   <% else %>
-                    <%= convert_html(question.content) %>
+                    <%== question.content %>
                   <% end %>
                   <div class='panel panel-default'>
                     <div class='panel-body'>

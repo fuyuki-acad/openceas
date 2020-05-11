@@ -125,7 +125,7 @@
                       <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY %>
                         <%== question.content %>
                       <% else %>
-                        <%= convert_html(question.content) %>
+                        <%== question.content %>
                       <% end %>
                       <div class='panel panel-default'>
                         <div class='panel-body'>
@@ -140,7 +140,7 @@
                               <tr>
                                 <!-- 正解 -->
                                 <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></td>
-                                <td class="col-xs-10"><%= convert_html(question.answer_memo) %></td>
+                                <td class="col-xs-10"><%== question.answer_memo %></td>
                               </tr>
                               <tr>
                                 <!-- あなたの解答 -->
@@ -223,7 +223,7 @@
                               <tr>
                                 <!-- 設問内容 -->
                                 <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
-                                <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%= convert_html(question.content) %></span></td>
+                                <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%== question.content %></span></td>
                               </tr>
                               <tr>
                                 <!-- 正解 -->
@@ -248,9 +248,9 @@
                                 <!-- 解説 -->
                                 <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_COMMENT") %></td>
                                 <% if compound_answer_correct?(question, @answers) %>
-                                  <td class="col-xs-10"><%= convert_html(question.correct_answer_memo) %></td>
+                                  <td class="col-xs-10"><%== question.correct_answer_memo %></td>
                                 <% else %>
-                                  <td class="col-xs-10"><%= convert_html(question.wrong_answer_memo) %></td>
+                                  <td class="col-xs-10"><%== question.wrong_answer_memo %></td>
                                 <% end %>
                               </tr>
                               <tr>
