@@ -80,7 +80,7 @@ en:
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_PARENTCOURSE_COPY_ENROLLMENT: "Copy the current registration information from the parent course."
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ASSIGNED: "Copy the current teacher information to the parent course."
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ENROLLMENT: "Copy the current registration information to the parent course."
-      PRI_ADM_COU_REGISTERCOURSE_COURSEID: "(Internal ID： This value [%{course_id}] is used as a unique couse ID in this system.)"
+      PRI_ADM_COU_REGISTERCOURSE_COURSEID: "(Internal ID： [%{course_id}] This value is used as a unique couse ID in this system.)"
       #confirmRegisterCourse.jsp
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRM: "Confirmation page."
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRMCONTENT: "Confirmation"
