@@ -158,9 +158,9 @@
                 <% end %>
                 &nbsp;
                 <% unless material.material_memo.blank? %>
-                  <p>
+                  <span>
                     <%= convert_html(material.material_memo) %>
-                  </p>
+                  </span>
                 <% end %>
               </p>
             <% end %>
@@ -188,9 +188,9 @@
                 <p>
                   <%= questionnaire.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless questionnaire.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(questionnaire.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -213,9 +213,9 @@
                     <% end %>
                   <% end %>
                   <% unless questionnaire.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(questionnaire.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -244,9 +244,9 @@
                 <p>
                   <%= compond.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless compond.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(compond.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -269,9 +269,9 @@
                     <% end %>
                   <% end %>
                   <% unless compond.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(compond.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -300,9 +300,9 @@
                 <p>
                   <%= multiplefib.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless multiplefib.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(multiplefib.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -325,9 +325,9 @@
                     <% end %>
                   <% end %>
                   <% unless multiplefib.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(multiplefib.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -357,9 +357,9 @@
                 <p>
                   <%= essay.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless essay.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(essay.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -382,9 +382,9 @@
                     <% end %>
                   <% end %>
                   <% unless essay.material_memo.blank? %>
-                    <p>
+                    <span>
                       <%= convert_html(essay.material_memo) %>
-                    </p>
+                    </span>
                   <% end %>
                 </p>
               <% end %>
@@ -449,12 +449,12 @@
 
           <div class="panel-body">
             <% @class_session.evaluations.each do |evaluation| %>
-              <p>
+              <<p></p>>
                 <%= evaluation.generic_page_title %>
                 <% unless evaluation.material_memo.blank? %>
-                  <p>
+                  <span>
                     <%= convert_html(evaluation.material_memo) %>
-                  </p>
+                  </span>
                 <% end %>
               </p>
             <% end %>
