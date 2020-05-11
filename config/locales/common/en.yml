@@ -73,6 +73,7 @@ en:
     COMMON_HOUR: "Period"
     COMMON_SCHOOLYEAR: "AY"
     COMMON_SEASON: "Semester"
+    COMMON_COURSEID: "Course ID"
     COMMON_COURSENAME: "Course Title"
     COMMON_INSTRUCTORNAME: "Instructor's name"
     COMMON_INSTRUCTORNAME_DISP: "Homeroom teacher's display name"
