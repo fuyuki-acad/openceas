@@ -80,7 +80,7 @@ zh_TW:
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_PARENTCOURSE_COPY_ENROLLMENT: "複製當前總課目的學習資訊"
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ASSIGNED: "把當前的科目授課信息復制到總科目"
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_TO_PARENTCOURSE_COPY_ENROLLMENT: "把當前的科目學習信息復制到總科目"
-      PRI_ADM_COU_REGISTERCOURSE_COURSEID: "Internal ID： This value [%{course_id}] is used as a unique couse ID in this system."
+      PRI_ADM_COU_REGISTERCOURSE_COURSEID: "(Internal ID： This value [%{course_id}] is used as a unique couse ID in this system.)"
       #confirmRegisterCourse.jsp
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRM: "確認畫面"
       PRI_ADM_COU_CONFIRMREGISTERCOURSE_CONFIRMCONTENT: "確認輸入內容"
