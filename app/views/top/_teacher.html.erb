@@ -149,7 +149,19 @@
             <table class="table table-striped table-hover">
               <% @not_read_assignment_essay_and_faqs.each.with_index(1) do |info, index| %>
                 <tr>
-                  <td class="td-bold"><%= info.course_name %></td>
+                  <td class="td">
+                    <div class='row'>
+                      <div class='col-xs-4 col-sm-2'>
+                        <%= info.school_year %>
+                      </div>
+                      <div class='col-xs-8 col-sm-2'>
+                        <%= convert_season_cd(info.season_cd) %>
+                      </div>
+                      <div class='col-xs-12 col-sm-8'>
+                        <%= info.course_name %>
+                      </div>
+                    </div>
+                  </td>
                   <td class="td-bold">
                     <div class='row'>
                       <div class='col-xs-12 col-sm-6'>
