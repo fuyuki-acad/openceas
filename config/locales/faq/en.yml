@@ -87,6 +87,7 @@ en:
     FAQ_OPENFAQLIST_TEXT4: "(Your questions)"
     FAQ_OPENFAQLIST_TEXT5: "The past questions and answers are here."
     FAQ_OPENFAQLIST_TEXT6: "(questions made open to public)"
+    FAQ_OPENFAQLIST_TEXT7: "(questions not made public)"
     FAQ_OPENFAQLIST_REPLYDATE: "Question send on:"
     FAQ_OPENFAQLIST_LASTUPDATE: "Last updated on:"
     FAQ_OPENFAQLIST_SCRIPT: "Your question was sent."

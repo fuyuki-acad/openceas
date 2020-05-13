@@ -59,8 +59,15 @@ class FaqsController < ApplicationController
   end
 
   def course
-    @not_answers = Faq.eager_load(:faq_answers).where("course_id = ? AND user_id = ? AND faq_answers.id IS NULL", @course.id, current_user.id).order("faqs.updated_at desc")
-    @answers = FaqAnswer.joins({:faq => :course}).where("faqs.course_id = ? AND faqs.open_flag = ?", @course.id, true).order("faqs.updated_at desc")
+    @not_answers = Faq.eager_load(:faq_answers).
+      where("course_id = ? AND user_id = ? AND faq_answers.id IS NULL", @course.id, current_user.id).
+      order("faqs.updated_at desc")
+    @answers = FaqAnswer.joins({:faq => :course}).
+      where("faqs.course_id = ? AND faqs.open_flag = ?", @course.id, true).
+      order("faqs.updated_at desc")
+    @closed_answers = FaqAnswer.joins({:faq => :course}).
+      where("faqs.course_id = ? AND faqs.open_flag = ? AND faqs.user_id = ?", @course.id, false, current_user.id).
+      order("faqs.updated_at desc")
   end
 
   def new
