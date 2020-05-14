@@ -55,6 +55,7 @@ class AssignmentEssayComment < ApplicationRecord
       history.insert_user_id = self.insert_user_id
       history.update_memo = self.update_memo
       history.update_user_id = self.update_user_id
+      history.file_size = self.file_size
 
       return history.save
     end
@@ -65,6 +66,7 @@ class AssignmentEssayComment < ApplicationRecord
     self.processed_link_name = get_link_name(self.processed_file_name)
     essay_path = self.get_essay_path(self.answer_score.generic_page.course) + self.processed_link_name
     FileUtils.mv(new_file, essay_path, {:force => true})
+    self.file_size = File.stat(self.get_file_path).size
   end
 
   def get_link_url

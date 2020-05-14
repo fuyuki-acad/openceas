@@ -47,6 +47,7 @@ class AnswerScore < ApplicationRecord
         count = self.answer_count.to_i == 0 ? 1 : self.answer_count
         self.file_name = self.original_filename
         self.link_name = self.store_filename
+        self.file_size = File.stat(self.get_file_path).size
 
         if self.latest_history && self.latest_history.file_name && self.answer_count == self.latest_history.answer_count
           delete_file(self.latest_history.file_name, get_essay_path)
@@ -76,6 +77,7 @@ class AnswerScore < ApplicationRecord
         extname = File.extname(file.original_filename)
         errors.add(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")) if extname.blank?
         errors.add(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE8")) if extname.downcase == ".exe"
+        errors.add(:base, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE19")) if file.read.size == 0
       end
     end
   end
@@ -99,6 +101,7 @@ class AnswerScore < ApplicationRecord
     history.insert_user_id = self.insert_user_id
     history.update_memo = self.update_memo
     history.update_user_id = self.update_user_id
+    history.file_size = self.file_size
 
     return history.save
   end

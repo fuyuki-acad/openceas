@@ -31,6 +31,7 @@ class Teacher::Result::EssaysController < ApplicationController
 
   ANALYZER_EXCEL_PATH = "/download"
   ANALYZER_EXCEL_NAME = "analyzer.xls"
+  DELETED_FILE = "deleted.txt"
 
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :download_report, :download_package]
@@ -39,7 +40,7 @@ class Teacher::Result::EssaysController < ApplicationController
     :upload, :upload_confirm, :upload_register, :upload_error, :import_file,
     :report_upload, :report_upload_confirm, :import_report, :send_mail,
     :download_report, :download_package, :history, :comment, :upload_return_report,
-    :confirm_return_report, :save_return_report, :return_report]
+    :confirm_return_report, :save_return_report, :return_report, :destroy_upload_file]
   before_action :set_user, only: [:report_upload_confirm, :import_report]
 
   def show
@@ -1085,6 +1086,70 @@ class Teacher::Result::EssaysController < ApplicationController
     end
   end
 
+  def destroy_upload_file
+    total_delete_size = 0
+
+    ActiveRecord::Base.transaction do
+      @essay.answer_score_histories.each do |history|
+        if history.link_name.present?
+          if File.exist?(history.get_file_path)
+            file_size = File.stat(history.get_file_path).size
+            replace_link_name = replace_uploadfile(history.get_file_path)
+            history.update_columns(
+              file_name: DELETED_FILE, link_name: replace_link_name, file_size: 0, file_deleted: true)
+
+            if history.answer_score && history.answer_score.answer_count == history.answer_count
+              answer_score = history.answer_score
+              answer_score.update_columns(
+                file_name: DELETED_FILE, link_name: replace_link_name, file_size: 0, file_deleted: true)
+            end
+
+            total_delete_size += file_size
+          end
+        end
+
+        if history.latest_comment
+          history_latest_comment = history.latest_comment
+          if history_latest_comment.processed_link_name.present?
+            if File.exist?(history_latest_comment.get_file_path)
+              file_size = File.stat(history_latest_comment.get_file_path).size
+              replace_link_name = replace_uploadfile(history_latest_comment.get_file_path)
+              history_latest_comment.update_columns(
+                processed_file_name: DELETED_FILE, processed_link_name: replace_link_name, file_size: 0, file_deleted: true)
+
+              if history.answer_score && history.answer_score.answer_count == history.answer_count
+                latest_comment = history.answer_score.latest_comment
+                if latest_comment
+                  latest_comment.update_columns(
+                    processed_file_name: DELETED_FILE, processed_link_name: replace_link_name, file_size: 0, file_deleted: true)
+                end
+              end
+
+              total_delete_size += file_size
+            end
+          end
+        end
+      end
+
+      @essay.update_columns(essayfile_deleted: true)
+    end
+
+    if total_delete_size == 0
+      deteled_size = 0
+    else
+      total_delete_size = total_delete_size.to_f / (1024 * 1024)
+      deteled_size = total_delete_size.round(2)
+    end
+
+    redirect_to teacher_result_result_essay_path, notice: I18n.t("materials_administration.MAT_ADM_ASS_SUCCEED_DELETE_UPLOADED_FILE", param0: "#{deteled_size}MB")
+
+  rescue => e
+    logger.error e.backtrace.join("\n")
+    flash.now[:alert] = I18n.t("materials_administration.MAT_ADM_ASS_FAILED_DELETE_UPLOADED_FILE")
+    result
+    render :result
+  end
+
   private
     def set_essay
       @essay = Essay.find_by(id: params[:id], type_cd: Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE)
@@ -1119,5 +1184,19 @@ class Teacher::Result::EssaysController < ApplicationController
 
     ensure
       session[:return_extract_path] = nil
+    end
+
+    def replace_uploadfile(file)
+      dir = File.dirname(file)
+      basename = File.basename(file, ".*")
+      deleted_link_file = "#{dir}/#{basename}.txt"
+
+      File.open(deleted_link_file, "w") do |f|
+        f.puts("[#{Time.new.strftime("%Y/%m/%d %H:%M")}]#{I18n.t("materials_administration.MAT_ADM_ASS_UPLOADED_FILE_DELETED_BY_ADMINISTRATOR")}")
+      end
+
+      File.delete(file) if file != deleted_link_file
+
+      File.basename(deleted_link_file)
     end
 end
