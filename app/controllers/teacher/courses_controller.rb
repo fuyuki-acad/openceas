@@ -113,20 +113,20 @@ class Teacher::CoursesController < ApplicationController
     ActiveRecord::Base.transaction do
       if params[:course]
         params[:course].each do |key, value|
-          Announcement.delete_all(["course_id = ?", value])
-          Attendance.delete_all(["course_id = ?", value])
+          Announcement.where(["course_id = ?", value]).delete_all
+          Attendance.where(["course_id = ?", value]).delete_all
 #          attendance_keys.delete_all(["course_id = ?", value])
-          ClassSession.delete_all(["course_id = ?", value])
+          ClassSession.where(["course_id = ?", value]).delete_all
 #          combined_record_show_flags.delete_all(["course_id = ?", value])
-          Course.delete_all(["id = ?", value])
-          CourseAccessLog.delete_all(["course_id = ?", value])
-          CourseAssignedUser.delete_all(["course_id = ?", value])
-          CourseEnrollmentUser.delete_all(["course_id = ?", value])
+          Course.where(["id = ?", value]).delete_all
+          CourseAccessLog.where(["course_id = ?", value]).delete_all
+          CourseAssignedUser.where(["course_id = ?", value]).delete_all
+          CourseEnrollmentUser.where(["course_id = ?", value]).delete_all
 #          courseware_course_associations.delete_all(["course_id = ?", value])
 #          courseware_user_associations.delete_all(["course_id = ?", value])
-          Faq.delete_all(["course_id = ?", value])
-          GenericPage.delete_all(["course_id = ?", value])
-          OpenCourseAssignedUser.delete_all(["course_id = ?", value])
+          Faq.where(["course_id = ?", value]).delete_all
+          GenericPage.where(["course_id = ?", value]).delete_all
+          OpenCourseAssignedUser.where(["course_id = ?", value]).delete_all
 #          self_study_course_associations.delete_all(["course_id = ?", value])
 #          sorts.delete_all(["course_id = ?", value])
 #          students.delete_all(["course_id = ?", value])
