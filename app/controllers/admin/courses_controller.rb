@@ -227,7 +227,7 @@ class Admin::CoursesController < ApplicationController
     params[:term_flag] = Settings.COURSE_TERMFLG_INVALIDITY
     params[:unread_assignment_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
     params[:unread_faq_display_cd] = Settings.UNREAD_DISPLAYFLG_ON
-    
+
     @courses = get_bulk_courses(true)
   end
 
@@ -523,7 +523,7 @@ class Admin::CoursesController < ApplicationController
       end
 
       # 科目CD
-      if line["course_cd"].to_i.to_s != line["course_cd"].to_s
+      if line["course_cd"] =~ /[^0-9A-Za-z\-]+/
         @errors[lineno] = I18n.t("admin.course.CHECK_CSV_ITEM_TYPE", :param0 => I18n.t('admin.course.CHECK_CSV_ITEMNAME_COURSECD'))
         next
       end
