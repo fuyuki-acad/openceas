@@ -77,7 +77,7 @@ class AnswerScore < ApplicationRecord
         extname = File.extname(file.original_filename)
         errors.add(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")) if extname.blank?
         errors.add(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE8")) if extname.downcase == ".exe"
-        errors.add(:base, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE19")) if file.read.size == 0
+        errors.add(:base, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE19")) if file.size == 0
       end
     end
   end
