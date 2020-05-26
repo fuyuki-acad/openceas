@@ -79,26 +79,32 @@
 
           <!-- グロナビ（トップページのみ表示） -->
           <% if current_page?(root_path) %>
+            <% if Settings.HEADER_REPORT %>
             <!-- レポート確認 -->
             <li>
               <%= link_to essay_results_path do %>
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span><%= t("top.COMMONTOP_ASSIGNMENTESSAY") %>
               <% end %>
             </li>
+            <% end %>
 
+            <% if Settings.HEADER_OPEN_COURSE %>
             <!-- 公開科目一覧 -->
             <li>
               <%= link_to open_courses_path do %>
                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><%= t("top.COMMONTOP_OPENCOURSE") %>
               <% end %>
             </li>
+            <% end %>
 
+            <% if Settings.HEADER_MANUAL %>
             <!-- 操作マニュアル -->
             <li>
               <%= link_to helps_path, :target => "_blank" do %>
                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span><%= t("top.COMMONTOP_MANUAL") %>
               <% end %>
             </li>
+            <% end %>
 
             <!-- サブメニュー -->
             <li class="dropdown">
@@ -109,12 +115,14 @@
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <% if Settings.HEADER_USER_PROFILE %>
                 <!-- 個人情報変更 -->
                 <li>
                   <%= link_to users_path do %>
                     <span class="glyphicon glyphicon-cog"></span><%= t("top.COMMONTOP_PERSONALDATA") %>
                   <% end %>
                 </li>
+                <% end %>
 
                 <!-- ログアウト -->
                 <li>

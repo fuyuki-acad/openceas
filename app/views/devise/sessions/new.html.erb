@@ -27,21 +27,64 @@
     <div class="panel panel-default">
       <div class="panel-body">
 
-        <div class="col-sm-12 text-center">
-          <p>
-            <%=t "login.LOG_LOGIN_EXPLANATION1_CAS" %>
-          <br/>
-          </p>
-        </div>
-        <div class="col-sm-2 col-sm-offset-5 text-center">
-          <%= link_to t('login.COMMONLOGIN_LOGIN'), user_cas_omniauth_authorize_path, class: "btn btn-primary btn-block" %>
-         </div>
-        <div class="col-sm-12 text-center">
-          <%= image_tag "openceas_qrcode.png", class: "hidden-xs hidden-sm" %>
-        </div>
+        <% if Settings.CAS_AUTHENTICATION %>
+          <div class="col-sm-12 text-center">
+            <p>
+              <%=t "login.LOG_LOGIN_EXPLANATION1_CAS" %>
+            <br/>
+            </p>
+          </div>
+          <div class="col-sm-2 col-sm-offset-5 text-center">
+            <%= link_to t('login.COMMONLOGIN_LOGIN'), user_cas_omniauth_authorize_path, class: "btn btn-primary btn-block" %>
+           </div>
+          <div class="col-sm-12 text-center">
+            <%= image_tag "openceas_qrcode.png", class: "hidden-xs hidden-sm" %>
+          </div>
+        <% else %>
+          <div class="col-md-3 col-sm-2">
+          </div>
+          <div class="col-md-6 col-sm-8 col-xs-12">
+            <%= form_for(resource, url: sign_in_path) do |f| %>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-user"></span>
+                  <%= t('login.LOG_LOGIN_ID') %>
+                </span>
+                <%= f.text_field :account, autofocus: true, :class => "form-control" %>
+              </div>
+              <label class="col-xs-12">
+                <%= t('login.LOG_LOGIN_IDEXAMPLE') %>
+              </label>
+
+              <br />
+
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-lock"></span>
+                  <%= t('login.LOG_LOGIN_PASSWORD') %>
+                </span>
+                <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+              </div>
+              <label class="col-xs-12">
+                <%= t('login.LOG_LOGIN_PASSWORDEXAMPLE') %>
+              </label>
+
+              <br />
+
+              <div class="form-group">
+                <div class="pull-right">
+                  <div class="col-xs-12 col-sm-8  col-md-6">
+                    <%= f.submit t('login.COMMONLOGIN_LOGIN'), :class => "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
 
+    <% if Settings.CAS_AUTHENTICATION %>
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="col-sm-12 text-center">
@@ -107,6 +150,7 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 </div>
 
