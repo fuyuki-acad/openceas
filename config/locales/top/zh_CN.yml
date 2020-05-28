@@ -87,6 +87,7 @@ zh_CN:
     STUDENTTOP_TITLE: "学生首页"
     STUDENTTOP_USRDATA: "用戸信息"
     STUDENTTOP_RESULT: "进入考试成绩页"
+    TOP_TITLE: "首页"
     #menuList.jsp
     MENULIST_FORUMMANAGELIST: "话题的管理(一览）"
     MENULIST_FORUMMANAGECROSS: "话题的管理(综合表）"

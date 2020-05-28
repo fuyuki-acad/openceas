@@ -195,15 +195,19 @@
         <thead>
           <tr class="hidden-xs even">
             <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
-            <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
-            <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
-            <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
-            <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+            <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+              <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+              <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+            <% end %>
             <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
             <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
             <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
             <th class="hidden-xs"></th>
-            <th class="hidden-xs"></th>
+            <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+              <th class="hidden-xs"></th>
+            <% end %>
           </tr>
         </thead>
           <% @courses.each.with_index(1) do |course, index| %>
@@ -212,17 +216,19 @@
               <td class="hidden-xs"><%= index %></td>
               <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
-              <!-- 曜日 -->
-              <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+              <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+                <!-- 曜日 -->
+                <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
-              <!-- 時限 -->
-              <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                <!-- 時限 -->
+                <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
-              <!-- 年度 -->
-              <td class="td-nowrap"><%= course.school_year %></td>
+                <!-- 年度 -->
+                <td class="td-nowrap"><%= course.school_year %></td>
 
-              <!-- 学期 -->
-              <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                <!-- 学期 -->
+                <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+              <% end %>
 
               <!-- 科目名称 -->
               <td class="hidden-xs"><%= course.course_name %></td>
@@ -236,8 +242,10 @@
               <!-- 授業実施画面 -->
               <td class="hidden-xs"><%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %></td>
 
-              <!-- テスト結果 -->
-              <td class="hidden-xs"><%= link_to t("top.STUDENTTOP_RESULT"), {:controller => "results", :course_id => course.id}, class: "btn btn-primary" %></td>
+              <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+                <!-- テスト結果 -->
+                <td class="hidden-xs"><%= link_to t("top.STUDENTTOP_RESULT"), {:controller => "results", :course_id => course.id}, class: "btn btn-primary" %></td>
+              <% end %>
             </tr>
             <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
               <!-- 科目名称 -->
@@ -252,10 +260,15 @@
             </tr>
             <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
               <td class="visible-xs v-middle" colspan="4">
-                <!-- 授業実施画面 -->
-                <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-6" %>
-                <!-- テスト結果 -->
-                <%= link_to t("top.STUDENTTOP_RESULT"), {:controller => "results", :course_id => course.id}, class: "btn btn-primary col-xs-6" %>
+                <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+                  <!-- 授業実施画面 -->
+                  <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-6" %>
+                  <!-- テスト結果 -->
+                  <%= link_to t("top.STUDENTTOP_RESULT"), {:controller => "results", :course_id => course.id}, class: "btn btn-primary col-xs-6" %>
+                <% else %>
+                  <!-- 授業実施画面 -->
+                  <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-12" %>
+                <% end %>
               </td>
             </tr>
           <% end %>
@@ -293,10 +306,12 @@
             <thead>
               <tr class="hidden-xs even">
                 <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
-                <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
-                <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
-                <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
-                <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+                <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+                  <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
+                  <th class="hidden-xs"><%= t("common.COMMON_SEASON") %></th>
+                <% end %>
                 <th class="hidden-xs"><%= t("common.COMMON_COURSENAME") %></th>
                 <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
                 <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
@@ -310,17 +325,19 @@
                 <td class="hidden-xs"><%= index %></td>
                 <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
-                <!-- 曜日 -->
-                <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+                <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+                  <!-- 曜日 -->
+                  <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
-                <!-- 時限 -->
-                <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                  <!-- 時限 -->
+                  <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
-                <!-- 年度 -->
-                <td class="td-nowrap"><%= course.school_year %></td>
+                  <!-- 年度 -->
+                  <td class="td-nowrap"><%= course.school_year %></td>
 
-                <!-- 学期 -->
-                <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                  <!-- 学期 -->
+                  <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                <% end %>
 
                 <!-- 科目名称 -->
                 <td class="hidden-xs"><%= course.course_name %></td>

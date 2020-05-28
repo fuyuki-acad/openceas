@@ -52,7 +52,11 @@
                   <% elsif current_user.teacher? %>
                     <%= t("top.INSTRUCTORTOP_TITLE") %>
                     <% elsif current_user.student? %>
-                      <%= t("top.STUDENTTOP_TITLE") %>
+                      <% if Settings.STUDENT.HEADER.SHOW_STUDENT_IN_TITLE %>
+                        <%= t("top.STUDENTTOP_TITLE") %>
+                      <% else %>
+                        <%= t("top.TOP_TITLE") %>
+                      <% end %>
                   <% else %>
                     <%= system_name %>
                   <% end %>

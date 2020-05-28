@@ -498,6 +498,25 @@ HEADER_USER_PROFILE: true
 #イメージ画像(true/false)
 USER_IMAGE_PICTURE: false
 
+#学生画面
+STUDENT:
+  #ヘッダー
+  HEADER:
+    #学生(true/false)
+    SHOW_STUDENT_IN_TITLE: true
+  #リスト表示
+  LIST_VIEW:
+    #時間割(true/false)
+    SHOW_TIMETABLE: true
+    #テスト実施画面(true/false)
+    SHOW_EXAM: true
+  #授業画面
+  CLASS_SESSION:
+    #科目詳細(true/false)
+    SHOW_COURSE_DETAIL: true
+    #出席(true/false)
+    SHOW_ATTENDANCE: true
+
 #Application Settings
 #Name
 APPLICATION_NAME: "Open CEAS"

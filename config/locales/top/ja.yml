@@ -87,6 +87,7 @@ ja:
     STUDENTTOP_TITLE: "学生TOPページ"
     STUDENTTOP_USRDATA: "ユーザ情報"
     STUDENTTOP_RESULT: "テスト結果へ"
+    TOP_TITLE: "TOPページ"
     #menuList.jsp
     MENULIST_FORUMMANAGELIST: "トピック管理（一覧）"
     MENULIST_FORUMMANAGECROSS: "トピック管理（連結表）"

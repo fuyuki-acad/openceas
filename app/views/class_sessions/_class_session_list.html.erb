@@ -21,7 +21,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %>
 
-<% if @course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PRIVATE %>
+<% if @course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PRIVATE && Settings.STUDENT.CLASS_SESSION.SHOW_ATTENDANCE %>
   <!-- お知らせ・FAQ　-->
   <div class="panel panel-default">
     <% if current_user.student? %>
