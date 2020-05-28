@@ -195,7 +195,7 @@
         <thead>
           <tr class="hidden-xs even">
             <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
-            <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+            <% if Settings.STUDENT.LIST_VIEW.SHOW_TIMETABLE %>
               <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
               <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
               <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
@@ -205,7 +205,7 @@
             <th class="hidden-xs"><%= t("common.COMMON_INSTRUCTOR") %></th>
             <th class="hidden-xs"><%= t("common.COMMON_MAJOR") %></th>
             <th class="hidden-xs"></th>
-            <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+            <% if Settings.STUDENT.LIST_VIEW.SHOW_EXAM %>
               <th class="hidden-xs"></th>
             <% end %>
           </tr>
@@ -216,7 +216,7 @@
               <td class="hidden-xs"><%= index %></td>
               <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
-              <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+              <% if Settings.STUDENT.LIST_VIEW.SHOW_TIMETABLE %>
                 <!-- 曜日 -->
                 <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
@@ -242,7 +242,7 @@
               <!-- 授業実施画面 -->
               <td class="hidden-xs"><%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %></td>
 
-              <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+              <% if Settings.STUDENT.LIST_VIEW.SHOW_EXAM %>
                 <!-- テスト結果 -->
                 <td class="hidden-xs"><%= link_to t("top.STUDENTTOP_RESULT"), {:controller => "results", :course_id => course.id}, class: "btn btn-primary" %></td>
               <% end %>
@@ -260,7 +260,7 @@
             </tr>
             <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
               <td class="visible-xs v-middle" colspan="4">
-                <% if Settings.STUDENT.LIST_SHOW_EXAM %>
+                <% if Settings.STUDENT.LIST_VIEW.SHOW_EXAM %>
                   <!-- 授業実施画面 -->
                   <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-6" %>
                   <!-- テスト結果 -->
@@ -306,7 +306,7 @@
             <thead>
               <tr class="hidden-xs even">
                 <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
-                <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+                <% if Settings.STUDENT.LIST_VIEW.SHOW_TIMETABLE %>
                   <th class="hidden-xs"><%= t("common.COMMON_DAY") %></th>
                   <th class="hidden-xs"><%= t("common.COMMON_HOUR") %></th>
                   <th class="hidden-xs"><%= t("common.COMMON_SCHOOLYEAR") %></th>
@@ -325,7 +325,7 @@
                 <td class="hidden-xs"><%= index %></td>
                 <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
-                <% if Settings.STUDENT.LIST_SHOW_TIMETABLE %>
+                <% if Settings.STUDENT.LIST_VIEW.SHOW_TIMETABLE %>
                   <!-- 曜日 -->
                   <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
