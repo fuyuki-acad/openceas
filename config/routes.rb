@@ -726,6 +726,7 @@ Rails.application.routes.draw do
       get     'essays/:id/upload_return_report',         to: 'essays#upload_return_report',       as: 'result_essay_upload_return_report'
       post    'essays/:id/confirm_return_report',        to: 'essays#confirm_return_report',      as: 'confirm_return_report'
       patch   'essays/:id/save_return_report',           to: 'essays#save_return_report',         as: 'result_essay_save_return_report'
+      delete  'essays/:id/destroy_upload_file',          to: 'essays#destroy_upload_file'
 
       # アンケート
       get     'questionnaires',                                   to: 'questionnaires#index'

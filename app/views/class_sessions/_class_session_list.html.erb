@@ -161,7 +161,7 @@
           <% 0.upto(@course.class_session_count) do |index| %>
             <% current_session = @course.class_session(index) %>
             <tr>
-              <td class="col-xs-7 td-bold">
+              <td class="td-bold blocklink">
                 <% if current_session %>
                   <!-- 割付がある時 -->
                   <% if index == 0 %>
@@ -170,15 +170,21 @@
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
                     <% else %>
                       <!-- 共通ページ(非選択時) -->
-                      <%= link_to t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0"), url_for(:action => :show, :course_id => @course.id, :session_no => index) %>
+                      <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
+                        <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+                      <% end %>
                     <% end %>
                   <% else %>
                     <% if @class_session && index == @class_session.class_session_no %>
                       <!-- 各授業ページ(選択時) -->
                       <%= current_session.class_session_day %>
+                      <div class="pull-right col-xs-5"><%= render 'class_session_icon', current_session: current_session %></div>
                     <% else %>
                       <!-- 各授業ページ(非選択時) -->
-                      <%= link_to current_session.class_session_day, url_for(:action => :show, :course_id => @course.id, :session_no => index) %>
+                      <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
+                        <%= current_session.class_session_day %>
+                        <div class="pull-right col-xs-5"><%= render 'class_session_icon', current_session: current_session %></div>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% else %>
@@ -189,7 +195,9 @@
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
                     <% else %>
                       <!-- 共通ページ(非選択時) -->
-                      <%= link_to t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0"), url_for(:action => :show, :course_id => @course.id, :session_no => index) %>
+                      <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
+                        <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+                      <% end %>
                     <% end %>
                   <% else %>
                     <% if @class_session && index == @class_session.class_session_no %>
@@ -197,40 +205,16 @@
                       <%= t("common.COMMON_COUNTFORM", :param0 => index) %>
                     <% else %>
                       <!-- 各授業ページ(非選択時) -->
-                      <%= link_to t("common.COMMON_COUNTFORM", :param0 => index), url_for(:action => :show, :course_id => @course.id, :session_no => index) %>
+                      <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
+                        <%= t("common.COMMON_COUNTFORM", :param0 => index) %>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                <% end %>
-              </td>
-              <td class="col-xs-5 td-bold">
-                <% if current_session %>
-                  <% if current_session.assigned_materials? %>
-                    <%= image_tag "siryo.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT1") %>
-                  <% end %>
-                  <% if current_session.assigned_urls? %>
-                    <%= image_tag "url.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
-                  <% end %>
-                  <% if current_session.assigned_componds? || current_session.assigned_multiplefibs? %>
-                    <%= image_tag "test.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT6") %>
-                  <% end %>
-                  <% if current_session.assigned_essays? %>
-                    <%= image_tag "repo.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT11") %>
-                  <% end %>
-                  <% if current_session.assigned_questionnaires? %>
-                    <%= image_tag "enq.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT13") %>
-                  <% end %>
-<!-- ********** 未対応（現行よりコピー） ここから **********-->
-                  <!--@include file="../forumManagement/includes/ClassSessionExecutionIcon.jsp" -->
-                  <!--@include file="../courseware/includes/ClassSessionExecutionIcon.jsp" -->
-<!-- ********** 未対応（現行よりコピー） ここまで**********-->
-                  <% if current_session.assigned_evaluations? %>
-                    <%= image_tag "eva.gif", :alt => t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT6") %>
                   <% end %>
                 <% end %>
               </td>
             </tr>
           <% end %>
         </table>
-    </div>
+      </div>
   </div>
 <% end %>

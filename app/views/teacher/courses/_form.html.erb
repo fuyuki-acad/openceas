@@ -32,6 +32,18 @@
       </div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
+          <% unless @course.new_record? %>
+            <!--科目ID-->
+            <tr>
+              <td class="col-xs-3">
+                <%= t('common.COMMON_COURSEID') %>
+              </td>
+              <td class="col-xs-9">
+                <%= @course.id %><br/>
+                <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_COURSEID', :course_id => @course.id) %>
+              </td>
+            </tr>
+          <% end %>
           <!--科目名称-->
           <tr>
             <td class="col-xs-3">

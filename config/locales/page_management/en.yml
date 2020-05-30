@@ -58,6 +58,7 @@ en:
     MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE16: "You can use one-byte English characters and numbers, and hyphens."
     MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE17: "The file name contains an extension code."
     MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE18: "Failed to bulk copy"
+    MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE19: "File uoload has failed because the file size is 0 byte."
     MAT_REG_MAT_PAGEMANAGEMENT_CONFIRM: "Are you sure?"
     MAT_REG_MAT_PAGEMANAGEMENT_REGISTEREDURL: "Uploaded successfully."
     MAT_REG_MAT_PAGEMANAGEMENT_REGISTERERMATERIAL: ""

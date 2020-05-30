@@ -93,6 +93,7 @@
                     <% if essay.unread_essay_count > 0 %>
                       <code><%= t("materials_administration.MAT_ADM_ASS_ADMINISTRATEASSIGNMENTESSAY_NOTREADCOUNT", :param0 => essay.unread_essay_count) %></code>
                     <% end %>
+                    <p><%= essay.total_upload_filesize %></p>
                   </td>
                   <!-- 提出期間 -->
                   <td class="td-bold hidden-xs td-nowrap">

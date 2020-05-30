@@ -62,6 +62,7 @@ class Help < ApplicationRecord
   end
 
   def create_file
+    FileUtils.mkdir_p(get_help_path)
     upload_file = get_help_path + self.link_name
     File.open(upload_file, "wb") {|f|f.write(file.read)}
   end
