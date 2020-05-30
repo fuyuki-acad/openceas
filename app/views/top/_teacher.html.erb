@@ -149,7 +149,19 @@
             <table class="table table-striped table-hover">
               <% @not_read_assignment_essay_and_faqs.each.with_index(1) do |info, index| %>
                 <tr>
-                  <td class="td-bold"><%= info.course_name %></td>
+                  <td class="td">
+                    <div class='row'>
+                      <div class='col-xs-4 col-sm-2'>
+                        <%= info.school_year %>
+                      </div>
+                      <div class='col-xs-8 col-sm-2'>
+                        <%= convert_season_cd(info.season_cd) %>
+                      </div>
+                      <div class='col-xs-12 col-sm-8'>
+                        <%= info.course_name %>
+                      </div>
+                    </div>
+                  </td>
                   <td class="td-bold">
                     <div class='row'>
                       <div class='col-xs-12 col-sm-6'>
@@ -231,49 +243,49 @@
                 <% @courses.each.with_index(1) do |course, index| %>
                   <tr class="<%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- No. -->
-                    <td class="td-bold hidden-xs"><%= index %></td>
-                    <td class="td-bold visible-xs v-middle" rowspan="4"><%= index %></td>
+                    <td class="hidden-xs"><%= index %></td>
+                    <td class="visible-xs v-middle" rowspan="4"><%= index %></td>
 
                     <!-- 曜日 -->
-                    <td class="td-bold td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
+                    <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
 
                     <!-- 時限 -->
-                    <td class="td-bold td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
+                    <td class="td-nowrap"><%= convert_hour_cd(course.hour_cd) %></td>
 
                     <!-- 年度 -->
-                    <td class="td-bold td-nowrap"><%= course.school_year %></td>
+                    <td class="td-nowrap"><%= course.school_year %></td>
 
                     <!-- 学期 -->
-                    <td class="td-bold td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
+                    <td class="td-nowrap"><%= convert_season_cd(course.season_cd) %></td>
 
                     <!-- 科目名称 -->
-                    <td class="td-bold hidden-xs"><%= course.course_name %></td>
+                    <td class="hidden-xs"><%= course.course_name %></td>
 
                     <!-- 担任者 -->
-                    <td class="td-bold td-nowrap hidden-xs"><%= course.instructor_name %></td>
+                    <td class="td-nowrap hidden-xs"><%= tooltip_text(course.instructor_name, 8) %></td>
 
                     <!-- 系・学科・コース -->
-                    <td class="td-bold td-nowrap hidden-xs"><%= course.major %></td>
+                    <td class="td-nowrap hidden-xs"><%= course.major %></td>
 
                     <!-- 授業実施画面 -->
-                    <td class="td-bold hidden-xs">
+                    <td class="hidden-xs">
                       <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary" %>
                     </td>
                   </tr>
                   <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- 科目名称 -->
-                    <td class="td-bold visible-xs" colspan="4"><%= course.course_name %></td>
+                    <td class="visible-xs" colspan="4"><%= course.course_name %></td>
                   </tr>
                   <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- 担任者 -->
-                    <td class="td-bold td-nowrap visible-xs" colspan="2"><%= course.instructor_name %>&nbsp;</td>
+                    <td class="visible-xs" colspan="2"><%= course.instructor_name %>&nbsp;</td>
 
                     <!-- 系・学科・コース -->
-                    <td class="td-bold td-nowrap visible-xs" colspan="2"><%= course.major %></td>
+                    <td class="visible-xs" colspan="2"><%= course.major %></td>
                   </tr>
                   <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                     <!-- 授業実施画面へボタン -->
-                    <td class="td-bold visible-xs v-middle" colspan="4">
+                    <td class=visible-xs v-middle" colspan="4">
                       <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => course.id}, class: "btn btn-primary col-xs-12" %>
                     </td>
                   </tr>
@@ -328,49 +340,49 @@
               <% @allocated_open_courses.each.with_index(1) do |open_course, index| %>
                 <tr>
                   <!-- No. -->
-                  <td class="td-bold hidden-xs"><%= index %></td>
+                  <td class="hidden-xs"><%= index %></td>
                   <td class="visible-xs v-middle td-bold" rowspan="4"><%= index %></td>
 
                   <!-- 曜日 -->
-                  <td class="td-bold td-nowrap"><%= convert_day_cd(open_course.day_cd) %></td>
+                  <td class="td-nowrap"><%= convert_day_cd(open_course.day_cd) %></td>
 
                   <!-- 時限 -->
-                  <td class="td-bold td-nowrap"><%= convert_hour_cd(open_course.hour_cd) %></td>
+                  <td class="td-nowrap"><%= convert_hour_cd(open_course.hour_cd) %></td>
 
                   <!-- 年度 -->
-                  <td class="td-bold td-nowrap"><%= open_course.school_year %></td>
+                  <td class="td-nowrap"><%= open_course.school_year %></td>
 
                   <!-- 学期 -->
-                  <td class="td-bold td-nowrap"><%= convert_season_cd(open_course.season_cd) %></td>
+                  <td class="td-nowrap"><%= convert_season_cd(open_course.season_cd) %></td>
 
                   <!-- 科目名称 -->
-                  <td class="td-bold hidden-xs"><%= open_course.course_name %></td>
+                  <td class="hidden-xs"><%= open_course.course_name %></td>
 
                   <!-- 担任者 -->
-                  <td class="td-bold td-nowrap hidden-xs"><%= open_course.instructor_name %></td>
+                  <td class="td-nowrap hidden-xs"><%= tooltip_text(open_course.instructor_name, 8) %></td>
 
                   <!-- 系・学科・コース -->
-                  <td class="td-bold td-nowrap hidden-xs"><%= open_course.major %></td>
+                  <td class="td-nowrap hidden-xs"><%= open_course.major %></td>
 
                   <!-- 授業実施画面へボタン -->
-                  <td class="td-bold hidden-xs">
+                  <td class="hidden-xs">
                     <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary", :onclick => "javaScript:setGoCdInstructor('2')" %>
                   </td>
                 </tr>
                 <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                   <!-- 科目名称 -->
-                  <td class="visible-xs td-bold" colspan="4"><%= open_course.course_name %></td>
+                  <td class="visible-xs" colspan="4"><%= open_course.course_name %></td>
                 </tr>
                 <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                   <!-- 担任者 -->
-                  <td class="visible-xs td-bold" colspan="2"><%= open_course.instructor_name %>&nbsp;</td>
+                  <td class="visible-xs" colspan="2"><%= open_course.instructor_name %>&nbsp;</td>
 
                   <!-- 系・学科・コース -->
-                  <td class="visible-xs td-bold" colspan="2"><%= open_course.major %></td>
+                  <td class="visible-xs" colspan="2"><%= open_course.major %></td>
                 </tr>
                 <tr class="visible-xs <%= (index % 2) == 0 ? 'even' : 'odd' %>">
                   <!-- 授業実施画面へボタン -->
-                  <td class="td-bold visible-xs v-middle" colspan="4">
+                  <td class="visible-xs v-middle" colspan="4">
                     <%= link_to t("top.COMMONTOP_CLASSSESSIONEXECUTION"), {:controller => "class_sessions", :course_id => open_course.id}, class: "btn btn-primary col-xs-12", :onclick => "javaScript:setGoCdInstructor('2')" %>
                   </td>
                 </tr>

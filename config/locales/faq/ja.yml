@@ -87,6 +87,7 @@ ja:
     FAQ_OPENFAQLIST_TEXT4: "(あなたが送信した質問)"
     FAQ_OPENFAQLIST_TEXT5: "以下に過去質問を受けた回答を表示します"
     FAQ_OPENFAQLIST_TEXT6: "(公開された質問)"
+    FAQ_OPENFAQLIST_TEXT7: "(非公開の質問)"
     FAQ_OPENFAQLIST_REPLYDATE: "質問送信日："
     FAQ_OPENFAQLIST_LASTUPDATE: "最終更新日："
     FAQ_OPENFAQLIST_SCRIPT: "質問を登録しました"

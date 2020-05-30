@@ -279,4 +279,23 @@ class Essay < GenericPage
     count = self.answer_scores.where("user_id = ?", user.id).maximum("answer_count")
     count.blank? ? 0 : count
   end
+
+  def total_upload_filesize(user_id = nil)
+    if user_id.blank?
+      return I18n.t("materials_administration.MAT_ADM_ASS_UPLOADED_FILES_HAS_BEEN_DELETED") if self.essayfile_deleted == 1
+      total = self.answer_score_histories.sum(:file_size)
+    else
+      histories = self.answer_score_histories.where(user_id: user_id)
+      return if histories.count == 0
+      return I18n.t("materials_administration.MAT_ADM_ASS_UPLOADED_FILE_HAS_BEEN_DELETED") if self.essayfile_deleted == 1
+      total = histories.sum(:file_size)
+    end
+
+    if total == 0
+      return "#{total} MB"
+    else
+      total = total.to_f / (1024 * 1024)
+      return "#{total.round(2)} MB"
+    end
+  end
 end

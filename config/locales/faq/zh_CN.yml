@@ -87,6 +87,7 @@ zh_CN:
     FAQ_OPENFAQLIST_TEXT4: "(你发送的问题)"
     FAQ_OPENFAQLIST_TEXT5: "对过去提问的回复显示如下"
     FAQ_OPENFAQLIST_TEXT6: "(被公开的问题)"
+    FAQ_OPENFAQLIST_TEXT7: "(questions not made public)"
     FAQ_OPENFAQLIST_REPLYDATE: "问题发送日期"
     FAQ_OPENFAQLIST_LASTUPDATE: "最终更新日期"
     FAQ_OPENFAQLIST_SCRIPT: "问题登录完毕"

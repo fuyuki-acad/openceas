@@ -438,7 +438,7 @@ module ApplicationHelper
   end
 
   def tooltip_text(text, max_length = 5, separator = "...")
-    retrun "" if text.nil?
+    return "" if text.nil?
 
     if text.length > max_length
       short_text = text[0, max_length] + separator

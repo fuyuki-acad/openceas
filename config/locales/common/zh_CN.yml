@@ -73,6 +73,7 @@ zh_CN:
     COMMON_HOUR: "节"
     COMMON_SCHOOLYEAR: "年度"
     COMMON_SEASON: "学期"
+    COMMON_COURSEID: "课程ID"
     COMMON_COURSENAME: "课程名"
     COMMON_INSTRUCTORNAME: "授课教师名"
     COMMON_INSTRUCTORNAME_DISP: "Homeroom teacher's display name"

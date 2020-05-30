@@ -89,6 +89,33 @@
   </div>
 </div>
 
+<!-- アップロードファイル合計 -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <%= t("materials_administration.MAT_ADM_ASS_TOTAL_UPLOADED_FILE_SIZE") %>&nbsp;&nbsp;
+            <% if @essay.essayfile_deleted == 1 %>
+              <%= t("materials_administration.MAT_ADM_ASS_UPLOADED_FILES_HAS_BEEN_DELETED") %>
+            <% else %>
+              <%= @essay.total_upload_filesize %>
+              <%= link_to t("materials_administration.MAT_ADM_ASS_UPLOADED_FILE_DELETE"), {:action => :destroy_upload_file},
+                :data => {:confirm => t("materials_administration.MAT_ADM_ASS_UPLOADED_FILE_DELETE_EXPLANATION")}, :class => "btn btn-danger pull-right", :method => :delete %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <%= t("materials_administration.MAT_ADM_ASS_UPLOADED_FILE_DELETE_EXPLANATION") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 検索条件 -->
 <%= form_tag url_for({:action => :result}), :method => :get do %>
 <div class="row">
@@ -212,17 +239,20 @@
           </div>
 
           <!-- レポート一括アップロード -->
-          <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_INDIVIDUALLY ||
-                @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
+          <% if (@essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_INDIVIDUALLY ||
+                 @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY) &&
+                @essay.essayfile_deleted == 0 %>
           <div class="col-md-3">
             <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON1"), {:action => :upload_return_report, :course_id => @essay.course.id}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
           </div>
           <% end %>
 
           <!-- レポート個別アップロード -->
+          <% if @essay.essayfile_deleted == 0 %>
           <div class="col-md-3">
             <%= link_to t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_BUTTON8"), {:action => :report_upload}, class: "btn btn-primary btn-block ceas-button-margin-5" %>
           </div>
+          <% end %>
 
           <!-- チェックされたレポートを一斉返却-->
           <% if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY %>
@@ -385,6 +415,7 @@
                       <!--ステータス -->
                       <td class="hidden-xs">
                         <%= essay_status_name(@essay.essay_status(user.id)) %>
+                        <p><%= @essay.total_upload_filesize(user.id) %></p>
                       </td>
 
                       <!--提出 -->

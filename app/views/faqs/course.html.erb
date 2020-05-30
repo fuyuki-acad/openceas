@@ -149,6 +149,83 @@
 <!-- アンカー -->
 <a id="anchor-top2"></a>
 
+<% if @closed_answers.count > 0 %>
+  <br />
+
+  <!-- 非公開回答一覧 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <%= t("faq.FAQ_OPENFAQLIST_TEXT5") %>
+                <br>
+                <%= t("faq.FAQ_OPENFAQLIST_TEXT7") %>
+                <!-- 該当件数 -->
+                <div class="pull-right">
+                  <%= t("common.COMMON_HITCOURSE", :param0 => @closed_answers.count) %>
+                </div>
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <!-- リスト表示 -->
+              <% @closed_answers.each.with_index(1) do |answer, index| %>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <table class="table table-striped table-hover">
+                          <!-- No. -->
+                          <tr>
+                            <td class="col-xs-2 td-header"><%= t("common.COMMON_NO1") %></td>
+                            <td class="col-xs-10"><%= index %></td>
+                          </tr>
+
+                          <!-- 質問内容 -->
+                          <tr>
+                            <td class="td-header"><%= t("faq.COMMONFAQ_QUESTION_NODATE") %></td>
+                            <td><%== convert_html(answer.faq.question) %></td>
+                          </tr>
+
+                          <!-- 回答内容 -->
+                          <tr>
+                            <td class="td-header"><%= t("faq.COMMONFAQ_ANSWER_NODATE") %></td>
+                            <td><%== convert_html(answer.answer) %></td>
+                          </tr>
+
+                          <!-- 日付 -->
+                          <tr>
+                            <td class="td-header"><%= t("faq.FAQ_OPENFAQLIST_LASTUPDATE") %></td>
+                            <td><%= l(answer.created_at) %></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- アンカーボタン -->
+      <div class="container">
+        <div class="row">
+          <div class="pull-right">
+            <a class="anchor" href="#anchor-top2">
+              <%= t("common.COMMON_TOP") %>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <% if @answers.count > 0 %>
   <br />
 

@@ -73,6 +73,7 @@ zh_TW:
     COMMON_HOUR: "節"
     COMMON_SCHOOLYEAR: "年度"
     COMMON_SEASON: "學期"
+    COMMON_COURSEID: "科目ID"
     COMMON_COURSENAME: "科目名稱"
     COMMON_INSTRUCTORNAME: "授課教師名稱"
     COMMON_INSTRUCTORNAME_DISP: "Homeroom teacher's display name"

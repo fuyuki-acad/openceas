@@ -36,16 +36,15 @@ class HelpsController < ApplicationController
 		end
 
     count = 0
-		if params[:manual] && params[:manual].count > 0
-      ActiveRecord::Base.transaction do
-        params[:manual].each do |key, value|
-          help = Help.where(:id => key).first
-          if help.title != value[:title] || help.version != value[:version]
-            help.title = value[:title]
-            help.version = value[:version]
-            help.save!
-            count += 1
-          end
+    ActiveRecord::Base.transaction do
+      helps = Help.all
+      helps.each do |help|
+        value = params.require(:manual).permit("#{help.id}" => [:title, :version])["#{help.id}"]
+        if help.title != value[:title] || help.version != value[:version]
+          help.title = value[:title]
+          help.version = value[:version]
+          help.save!(validate: false)
+          count += 1
         end
       end
     end

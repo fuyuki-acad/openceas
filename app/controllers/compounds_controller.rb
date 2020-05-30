@@ -421,7 +421,7 @@ class CompoundsController < ApplicationController
 		end
 
     @total_score = @total_score + @multiple_score
-    @total_score_per_hundred = (@total_score * 100 / full_point).round
+    @total_score_per_hundred = @total_score == 0 ? 0 : (@total_score * 100 / full_point).round
   end
 
   def update_self_score

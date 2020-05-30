@@ -87,6 +87,7 @@ zh_TW:
     FAQ_OPENFAQLIST_TEXT4: "（您已寄信的問題）"
     FAQ_OPENFAQLIST_TEXT5: "顯示曾發問且已得到回覆的問題"
     FAQ_OPENFAQLIST_TEXT6: "被公開的問題"
+    FAQ_OPENFAQLIST_TEXT7: "(questions not made public)"
     FAQ_OPENFAQLIST_REPLYDATE: "發問日"
     FAQ_OPENFAQLIST_LASTUPDATE: "最終更新日"
     FAQ_OPENFAQLIST_SCRIPT: "已登錄問題"
