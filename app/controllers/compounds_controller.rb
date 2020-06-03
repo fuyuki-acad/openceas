@@ -26,6 +26,8 @@ class CompoundsController < ApplicationController
   before_action :set_generic_page, only: [:show, :password, :confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
 
   def show
+    create_access_log(@generic_page.course.id)
+
     @execute_flag = false
 
 		## /// テスト開始前の各チェック /////

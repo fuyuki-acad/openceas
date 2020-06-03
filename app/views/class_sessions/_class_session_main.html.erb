@@ -200,7 +200,9 @@
               <% @class_session.questionnaires.each do |questionnaire| %>
                 <p>
                   <%= link_to questionnaire.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire) +"', 'executeQuestionnaire', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeQuestionnaire', '800', '600')"} %>
                   <% if questionnaire.start_time.blank? %>
                     <% unless questionnaire.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(questionnaire.end_time)) %>
@@ -256,7 +258,9 @@
               <% @class_session.componds.each do |compond| %>
                 <p>
                   <%= link_to compond.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/compounds", :action => :show, :id => compond) +"', 'executeCompound', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/compounds", :action => :show, :id => compond, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeCompound', '800', '600')"} %>
                   <% if compond.start_time.blank? %>
                     <% unless compond.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(compond.end_time)) %>
@@ -312,7 +316,9 @@
               <% @class_session.multiplefibs.each do |multiplefib| %>
                 <p>
                   <%= link_to multiplefib.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib) +"', 'executeMultipleFib', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeMultipleFib', '800', '600')"} %>
                   <% if multiplefib.start_time.blank? %>
                     <% unless multiplefib.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(multiplefib.end_time)) %>

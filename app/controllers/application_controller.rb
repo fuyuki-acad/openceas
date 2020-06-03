@@ -162,4 +162,16 @@ class ApplicationController < ActionController::Base
     def remote_ip
       request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
     end
+
+    def create_access_log(course_id)
+      query_string = request.query_string.sub(/class_session_no=\d+\&?/, "")
+
+      CourseAccessLog.create(
+        course_id: course_id,
+        user_id: current_user.id,
+        ip: remote_ip,
+        class_session_no: params[:class_session_no],
+        access_page: request.path,
+        query_string: query_string)
+    end
 end

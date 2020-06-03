@@ -27,6 +27,8 @@ class MultiplefibsController < ApplicationController
   before_action :set_generic_page, only: [:show, :quiz, :mark, :password]
 
   def show
+    create_access_log(@generic_page.course.id)
+
     @latest_score = @generic_page.latest_score(current_user.id)
 
     if @generic_page.passed?(current_user.id)
