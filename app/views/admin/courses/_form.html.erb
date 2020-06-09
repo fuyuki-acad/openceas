@@ -318,7 +318,7 @@
             '"+t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR8")+"','"+t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR9")+"',
             '"+t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR10")+"')"} %>
         <%= f.button t("common.COMMON_CANCEL"), {:class => "btn btn-default ceas-button-margin-5 center-block", :type => :reset} %>
-        <%= link_to t("common.COMMON_RETURN"), {:action => :index}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
+        <%= link_to t("common.COMMON_RETURN"), "#{admin_courses_path}?#{session[:course_search_parama]}" , {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
       </div>
     </div>
   </div>

@@ -31,6 +31,8 @@ class Admin::CoursesController < ApplicationController
     sql_texts = []
     sql_params = {}
 
+    session[:course_search_parama] = request.query_string
+
     if !params[:keyword].blank?
       case params[:type1]
       when "1"
