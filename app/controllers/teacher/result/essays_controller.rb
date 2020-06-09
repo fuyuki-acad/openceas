@@ -962,7 +962,6 @@ class Teacher::Result::EssaysController < ApplicationController
         end
 
         # ステータスが変更されている場合
-
         status_cd = get_status_cd(line["status"])
         if line["status"] != @essay.essay_status(user_id)
           @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_STATUSERROR')
@@ -971,9 +970,7 @@ class Teacher::Result::EssaysController < ApplicationController
 
         # 点数に文字列が含まれている場合
         # 点数が0～100でないとき場合
-        unless (line["total_score"].to_i.to_s == line["total_score"].to_s &&
-                line["total_score"].to_i >= 0 && line["total_score"].to_i <= 100) ||
-                line["total_score"].blank?
+        if line["total_score"].blank? || line["total_score"] =~ /[^0-9A-Za-z]+/
           @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_SCOREERROR')
           next
         end
