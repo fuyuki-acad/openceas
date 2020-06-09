@@ -73,10 +73,10 @@ class Help < ApplicationRecord
 			## 既存のファイルがある場合はリネームする
       new_file_dir = get_help_path + "bak/"
       check_user_path(new_file_dir)
-      if self.file_name_was.blank?
+      if self.file_name_in_database.blank?
         new_file_path = new_file_dir + self.file_name
       else
-        new_file_path = new_file_dir + self.file_name_was
+        new_file_path = new_file_dir + self.file_name_in_database
       end
 			false unless FileUtils.move(file_path, new_file_path)
 		end
