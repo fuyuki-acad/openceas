@@ -31,6 +31,12 @@ class MultiplefibsController < ApplicationController
 
     @latest_score = @generic_page.latest_score(current_user.id)
 
+    if @generic_page.not_ready?
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_NOTREADYSTARTTIME_html", :param0 => I18n.l(@generic_page.start_time))
+      render "error"
+      return
+    end
+
     if @generic_page.passed?(current_user.id)
     elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
       if !@generic_page.valid_term?

@@ -151,6 +151,25 @@
     </td>
   </tr>
 
+  <!-- 受付開始時間 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTTIME") %>
+    </td>
+    <td>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <div class='input-group date datetimepicker form-datetime'>
+            <%= form.text_field :start_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+
   <!-- 受付終了時間 -->
   <tr>
     <td>

@@ -31,7 +31,7 @@
           <li><%= error_msg %></li>
         <% end %>
       <% else %>
-        <li><%= t("activerecord.attributes.#{record.class.name.downcase}.#{key}") %><%= msg.join("") %></li>
+        <li><%= msg.join("") %></li>
       <% end %>
     <% end %>
     </ul>
