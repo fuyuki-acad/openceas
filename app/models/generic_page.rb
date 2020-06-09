@@ -310,7 +310,7 @@ class GenericPage < ApplicationRecord
         new_question.parent_question_id = new_parent.id
         new_question.save!(validate: false)
 
-        question.select_quizzes.each do |quiz|
+        question.all_quizzes.each do |quiz|
           new_quiz = quiz.dup
           new_quiz.question_id = new_question.id
           new_quiz.save!(validate: false)
