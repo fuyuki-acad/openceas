@@ -215,6 +215,9 @@ class GenericPage < ApplicationRecord
       if self.upload_flag == GenericPage::TYPE_FILEUPLOAD && self.file.blank?
         errors.add(:file, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE6"))
       end
+      unless start_time.blank? || end_time.blank?
+        errors.add(:start_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE2")) if self.start_time > self.end_time
+      end
 
     when Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE.to_s
       validate_presence(:generic_page_title, I18n.t("common.COMMON_SUBJECTCHECK"))
