@@ -68,8 +68,12 @@ class MultiplefibsController < ApplicationController
   end
 
   def mark
-    if params[:answer].blank?
+    if @generic_page.expired?
+      render "expired", :layout => "content_only"
+      return
+    elsif params[:answer].blank?
       redirect_to :action => :quiz, :id => @generic_page
+      return
     else
       total_score = 0
       mark_score = 0

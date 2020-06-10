@@ -274,6 +274,12 @@ class CompoundsController < ApplicationController
   end
 
   def save
+    if @generic_page.expired?
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+      render "error"
+      return
+    end
+
     if session[:answers].blank?
       @answers = params[:answers]
       tmpFlg = true
