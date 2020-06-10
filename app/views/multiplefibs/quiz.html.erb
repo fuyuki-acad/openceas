@@ -69,9 +69,15 @@
       <div class="text-center">
         <div class="btn-group">
           <% if current_user.student? %>
-            <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"), :class => "btn btn-default ceas-button-margin-5 center-block" %>
+            <%= button_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"),
+              type: 'button',
+              class: "btn btn-default ceas-button-margin-5 center-block",
+              onclick: 'submit();' %>
           <% else %>
-            <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"), :class => "btn btn-default ceas-button-margin-5 center-block" %>
+            <%= button_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"),
+              type: 'button',
+              class: "btn btn-default ceas-button-margin-5 center-block",
+              onclick: 'submit();' %>
           <% end %>
         </div>
       </div>
