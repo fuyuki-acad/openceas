@@ -170,6 +170,42 @@
     </div>
   </div>
 
+  <!-- URL -->
+  <% if @class_session.assigned_urls? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% @class_session.urls.each do |url| %>
+              <div>
+                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
+                <% unless url.material_memo.blank? %>
+                  <p>
+                    <%= convert_html(url.material_memo) %>
+                  </p>
+                <% end %>
+                &nbsp;
+                <% unless url.content.blank? %>
+                  <p>
+                    <%== url.content %>
+                  </p>
+                <% end %>
+                <p id='azure_message'></p>
+                <hr>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <!--　アンケート　-->
   <% if @class_session.assigned_questionnaires? %>
     <div class="row">
@@ -401,47 +437,6 @@
       </div>
     </div>
   <% end %>
-
-  <!-- URL -->
-  <% if @class_session.assigned_urls? %>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
-            </h3>
-          </div>
-
-          <div class="panel-body">
-            <% @class_session.urls.each do |url| %>
-              <div>
-                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
-                <% unless url.material_memo.blank? %>
-                  <p>
-                    <%= convert_html(url.material_memo) %>
-                  </p>
-                <% end %>
-                &nbsp;
-                <% unless url.content.blank? %>
-                  <p>
-                    <%== url.content %>
-                  </p>
-                <% end %>
-                <p id='azure_message'></p>
-                <hr>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-<!-- ********** 未対応（現行よりコピー） ここから **********-->
-  <!-- include file="../forumManagement/includes/ClassSessionExecutionMainForum.jsp" -->
-  <!-- include file="../courseware/includes/ClassSessionExecutionMainCourseware.jsp" -->
-<!-- ********** 未対応（現行よりコピー） ここまで**********-->
 
   <!-- 評価記入リスト-->
   <% if @class_session.assigned_evaluations? %>
