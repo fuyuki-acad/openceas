@@ -970,8 +970,8 @@ class Teacher::Result::EssaysController < ApplicationController
 
         # 点数に文字列が含まれている場合
         # 点数が0～100でないとき場合
-        if line["total_score"].blank? || line["total_score"] =~ /[^0-9A-Za-z]+/
-          @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_SCOREERROR')
+        if line["total_score"].blank?
+          @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_NULLSCORE')
           next
         end
 
