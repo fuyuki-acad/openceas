@@ -79,13 +79,17 @@ class HelpsController < ApplicationController
       return
 		end
 
-		## DB更新
-    if @manual.update(manual_params)
+    ## DB更新
+    if params[:manual].blank?
+      flash.now[:notice] = I18n.t("common.COMMON_UPLOADFILENULLCHECK")
+    elsif @manual.update(manual_params)
       redirect_to helps_path, :notice => I18n.t("helptop.HELPTOP_UPDATE_SUCCESS")
+      return
     else
       flash.now[:notice] = I18n.t("helptop.HELPTOP_UPDATE_FAILURE")
-      render :edit
-		end
+    end
+    
+    render :edit
   end
 
   private
