@@ -169,6 +169,8 @@ zh_TW:
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDERFILE: "MyFolder的文件"
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDER_NOCONTENTS: "無法讀取MyFolder"
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDER_SELECTFILE: "請選擇文件"
+    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html: "This essay was already closed (submission period: <strong> %{param0} </strong>). You cannot upload your essay."
+    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html: "This essay was already closed (submission period: <strong> %{param0}～%{param1} </strong>). You cannot upload your essay."
 
     #####アンケート実施#####
     ##executeQuestionnaire.jsp
