@@ -1050,7 +1050,7 @@ class Teacher::Result::EssaysController < ApplicationController
           end
 
           ## レポートの採点結果を更新する
-          answer_score.assignment_essay_score = csv_essay["total_score"].to_i
+          answer_score.assignment_essay_score = csv_essay["total_score"]
           answer_score.total_score = (Settings.DEFAULT_ARGUMENT_INT).abs - 1
 
           if csv_essay["reintroduction_flag"] == "1"
