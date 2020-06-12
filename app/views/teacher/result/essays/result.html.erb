@@ -402,10 +402,12 @@
                       <!--メール送信 -->
                       <td class="hidden-xs">
                         <% if @scores[user.id] && @scores[user.id].latest_comment %>
-                          <% if @scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF %>
+                          <% if @scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_SENDED %>
                             <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_WASSENT") %>
                           <% elsif @scores[user.id].latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON %>
                             <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDPLAN") %>
+                          <% else %>
+                            -
                           <% end %>
                         <% else %>
                           -

@@ -170,11 +170,14 @@ class Teacher::Result::EssaysController < ApplicationController
       @answer_score.user_id = @user.id
       @answer_score.answer_count = 1
       @answer_score.pass_cd = Settings.ANSWERSCORE_PASSCD_SUBMITTED
-      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => 0)
+      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF)
     elsif @answer_score.assignment_essay_comments.count == 0
-      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => 0)
+      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF)
     else
       @comment = @answer_score.latest_comment
+      if @comment.mail_flag != Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON
+        @comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF
+      end
     end
 
   end
@@ -523,11 +526,12 @@ class Teacher::Result::EssaysController < ApplicationController
         params[:user].each do |user|
           user = User.find(user)
           answer_score = @essay.latest_score(user.id)
-          if answer_score && answer_score.latest_comment && answer_score.latest_comment.mail_flag == 1
+          if answer_score && answer_score.latest_comment && 
+            answer_score.latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON
             latest_comment = answer_score.latest_comment
             EssayMailer.send_mail(@essay, latest_comment, user).deliver_now
 
-            latest_comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF
+            latest_comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_SENDED
             latest_comment.save!
           end
         end
