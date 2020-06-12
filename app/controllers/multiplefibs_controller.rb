@@ -58,9 +58,9 @@ class MultiplefibsController < ApplicationController
       @score = @generic_page.latest_score(current_user.id)
       template = "result"
     elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
-      @redirect = true
+      template = "redirect"
     elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
-      @redirect = true
+      template = "redirect"
     else
       @latest_score = @generic_page.latest_score(current_user.id)
     end
@@ -69,7 +69,7 @@ class MultiplefibsController < ApplicationController
 
   def mark
     if @generic_page.expired?
-      render "expired", :layout => "content_only"
+      render "redirect", :layout => "content_only"
       return
     elsif params[:answer].blank?
       redirect_to :action => :quiz, :id => @generic_page
