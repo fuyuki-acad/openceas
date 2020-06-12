@@ -168,7 +168,7 @@ class CompoundsController < ApplicationController
             ## 合格していない
 						## 【すでに受付終了している時→解答結果画面へ】
 						if @generic_page.expired?
-              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => @generic_page.end_time)
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
               render "mark"
               return
 
@@ -187,7 +187,7 @@ class CompoundsController < ApplicationController
           ## 記述式のみ||複合式の設問構成の時
 					## 【すでに受付終了している時→解答結果画面へ】
           if @generic_page.expired?
-            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => @generic_page.end_time)
+            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
             render "mark"
             return
 
