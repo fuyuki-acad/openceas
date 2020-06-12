@@ -23,4 +23,14 @@
 
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+
+  def has_error_detail?(key)
+    if self.errors.details && self.errors.details.has_key?(key)
+      self.errors.details[key].each do |datail|
+        return true if datail.has_key?(:value)
+      end
+    end
+
+    return false
+  end
 end

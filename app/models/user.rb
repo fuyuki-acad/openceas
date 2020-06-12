@@ -74,11 +74,7 @@ class User < ApplicationRecord
     #validate_name_no_prefix(:name_no_prefix, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR11")) unless self.name_no_prefix.blank?
 
     unless self.email.blank?
-      if self.email_in_database.blank?
-        count = self.class.where("email_mobile = ?", self.email).count
-      else
-        count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", self.email, self.email, self.id).count
-      end
+      count = self.class.where("email_mobile = ?", self.email).count
       self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
     end
 
