@@ -73,7 +73,7 @@
         <% if @generic_page.start_time.blank? %>
           <%= t("execution.MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html", :param0 => l(@generic_page.end_time)) %>
         <% else %>
-          <%= t("execution.MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html", :param0 => @generic_page.start_time, :param1 => l(@generic_page.end_time)) %>
+          <%= t("execution.MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html", :param0 => l(@generic_page.start_time), :param1 => l(@generic_page.end_time)) %>
         <% end %>
       </div>
     </div>
