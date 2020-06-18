@@ -17,7 +17,6 @@
     var video_width = 640;
     var video_height = 400;
     var start_date = get_datetime();
-    var end_date = '';
     if (window.parent.document.getElementById("video_width")) video_width = window.parent.document.getElementById("video_width").textContent;
     if (window.parent.document.getElementById("video_height")) video_height = window.parent.document.getElementById("video_height").textContent;
 
@@ -42,9 +41,9 @@
       params = ''
       if (forwarding_url) {
         if (forwarding_url.indexOf('?')) {
-          forwarding_url = forwarding_url + '&seeked='+seeked_count+'&rewind='+rewind_count;
+          forwarding_url = forwarding_url+'&seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
         } else {
-          forwarding_url = forwarding_url + '?seeked='+seeked_count+'&rewind='+rewind_count;
+          forwarding_url = forwarding_url+'?seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
         }
         if (forwarding == 'true') {
           parent.location.href = forwarding_url;
