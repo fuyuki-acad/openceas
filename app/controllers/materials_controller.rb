@@ -22,6 +22,7 @@
 #++
 
 class MaterialsController < ApplicationController
+  before_action :require_assigned
   before_action :set_generic_page, only: [:show, :explain_file]
 
   def show

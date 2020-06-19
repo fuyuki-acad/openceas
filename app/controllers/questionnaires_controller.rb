@@ -22,6 +22,7 @@
 #++
 
 class QuestionnairesController < ApplicationController
+  before_action :require_assigned, only: [:show, :save, :confirm, :password]
   skip_before_action :verify_authenticity_token, only: :confirm
   before_action :set_generic_page, only: [:show, :save, :confirm, :password]
 
