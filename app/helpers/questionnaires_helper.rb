@@ -26,7 +26,7 @@ module QuestionnairesHelper
     if answers.kind_of?(Hash) && answers.count == 0
       return true if quiz.select_mark_flag == Settings.SELECT_SELECTMARKFLG_ON
     else
-      if answers.kind_of?(Hash) && question_id && answers[question_id.to_s]
+      if question_id && answers[question_id.to_s]
         answer = answers[question_id.to_s]
         if answer.kind_of?(Array)
           answer.each do |select_answer|
