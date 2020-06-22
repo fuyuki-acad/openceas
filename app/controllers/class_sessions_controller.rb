@@ -22,6 +22,7 @@
 #++
 
 class ClassSessionsController < ApplicationController
+  before_action :require_assigned
   before_action :set_course, only: [:index, :show, :announcement, :faq, :specific_page, :collect_attendance, :start_collect_attendance, :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]
   before_action :set_generic_page, only: [:compond, :essay]
   before_action :set_class_session, only: [:show, :collect_attendance, :start_collect_attendance, :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]

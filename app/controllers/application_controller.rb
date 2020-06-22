@@ -131,6 +131,40 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless current_user.admin? || current_user.teacher?
     end
 
+    def require_assigned
+      return if current_user.admin?
+
+      if params[:course_id].present?
+        course = Course.find(params[:course_id])
+      elsif params[:generic_page_id].present?
+        course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:generic_page_id]).first
+      elsif params[:id].present?
+        if controller_name == "group_folders"
+          course = Course.joins(:group_folders).where("group_folders.id = ?", params[:id]).first
+        else
+          course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:id]).first
+        end
+      end
+
+      if current_user.teacher?
+        if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
+          assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
+        else
+          assigned = course.course_assigned_users.where(user_id: current_user.id).first
+        end
+        raise "not assigned" if assigned.blank?
+
+      else
+        if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
+          enrolled = course.open_course_assigned_users.where(user_id: current_user.id).first
+        else
+          enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
+        end
+        raise "not enrolled" if enrolled.blank?
+
+      end
+    end
+
     def get_content_type(file_name)
       extname = File.extname(file_name)
       case extname.downcase

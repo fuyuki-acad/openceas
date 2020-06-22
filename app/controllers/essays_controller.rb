@@ -22,6 +22,7 @@
 #++
 
 class EssaysController < ApplicationController
+  before_action :require_assigned, only: [:show, :upload, :password, :file, :return_file]
   before_action :set_essay, only: [:show, :upload, :password, :file, :return_file]
 
   def show
