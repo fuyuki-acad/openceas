@@ -14,12 +14,6 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 # EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#++
-
 # MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 # NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
@@ -551,19 +545,17 @@ class Teacher::Result::CompoundsController < ApplicationController
           end
 
           parent.questions.each.with_index do |question, index|
-            answer = Answer.where(["user_id = ? AND question_id = ?", user.id, question.id]).order("answer_count DESC").first
-            answer_test = ""
-            if answer
+            answers = Answer.where(["user_id = ? AND question_id = ?", user.id, question.id]).order("question_id")
+            answer_texts = []
+            answers.each do |answer|
               if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY
-                answer_test = answer.text_answer
+                answer_texts << answer.text_answer
               else
                 select_quizze = question.select_quizzes.where(["select_quizzes.id = ?", answer.select_answer_id]).first
-                if select_quizze
-                  answer_test = select_quizze.content.html_safe
-                end
+                answer_texts << select_quizze.content.html_safe if select_quizze.present?
               end
             end
-            line << answer_test
+            line << answer_texts.join
           end
 
           csv << line
