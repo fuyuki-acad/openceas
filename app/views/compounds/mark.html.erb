@@ -32,23 +32,12 @@
         <table class="table table-striped table-hover">
           <!-- 氏名　-->
           <tr>
-            <% if @generic_page.self_flag != Settings.GENERICPAGE_SELFFLG_MUTUAL %>
-              <td class="col-xs-4">
-                <%= t("common.COMMON_TARGETNAME") %>
-              </td>
-              <td class="col-xs-8">
-                <%= current_user.user_name %>
-              </td>
-            <% else %>
-              <td>
-                <%= t("execution.COMMONMATERIALSEXECUTION_MARKER") %>
-              </td>
-              <td>
-                <%#--
-                <h:outputText value="#{sessionScope.usrPresentation2.usrName}" />
-                --#%>
-              </td>
-            <% end %>
+            <td class="col-xs-4">
+              <%= t("common.COMMON_TARGETNAME") %>
+            </td>
+            <td class="col-xs-8">
+              <%= current_user.user_name %>
+            </td>
           </tr>
 
           <!-- テストタイトル　-->
