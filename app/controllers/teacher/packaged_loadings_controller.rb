@@ -24,6 +24,7 @@
 class Teacher::PackagedLoadingsController < ApplicationController
   include XmlCeas10Module
 
+  before_action :require_assigned, only: [:download_file, :select_upload_file, :confirm_upload, :commit_upload]
   before_action :set_course, only: [:download_file, :select_upload_file, :confirm_upload, :commit_upload]
 
 
