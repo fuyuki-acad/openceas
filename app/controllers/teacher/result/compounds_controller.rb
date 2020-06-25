@@ -555,7 +555,7 @@ class Teacher::Result::CompoundsController < ApplicationController
                 answer_texts << select_quizze.content.html_safe if select_quizze.present?
               end
             end
-            line << answer_texts.join
+            line << answer_texts.join(",")
           end
 
           csv << line
