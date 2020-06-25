@@ -22,6 +22,7 @@
 #++
 
 class Teacher::AllocationsController < ApplicationController
+  before_action :require_assigned, only: [:show, :create, :assign, :confirm]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :create, :assign, :confirm]
   before_action :set_class_session, only: [:update]
