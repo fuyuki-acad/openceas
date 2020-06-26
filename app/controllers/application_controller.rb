@@ -33,6 +33,9 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :check_permission
 
+  NOT_ASSIGNED = "not assigned"
+  NOT_ENROLLED = "not enrolled"
+
   def send_file_headers!(options)
     super(options)
     match = /(.+); filename="(.+)"/.match(headers['Content-Disposition'])
@@ -162,7 +165,7 @@ class ApplicationController < ActionController::Base
         else
           assigned = course.course_assigned_users.where(user_id: current_user.id).first
         end
-        raise "not assigned" if assigned.blank?
+        raise NOT_ASSIGNED if assigned.blank?
 
       else
         if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
@@ -170,7 +173,7 @@ class ApplicationController < ActionController::Base
         else
           enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
         end
-        raise "not enrolled" if enrolled.blank?
+        raise NOT_ENROLLED if enrolled.blank?
 
       end
     end
