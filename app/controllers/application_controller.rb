@@ -141,6 +141,8 @@ class ApplicationController < ActionController::Base
       elsif params[:id].present?
         if controller_name == "group_folders"
           course = Course.joins(:group_folders).where("group_folders.id = ?", params[:id]).first
+        elsif controller_name == "courses"
+          course = Course.where("id = ?", params[:id]).first
         else
           course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:id]).first
         end
