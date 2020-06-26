@@ -82,7 +82,7 @@ class Teacher::AnnouncementsController < ApplicationController
     items = params[:announcement].keys if params[:announcement]
     items.each do |item|
       course = Course.joins(:announcements).where("announcements.id = ?", item).first
-      has_been_assigned?(course)
+      must_be_assigned(course)
     end
     Announcement.destroy(items)
 

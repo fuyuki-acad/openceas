@@ -97,7 +97,7 @@ class Teacher::FaqsController < ApplicationController
     items = params[:faq].keys if params[:faq]
     items.each do |item|
       course = Course.joins(:faqs).where("faqs.id = ?", item).first
-      has_been_assigned?(course)
+      must_be_assigned(course)
     end
     Faq.destroy(items)
 

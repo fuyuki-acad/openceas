@@ -155,10 +155,10 @@ class ApplicationController < ActionController::Base
         end
       end
 
-      has_been_assigned?(course)
+      must_be_assigned(course)
     end
 
-    def has_been_assigned?(course)
+    def must_be_assigned(course)
       if current_user.teacher?
         if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
           assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
