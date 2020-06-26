@@ -22,6 +22,7 @@
 #++
 
 class Teacher::AnnouncementsController < ApplicationController
+  before_action :require_assigned, only: [:show, :new, :create, :user, :send_mail, :edit, :update]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :new, :create, :user, :send_mail]
   before_action :set_announcement, only: [:edit, :update]
@@ -79,6 +80,10 @@ class Teacher::AnnouncementsController < ApplicationController
 
   def destroy
     items = params[:announcement].keys if params[:announcement]
+    items.each do |item|
+      course = Course.joins(:announcements).where("announcements.id = ?", item).first
+      has_been_assigned?(course)
+    end
     Announcement.destroy(items)
 
     redirect_to :action => :show, :course_id => params[:course_id]

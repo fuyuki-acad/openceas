@@ -143,11 +143,19 @@ class ApplicationController < ActionController::Base
           course = Course.joins(:group_folders).where("group_folders.id = ?", params[:id]).first
         elsif controller_name == "courses"
           course = Course.where("id = ?", params[:id]).first
+        elsif controller_name == "announcements"
+          course = Course.joins(:announcements).where("announcements.id = ?", params[:id]).first
+        elsif controller_name == "faqs"
+          course = Course.joins(:faqs).where("faqs.id = ?", params[:id]).first
         else
           course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:id]).first
         end
       end
 
+      has_been_assigned?(course)
+    end
+
+    def has_been_assigned?(course)
       if current_user.teacher?
         if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
           assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
