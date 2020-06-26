@@ -24,6 +24,8 @@
 require 'csv'
 
 class Teacher::Result::QuestionnairesController < ApplicationController
+  before_action :require_assigned, only: [:show, :bulk_outputcsv, :bulk_outputcsv_user,
+    :result, :outputcsv, :outputcsv_user, :detail_outputcsv]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :bulk_outputcsv, :bulk_outputcsv_user]
   before_action :set_generic_page, only: [:result, :outputcsv, :outputcsv_user, :detail_outputcsv]

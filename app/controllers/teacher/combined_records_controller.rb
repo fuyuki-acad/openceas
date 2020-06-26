@@ -22,6 +22,7 @@
 #++
 
 class Teacher::CombinedRecordsController < ApplicationController
+  before_action :require_assigned, except: [:index]
   before_action :set_courses, only: [:index]
   before_action :set_course, except: [:index]
 

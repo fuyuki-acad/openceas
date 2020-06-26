@@ -33,6 +33,13 @@ class Teacher::Result::EssaysController < ApplicationController
   ANALYZER_EXCEL_NAME = "analyzer.xls"
   DELETED_FILE = "deleted.txt"
 
+  before_action :require_assigned, only: [:show, :download_report, :download_package,
+    :result, :mark, :file, :return_file, :file_confirm,
+    :save, :update_score, :outputcsv_assignmentessay, :outputcsv_scoresheet,
+    :upload, :upload_confirm, :upload_register, :upload_error, :import_file,
+    :report_upload, :report_upload_confirm, :import_report, :send_mail,
+    :download_report, :download_package, :history, :comment, :upload_return_report,
+    :confirm_return_report, :save_return_report, :return_report, :destroy_upload_file]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :download_report, :download_package]
   before_action :set_essay, only: [:result, :mark, :file, :return_file, :file_confirm,

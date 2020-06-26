@@ -22,6 +22,7 @@
 #++
 
 class Teacher::Result::MultiplefibsController < ApplicationController
+  before_action :require_assigned, only: [:show, :outputcsv_bulk, :result, :outputcsv]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :outputcsv_bulk]
   before_action :set_generic_page, only: [:result, :outputcsv]

@@ -24,6 +24,8 @@
 require 'csv'
 
 class Teacher::Result::CompoundsController < ApplicationController
+  before_action :require_assigned, only: [:show, :outputcsv_bulk,
+    :result, :mark, :save, :graph, :outputcsv, :outputcsv_question]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :outputcsv_bulk]
   before_action :set_generic_page, only: [:result, :mark, :save, :graph, :outputcsv, :outputcsv_question]

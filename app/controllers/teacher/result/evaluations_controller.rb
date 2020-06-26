@@ -25,6 +25,8 @@ require 'csv'
 require 'nkf'
 
 class Teacher::Result::EvaluationsController < ApplicationController
+  before_action :require_assigned, only: [:show,
+    :result, :save, :save_content, :outputcsv, :upload, :upload_confirm, :upload_error, :upload_save, :upload_result, :send_mail]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show]
   before_action :set_generic_page, only: [:result, :save, :save_content, :outputcsv, :upload, :upload_confirm, :upload_error, :upload_save, :upload_result, :send_mail]
