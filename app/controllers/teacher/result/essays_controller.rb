@@ -52,7 +52,8 @@ class Teacher::Result::EssaysController < ApplicationController
 
   def show
     session[:essay_search] = nil
-    @essays = @course.essays.joins(:class_sessions)
+    @essays = @course.essays.left_joins(:class_sessions, :answer_scores).
+      where("(class_sessions.id IS NOT NULL OR answer_scores.id IS NOT NULL)").distinct
   end
 
   def result

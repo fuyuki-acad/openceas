@@ -31,7 +31,8 @@ class Teacher::Result::QuestionnairesController < ApplicationController
   before_action :set_generic_page, only: [:result, :outputcsv, :outputcsv_user, :detail_outputcsv]
 
   def show
-    @questionnaires = @course.questionnaires.joins(:class_sessions)
+    @questionnaires = @course.questionnaires.left_joins(:class_sessions, :answer_scores).
+      where("(class_sessions.id IS NOT NULL OR answer_scores.id IS NOT NULL)").distinct
   end
 
   def result

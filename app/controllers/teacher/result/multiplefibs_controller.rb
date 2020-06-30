@@ -28,7 +28,8 @@ class Teacher::Result::MultiplefibsController < ApplicationController
   before_action :set_generic_page, only: [:result, :outputcsv]
 
   def show
-    @multiplefibs = @course.multiplefibs.joins(:class_sessions)
+    @multiplefibs = @course.multiplefibs.left_joins(:class_sessions, :answer_scores).
+      where("(class_sessions.id IS NOT NULL OR answer_scores.id IS NOT NULL)").distinct
   end
 
   def result
