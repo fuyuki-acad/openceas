@@ -367,15 +367,9 @@
             <div id="collapseListMaterial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListMaterialHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.materials %>
-
-                <p>
-                  <% if @course.materials.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT2") %>
-                  <% end %>
-                </p>
-
                 <% if @course.materials.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.materials %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -409,15 +403,9 @@
             <div id="collapseListURL" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListURLHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.urls %>
-
-                <p>
-                  <% if @course.urls.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT2") %>
-                  <% end %>
-                </p>
-
                 <% if @course.urls.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.urls %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -451,15 +439,9 @@
             <div id="collapseListQuestionnaire" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListQuestionnaireHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.questionnaires %>
-
-                <p>
-                  <% if @course.questionnaires.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT14") %>
-                  <% end %>
-                </p>
-
                 <% if @course.questionnaires.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.questionnaires %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -493,15 +475,9 @@
             <div id="collapseListCompound" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListCompoundHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.compounds %>
-
-                <p>
-                  <% if @course.compounds.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT8") %>
-                  <% end %>
-                </p>
-
                 <% if @course.compounds.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.compounds %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -535,15 +511,9 @@
             <div id="collapseListMultipleFib" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListMultipleFibHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.multiplefibs %>
-
-                <p>
-                  <% if @course.multiplefibs.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT10") %>
-                  <% end %>
-                </p>
-
                 <% if @course.multiplefibs.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.multiplefibs %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -577,15 +547,9 @@
             <div id="collapseListAssignmentEssay" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListAssignmentEssayHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.essays %>
-
-                <p>
-                  <% if @course.essays.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT12") %>
-                  <% end %>
-                </p>
-
                 <% if @course.essays.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.essays %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -619,15 +583,9 @@
             <div id="collapseListEvaluationlist" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListEvaluationlistHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.evaluations %>
+                <% if @course.evaluations.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.evaluations %>
 
-                <p>
-                  <% if @course.questionnaires.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT21") %>
-                  <% end %>
-                </p>
-
-                <% if @course.questionnaires.count > 0 %>
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>

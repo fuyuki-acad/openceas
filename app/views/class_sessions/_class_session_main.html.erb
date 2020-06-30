@@ -129,21 +129,17 @@
   <% end %>
 
   <!-- 教材 -->
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_MATERIAL") %>
-          </h3>
-        </div>
+    <% if @class_session.assigned_materials? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_MATERIAL") %>
+            </h3>
+          </div>
 
-        <div class="panel-body">
-          <% unless @class_session.assigned_materials? %>
-            <p>
-              <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOMATERIAL") %>
-            </p>
-          <% else %>
+          <div class="panel-body">
             <% @class_session.materials.each do |material| %>
               <p>
                 <%= link_to material.generic_page_title, material_path(material.id), :target => "_blank" %>
@@ -164,11 +160,11 @@
                 <% end %>
               </p>
             <% end %>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- URL -->
   <% if @class_session.assigned_urls? %>

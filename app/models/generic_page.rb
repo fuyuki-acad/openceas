@@ -187,10 +187,11 @@ class GenericPage < ApplicationRecord
 
     when Settings.GENERICPAGE_TYPECD_URLCODE.to_s
       validate_presence(:generic_page_title, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE6"))
-      validate_presence(:url_content, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE7"))
-      result = self.url_content.match(/\A#{URI::regexp(%w(http https))}\z/)
-      unless result && result[4]
-        self.errors.add(:url_content, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE7"))
+      if self.url_content.present?
+        result = self.url_content.match(/\A#{URI::regexp(%w(http https))}\z/)
+        unless result && result[4]
+          self.errors.add(:url_content, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE7"))
+        end
       end
       validate_max_length(:material_memo, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG"), 4096)
       validate_max_length(:material_memo_closed, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG2"), 4096)

@@ -44,7 +44,6 @@ class Teacher::MaterialsController < ApplicationController
   def new_url
     new
     @generic_page.type_cd = Settings.GENERICPAGE_TYPECD_URLCODE
-    @generic_page.url_content = "http://"
   end
 
   def create
