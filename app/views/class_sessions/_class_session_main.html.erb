@@ -180,7 +180,12 @@
           <div class="panel-body">
             <% @class_session.urls.each do |url| %>
               <div>
-                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
+                <% if url.url_content.present? %>
+                  <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
+                <% else %>
+                  <%= url.generic_page_title %>
+                <% end %>
+
                 <% unless url.material_memo.blank? %>
                   <p>
                     <%= convert_html(url.material_memo) %>

@@ -221,7 +221,11 @@
                     <td class="td-bold"><%= url.url_content %></td>
 
                     <!-- 確認ボタン -->
-                    <td><%= link_to t("common.COMMON_CONFIRM"), url.url_content, {class: "btn btn-warning", target: "_blank"} %></td>
+                    <td>
+                      <% if url.url_content.present? %>
+                        <%= link_to t("common.COMMON_CONFIRM"), url.url_content, {class: "btn btn-warning", target: "_blank"} %>
+                      <% end %>
+                    </td>
 
                     <!-- 修正ボタン -->
                     <td><%= link_to t("common.COMMON_EDIT"), {action: :edit_url, id: url}, class: "btn btn-primary" %></td>
