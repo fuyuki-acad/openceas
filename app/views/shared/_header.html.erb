@@ -45,7 +45,9 @@
                 <% end %>
               <% end %>
             <% else %>
-              <% if current_user %>
+              <% if controller.status == 404 || controller.status == 500 %>
+                <%= system_name %>
+              <% elsif current_user %>
                 <% if controller.controller_name == "top" %>
                   <% if current_user.admin? %>
                     <%= t("top.ADMINISTRATORTOP_TITLE") %>
@@ -73,7 +75,8 @@
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-right">
 
-          <% if Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
+          <% if controller.status == 404 || controller.status == 500 %>
+          <% elsif Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
           <li>
             <%= link_to('#', {class: "bnt-support", data: {toggle: 'modal', target: '.support-modal'}}) do %>
               <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><%= t("top.COMMONTOP_SUPPORT") %>

@@ -33,6 +33,10 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :check_permission
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render_404
+  rescue_from Exception, with: :render_500
+
   NOT_ASSIGNED = "not assigned"
   NOT_ENROLLED = "not enrolled"
 
@@ -220,5 +224,14 @@ class ApplicationController < ActionController::Base
         class_session_no: params[:class_session_no],
         access_page: request.path,
         query_string: query_string)
+      end
     end
-end
+
+  private
+    def render_404
+      render template: 'errors/error404', status: :not_found
+    end
+    
+    def render_500
+      render template: 'errors/error500', status: :internal_server_error
+    end
