@@ -293,7 +293,7 @@ module ApplicationHelper
   end
 
   def convert_announcement_cd(cd)
-    case cd
+    case cd.to_s
     when "1"
       return t('common.COMMON_USE')
     when "0"
@@ -302,7 +302,7 @@ module ApplicationHelper
   end
 
   def convert_open_course_announcement_flag(flag)
-    if flag
+    if flag == 1
       return t('common.COMMON_OPEN')
     else
       return t('common.COMMON_NOTOPEN')
@@ -319,7 +319,7 @@ module ApplicationHelper
   end
 
   def convert_open_course_faq_flag(flag)
-    if flag
+    if flag == 1
       return t('common.COMMON_OPEN')
     else
       return t('common.COMMON_NOTOPEN')

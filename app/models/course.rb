@@ -142,6 +142,12 @@ class Course < ApplicationRecord
         self.deleted_at = nil
       end
     end
+
+    if self.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PRIVATE &&
+       self.open_course_flag != self.open_course_flag_in_database
+
+       OpenCourseAssignedUser.where(course_id: self.id).delete_all
+    end
   end
 
   after_save do
