@@ -40,6 +40,14 @@ class ApplicationController < ActionController::Base
   NOT_ASSIGNED = "not assigned"
   NOT_ENROLLED = "not enrolled"
 
+  def render_404
+    render template: 'errors/error404', status: :not_found
+  end
+  
+  def render_500
+    render template: 'errors/error500', status: :internal_server_error
+  end
+
   def send_file_headers!(options)
     super(options)
     match = /(.+); filename="(.+)"/.match(headers['Content-Disposition'])
@@ -225,13 +233,4 @@ class ApplicationController < ActionController::Base
         access_page: request.path,
         query_string: query_string)
       end
-    end
-
-  private
-    def render_404
-      render template: 'errors/error404', status: :not_found
-    end
-    
-    def render_500
-      render template: 'errors/error500', status: :internal_server_error
     end

@@ -773,4 +773,6 @@ Rails.application.routes.draw do
       get     'user/:id',                         to: 'users#show'
     end
   end
+
+  get "*path" => 'application#render_404'
 end
