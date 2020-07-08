@@ -22,7 +22,7 @@
 #++
 
 class GroupFoldersController < ApplicationController
-  before_action :require_assigned, only: [:index, :show, :edit, :update, :upload]
+  before_action :require_enrolled, only: [:index, :show, :edit, :update, :upload]
   before_action :set_course, only: [:index]
   before_action :set_group_folder, only: [:show, :edit, :update, :upload]
   before_action :set_group_folder_material, only: [:material, :confirm]

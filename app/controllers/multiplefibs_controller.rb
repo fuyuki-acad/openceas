@@ -24,7 +24,7 @@
 require 'nkf'
 
 class MultiplefibsController < ApplicationController
-  before_action :require_assigned, only: [:show, :quiz, :mark, :password]
+  before_action :require_enrolled_or_open_assigned, only: [:show, :quiz, :password, :mark]
   before_action :set_generic_page, only: [:show, :quiz, :mark, :password]
 
   def show

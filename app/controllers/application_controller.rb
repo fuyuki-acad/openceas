@@ -146,9 +146,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless current_user.admin? || current_user.teacher?
     end
 
-    def require_assigned
-      return if current_user.admin?
-
+    def get_require_course
       if params[:course_id].present?
         course = Course.find(params[:course_id])
       elsif params[:generic_page_id].present?
@@ -167,27 +165,53 @@ class ApplicationController < ActionController::Base
         end
       end
 
+      course
+    end
+
+    def require_assigned
+      return if current_user.admin?
+
+      course = get_require_course
       must_be_assigned(course)
     end
 
     def must_be_assigned(course)
       if current_user.teacher?
-        if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
-          assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
-        else
-          assigned = course.course_assigned_users.where(user_id: current_user.id).first
-        end
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
+      end
+      
+      raise NOT_ASSIGNED if assigned.blank?
+    end
+
+    def require_enrolled
+      return if current_user.admin?
+
+      course = get_require_course
+      if current_user.teacher?
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
         raise NOT_ASSIGNED if assigned.blank?
 
       else
-        if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
-          enrolled = course.open_course_assigned_users.where(user_id: current_user.id).first
-        else
-          enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
-        end
+        enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
         raise NOT_ENROLLED if enrolled.blank?
 
       end
+    end
+
+    def require_enrolled_or_open_assigned
+      return if current_user.admin?
+
+      course = get_require_course
+      if current_user.teacher?
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
+      else
+        assigned = course.course_enrollment_users.where(user_id: current_user.id).first
+      end
+
+      if assigned.blank? && course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PUBLIC
+        assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
+      end
+      raise NOT_ENROLLED if assigned.blank?
     end
 
     def get_content_type(file_name)

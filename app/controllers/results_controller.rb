@@ -24,7 +24,7 @@
 class ResultsController < ApplicationController
   include MarkModule
 
-  before_action :require_assigned
+  before_action :require_enrolled
   before_action :set_course, only: [:index]
 
   def index
