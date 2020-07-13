@@ -138,7 +138,9 @@ class Teacher::Result::CompoundsController < ApplicationController
     @chart_data = {0 => 0, 11 => 0, 21 => 0, 31 => 0, 41 => 0, 51 => 0, 61 => 0, 71 => 0, 81 => 0, 91 => 0}
 
     ## テスト結果リストを取得
-    answer_scores = AnswerScore.where("page_id = ? AND total_score >= 0", @generic_page.id).order("user_id ASC, answer_count DESC")
+    answer_scores = AnswerScore.
+      where("page_id = ? AND total_score >= 0 AND user_id IN (SELECT user_id FROM course_enrollment_users WHERE course_id = ?)",
+        @generic_page.id, @generic_page.course_id).order("user_id ASC, answer_count DESC")
     ## 同じユーザの最後の解答以外削除
     answer_scores.each do |answer_score|
       next if @scores.key?(answer_score.user_id)
