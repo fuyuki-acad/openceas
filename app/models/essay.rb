@@ -283,7 +283,9 @@ class Essay < GenericPage
   def total_upload_filesize(user_id = nil)
     if user_id.blank?
       return I18n.t("materials_administration.MAT_ADM_ASS_UPLOADED_FILES_HAS_BEEN_DELETED") if self.essayfile_deleted == 1
-      total = self.answer_score_histories.sum(:file_size)
+      total = self.answer_score_histories.
+        where("user_id IN (SELECT user_id FROM course_enrollment_users WHERE course_id = ?)", self.course_id).
+          sum(:file_size)
     else
       histories = self.answer_score_histories.where(user_id: user_id)
       return if histories.count == 0
