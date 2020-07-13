@@ -22,7 +22,8 @@
 #++
 
 class CompoundsController < ApplicationController
-  before_action :require_enrolled_or_open_assigned, only: [:show, :password, :confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
+  before_action :require_enrolled_or_open_assigned, only: [:show, :password]
+  before_action :require_enrolled, only: [:confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
   skip_before_action :verify_authenticity_token, only: :confirm
   before_action :set_generic_page, only: [:show, :password, :confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
 

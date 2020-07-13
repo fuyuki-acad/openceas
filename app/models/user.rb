@@ -354,6 +354,12 @@ class User < ApplicationRecord
   end
 
   def assigned?(course_id)
-    self.course_assigned_users.where(:course_id => course_id).count == 0 ? false : true
+    if self.admin?
+      true
+    elsif self.student?
+      self.course_enrollment_users.where(course_id: course_id).count == 0 ? false : true
+    elsif self.teacher?
+      self.course_assigned_users.where(course_id: course_id).count == 0 ? false : true
+    end
   end
 end

@@ -29,6 +29,16 @@
 </div>
 <% end %>
 
+<% unless current_user.assigned?(@essay.course.id) %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <%= t("execution.COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT") %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <!-- スマートフォンタイトル　-->
 <%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONASSIGNMENTESSAY") } %>
 
@@ -117,152 +127,154 @@
 <% end %>
 
 <!-- レポート提出 -->
-<%= form_tag url_for(:action => :upload, :id => @essay), {:class => "form-horizontal", :metbhod => :post, :multipart => true} do %>
-<!--******************************** レポート提出 **************************************-->
-<% if @is_can_submit && @essay.essayfile_deleted == 0 %>
+<% if current_user.assigned?(@essay.course.id) %>
+  <%= form_tag url_for(:action => :upload, :id => @essay), {:class => "form-horizontal", :metbhod => :post, :multipart => true} do %>
+  <!--******************************** レポート提出 **************************************-->
+    <% if @is_can_submit && @essay.essayfile_deleted == 0 %>
 
-  <%= hidden_field_tag "myFolderSelected", "-1" %>
-    <p class="center">
-      <table class="submit_table_frame">
-        <tr>
-          <td class="submit_table_upper">
-            <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE2") %>
-          </td>
-        </tr>
-        <tr>
-          <td class="submit_table_under">
-            <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION1") %>
-            <br/><br/>
-              <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="submit_table_under">
-                    <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_PCFILE") %>
-                  </td>
-                  <td class="submit_table_under">
-                    <%= file_field_tag "file", {:class => "inputForm"} %>
-                  </td>
-                  <td class="submit_table_under_narrow">
-                    <%= submit_tag t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_SUBMIT"), :class => "btn btn-default center-block" %>
-                  </td>
-                </tr>
-              </table>
-              <br>
-              <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION2") %>
+    <%= hidden_field_tag "myFolderSelected", "-1" %>
+      <p class="center">
+        <table class="submit_table_frame">
+          <tr>
+            <td class="submit_table_upper">
+              <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE2") %>
             </td>
           </tr>
-        </table>
-      </p>
-<% end %>
-<% end %>
+          <tr>
+            <td class="submit_table_under">
+              <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION1") %>
+              <br/><br/>
+                <table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="submit_table_under">
+                      <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_PCFILE") %>
+                    </td>
+                    <td class="submit_table_under">
+                      <%= file_field_tag "file", {:class => "inputForm"} %>
+                    </td>
+                    <td class="submit_table_under_narrow">
+                      <%= submit_tag t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_SUBMIT"), :class => "btn btn-default center-block" %>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+                <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION2") %>
+              </td>
+            </tr>
+          </table>
+        </p>
+    <% end %>
+  <% end %>
 
-<br />
+  <br />
 
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION3_html") %>
-        <br>
-        <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION4") %>
-        <br>
-        <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION5") %>
-        <br>
-        <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION6_html") %>
-        <% if @essay.assignment_essay_return_method_cd != Settings.GENERICPAGE_RETURN_METHOD_NOT_RETURN %>
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION3_html") %>
           <br>
-          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION14_html") %>
-        <% end %>
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION4") %>
+          <br>
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION5") %>
+          <br>
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION6_html") %>
+          <% if @essay.assignment_essay_return_method_cd != Settings.GENERICPAGE_RETURN_METHOD_NOT_RETURN %>
+            <br>
+            <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_EXPLANATION14_html") %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- レポート情報表示 -->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <!-- 0件メッセージ -->
-        <% if !@answer_scores || @answer_scores.count == 0 %>
-          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_NOTFOUND") %>
-        <% else %>
+  <!-- レポート情報表示 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- 0件メッセージ -->
+          <% if !@answer_scores || @answer_scores.count == 0 %>
+            <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_NOTFOUND") %>
+          <% else %>
 
-          <!-- リスト表示 -->
-          <% @answer_scores.each.with_index(1) do |answer_score, index| %>
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;&nbsp;
-                    <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE3", :param0 => index.to_s) %>
-                  </div>
-                  <div class="panel-body">
-                    <div class="panel panel-default">
-                      <div class="panel-body">
-                        <table border="0" class="table table-striped table-hover">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE4") %>
-                              </td>
-                              <td>
-                                <% unless answer_score.link_name.blank? %>
-                                  <%= link_to t('common.COMMON_READ'), url_for(:action => :file, :id => @essay, :count => answer_score.answer_count), class: 'btn btn-warning', :target => "_blank" %>
-                                <% end %>
-                                <% unless current_user.student? %>
-                                  <%= link_to t("common.COMMON_DELETE"), {:action => :destroy}, :class => "btn btn-danger", :method => :delete %>
-                                <% end %>
-                                <% if answer_score.link_name.blank? %>
-                                  <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE5") %>
-                                <% end %>
-                              </td>
-                            </tr>
-                            <% if answer_score.latest_comment && answer_score.latest_comment.return_flag == 1 %>
+            <!-- リスト表示 -->
+            <% @answer_scores.each.with_index(1) do |answer_score, index| %>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;&nbsp;
+                      <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE3", :param0 => index.to_s) %>
+                    </div>
+                    <div class="panel-body">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <table border="0" class="table table-striped table-hover">
+                            <tbody>
                               <tr>
                                 <td>
-                                  <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE8") %>
+                                  <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE4") %>
                                 </td>
                                 <td>
-                                  <% if answer_score.latest_comment.processed_link_name.blank? %>
+                                  <% unless answer_score.link_name.blank? %>
+                                    <%= link_to t('common.COMMON_READ'), url_for(:action => :file, :id => @essay, :count => answer_score.answer_count), class: 'btn btn-warning', :target => "_blank" %>
+                                  <% end %>
+                                  <% unless current_user.student? %>
+                                    <%= link_to t("common.COMMON_DELETE"), {:action => :destroy}, :class => "btn btn-danger", :method => :delete %>
+                                  <% end %>
+                                  <% if answer_score.link_name.blank? %>
                                     <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE5") %>
-                                  <% else %>
-                                    <%= link_to t('common.COMMON_READ'), url_for(:action => :return_file, :id => @essay, :count => answer_score.answer_count), class: 'btn btn-warning', :target => "_blank" %>
                                   <% end %>
                                 </td>
                               </tr>
-                            <% end %>
-                            <tr>
-                              <td>
-                                <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE6") %>
-                              </td>
-                              <td>
-                                <% if answer_score.latest_comment.blank? || answer_score.latest_comment.memo.blank? %>
-                                  <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE7") %>
-                                <% else %>
-                                  <%== answer_score.latest_comment.memo %>
-                                <% end %>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                              <% if answer_score.latest_comment && answer_score.latest_comment.return_flag == 1 %>
+                                <tr>
+                                  <td>
+                                    <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE8") %>
+                                  </td>
+                                  <td>
+                                    <% if answer_score.latest_comment.processed_link_name.blank? %>
+                                      <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE5") %>
+                                    <% else %>
+                                      <%= link_to t('common.COMMON_READ'), url_for(:action => :return_file, :id => @essay, :count => answer_score.answer_count), class: 'btn btn-warning', :target => "_blank" %>
+                                    <% end %>
+                                  </td>
+                                </tr>
+                              <% end %>
+                              <tr>
+                                <td>
+                                  <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE6") %>
+                                </td>
+                                <td>
+                                  <% if answer_score.latest_comment.blank? || answer_score.latest_comment.memo.blank? %>
+                                    <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_TABLE7") %>
+                                  <% else %>
+                                    <%== answer_score.latest_comment.memo %>
+                                  <% end %>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 閉じるボタン -->
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();',
+          class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: essay_clear_password_path} %>
       </div>
     </div>
   </div>
-
-  <!-- 閉じるボタン -->
-  <div class="text-center">
-    <div class="btn-group">
-      <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();',
-        class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: essay_clear_password_path} %>
-    </div>
-  </div>
-</div>
+<% end %>

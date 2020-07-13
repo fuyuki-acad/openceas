@@ -21,6 +21,16 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %>
 
+<% unless current_user.assigned?(@generic_page.course.id) %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <%= t("execution.COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT") %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <!-- スマートフォンタイトル　-->
 <%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONMULTIPLEFIB") } %>
 

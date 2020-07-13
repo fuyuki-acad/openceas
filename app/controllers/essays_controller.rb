@@ -22,7 +22,8 @@
 #++
 
 class EssaysController < ApplicationController
-  before_action :require_enrolled_or_open_assigned, only: [:show, :upload, :password, :file, :return_file]
+  before_action :require_enrolled_or_open_assigned, only: [:show]
+  before_action :require_enrolled, only: [:upload, :password, :file, :return_file]
   before_action :set_essay, only: [:show, :upload, :password, :file, :return_file]
 
   def show
