@@ -22,7 +22,7 @@
 #++
 
 class MaterialFile
-  include ActiveModel::Model, UploadFileModule
+  include ActiveModel::Model, UploadFileModule, ErrorMessageModule
 
   UPLOAD_FILE_TYPES = ['.xml', '.csv']
   CONTENT_TYPE_XML = "xml"

@@ -24,7 +24,7 @@
 require 'kconv'
 
 class EssayFile
-  include ActiveModel::Model, UploadFileModule
+  include ActiveModel::Model, UploadFileModule, ErrorMessageModule
 
   UPLOAD_FILE_TYPES = ['.zip']
 

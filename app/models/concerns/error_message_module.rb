@@ -21,32 +21,17 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-class QuestionFile
-  include ActiveModel::Model, ErrorMessageModule
+module ErrorMessageModule
+  extend ActiveSupport::Concern
 
-  CONTENT_TYPE_XML = ".xml"
-  CONTENT_TYPE_CSV = ".csv"
-  UPLOAD_FILE_TYPES = [CONTENT_TYPE_XML, CONTENT_TYPE_CSV]
-
-  attr_accessor :generic_page_id, :file
-
-  validate :check_data
-
-  def check_data
-    if @file.blank?
-      errors.add(:file, I18n.t("common.COMMON_UPLOADFILENULLCHECK"))
-    elsif File.extname(@file.original_filename).length == 0
-      errors.add(:file, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3"))
-    else
-      errors.add(:file, I18n.t("common.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD_FILECHECK")) unless UPLOAD_FILE_TYPES.include?(File.extname(@file.original_filename))
+  def has_error_detail?(key)
+    if self.errors.details && self.errors.details.has_key?(key)
+      self.errors.details[key].each do |datail|
+      return true if datail.has_key?(:value)
+      end
     end
-  end
 
-  def xml?
-    File.extname(@file.original_filename) == CONTENT_TYPE_XML
+   return false
   end
-
-  def csv?
-    File.extname(@file.original_filename) == CONTENT_TYPE_CSV
-  end
-end
+    
+end  
