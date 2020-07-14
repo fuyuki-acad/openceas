@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
 
     def get_require_course
       if params[:course_id].present?
-        course = Course.find(params[:course_id])
+        course = Course.where("id = ?", params[:course_id]).first
       elsif params[:generic_page_id].present?
         course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:generic_page_id]).first
       elsif params[:id].present?
@@ -160,12 +160,22 @@ class ApplicationController < ActionController::Base
           course = Course.joins(:announcements).where("announcements.id = ?", params[:id]).first
         elsif controller_name == "faqs"
           course = Course.joins(:faqs).where("faqs.id = ?", params[:id]).first
+        elsif controller_name == "questionnaires" && action_name == "detail"
+          question = Question.find(params[:id])
+          if question.present?
+            generic_page = question.parent.generic_pages.first
+            course = generic_page.course
+          end
         else
           course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:id]).first
         end
       end
 
-      course
+      if course.blank?
+        raise ActiveRecord::RecordNotFound
+      else
+        course
+      end
     end
 
     def require_assigned
