@@ -48,18 +48,6 @@
               <%= @essay.generic_page_title %>
             </td>
           </tr>
-          <tr>
-            <td>
-              <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION3") %>
-            </td>
-            <td>
-              <% if @essay.assignment_essay_return_method_cd == 0 %>
-                <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION5") %>
-              <% else %>
-                <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION4") %>
-              <% end %>
-            </td>
-          </tr>
         </table>
       </div>
     </div>

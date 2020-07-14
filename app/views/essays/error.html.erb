@@ -22,7 +22,7 @@
 %>
 
 <!-- スマートフォンタイトル　-->
-<%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONQUESTIONNAIRE") } %>
+<%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONASSIGNMENTESSAY") } %>
 
 <!-- 氏名、テスト/アンケートタイトル -->
 <div class="row">
@@ -36,7 +36,7 @@
               <%= t("common.COMMON_COURSENAME") %>
             </td>
             <td class="col-xs-8">
-              <%= @generic_page.course.course_name %>
+              <%= @essay.course.course_name %>
             </td>
           </tr>
 
@@ -46,7 +46,7 @@
               <%= t("common.COMMON_SUBJECT") %>
             </td>
             <td>
-              <%= @generic_page.generic_page_title %>
+              <%= @essay.generic_page_title %>
             </td>
           </tr>
 
@@ -70,10 +70,10 @@
   <div class="col-sm-12">
     <div class="panel panel-default">
       <div class="panel-body">
-        <% if @generic_page.start_time.blank? %>
-          <%= t("execution.MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html", :param0 => l(@generic_page.end_time)) %>
+        <% if @essay.start_time.blank? %>
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html", :param0 => l(@essay.end_time)) %>
         <% else %>
-          <%= t("execution.MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html", :param0 => l(@generic_page.start_time), :param1 => l(@generic_page.end_time)) %>
+          <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html", :param0 => l(@essay.start_time), :param1 => l(@essay.end_time)) %>
         <% end %>
       </div>
     </div>

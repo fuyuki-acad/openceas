@@ -65,6 +65,11 @@ class QuestionnairesController < ApplicationController
   end
 
   def save
+    if @generic_page.expired?
+      render "error"
+      return
+    end
+
     if session[:answers]
       @answers = session[:answers]
       total_score = 0

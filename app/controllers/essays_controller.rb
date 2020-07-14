@@ -79,6 +79,11 @@ class EssaysController < ApplicationController
   end
 
   def upload
+    if @essay.expired?
+      render "error"
+      return
+    end
+
     @is_can_submit = true
 
     if current_user.student?
@@ -157,7 +162,7 @@ class EssaysController < ApplicationController
     render action: :show
 
   rescue => e
-    if @answer_score.errors.count == 0
+    if @answer_score && @answer_score.errors.count == 0
       logger.error e.backtrace.join("\n")
       flash.now[:notice] = I18n.t("error.ERROR_FATAL_EXPLANATION1_html")
     end
