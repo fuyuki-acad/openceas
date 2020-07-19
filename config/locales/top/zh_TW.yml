@@ -71,7 +71,7 @@ zh_TW:
     #administratorTop.jsp
     ADMINISTRATORTOP_TITLE: "選課環境管理者主頁"
     #instructorTop.jsp
-    INSTRUCTORTOP_TITLE: "担任教师主页"
+    INSTRUCTORTOP_TITLE: "担任教师主頁"
     INSTRUCTORTOP_NOTREAD: "未读的报告，未回答的常见问题"
     INSTRUCTORTOP_NOTREADINFORMATION1: "■ %{param0} の未読レポート"
     INSTRUCTORTOP_NOTREADINFORMATION2: "未回答的常见问题"
@@ -84,9 +84,10 @@ zh_TW:
     INSTRUCTORTOP_NOTREADREPORT: "Unread report"
     INSTRUCTORTOP_NUMBER: "%{param0}"
     #studentTop.jsp
-    STUDENTTOP_TITLE: "學生主页"
+    STUDENTTOP_TITLE: "學生主頁"
     STUDENTTOP_USRDATA: "使用者信息"
     STUDENTTOP_RESULT: "进入測驗结果"
+    TOP_TITLE: "主頁"
     #menuList.jsp
     MENULIST_FORUMMANAGELIST: "話題的管理(一覽）"
     MENULIST_FORUMMANAGECROSS: "話題的管理(綜合表）"

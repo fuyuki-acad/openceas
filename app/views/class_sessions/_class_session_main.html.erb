@@ -170,6 +170,42 @@
     </div>
   </div>
 
+  <!-- URL -->
+  <% if @class_session.assigned_urls? %>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
+            </h3>
+          </div>
+
+          <div class="panel-body">
+            <% @class_session.urls.each do |url| %>
+              <div>
+                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
+                <% unless url.material_memo.blank? %>
+                  <p>
+                    <%= convert_html(url.material_memo) %>
+                  </p>
+                <% end %>
+                &nbsp;
+                <% unless url.content.blank? %>
+                  <p>
+                    <%== url.content %>
+                  </p>
+                <% end %>
+                <p id='azure_message'></p>
+                <hr>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <!--　アンケート　-->
   <% if @class_session.assigned_questionnaires? %>
     <div class="row">
@@ -200,7 +236,9 @@
               <% @class_session.questionnaires.each do |questionnaire| %>
                 <p>
                   <%= link_to questionnaire.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire) +"', 'executeQuestionnaire', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeQuestionnaire', '800', '600')"} %>
                   <% if questionnaire.start_time.blank? %>
                     <% unless questionnaire.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(questionnaire.end_time)) %>
@@ -256,7 +294,9 @@
               <% @class_session.componds.each do |compond| %>
                 <p>
                   <%= link_to compond.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/compounds", :action => :show, :id => compond) +"', 'executeCompound', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/compounds", :action => :show, :id => compond, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeCompound', '800', '600')"} %>
                   <% if compond.start_time.blank? %>
                     <% unless compond.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(compond.end_time)) %>
@@ -312,7 +352,9 @@
               <% @class_session.multiplefibs.each do |multiplefib| %>
                 <p>
                   <%= link_to multiplefib.generic_page_title, "javascript:void();",
-                    {:onclick => "openWindow3('" + url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib) +"', 'executeMultipleFib', '800', '600')"} %>
+                    {:onclick => "openWindow3('" +
+                      url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib, :class_session_no => @class_session.class_session_no) +
+                      "', 'executeMultipleFib', '800', '600')"} %>
                   <% if multiplefib.start_time.blank? %>
                     <% unless multiplefib.end_time.blank? %>
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_ENDTIME", :param0 => l(multiplefib.end_time)) %>
@@ -395,46 +437,6 @@
       </div>
     </div>
   <% end %>
-
-  <!-- URL -->
-  <% if @class_session.assigned_urls? %>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT3") %>
-            </h3>
-          </div>
-
-          <div class="panel-body">
-            <% @class_session.urls.each do |url| %>
-              <div>
-                <%= link_to url.generic_page_title, url.url_content,  :target => "_blank" %>
-                <% unless url.material_memo.blank? %>
-                  <p>
-                    <%= convert_html(url.material_memo) %>
-                  </p>
-                <% end %>
-                &nbsp;
-                <% unless url.content.blank? %>
-                  <p>
-                    <%== url.content %>
-                  </p>
-                <% end %>
-                <hr>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-<!-- ********** 未対応（現行よりコピー） ここから **********-->
-  <!-- include file="../forumManagement/includes/ClassSessionExecutionMainForum.jsp" -->
-  <!-- include file="../courseware/includes/ClassSessionExecutionMainCourseware.jsp" -->
-<!-- ********** 未対応（現行よりコピー） ここまで**********-->
 
   <!-- 評価記入リスト-->
   <% if @class_session.assigned_evaluations? %>

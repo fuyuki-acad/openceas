@@ -63,17 +63,21 @@ class Help < ApplicationRecord
 
   def create_file
     FileUtils.mkdir_p(get_help_path)
-    upload_file = get_help_path + self.link_name
+    upload_file = get_help_path + self.file_name
     File.open(upload_file, "wb") {|f|f.write(file.read)}
   end
 
   def check_exist_file
-    file_path = get_help_path + self.link_name
-    if File.exist?(file_path)
+    file_path = get_help_path + self.file_name
+    if self.file_name.present? && File.exist?(file_path)
 			## 既存のファイルがある場合はリネームする
       new_file_dir = get_help_path + "bak/"
       check_user_path(new_file_dir)
-      new_file_path = new_file_dir + self.file_name_was
+      if self.file_name_in_database.blank?
+        new_file_path = new_file_dir + self.file_name
+      else
+        new_file_path = new_file_dir + self.file_name_in_database
+      end
 			false unless FileUtils.move(file_path, new_file_path)
 		end
 
@@ -81,7 +85,7 @@ class Help < ApplicationRecord
   end
 
   def get_link_url
-    DOWNLOAD_PATH + HELP_PATH + self.link_name
+    DOWNLOAD_PATH + HELP_PATH + self.file_name
   end
 
   def get_help_path

@@ -479,8 +479,46 @@ SCORE_LIST_PER_PAGE: 10
 #AI bot (yes / no)
 USEAGE_AI_BOT: "no"
 
+#CAS認証(true/false)
+CAS_AUTHENTICATION: false
+
+#メール未設定ユーザへの設定画面(true/false)
+REMIND_MAIL_ADDRESS_BLANK: true
+
+#TOP PAGE Header
+#レポート確認(true/false)
+HEADER_REPORT: true
+#公開科目一覧(true/false)
+HEADER_OPEN_COURSE: true
+#操作マニュアル(true/false)
+HEADER_MANUAL: true
+#個人情報変更(true/false)
+HEADER_USER_PROFILE: true
+
+#イメージ画像(true/false)
+USER_IMAGE_PICTURE: true
+
+#学生画面
+STUDENT:
+  #ヘッダー
+  HEADER:
+    #学生(true/false)
+    SHOW_STUDENT_IN_TITLE: true
+  #リスト表示
+  LIST_VIEW:
+    #時間割(true/false)
+    SHOW_TIMETABLE: true
+    #テスト実施画面(true/false)
+    SHOW_EXAM: true
+  #授業画面
+  CLASS_SESSION:
+    #科目詳細(true/false)
+    SHOW_COURSE_DETAIL: true
+    #出席(true/false)
+    SHOW_ATTENDANCE: true
+
 #Application Settings
 #Name
 APPLICATION_NAME: "Open CEAS"
 #Version
-APPLICATION_VERSION: "1.4.0"
+APPLICATION_VERSION: "1.5.0"

@@ -30,6 +30,8 @@ class QuestionnairesController < ApplicationController
       @answers = session[:answers]
       session[:answers] = nil
     else
+      create_access_log(@generic_page.course.id)
+
       session[:answers] = nil
       @answers = get_answers(@generic_page, current_user)
       latest_score = @generic_page.latest_score(current_user.id)
@@ -61,6 +63,11 @@ class QuestionnairesController < ApplicationController
   end
 
   def save
+    if @generic_page.expired?
+      render "error"
+      return
+    end
+
     if session[:answers]
       @answers = session[:answers]
       total_score = 0

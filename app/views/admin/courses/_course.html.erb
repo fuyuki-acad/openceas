@@ -122,7 +122,7 @@
                   <td class="td-bold"><%= course.course_name %></td>
 
                   <!-- 担任者 -->
-                  <td class="td-bold"><%= course.instructor_name %></td>
+                  <td class="td-bold"><%= tooltip_text(course.instructor_name, 8) %></td>
 
                   <!-- 系・学科・コース -->
                   <td class="td-bold"><%= course.major %></td>
