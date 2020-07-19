@@ -37,6 +37,8 @@ module QuestionnairesHelper
           return true if quiz.id.to_s == answer["select_answer_id"].to_s
         end
       end
+    else
+      return true if quiz.select_mark_flag == Settings.SELECT_SELECTMARKFLG_ON
     end
   end
 
