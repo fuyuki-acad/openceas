@@ -58,7 +58,7 @@
               </td>
               <td>
                 <!-- エラーメッセージ -->
-                <%= @message %>
+                <%== @message %>
               </td>
             </tr>
           <% end %>
@@ -279,3 +279,11 @@
       class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: compound_clear_password_path} %>
   </div>
 </div>
+
+<script>
+history.pushState(null, null, null);
+window.addEventListener('popstate', (e) => {
+  history.pushState(null, null, null);
+  return;
+});
+</script>

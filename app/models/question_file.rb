@@ -22,7 +22,7 @@
 #++
 
 class QuestionFile
-  include ActiveModel::Model
+  include ActiveModel::Model, ErrorMessageModule
 
   CONTENT_TYPE_XML = ".xml"
   CONTENT_TYPE_CSV = ".csv"

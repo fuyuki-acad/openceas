@@ -22,6 +22,7 @@
 #++
 
 class Teacher::CourseSpecificPagesController < ApplicationController
+  before_action :require_assigned, only: [:show, :upload, :show_file]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :upload]
   before_action :set_specific_page, only: [:show, :upload, :show_file]

@@ -45,14 +45,20 @@
                 <% end %>
               <% end %>
             <% else %>
-              <% if current_user %>
+              <% if controller.status == 404 || controller.status == 500 %>
+                <%= system_name %>
+              <% elsif current_user %>
                 <% if controller.controller_name == "top" %>
                   <% if current_user.admin? %>
                     <%= t("top.ADMINISTRATORTOP_TITLE") %>
                   <% elsif current_user.teacher? %>
                     <%= t("top.INSTRUCTORTOP_TITLE") %>
                     <% elsif current_user.student? %>
-                      <%= t("top.STUDENTTOP_TITLE") %>
+                      <% if Settings.STUDENT.HEADER.SHOW_STUDENT_IN_TITLE %>
+                        <%= t("top.STUDENTTOP_TITLE") %>
+                      <% else %>
+                        <%= t("top.TOP_TITLE") %>
+                      <% end %>
                   <% else %>
                     <%= system_name %>
                   <% end %>
@@ -69,7 +75,8 @@
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-right">
 
-          <% if Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
+          <% if controller.status == 404 || controller.status == 500 %>
+          <% elsif Settings.USEAGE_AI_BOT.to_s.downcase == "yes" %>
           <li>
             <%= link_to('#', {class: "bnt-support", data: {toggle: 'modal', target: '.support-modal'}}) do %>
               <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span><%= t("top.COMMONTOP_SUPPORT") %>
@@ -79,26 +86,32 @@
 
           <!-- グロナビ（トップページのみ表示） -->
           <% if current_page?(root_path) %>
+            <% if Settings.HEADER_REPORT %>
             <!-- レポート確認 -->
             <li>
               <%= link_to essay_results_path do %>
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span><%= t("top.COMMONTOP_ASSIGNMENTESSAY") %>
               <% end %>
             </li>
+            <% end %>
 
+            <% if Settings.HEADER_OPEN_COURSE %>
             <!-- 公開科目一覧 -->
             <li>
               <%= link_to open_courses_path do %>
                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><%= t("top.COMMONTOP_OPENCOURSE") %>
               <% end %>
             </li>
+            <% end %>
 
+            <% if Settings.HEADER_MANUAL %>
             <!-- 操作マニュアル -->
             <li>
               <%= link_to helps_path, :target => "_blank" do %>
                 <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span><%= t("top.COMMONTOP_MANUAL") %>
               <% end %>
             </li>
+            <% end %>
 
             <!-- サブメニュー -->
             <li class="dropdown">
@@ -109,12 +122,14 @@
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <% if Settings.HEADER_USER_PROFILE %>
                 <!-- 個人情報変更 -->
                 <li>
                   <%= link_to users_path do %>
                     <span class="glyphicon glyphicon-cog"></span><%= t("top.COMMONTOP_PERSONALDATA") %>
                   <% end %>
                 </li>
+                <% end %>
 
                 <!-- ログアウト -->
                 <li>

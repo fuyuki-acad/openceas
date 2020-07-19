@@ -40,7 +40,8 @@ class CsvCourseEnrollment
   BUS_SER_IMP_IMP_ACCOUNTFORMAT = /[^0-9A-Za-z\.\_\-]+/
   # 科目コード制限
   BUS_SER_IMP_IMP_COURSECDMAXLENGTH = 128
-  BUS_SER_IMP_IMP_COURSECDFORMAT = /[[:punct:]]/
+#  BUS_SER_IMP_IMP_COURSECDFORMAT = /[[:punct:]]/
+  BUS_SER_IMP_IMP_COURSECDFORMAT = /[^0-9A-Za-z\.\_\-]+/
   # 年度制限
   BUS_SER_IMP_IMP_SCHOOLYEARFORMAT = /^\d{4}$/
 

@@ -237,7 +237,8 @@ Rails.application.routes.draw do
   post    'essay_results/:id/return_report',                to: 'essay_results#return_report'
   post    'essay_results/:id/upload_return_report',         to: 'essay_results#upload_return_report',     as: 'result_essay_upload_return_report'
   patch   'essay_results/:id/save_return_report',           to: 'essay_results#save_return_report',       as: 'result_essay_save_return_report'
-  get     'essay_results/:id/return_file',       to: 'essay_results#return_file'
+  get     'essay_results/:id/return_file',                  to: 'essay_results#return_file'
+  delete  'essay_results/:id/destroy_upload_file',          to: 'essay_results#destroy_upload_file'
 
   # 公開コース
   get     'open_courses',                 to: 'open_courses#index'
@@ -772,4 +773,6 @@ Rails.application.routes.draw do
       get     'user/:id',                         to: 'users#show'
     end
   end
+
+  get "*path" => 'application#render_404'
 end

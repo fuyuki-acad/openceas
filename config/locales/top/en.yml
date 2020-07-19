@@ -87,6 +87,7 @@ en:
     STUDENTTOP_TITLE: "Student's Top Page"
     STUDENTTOP_USRDATA: "User Info"
     STUDENTTOP_RESULT: "Go to Quiz Results"
+    TOP_TITLE: "Top Page"
     #menuList.jsp
     MENULIST_FORUMMANAGELIST: "Topic (list)"
     MENULIST_FORUMMANAGECROSS: "Topic (All-in-one list)"

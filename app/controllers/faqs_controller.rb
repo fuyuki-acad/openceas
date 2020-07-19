@@ -22,6 +22,7 @@
 #++
 
 class FaqsController < ApplicationController
+  before_action :require_enrolled, only: [:course, :new, :show]
   before_action :set_course, only: [:course, :new]
 
   def index

@@ -22,6 +22,9 @@
 #++
 
 class Teacher::MaterialsController < ApplicationController
+  before_action :require_assigned, only: [
+    :show, :new, :create, :new_url, :select_course, :select_page, :copy, :select_url_course, :select_url_page, :url_copy,
+    :edit, :edit_url, :update, :download, :select_copy_to, :copy_to]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :new, :create, :new_url, :select_course, :select_page, :copy, :select_url_course, :select_url_page, :url_copy]
   before_action :set_generic_page, only: [:edit, :edit_url, :update, :download, :select_copy_to, :copy_to]
@@ -41,7 +44,6 @@ class Teacher::MaterialsController < ApplicationController
   def new_url
     new
     @generic_page.type_cd = Settings.GENERICPAGE_TYPECD_URLCODE
-    @generic_page.url_content = "http://"
   end
 
   def create

@@ -68,6 +68,7 @@ module XmlConvertorModule
   end
 
   def compress(compress_file)
+    Zip.unicode_names = true
     compress_dir = File.dirname(compress_file)
     Zip::ZipFile.open(compress_file, 'w') do |zip_file|
       Dir["#{compress_dir}/**/**"].reject{ |f| f == compress_file }.each do |add_file|

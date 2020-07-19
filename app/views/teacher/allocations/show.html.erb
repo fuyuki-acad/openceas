@@ -367,15 +367,9 @@
             <div id="collapseListMaterial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListMaterialHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.materials %>
-
-                <p>
-                  <% if @course.materials.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT2") %>
-                  <% end %>
-                </p>
-
                 <% if @course.materials.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.materials %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -409,141 +403,9 @@
             <div id="collapseListURL" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListURLHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.urls %>
-
-                <p>
-                  <% if @course.urls.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT2") %>
-                  <% end %>
-                </p>
-
                 <% if @course.urls.count > 0 %>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
+                  <%= render 'list', :generic_pages => @course.urls %>
 
-        <!-- 複合式テスト -->
-        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
-        <div class="col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="collapseListCompoundHeading">
-              <h3 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListCompound" aria-expanded="false" aria-controls="collapseListCompound">
-                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT7") %>
-                  <%= t("common.COMMON_PARANTHESISLEFT") %>
-                  <%= @course.compounds.count %>
-                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
-
-                  <div class="pull-right">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                  </div>
-                </a>
-              </h3>
-            </div>
-            <div id="collapseListCompound" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListCompoundHeading">
-              <div class="panel-body">
-
-                <%= render 'list', :generic_pages => @course.compounds %>
-
-                <p>
-                  <% if @course.compounds.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT8") %>
-                  <% end %>
-                </p>
-
-                <% if @course.compounds.count > 0 %>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-        <!-- 記号入力式テスト -->
-        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
-        <div class="col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="collapseListMultipleFibHeading">
-              <h3 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListMultipleFib" aria-expanded="false" aria-controls="collapseListMultipleFib">
-                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT9") %>
-                  <%= t("common.COMMON_PARANTHESISLEFT") %>
-                  <%= @course.multiplefibs.count %>
-                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
-
-                  <div class="pull-right">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                  </div>
-                </a>
-              </h3>
-            </div>
-            <div id="collapseListMultipleFib" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListMultipleFibHeading">
-              <div class="panel-body">
-
-                <%= render 'list', :generic_pages => @course.multiplefibs %>
-
-                <p>
-                  <% if @course.multiplefibs.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT10") %>
-                  <% end %>
-                </p>
-
-                <% if @course.multiplefibs.count > 0 %>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <% end %>
-
-        <!-- レポート -->
-        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
-        <div class="col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="collapseListAssignmentEssayHeading">
-              <h3 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListAssignmentEssay" aria-expanded="false" aria-controls="collapseListAssignmentEssay">
-                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT11") %>
-                  <%= t("common.COMMON_PARANTHESISLEFT") %>
-                  <%= @course.essays.count %>
-                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
-
-                  <div class="pull-right">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                  </div>
-                </a>
-              </h3>
-            </div>
-            <div id="collapseListAssignmentEssay" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListAssignmentEssayHeading">
-              <div class="panel-body">
-
-                <%= render 'list', :generic_pages => @course.essays %>
-
-                <p>
-                  <% if @course.essays.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT12") %>
-                  <% end %>
-                </p>
-
-                <% if @course.essays.count > 0 %>
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -577,15 +439,117 @@
             <div id="collapseListQuestionnaire" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListQuestionnaireHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.questionnaires %>
-
-                <p>
-                  <% if @course.questionnaires.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT14") %>
-                  <% end %>
-                </p>
-
                 <% if @course.questionnaires.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.questionnaires %>
+
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <!-- 複合式テスト -->
+        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="collapseListCompoundHeading">
+              <h3 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListCompound" aria-expanded="false" aria-controls="collapseListCompound">
+                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT7") %>
+                  <%= t("common.COMMON_PARANTHESISLEFT") %>
+                  <%= @course.compounds.count %>
+                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
+
+                  <div class="pull-right">
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                  </div>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseListCompound" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListCompoundHeading">
+              <div class="panel-body">
+
+                <% if @course.compounds.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.compounds %>
+
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <!-- 記号入力式テスト -->
+        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="collapseListMultipleFibHeading">
+              <h3 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListMultipleFib" aria-expanded="false" aria-controls="collapseListMultipleFib">
+                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT9") %>
+                  <%= t("common.COMMON_PARANTHESISLEFT") %>
+                  <%= @course.multiplefibs.count %>
+                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
+
+                  <div class="pull-right">
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                  </div>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseListMultipleFib" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListMultipleFibHeading">
+              <div class="panel-body">
+
+                <% if @course.multiplefibs.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.multiplefibs %>
+
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+        <!-- レポート -->
+        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
+        <div class="col-xs-12">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="collapseListAssignmentEssayHeading">
+              <h3 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseListAssignmentEssay" aria-expanded="false" aria-controls="collapseListAssignmentEssay">
+                  <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT11") %>
+                  <%= t("common.COMMON_PARANTHESISLEFT") %>
+                  <%= @course.essays.count %>
+                  <%= t("common.COMMON_PARANTHESISRIGHT") %>
+
+                  <div class="pull-right">
+                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                  </div>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseListAssignmentEssay" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListAssignmentEssayHeading">
+              <div class="panel-body">
+
+                <% if @course.essays.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.essays %>
+
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
@@ -619,15 +583,9 @@
             <div id="collapseListEvaluationlist" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListEvaluationlistHeading">
               <div class="panel-body">
 
-                <%= render 'list', :generic_pages => @course.evaluations %>
+                <% if @course.evaluations.count > 0 %>
+                  <%= render 'list', :generic_pages => @course.evaluations %>
 
-                <p>
-                  <% if @course.questionnaires.count == 0 %>
-                    <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT21") %>
-                  <% end %>
-                </p>
-
-                <% if @course.questionnaires.count > 0 %>
                   <div class="text-center">
                     <div class="btn-group">
                       <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>

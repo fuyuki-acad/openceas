@@ -24,6 +24,9 @@
 class Teacher::MultiplefibsController < ApplicationController
   include MaterialFileModule
 
+  before_action :require_assigned, only: [
+    :show, :new, :create, :destroy, :select_course, :select_page, :copy, :select_upload_file, :confirm_upload_file, :upload_file,
+    :edit, :update, :edit_html, :update_html, :destory, :destroy_file, :download]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :new, :create, :destroy, :select_course, :select_page, :copy, :select_upload_file, :confirm_upload_file, :upload_file]
   before_action :set_generic_page, only: [:edit, :update, :edit_html, :update_html, :destory, :destroy_file, :download]
@@ -191,7 +194,7 @@ class Teacher::MultiplefibsController < ApplicationController
 
     def generic_page_params
       params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag,
-        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :end_time, :material_memo, :html_text)
+        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text)
     end
 
     def material_file_params

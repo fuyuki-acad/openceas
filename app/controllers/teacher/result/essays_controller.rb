@@ -33,6 +33,13 @@ class Teacher::Result::EssaysController < ApplicationController
   ANALYZER_EXCEL_NAME = "analyzer.xls"
   DELETED_FILE = "deleted.txt"
 
+  before_action :require_assigned, only: [:show, :download_report, :download_package,
+    :result, :mark, :file, :return_file, :file_confirm,
+    :save, :update_score, :outputcsv_assignmentessay, :outputcsv_scoresheet,
+    :upload, :upload_confirm, :upload_register, :upload_error, :import_file,
+    :report_upload, :report_upload_confirm, :import_report, :send_mail,
+    :download_report, :download_package, :history, :comment, :upload_return_report,
+    :confirm_return_report, :save_return_report, :return_report, :destroy_upload_file]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :download_report, :download_package]
   before_action :set_essay, only: [:result, :mark, :file, :return_file, :file_confirm,
@@ -45,7 +52,8 @@ class Teacher::Result::EssaysController < ApplicationController
 
   def show
     session[:essay_search] = nil
-    @essays = @course.essays.joins(:class_sessions)
+    @essays = @course.essays.left_joins(:class_sessions, :answer_scores).
+      where("(class_sessions.id IS NOT NULL OR answer_scores.id IS NOT NULL)").distinct
   end
 
   def result
@@ -170,11 +178,14 @@ class Teacher::Result::EssaysController < ApplicationController
       @answer_score.user_id = @user.id
       @answer_score.answer_count = 1
       @answer_score.pass_cd = Settings.ANSWERSCORE_PASSCD_SUBMITTED
-      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => 0)
+      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF)
     elsif @answer_score.assignment_essay_comments.count == 0
-      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => 0)
+      @comment = AssignmentEssayComment.new(:answer_score_id => @answer_score.id, :mail_flag => Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF)
     else
       @comment = @answer_score.latest_comment
+      if @comment.mail_flag != Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON
+        @comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF
+      end
     end
 
   end
@@ -523,11 +534,12 @@ class Teacher::Result::EssaysController < ApplicationController
         params[:user].each do |user|
           user = User.find(user)
           answer_score = @essay.latest_score(user.id)
-          if answer_score && answer_score.latest_comment && answer_score.latest_comment.mail_flag == 1
+          if answer_score && answer_score.latest_comment && 
+            answer_score.latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON
             latest_comment = answer_score.latest_comment
             EssayMailer.send_mail(@essay, latest_comment, user).deliver_now
 
-            latest_comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF
+            latest_comment.mail_flag = Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_SENDED
             latest_comment.save!
           end
         end
@@ -962,7 +974,6 @@ class Teacher::Result::EssaysController < ApplicationController
         end
 
         # ステータスが変更されている場合
-
         status_cd = get_status_cd(line["status"])
         if line["status"] != @essay.essay_status(user_id)
           @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_STATUSERROR')
@@ -971,10 +982,8 @@ class Teacher::Result::EssaysController < ApplicationController
 
         # 点数に文字列が含まれている場合
         # 点数が0～100でないとき場合
-        unless (line["total_score"].to_i.to_s == line["total_score"].to_s &&
-                line["total_score"].to_i >= 0 && line["total_score"].to_i <= 100) ||
-                line["total_score"].blank?
-          @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_SCOREERROR')
+        if line["total_score"].blank?
+          @errors[index] = I18n.t('registerList.PRI_REG_RESULTLIST_NULLSCORE')
           next
         end
 
@@ -1049,7 +1058,7 @@ class Teacher::Result::EssaysController < ApplicationController
           end
 
           ## レポートの採点結果を更新する
-          answer_score.assignment_essay_score = csv_essay["total_score"].to_i
+          answer_score.assignment_essay_score = csv_essay["total_score"]
           answer_score.total_score = (Settings.DEFAULT_ARGUMENT_INT).abs - 1
 
           if csv_essay["reintroduction_flag"] == "1"

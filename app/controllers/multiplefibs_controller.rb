@@ -24,10 +24,20 @@
 require 'nkf'
 
 class MultiplefibsController < ApplicationController
+  before_action :require_enrolled_or_open_assigned, only: [:show, :quiz, :password]
+  before_action :require_enrolled, only: [:mark]
   before_action :set_generic_page, only: [:show, :quiz, :mark, :password]
 
   def show
+    create_access_log(@generic_page.course.id)
+
     @latest_score = @generic_page.latest_score(current_user.id)
+
+    if @generic_page.not_ready?
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_NOTREADYSTARTTIME_html", :param0 => I18n.l(@generic_page.start_time))
+      render "error"
+      return
+    end
 
     if @generic_page.passed?(current_user.id)
     elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
@@ -50,9 +60,9 @@ class MultiplefibsController < ApplicationController
       @score = @generic_page.latest_score(current_user.id)
       template = "result"
     elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
-      @redirect = true
+      template = "redirect"
     elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
-      @redirect = true
+      template = "redirect"
     else
       @latest_score = @generic_page.latest_score(current_user.id)
     end
@@ -60,11 +70,16 @@ class MultiplefibsController < ApplicationController
   end
 
   def mark
-    if params[:answer].blank?
+    if @generic_page.expired?
+      render "redirect", :layout => "content_only"
+      return
+    elsif params[:answer].blank?
       redirect_to :action => :quiz, :id => @generic_page
+      return
     else
       total_score = 0
       mark_score = 0
+      @your_scores = {}
 
       @generic_page.parent_questions.each do |parent|
         ## 順不同、完全解答コードが両方ある時
@@ -73,6 +88,7 @@ class MultiplefibsController < ApplicationController
         full_cds.each do |full_cd|
           count = 0
           score = 0
+          answer_scores = {}
           questions = Question.where("random_cd IS NOT NULL AND answer_in_full_cd IS NOT NULL AND answer_in_full_cd = ? AND parent_question_id = ?", full_cd.answer_in_full_cd, parent.id)
           answerd_questions = []
           user_answers = []
@@ -90,10 +106,14 @@ class MultiplefibsController < ApplicationController
               if user_answer == question.answer_memo
                 count += 1
                 answerd_questions << question.id
+                answer_scores[question.id] = question.score
               end
             end
           end
-          mark_score += score if count == questions.count
+          if count == questions.count
+            mark_score += score
+            @your_scores = answer_scores
+          end
         end
 
         ## 順不同コードのみある時
@@ -110,6 +130,7 @@ class MultiplefibsController < ApplicationController
             if user_answer == question.answer_memo
               mark_score += question.score
               answerd_questions << question.id
+              @your_scores[question.id] = question.score
             end
           end
         end
@@ -120,6 +141,7 @@ class MultiplefibsController < ApplicationController
         full_cds.each do |full_cd|
           count = 0
           score = 0
+          answer_scores = {}
           questions = Question.where("random_cd IS NULL AND answer_in_full_cd IS NOT NULL AND answer_in_full_cd = ? AND parent_question_id = ?", full_cd.answer_in_full_cd, parent.id)
           questions.each.with_index do |question, index|
             if index == 0
@@ -130,10 +152,14 @@ class MultiplefibsController < ApplicationController
             unless user_answer.nil?
               if user_answer.to_s == question.answer_memo
                 count += 1
+                answer_scores[question.id] = question.score
               end
             end
           end
-          mark_score += score if count == questions.count
+          if count == questions.count
+            mark_score += score
+            @your_scores += answer_scores
+          end
         end
 
         ## 順不同、完全解答コードが両方ない時
@@ -143,6 +169,7 @@ class MultiplefibsController < ApplicationController
           unless user_answer.nil?
             if user_answer == question.answer_memo
               mark_score += question.score
+              @your_scores[question.id] = question.score
             end
           end
         end

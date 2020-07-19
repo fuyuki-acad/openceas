@@ -35,6 +35,8 @@ zh_TW:
     COMMONMATERIALSEXECUTION_TEMP_SAVE_DATE: "保存日期與保存時間"
     COMMONMATERIALSEXECUTION_TEMP_SAVE_DATA_DELETE: "要刪除臨時保存的文件嗎"
     COMMONMATERIALSEXECUTION_MARKER: "評分人員"
+    COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT: "You are not allowed to submit this open course."
+    COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "You are not allowed to present this open course."
     #####複合式テスト実施#####
     ##executeCompound.jsp
     MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "接受測驗次數第%{param0}次"
@@ -106,6 +108,7 @@ zh_TW:
     ##gradeExecuteMultipleFib.jsp
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURANSWER: "您的解答"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_CORRECTANSWER: "正確解答"
+    MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURSCORE: "Your score"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_SCORE: "配分"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_RANDOM: "順序不同"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_ANSWERINFULL: "完整解答"
@@ -169,6 +172,8 @@ zh_TW:
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDERFILE: "MyFolder的文件"
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDER_NOCONTENTS: "無法讀取MyFolder"
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDER_SELECTFILE: "請選擇文件"
+    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html: "This essay was already closed (submission period: <strong> %{param0} </strong>). You cannot upload your essay."
+    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html: "This essay was already closed (submission period: <strong> %{param0}～%{param1} </strong>). You cannot upload your essay."
 
     #####アンケート実施#####
     ##executeQuestionnaire.jsp

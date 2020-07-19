@@ -48,6 +48,7 @@
 
 <div class="row">
   <div class="col-xs-12 col-sm-5">
+    <% if Settings.USER_IMAGE_PICTURE %>
     <!-- 氏名表示、表示用画像変更 -->
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -94,6 +95,7 @@
         </fieldset>
       </div>
     </div>
+    <% end %>
 
     <!-- password変更 -->
     <% if current_user.provider.blank? %>

@@ -179,6 +179,7 @@ module MaterialFileModule
   end
 
   def compress
+    Zip.unicode_names = true
     Zip::ZipFile.open(@temp_file, 'w') do |zip_file|
       Dir["#{tmp_dir}/**/**"].reject{ |f| f == temp_file }.each do |add_file|
         if File.directory?(add_file)

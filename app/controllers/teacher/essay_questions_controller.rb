@@ -22,6 +22,7 @@
 #++
 
 class Teacher::EssayQuestionsController < ApplicationController
+  before_action :require_assigned, only: [:show, :create, :update, :destroy, :confirm]
   before_action :set_generic_page, only: [:show, :create, :update, :destroy, :confirm]
   before_action :set_question, only: [:update, :destroy]
 

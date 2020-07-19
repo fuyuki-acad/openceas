@@ -75,6 +75,10 @@ ready = ->
     cssHeader:'headerSort'
   })
 
+  $('#iframe1').load ->
+    $(this).height(0)
+    $(this).height(this.contentWindow.document.documentElement.scrollHeight)
+
   @
 
 #

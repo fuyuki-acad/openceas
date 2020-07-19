@@ -523,27 +523,27 @@ module QuestionFileModule
     bom = %w(EF BB BF).map { |e| e.hex.chr }.join
     csv_data = CSV.generate(bom) do |csv|
       if generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER1")
-        csv << ""
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION1")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION2")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION3")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION4")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION5")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION6")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION7")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION8")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION9")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION10")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION11")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION12")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION13")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION14")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION15")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION16")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION17")
-        csv << I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION18")
-        csv << ""
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER1")]
+        csv << [""]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION1")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION2")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION3")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION4")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION5")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION6")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION7")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION8")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION9")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION10")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION11")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION12")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION13")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION14")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION15")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION16")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION17")]
+        csv << [I18n.t("materials_administration.MAT_ADM_COMPOUND_CSV_DOWNLOAD_HEADER_EXPLANATION18")]
+        csv << [""]
       else
         csv << ["#{I18n.t('materials_administration.MAT_ADM_QUESTIONNAIRE_CSV_DOWNLOAD_HEADER1')}"]
         csv << []

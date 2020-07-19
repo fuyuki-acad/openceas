@@ -24,12 +24,15 @@
 require 'csv'
 
 class Teacher::Result::CompoundsController < ApplicationController
+  before_action :require_assigned, only: [:show, :outputcsv_bulk,
+    :result, :mark, :save, :graph, :outputcsv, :outputcsv_question]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :outputcsv_bulk]
   before_action :set_generic_page, only: [:result, :mark, :save, :graph, :outputcsv, :outputcsv_question]
 
   def show
-    @compounds = @course.compounds.joins(:class_sessions)
+    @compounds = @course.compounds.left_joins(:class_sessions, :answer_scores).
+      where("(class_sessions.id IS NOT NULL OR answer_scores.id IS NOT NULL)").distinct
   end
 
   def result
@@ -135,7 +138,9 @@ class Teacher::Result::CompoundsController < ApplicationController
     @chart_data = {0 => 0, 11 => 0, 21 => 0, 31 => 0, 41 => 0, 51 => 0, 61 => 0, 71 => 0, 81 => 0, 91 => 0}
 
     ## テスト結果リストを取得
-    answer_scores = AnswerScore.where("page_id = ? AND total_score >= 0", @generic_page.id).order("user_id ASC, answer_count DESC")
+    answer_scores = AnswerScore.
+      where("page_id = ? AND total_score >= 0 AND user_id IN (SELECT user_id FROM course_enrollment_users WHERE course_id = ?)",
+        @generic_page.id, @generic_page.course_id).order("user_id ASC, answer_count DESC")
     ## 同じユーザの最後の解答以外削除
     answer_scores.each do |answer_score|
       next if @scores.key?(answer_score.user_id)
@@ -545,15 +550,17 @@ class Teacher::Result::CompoundsController < ApplicationController
           end
 
           parent.questions.each.with_index do |question, index|
-            answer = Answer.where(["user_id = ? AND question_id = ?", user.id, question.id]).order("answer_count DESC").first
-            answer_test = ""
-            if answer
-              select_quizze = question.select_quizzes.where(["select_quizzes.id = ?", answer.select_answer_id]).first
-              if select_quizze
-                answer_test = select_quizze.content.html_safe
+            answers = Answer.where(["user_id = ? AND question_id = ?", user.id, question.id]).order("question_id")
+            answer_texts = []
+            answers.each do |answer|
+              if question.pattern_cd == Settings.QUESTION_PATTERNCD_ESSAY
+                answer_texts << answer.text_answer
+              else
+                select_quizze = question.select_quizzes.where(["select_quizzes.id = ?", answer.select_answer_id]).first
+                answer_texts << select_quizze.content.html_safe if select_quizze.present?
               end
             end
-            line << answer_test
+            line << answer_texts.join(",")
           end
 
           csv << line

@@ -8,43 +8,88 @@
     <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"></video>
   </body>
   <script>
-    params = GetQueryString();
+    if (window.parent.document.getElementById("url_content")) var url_content = window.parent.document.getElementById("url_content");
+    if (url_content) url_content.classList.add('none');
+    if (window.parent.document.getElementById("azure_message")) var azure_message = window.parent.document.getElementById("azure_message");
+
+    var rewind_count = 0;
+    var seeked_count = 0;
+    var video_width = 640;
+    var video_height = 400;
+    var start_date = get_datetime();
+    if (window.parent.document.getElementById("video_width")) video_width = window.parent.document.getElementById("video_width").textContent;
+    if (window.parent.document.getElementById("video_height")) video_height = window.parent.document.getElementById("video_height").textContent;
+
+    if (window.parent.document.getElementById("video_url")) var video_url = window.parent.document.getElementById("video_url").textContent;
+    if (window.parent.document.getElementById("forwarding_url")) var forwarding_url = window.parent.document.getElementById("forwarding_url").textContent;
+    if (window.parent.document.getElementById("forwarding")) var forwarding = window.parent.document.getElementById("forwarding").textContent;
+    if (window.parent.document.getElementById("init_message") && azure_message) azure_message.innerHTML = window.parent.document.getElementById("init_message").textContent;
+    if (window.parent.document.getElementById("firstquartile_message")) var firstquartile_message = window.parent.document.getElementById("firstquartile_message").textContent;
+    if (window.parent.document.getElementById("midpoint_message")) var midpoint_message = window.parent.document.getElementById("midpoint_message").textContent;
+    if (window.parent.document.getElementById("thirdquartile_message")) var thirdquartile_message = window.parent.document.getElementById("thirdquartile_message").textContent;
+    if (window.parent.document.getElementById("ended_message")) var ended_message = window.parent.document.getElementById("ended_message").textContent;
 
     var myOptions = {
       "nativeControlsForTouch": false,
       controls: true,
       autoplay: true,
-      width: params['width'],
-      height: params['height'],
+      width: video_width,
+      height: video_height,
     }
     myPlayer = amp("azuremediaplayer", myOptions);
+    myPlayer.addEventListener(amp.eventName.ended, function () {
+      params = ''
+      if (forwarding_url) {
+        if (forwarding_url.indexOf('?')) {
+          forwarding_url = forwarding_url+'&seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
+        } else {
+          forwarding_url = forwarding_url+'?seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
+        }
+        if (forwarding == 'true') {
+          parent.location.href = forwarding_url;
+        } else {
+          if (ended_message) {
+            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+ended_message+"</a>";
+          } else {
+            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+forwarding_url+"</a>";
+          }
+        }
+      } else {
+        if (ended_message && azure_message) azure_message.innerHTML = ended_message;
+      }
+    });
+    myPlayer.addEventListener(amp.eventName.seeked, function () {
+      seeked_count+=1;
+    });
+    myPlayer.addEventListener(amp.eventName.rewind, function () {
+      rewind_count+=1;
+    });
+    myPlayer.addEventListener(amp.eventName.firstquartile, function () {
+      if (firstquartile_message && azure_message) azure_message.innerHTML = firstquartile_message;
+    });
+    myPlayer.addEventListener(amp.eventName.midpoint, function () {
+      if (midpoint_message && azure_message) azure_message.innerHTML = midpoint_message;
+    });
+    myPlayer.addEventListener(amp.eventName.thirdquartile, function () {
+      if (thirdquartile_message && azure_message) azure_message.innerHTML = thirdquartile_message;
+    });
     myPlayer.src([
       {
-        "src": params['url'],
+        "src": video_url,
         "type": "application/vnd.ms-sstr+xml"
       }
     ]);
 
-    function GetQueryString() {
-      var result = {url: '', width: 640, helght:400};
-      if( 1 < window.location.search.length ) {
-        // 最初の1文字 (?記号) を除いた文字列を取得する
-        var query = window.location.search.substring( 1 );
-
-        // クエリの区切り記号 (&) で文字列を配列に分割する
-        var parameters = query.split( '&' );
-
-        for( var i = 0; i < parameters.length; i++ ) {
-          // パラメータ名とパラメータ値に分割する
-          var element = parameters[ i ].split( '=' );
-
-          var paramName = decodeURIComponent( element[ 0 ] );
-          var paramValue = decodeURIComponent( element[ 1 ] );
-
-          result[ paramName ] = paramValue;
-        }
-      }
-      return result;
+    function get_datetime() {
+      var date = new Date();
+      format_str = 'YYYYMMDDhhmmss';
+      format_str = format_str.replace(/YYYY/g, date.getFullYear());
+      format_str = format_str.replace(/MM/g, ('0'+(date.getMonth()+1)).slice(-2));
+      format_str = format_str.replace(/DD/g, ('0'+date.getDate()).slice(-2));
+      format_str = format_str.replace(/hh/g, ('0'+date.getHours()).slice(-2));
+      format_str = format_str.replace(/mm/g, ('0'+date.getMinutes()).slice(-2));
+      format_str = format_str.replace(/ss/g, ('0'+date.getSeconds()).slice(-2));
+      return format_str;
     }
   </script>
 </html>

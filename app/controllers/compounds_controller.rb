@@ -22,10 +22,14 @@
 #++
 
 class CompoundsController < ApplicationController
+  before_action :require_enrolled_or_open_assigned, only: [:show, :password]
+  before_action :require_enrolled, only: [:confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
   skip_before_action :verify_authenticity_token, only: :confirm
   before_action :set_generic_page, only: [:show, :password, :confirm, :save, :mark, :mark_password, :self_mark, :update_self_score, :finish]
 
   def show
+    create_access_log(@generic_page.course.id)
+
     @execute_flag = false
 
 		## /// テスト開始前の各チェック /////
@@ -166,7 +170,7 @@ class CompoundsController < ApplicationController
             ## 合格していない
 						## 【すでに受付終了している時→解答結果画面へ】
 						if @generic_page.expired?
-              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => @generic_page.end_time)
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
               render "mark"
               return
 
@@ -185,7 +189,7 @@ class CompoundsController < ApplicationController
           ## 記述式のみ||複合式の設問構成の時
 					## 【すでに受付終了している時→解答結果画面へ】
           if @generic_page.expired?
-            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => @generic_page.end_time)
+            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
             render "mark"
             return
 
@@ -272,6 +276,12 @@ class CompoundsController < ApplicationController
   end
 
   def save
+    if @generic_page.expired?
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+      render "error"
+      return
+    end
+
     if session[:answers].blank?
       @answers = params[:answers]
       tmpFlg = true

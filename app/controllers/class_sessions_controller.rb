@@ -22,9 +22,16 @@
 #++
 
 class ClassSessionsController < ApplicationController
-  before_action :set_course, only: [:index, :show, :announcement, :faq, :specific_page, :collect_attendance, :start_collect_attendance, :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]
+  before_action :require_enrolled_or_open_assigned, only: [:index, :show, :compond, :essay, :announcement, :faq]
+  before_action :require_enrolled, only: [:collect_attendance, :start_collect_attendance,
+    :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, 
+    :recollect_late, :delete_attendance, :confirm_attendance]
+  before_action :set_course, only: [:index, :show, :announcement, :faq, :specific_page, :collect_attendance, 
+    :start_collect_attendance, :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, 
+    :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]
   before_action :set_generic_page, only: [:compond, :essay]
-  before_action :set_class_session, only: [:show, :collect_attendance, :start_collect_attendance, :stop_collect_attendance, :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]
+  before_action :set_class_session, only: [:show, :collect_attendance, :start_collect_attendance, :stop_collect_attendance, 
+    :start_collect_late, :recollect_or_delete_attendance, :recollect_attendance, :recollect_late, :delete_attendance, :confirm_attendance]
 
   def index
     @class_sessions = {}
@@ -32,7 +39,7 @@ class ClassSessionsController < ApplicationController
       @class_sessions[session.class_session_no] = session
     end
 
-    CourseAccessLog.create(course_id: @course.id, user_id: current_user.id, ip: remote_ip)
+    create_access_log(@course.id)
   end
 
   def show

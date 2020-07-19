@@ -198,6 +198,9 @@ class Admin::UsersController < ApplicationController
         sql_texts.push('courses.id NOT IN (' + CourseAssignedUser.where(user_id: @user.id).select(:course_id).to_sql + ')') if @user
       elsif role_id == Settings.USR_AUTHCD_STUDENT
         sql_texts.push('courses.id NOT IN (' + CourseEnrollmentUser.where(user_id: @user.id).select(:course_id).to_sql + ')') if @user
+
+        sql_texts.push('courses.open_course_flag = :open_course_flag')
+        sql_params[:open_course_flag] = Settings.COURSE_OPENCOURSEFLG_PRIVATE
       end
 
       if !params[:keyword].blank?

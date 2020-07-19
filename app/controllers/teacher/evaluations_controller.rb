@@ -22,6 +22,9 @@
 #++
 
 class Teacher::EvaluationsController < ApplicationController
+  before_action :require_assigned, only: [
+    :show, :new, :create, :select_course, :select_page, :copy,
+    :edit, :update, :destroy_file]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :new, :create, :select_course, :select_page, :copy]
   before_action :set_generic_page, only: [:edit, :update, :destroy_file]

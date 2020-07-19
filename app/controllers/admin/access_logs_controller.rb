@@ -132,9 +132,14 @@ class Admin::AccessLogsController < ApplicationController
                   line << I18n.t('access_log.ACC_ACCESSLOG_SEARCHRESULTTABLE6')
                 end
               else
+                url = log.query_string.blank? ? log.access_page :  log.access_page + "?" + log.query_string
+
                 line << index
+                line << log.course.course_name
+                line << log.class_session_no
                 line << log.user.get_name_no_prefix.to_s + log.user.user_name
                 line << I18n.l(log.created_at)
+                line << url
                 line << log.ip
               end
               csv << line

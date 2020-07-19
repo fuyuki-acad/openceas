@@ -179,7 +179,7 @@
                   <!-- 科目名称 -->
                   <td class="hidden-xs"><%= course.course_name %></td>
                   <!-- 担任者 -->
-                  <td class="td-nowrap hidden-xs"><%= course.instructor_name %></td>
+                  <td class="td-nowrap hidden-xs"><%= tooltip_text(course.instructor_name, 8) %></td>
                   <td class="hidden-xs">
                     <%= link_to url_for(:action => :outputcsv_enrollment, :id => course.id), {:method => :post, :class => "btn btn-default ceas-button-margin-5"} do %>
                       <span><%= t("common.COMMON_CSVOUTPUT") %></span>

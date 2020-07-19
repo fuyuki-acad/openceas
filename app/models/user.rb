@@ -74,11 +74,7 @@ class User < ApplicationRecord
     #validate_name_no_prefix(:name_no_prefix, I18n.t("admin.user.PRI_ADM_USR_REGISTERUST_ERROR11")) unless self.name_no_prefix.blank?
 
     unless self.email.blank?
-      if self.email_was.blank?
-        count = self.class.where("email_mobile = ?", self.email).count
-      else
-        count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", self.email, self.email, self.id).count
-      end
+      count = self.class.where("email_mobile = ?", self.email).count
       self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
     end
 
@@ -182,7 +178,7 @@ class User < ApplicationRecord
       result = false
     else
       result = update_columns(email: params[:new_email])
-      assign_attributes(email: self.email_was) unless result
+      assign_attributes(email: self.email_in_database) unless result
     end
 
     result
@@ -208,7 +204,7 @@ class User < ApplicationRecord
       result = false
     else
       result = update_columns(email_mobile: params[:new_email_mobile])
-      assign_attributes(email_mobile: self.email_mobile_was) unless result
+      assign_attributes(email_mobile: self.email_mobile_in_database) unless result
     end
 
     result
@@ -358,6 +354,12 @@ class User < ApplicationRecord
   end
 
   def assigned?(course_id)
-    self.course_assigned_users.where(:course_id => course_id).count == 0 ? false : true
+    if self.admin?
+      true
+    elsif self.student?
+      self.course_enrollment_users.where(course_id: course_id).count == 0 ? false : true
+    elsif self.teacher?
+      self.course_assigned_users.where(course_id: course_id).count == 0 ? false : true
+    end
   end
 end
