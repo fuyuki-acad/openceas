@@ -16,6 +16,7 @@
     var seeked_count = 0;
     var video_width = 640;
     var video_height = 400;
+    var start_date = get_datetime();
     if (window.parent.document.getElementById("video_width")) video_width = window.parent.document.getElementById("video_width").textContent;
     if (window.parent.document.getElementById("video_height")) video_height = window.parent.document.getElementById("video_height").textContent;
 
@@ -40,9 +41,9 @@
       params = ''
       if (forwarding_url) {
         if (forwarding_url.indexOf('?')) {
-          forwarding_url = forwarding_url + '&seeked='+seeked_count+'&rewind='+rewind_count;
+          forwarding_url = forwarding_url+'&seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
         } else {
-          forwarding_url = forwarding_url + '?seeked='+seeked_count+'&rewind='+rewind_count;
+          forwarding_url = forwarding_url+'?seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
         }
         if (forwarding == 'true') {
           parent.location.href = forwarding_url;
@@ -78,5 +79,17 @@
         "type": "application/vnd.ms-sstr+xml"
       }
     ]);
+
+    function get_datetime() {
+      var date = new Date();
+      format_str = 'YYYYMMDDhhmmss';
+      format_str = format_str.replace(/YYYY/g, date.getFullYear());
+      format_str = format_str.replace(/MM/g, ('0'+(date.getMonth()+1)).slice(-2));
+      format_str = format_str.replace(/DD/g, ('0'+date.getDate()).slice(-2));
+      format_str = format_str.replace(/hh/g, ('0'+date.getHours()).slice(-2));
+      format_str = format_str.replace(/mm/g, ('0'+date.getMinutes()).slice(-2));
+      format_str = format_str.replace(/ss/g, ('0'+date.getSeconds()).slice(-2));
+      return format_str;
+    }
   </script>
 </html>

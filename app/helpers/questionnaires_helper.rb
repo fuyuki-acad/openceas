@@ -23,8 +23,10 @@
 
 module QuestionnairesHelper
   def checked(quiz, answers, question_id)
-    if answers && answers.count > 0
-      if answers.kind_of?(Hash) && question_id && answers[question_id.to_s]
+    if answers.kind_of?(Hash) && answers.count == 0
+      return true if quiz.select_mark_flag == Settings.SELECT_SELECTMARKFLG_ON
+    else
+      if question_id && answers[question_id.to_s]
         answer = answers[question_id.to_s]
         if answer.kind_of?(Array)
           answer.each do |select_answer|

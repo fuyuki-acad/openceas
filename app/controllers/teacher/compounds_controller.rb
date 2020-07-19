@@ -24,6 +24,9 @@
 class Teacher::CompoundsController < ApplicationController
   include MaterialFileModule
 
+  before_action :require_assigned, only: [
+    :show, :new, :select_course, :select_page, :copy, :select_upload_file, :confirm_upload_file, :upload_file,
+    :edit, :update, :destroy_file, :download]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :new, :select_course, :select_page, :copy, :select_upload_file, :confirm_upload_file, :upload_file]
   before_action :set_generic_page, only: [:edit, :update, :destroy_file, :download]

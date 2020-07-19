@@ -33,6 +33,21 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :check_permission
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render_404
+  rescue_from Exception, with: :render_500
+
+  NOT_ASSIGNED = "not assigned"
+  NOT_ENROLLED = "not enrolled"
+
+  def render_404
+    render template: 'errors/error404', status: :not_found
+  end
+  
+  def render_500
+    render template: 'errors/error500', status: :internal_server_error
+  end
+
   def send_file_headers!(options)
     super(options)
     match = /(.+); filename="(.+)"/.match(headers['Content-Disposition'])
@@ -131,6 +146,84 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless current_user.admin? || current_user.teacher?
     end
 
+    def get_require_course
+      if params[:course_id].present?
+        course = Course.where("id = ?", params[:course_id]).first
+      elsif params[:generic_page_id].present?
+        course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:generic_page_id]).first
+      elsif params[:id].present?
+        if controller_name == "group_folders"
+          course = Course.joins(:group_folders).where("group_folders.id = ?", params[:id]).first
+        elsif controller_name == "courses"
+          course = Course.where("id = ?", params[:id]).first
+        elsif controller_name == "announcements"
+          course = Course.joins(:announcements).where("announcements.id = ?", params[:id]).first
+        elsif controller_name == "faqs"
+          course = Course.joins(:faqs).where("faqs.id = ?", params[:id]).first
+        elsif controller_name == "questionnaires" && action_name == "detail"
+          question = Question.find(params[:id])
+          if question.present?
+            generic_page = question.parent.generic_pages.first
+            course = generic_page.course
+          end
+        else
+          course = Course.joins(:generic_pages).where("generic_pages.id = ?", params[:id]).first
+        end
+      end
+
+      if course.blank?
+        raise ActiveRecord::RecordNotFound
+      else
+        course
+      end
+    end
+
+    def require_assigned
+      return if current_user.admin?
+
+      course = get_require_course
+      must_be_assigned(course)
+    end
+
+    def must_be_assigned(course)
+      if current_user.teacher?
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
+      end
+      
+      raise NOT_ASSIGNED if assigned.blank?
+    end
+
+    def require_enrolled
+      return if current_user.admin?
+
+      course = get_require_course
+      if current_user.teacher?
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
+        raise NOT_ASSIGNED if assigned.blank?
+
+      else
+        enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
+        raise NOT_ENROLLED if enrolled.blank?
+
+      end
+    end
+
+    def require_enrolled_or_open_assigned
+      return if current_user.admin?
+
+      course = get_require_course
+      if current_user.teacher?
+        assigned = course.course_assigned_users.where(user_id: current_user.id).first
+      else
+        assigned = course.course_enrollment_users.where(user_id: current_user.id).first
+      end
+
+      if assigned.blank? && course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PUBLIC
+        assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
+      end
+      raise NOT_ENROLLED if assigned.blank?
+    end
+
     def get_content_type(file_name)
       extname = File.extname(file_name)
       case extname.downcase
@@ -173,5 +266,5 @@ class ApplicationController < ActionController::Base
         class_session_no: params[:class_session_no],
         access_page: request.path,
         query_string: query_string)
+      end
     end
-end

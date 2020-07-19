@@ -21,6 +21,16 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %>
 
+<% unless current_user.assigned?(@generic_page.course.id) %>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <%= t("execution.COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT") %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <!-- スマートフォンタイトル　-->
 <%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONCOMPOUND") } %>
 
@@ -86,23 +96,25 @@
 <% end %>
 
 <%= form_tag url_for(:controller => "/compounds", :action => :save, :id => @generic_page), {:class => "form-horizontal", :method => :patch} do %>
-<% if @execute_flag && @generic_page.parent_questions.count > 0 %>
-  <!-- 一時保存ボタン -->
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="pull-right">
-        <div class="text-center">
-          <div class="btn-group">
-            <% if current_user.student? %>
-              <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
-            <% else %>
-              <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default" %>
-            <% end %>
+<% if current_user.assigned?(@generic_page.course.id) %>
+  <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
+    <!-- 一時保存ボタン -->
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-right">
+          <div class="text-center">
+            <div class="btn-group">
+              <% if current_user.student? %>
+                <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), {:class => "btn btn-default"} %>
+              <% else %>
+                <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default" %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
 <!-- 問題一覧 -->
@@ -187,17 +199,19 @@
   <div class="col-xs-12">
     <div class="text-center">
       <div class="btn-group">
-        <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
-          <% if current_user.student? %>
-            <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
+        <% if current_user.assigned?(@generic_page.course.id) %>
+          <% if @execute_flag && @generic_page.parent_questions.count > 0 %>
+            <% if current_user.student? %>
+              <%= submit_tag t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), :class => "btn btn-default ceas-button-margin-5" %>
+            <% else %>
+              <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>
+            <% end %>
+            <%= link_to t("common.COMMON_CONFIRM"), 'javascript:void();', :id => "submit_execution", :class => "btn btn-default ceas-button-margin-5", :data => {:id => @generic_page.id} %>
+            <%= link_to t('execution.MAT_EXE_COM_EXECUTECOMPOUND_CANCEL'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5 btn_cancel_close', :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT2")} %>
           <% else %>
-            <%= link_to t("execution.COMMONMATERIALSEXECUTION_TEMP_SAVE"), "javascript:void()", :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT3")}, :class => "btn btn-default ceas-button-margin-5" %>
+            <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();',
+              class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: compound_clear_password_path} %>
           <% end %>
-          <%= link_to t("common.COMMON_CONFIRM"), 'javascript:void();', :id => "submit_execution", :class => "btn btn-default ceas-button-margin-5", :data => {:id => @generic_page.id} %>
-          <%= link_to t('execution.MAT_EXE_COM_EXECUTECOMPOUND_CANCEL'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5 btn_cancel_close', :data => {:confirm => t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT2")} %>
-        <% else %>
-          <%= link_to t('common.COMMON_CLOSE'), 'javascript:void();',
-            class: 'btn btn-default ceas-button-margin-5 center-block close_and_clear_password', data: {request_url: compound_clear_password_path} %>
         <% end %>
       </div>
     </div>

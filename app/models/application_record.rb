@@ -22,6 +22,8 @@
 #++
 
 class ApplicationRecord < ActiveRecord::Base
+  include ErrorMessageModule
+
   self.abstract_class = true
 
   def has_error_detail?(key)

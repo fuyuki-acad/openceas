@@ -46,7 +46,7 @@
             <tr>
               <th><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") %></th>
               <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURANSWER") %></th>
-              <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_CORRECTANSWER") %></th>
+              <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURSCORE") %></th>
               <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_SCORE") %></th>
               <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_RANDOM") %></th>
               <th><%= t("execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_ANSWERINFULL") %></th>
@@ -59,13 +59,13 @@
               <td>
                 <%= j %>
               </td>
-              <!-- 正解解答 -->
+              <!-- あなたの解答 -->
               <td>
                 <%= params[:answer][question.id.to_s] %>
               </td>
-              <!-- メモ -->
+              <!-- 得点 -->
               <td>
-                <%= question.answer_memo %>
+                <%= @your_scores[question.id].blank? ? 0 : @your_scores[question.id] %>
               </td>
               <!-- 配点 -->
               <td>
@@ -130,3 +130,11 @@
     </div>
   </div>
 </div>
+
+<script>
+history.pushState(null, null, null);
+window.addEventListener('popstate', (e) => {
+  history.pushState(null, null, null);
+  return;
+});
+</script>

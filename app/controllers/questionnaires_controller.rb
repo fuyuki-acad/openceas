@@ -22,6 +22,8 @@
 #++
 
 class QuestionnairesController < ApplicationController
+  before_action :require_enrolled_or_open_assigned, only: [:show, :password]
+  before_action :require_enrolled_or_open_assigned, only: [:save, :confirm]
   skip_before_action :verify_authenticity_token, only: :confirm
   before_action :set_generic_page, only: [:show, :save, :confirm, :password]
 

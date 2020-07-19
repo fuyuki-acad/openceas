@@ -22,6 +22,7 @@
 #++
 
 class Teacher::FaqsController < ApplicationController
+  before_action :require_assigned, only: [:show, :replied, :edit, :confirm, :update, :replied]
   before_action :set_courses, only: [:index]
   before_action :set_course, only: [:show, :replied]
   before_action :set_faq, only: [:edit, :confirm, :update, :replied]
@@ -94,6 +95,10 @@ class Teacher::FaqsController < ApplicationController
 
   def destroy
     items = params[:faq].keys if params[:faq]
+    items.each do |item|
+      course = Course.joins(:faqs).where("faqs.id = ?", item).first
+      must_be_assigned(course)
+    end
     Faq.destroy(items)
 
     redirect_to :action => :show, :course_id => params[:course_id]

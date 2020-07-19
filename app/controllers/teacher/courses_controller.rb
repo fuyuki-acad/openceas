@@ -24,6 +24,7 @@
 require 'csv'
 
 class Teacher::CoursesController < ApplicationController
+  before_action :require_assigned, only: [:show, :outputcsv, :confirm, :update]
   before_action :set_course, only: [:show, :outputcsv]
   before_action :set_course_local, only: [:confirm, :update]
 

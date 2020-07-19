@@ -22,8 +22,7 @@
 #++
 
 class SupportScoreForm
-  include ActiveModel::Model
-  include CustomValidationModule
+  include ActiveModel::Model, CustomValidationModule, ErrorMessageModule
 
   attr_accessor :start_date, :end_date
 

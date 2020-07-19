@@ -1,4 +1,4 @@
-#--
+<%
 # Copyright (c) 2019 Fuyuki Academy
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,34 +19,6 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#++
+%>
 
-class QuestionFile
-  include ActiveModel::Model, ErrorMessageModule
-
-  CONTENT_TYPE_XML = ".xml"
-  CONTENT_TYPE_CSV = ".csv"
-  UPLOAD_FILE_TYPES = [CONTENT_TYPE_XML, CONTENT_TYPE_CSV]
-
-  attr_accessor :generic_page_id, :file
-
-  validate :check_data
-
-  def check_data
-    if @file.blank?
-      errors.add(:file, I18n.t("common.COMMON_UPLOADFILENULLCHECK"))
-    elsif File.extname(@file.original_filename).length == 0
-      errors.add(:file, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3"))
-    else
-      errors.add(:file, I18n.t("common.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD_FILECHECK")) unless UPLOAD_FILE_TYPES.include?(File.extname(@file.original_filename))
-    end
-  end
-
-  def xml?
-    File.extname(@file.original_filename) == CONTENT_TYPE_XML
-  end
-
-  def csv?
-    File.extname(@file.original_filename) == CONTENT_TYPE_CSV
-  end
-end
+<%= image_tag "500image-logo.png", width: "50%", class: "img-responsive center-block" %>

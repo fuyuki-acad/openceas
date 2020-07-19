@@ -22,6 +22,7 @@
 #++
 
 class Teacher::MultiplefibQuestionsController < ApplicationController
+  before_action :require_assigned, only: [:index, :show, :create_parent, :create, :update, :destroy, :confirm]
   before_action :set_generic_page, only: [:index, :show, :create_parent, :create, :update, :destroy, :confirm]
   before_action :set_question, only: [:edit, :destroy_parent]
 

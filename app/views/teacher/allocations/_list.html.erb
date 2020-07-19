@@ -88,8 +88,12 @@
           <!-- 確認 -->
           <td>
             <% case generic_page.type_cd %>
-            <% when Settings.GENERICPAGE_TYPECD_MATERIALCODE, Settings.GENERICPAGE_TYPECD_URLCODE %>
-              <%= link_to t("common.COMMON_CONFIRM"), material_path(generic_page.id), :class => "btn btn-warning", :target => "_blank" %>
+            <% when Settings.GENERICPAGE_TYPECD_MATERIALCODE %>
+                <%= link_to t("common.COMMON_CONFIRM"), material_path(generic_page.id), :class => "btn btn-warning", :target => "_blank" %>
+            <% when Settings.GENERICPAGE_TYPECD_URLCODE %>
+              <% if generic_page.url_content.present? %>
+                <%= link_to t("common.COMMON_CONFIRM"), generic_page.url_content, :class => "btn btn-warning", :target => "_blank" %>
+              <% end %>
             <% when Settings.GENERICPAGE_TYPECD_COMPOUNDCODE, Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
               <%= link_to "javascript:void();",
                 {:class => "btn btn-warning",

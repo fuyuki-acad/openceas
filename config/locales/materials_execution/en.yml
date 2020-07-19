@@ -35,6 +35,8 @@ en:
     COMMONMATERIALSEXECUTION_TEMP_SAVE_DATE: "Date saved:"
     COMMONMATERIALSEXECUTION_TEMP_SAVE_DATA_DELETE: "Do you want to delete the temp. save file?"
     COMMONMATERIALSEXECUTION_MARKER: "Marked by "
+    COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT: "You are not allowed to submit this open course."
+    COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "You are not allowed to present this open course."
     #####複合式テスト実施#####
     ##executeCompound.jsp
     MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "You have taken the quiz: %{param0} times."
@@ -106,6 +108,7 @@ en:
     ##gradeExecuteMultipleFib.jsp
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURANSWER: "Your answer"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_CORRECTANSWER: "Correct answer"
+    MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_YOURSCORE: "Your score"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_SCORE: "Mark allocated"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_RANDOM: "Random order"
     MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_ANSWERINFULL: "Answers in a complete set"
