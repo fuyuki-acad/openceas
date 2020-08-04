@@ -168,10 +168,12 @@
                     <% if @class_session && index == @class_session.class_session_no %>
                       <!-- 共通ページ(選択時) -->
                       <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+                      <div class="pull-right col-xs-5"><%= render 'class_session_icon', current_session: current_session %></div>
                     <% else %>
                       <!-- 共通ページ(非選択時) -->
                       <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
                         <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0") %>
+                        <div class="pull-right col-xs-5"><%= render 'class_session_icon', current_session: current_session %></div>
                       <% end %>
                     <% end %>
                   <% else %>
