@@ -282,6 +282,12 @@ class CompoundsController < ApplicationController
       return
     end
 
+    @latest_score = @generic_page.latest_score(current_user.id)
+    if @latest_score && @generic_page.max_count <= @latest_score.answer_count
+      redirect_to :action => :show, :id => @generic_page
+      return
+    end
+
     if session[:answers].blank?
       @answers = params[:answers]
       tmpFlg = true
@@ -393,6 +399,11 @@ class CompoundsController < ApplicationController
 		if current_user.student?
       ## 最新の解答結果を取得
       @latest_score = @generic_page.latest_score(current_user.id)
+      if @generic_page.max_count <= @latest_score.answer_count
+        redirect_to :action => :show, :id => @generic_page
+        return
+      end
+  
       ## 解答取得
       @answers = get_answers(@generic_page, @latest_score.answer_count)
     else
@@ -485,7 +496,7 @@ class CompoundsController < ApplicationController
   end
 
   def mark
-		## テストが選択式の設問のみで構成されているかどうかチェック
+    ## テストが選択式の設問のみで構成されているかどうかチェック
     @question_composition_cd = @generic_page.get_question_composition
 
     @notExaminationFlg = 0
@@ -497,6 +508,11 @@ class CompoundsController < ApplicationController
     @latest_score = @generic_page.latest_score(current_user.id)
     ## 解答取得
     if current_user.student?
+      if @generic_page.max_count <= @latest_score.answer_count
+        redirect_to :action => :show, :id => @generic_page
+        return
+      end
+  
       @answers = get_answers(@generic_page, @latest_score.answer_count)
     else
       begin

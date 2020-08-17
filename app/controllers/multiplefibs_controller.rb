@@ -56,6 +56,8 @@ class MultiplefibsController < ApplicationController
     @is_view_only = params[:view_only]
     template = "quiz"
 
+    @latest_score = @generic_page.latest_score(current_user.id)
+
     if @generic_page.passed?(current_user.id)
       @score = @generic_page.latest_score(current_user.id)
       template = "result"
@@ -63,14 +65,15 @@ class MultiplefibsController < ApplicationController
       template = "redirect"
     elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
       template = "redirect"
-    else
-      @latest_score = @generic_page.latest_score(current_user.id)
     end
+
     render template, :layout => "content_only"
   end
 
   def mark
-    if @generic_page.expired?
+    @latest_score = @generic_page.latest_score(current_user.id)
+    
+    if !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
       render "redirect", :layout => "content_only"
       return
     elsif params[:answer].blank?
