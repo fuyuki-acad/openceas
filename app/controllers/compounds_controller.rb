@@ -399,11 +399,6 @@ class CompoundsController < ApplicationController
 		if current_user.student?
       ## 最新の解答結果を取得
       @latest_score = @generic_page.latest_score(current_user.id)
-      if @generic_page.max_count <= @latest_score.answer_count
-        redirect_to :action => :show, :id => @generic_page
-        return
-      end
-  
       ## 解答取得
       @answers = get_answers(@generic_page, @latest_score.answer_count)
     else
@@ -508,11 +503,6 @@ class CompoundsController < ApplicationController
     @latest_score = @generic_page.latest_score(current_user.id)
     ## 解答取得
     if current_user.student?
-      if @generic_page.max_count <= @latest_score.answer_count
-        redirect_to :action => :show, :id => @generic_page
-        return
-      end
-  
       @answers = get_answers(@generic_page, @latest_score.answer_count)
     else
       begin
