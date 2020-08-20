@@ -25,46 +25,7 @@
 <%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEEXECUTIONCOMPOUND") } %>
 
 <!-- 氏名、テスト/アンケートタイトル　-->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <table class="table table-striped table-hover">
-          <% if @generic_page.self_flag != Settings.GENERICPAGE_SELFFLG_MUTUAL %>
-            <tr>
-              <td>
-                <%= t("common.COMMON_TARGETNAME") %>
-              </td>
-              <td>
-                <%= current_user.user_name %>
-              </td>
-            </tr>
-          <% else %>
-            <tr>
-              <td>
-                <%= t("execution.COMMONMATERIALSEXECUTION_MARKER") %>
-              </td>
-              <td>
-                <%= @answer_score.self_user.user_name %>
-              </td>
-            </tr>
-          <% end %>
-          <tr>
-            <td>
-              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
-            </td>
-            <td>
-              <%= @generic_page.generic_page_title %>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+<%= render 'header', execution_count: @execution_count, message: @message %>
 
 <% if @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_SELF || @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL || @generic_page.self_flag == Settings.GENERICPAGE_SELFFLG_MUTUAL2 %>
   <!-- 結果表示 -->
