@@ -39,7 +39,7 @@ zh_TW:
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "You are not allowed to present this open course."
     #####複合式テスト実施#####
     ##executeCompound.jsp
-    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "接受測驗次數第%{param0}次"
+    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "接受測驗次數第%{current}次 / %{total}"
     MAT_EXE_COM_EXECUTECOMPOUND_REGISTER: "登錄解答"
     MAT_EXE_COM_EXECUTECOMPOUND_CONFIRM: "To the confirmation screen"
     MAT_EXE_COM_EXECUTECOMPOUND_CHANGE: "To change the answer"
