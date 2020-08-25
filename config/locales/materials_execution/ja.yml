@@ -39,7 +39,7 @@ ja:
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "公開されている科目に提出できません。"
     #####複合式テスト実施#####
     ##executeCompound.jsp
-    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "受験回数%{param0}回目"
+    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "%{current}回／%{total}回目"
     MAT_EXE_COM_EXECUTECOMPOUND_REGISTER: "解答を登録する"
     MAT_EXE_COM_EXECUTECOMPOUND_CONFIRM: "確認画面へ"
     MAT_EXE_COM_EXECUTECOMPOUND_CHANGE: "解答を変更する"
