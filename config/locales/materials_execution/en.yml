@@ -39,7 +39,7 @@ en:
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "You are not allowed to present this open course."
     #####複合式テスト実施#####
     ##executeCompound.jsp
-    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "You have taken the quiz: %{param0} times."
+    MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "You have taken the quiz: %{current} / %{total}"
     MAT_EXE_COM_EXECUTECOMPOUND_REGISTER: "Save your answers."
     MAT_EXE_COM_EXECUTECOMPOUND_CONFIRM: "To the confirmation screen"
     MAT_EXE_COM_EXECUTECOMPOUND_CHANGE: "To change the answer"

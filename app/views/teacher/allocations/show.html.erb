@@ -71,10 +71,12 @@
                           <% if @class_session && index == @class_session.class_session_no %>
                             <!-- 共通ページ(選択時) -->
                             <%= t("select_class_session.MAT_ALL_SELECTCLASSSESSION_CLASSSESSIONOVERVIEWTEXT1") %>
+                            <div class="pull-right col-xs-5"><%= render 'icon', current_session: current_session %></div>
                           <% else %>
                             <!-- 共通ページ(非選択時) -->
                             <%= link_to url_for(:action => :show, :course_id => @course.id, :session_no => index) do %>
                               <%=  t("select_class_session.MAT_ALL_SELECTCLASSSESSION_CLASSSESSIONOVERVIEWTEXT1") %>
+                              <div class="pull-right col-xs-5"><%= render 'icon', current_session: current_session %></div>
                             <% end %>
                           <% end %>
                         <% else %>
