@@ -46,18 +46,19 @@ class CompoundsController < ApplicationController
       end
     end
 
+    if params[:back] && session[:answers]
+      @execution_count = get_execution_count(@generic_page)
+      @answers = session[:answers]
+      session[:answers] = nil
+      @execute_flag = true
+      return
+    end
+
     ## 複合式テストに解答した回数を取得
     if @latest_score.blank?
       @execution_count = 1
     else
       @execution_count = @latest_score.answer_count
-    end
-
-    if params[:back] && session[:answers]
-      @answers = session[:answers]
-      session[:answers] = nil
-      @execute_flag = true
-      return
     end
 
     session[:answers] = nil
@@ -103,6 +104,7 @@ class CompoundsController < ApplicationController
           return
 				else
           ## 受験指示パスワードがある時
+          @execution_count = get_execution_count(@generic_page)
           render "start_password"
           return
 				end
@@ -120,6 +122,7 @@ class CompoundsController < ApplicationController
         if @latest_score.self_total_score < Settings.ANSWERSCORE_TMP_SAVED_SCORE
           if !@generic_page.self_pass.blank? || session[:mark_pass_flag]
             ## 採点開始パスワードがある時
+            @execution_count = get_execution_count(@generic_page, false)
   					render "mark_password"
             return
   				else
@@ -137,7 +140,7 @@ class CompoundsController < ApplicationController
         ## 担任者の採点が終わっていない
 				## 【すでに受付終了している時→解答結果画面へ】
 				if @generic_page.expired?
-					@message = I18n.t("execution.COMMONMATERIALSEXECUTION_EXECUTED")
+          @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
           render "mark"
           return
 
@@ -145,7 +148,7 @@ class CompoundsController < ApplicationController
           ## 受付終了していない
 					## 【すでに受験回数分受験している時→解答結果画面へ】
           if @generic_page.max_count <= @latest_score.answer_count
-            @message = I18n.t("execution.COMMONMATERIALSEXECUTION_TIMEOVER")
+            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
             render "mark"
             return
 					else
@@ -162,7 +165,12 @@ class CompoundsController < ApplicationController
 				if question_composition == Settings.QUESTIONCOMPOSITIONCD_MULTIPLEONLY
 					## 【すでに合格している時→解答結果画面へ】
 					if @generic_page.passed?(current_user.id)
-						@message = I18n.t("execution.COMMONMATERIALSEXECUTION_PASS")
+						if @generic_page.expired?
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+            elsif @generic_page.max_count <= @latest_score.answer_count
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
+            end
+
             render "mark"
             return
 
@@ -178,7 +186,7 @@ class CompoundsController < ApplicationController
               ## 受付終了していない
 							## 【すでに受験回数分受験している時→解答結果画面へ】
 							if @generic_page.max_count <= @latest_score.answer_count
-                @message = I18n.t("execution.COMMONMATERIALSEXECUTION_TIMEOVER")
+                @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
                 render "mark"
                 return
 							end
@@ -197,7 +205,7 @@ class CompoundsController < ApplicationController
             ## 受付終了していない
 						## 【すでに受験回数分受験している時→解答結果画面へ】
             if @generic_page.max_count <= @latest_score.answer_count
-              @message = I18n.t("execution.COMMONMATERIALSEXECUTION_TIMEOVER")
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
 							render "mark"
               return
 						end
@@ -231,6 +239,7 @@ class CompoundsController < ApplicationController
       render :action => :show
     else
       @message = I18n.t("execution.COMMONMATERIALSEXECUTION_STARTPASSWORDCHECK2")
+      @execution_count = get_execution_count(@generic_page)
       render "start_password"
     end
   end
@@ -243,10 +252,7 @@ class CompoundsController < ApplicationController
     ## 最新の解答結果を取得
     @latest_score = @generic_page.latest_score(current_user.id)
     ## 複合式テストに解答した回数を取得
-    if @latest_score && @latest_score.total_score == Settings.ANSWERSCORE_TMP_SAVED_SCORE
-    else
-      @execution_count = @latest_score ? @latest_score.answer_count : 1
-    end
+    @execution_count = get_execution_count(@generic_page)
 
 		## テストが選択式の設問のみで構成されているかどうかチェック
     @question_composition_cd = @generic_page.get_question_composition
@@ -279,6 +285,12 @@ class CompoundsController < ApplicationController
     if @generic_page.expired?
       @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
       render "error"
+      return
+    end
+
+    @latest_score = @generic_page.latest_score(current_user.id)
+    if @latest_score && @generic_page.max_count <= @latest_score.answer_count
+      redirect_to :action => :show, :id => @generic_page
       return
     end
 
@@ -369,6 +381,8 @@ class CompoundsController < ApplicationController
   end
 
   def mark_password
+    @execution_count = get_execution_count(@generic_page, false)
+
     if params[:self_pass].nil?
     else
       if params[:self_pass] != @generic_page.self_pass
@@ -383,6 +397,7 @@ class CompoundsController < ApplicationController
 
   def self_mark
     if !@generic_page.self_pass.blank? && !session[:mark_pass_flag]
+      @execution_count = get_execution_count(@generic_page, false)
       render "mark_password"
       return
     end
@@ -464,7 +479,11 @@ class CompoundsController < ApplicationController
         end
 
         @total_score = @total_score + @multiple_score
-        @total_score_per_hundred = (@total_score * 100 / full_point).round
+        if full_point == 0
+          @total_score_per_hundred = 0
+        else
+          @total_score_per_hundred = (@total_score * 100 / full_point).round
+        end
 
         @latest_score.total_raw_score = @total_score
         @latest_score.self_total_score = @total_score_per_hundred
@@ -485,7 +504,7 @@ class CompoundsController < ApplicationController
   end
 
   def mark
-		## テストが選択式の設問のみで構成されているかどうかチェック
+    ## テストが選択式の設問のみで構成されているかどうかチェック
     @question_composition_cd = @generic_page.get_question_composition
 
     @notExaminationFlg = 0
@@ -516,8 +535,10 @@ class CompoundsController < ApplicationController
     if current_user.student?
       score = @generic_page.latest_score(current_user.id)
       @total_score = score.total_score
+      @execution_count = score.answer_count
     else
       @total_score = session[:total_score]
+      @execution_count = 1
       session[:total_score] = nil
     end
   end
@@ -847,5 +868,23 @@ class CompoundsController < ApplicationController
       end
 
       return [answer_score, mark_answers]
+    end
+
+    def get_execution_count(generic_page, is_increment = true)
+      execution_count = 1
+
+      ## 最新の解答結果を取得
+      latest_score = generic_page.latest_score(current_user.id)
+      if latest_score.present?
+        if latest_score.total_score == Settings.ANSWERSCORE_TMP_SAVED_SCORE
+          execution_count = latest_score.answer_count
+        elsif is_increment
+          execution_count = latest_score.answer_count + 1
+        else
+          execution_count = latest_score.answer_count
+        end
+      end
+
+      execution_count
     end
 end

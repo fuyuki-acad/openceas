@@ -32,6 +32,7 @@ class MultiplefibsController < ApplicationController
     create_access_log(@generic_page.course.id)
 
     @latest_score = @generic_page.latest_score(current_user.id)
+    @execution_count = get_execution_count(@latest_score, false)
 
     if @generic_page.not_ready?
       @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_NOTREADYSTARTTIME_html", :param0 => I18n.l(@generic_page.start_time))
@@ -40,15 +41,22 @@ class MultiplefibsController < ApplicationController
     end
 
     if @generic_page.passed?(current_user.id)
-    elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
       if !@generic_page.valid_term?
         @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
-      else
+      elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
         @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", :param0 => @generic_page.max_count)
       end
+    elsif !@generic_page.valid_term?
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
       render "error"
-    elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
-      render "password"
+    elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
+      @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", :param0 => @generic_page.max_count)
+    else
+      @execution_count = get_execution_count(@latest_score)
+
+      if !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
+        render "password"
+      end
     end
   end
 
@@ -56,21 +64,27 @@ class MultiplefibsController < ApplicationController
     @is_view_only = params[:view_only]
     template = "quiz"
 
+    @latest_score = @generic_page.latest_score(current_user.id)
+
     if @generic_page.passed?(current_user.id)
       @score = @generic_page.latest_score(current_user.id)
       template = "result"
-    elsif !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
+    elsif !@generic_page.valid_term?
       template = "redirect"
+    elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
+      @score = @generic_page.latest_score(current_user.id)
+      template = "result"
     elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
       template = "redirect"
-    else
-      @latest_score = @generic_page.latest_score(current_user.id)
     end
+
     render template, :layout => "content_only"
   end
 
   def mark
-    if @generic_page.expired?
+    @latest_score = @generic_page.latest_score(current_user.id)
+    
+    if !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
       render "redirect", :layout => "content_only"
       return
     elsif params[:answer].blank?
@@ -158,7 +172,7 @@ class MultiplefibsController < ApplicationController
           end
           if count == questions.count
             mark_score += score
-            @your_scores += answer_scores
+            @your_scores = answer_scores
           end
         end
 
@@ -218,6 +232,7 @@ class MultiplefibsController < ApplicationController
       redirect_to :action => :show, :id => @generic_page
     else
       @message = I18n.t("execution.COMMONMATERIALSEXECUTION_STARTPASSWORDCHECK2")
+      @execution_count = get_execution_count(@generic_page.latest_score(current_user.id))
       render "password"
     end
   end
@@ -234,5 +249,22 @@ class MultiplefibsController < ApplicationController
 
     def full_to_half(value)
       NKF.nkf('-w -x -Z4', value) if value
+    end
+
+    def get_execution_count(latest_score, is_increment = true)
+      execution_count = 1
+
+      ## 最新の解答結果を取得
+      if latest_score.present?
+        if latest_score.total_score == Settings.ANSWERSCORE_TMP_SAVED_SCORE
+          execution_count = latest_score.answer_count
+        elsif is_increment
+          execution_count = latest_score.answer_count + 1
+        else
+          execution_count = latest_score.answer_count
+        end
+      end
+
+      execution_count
     end
 end

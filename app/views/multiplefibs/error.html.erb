@@ -27,47 +27,25 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <table class="table table-striped table-hover">
-          <!-- 科目名称　-->
-          <tr>
-            <td class="col-xs-4">
-              <%= t("common.COMMON_COURSENAME") %>
-            </td>
-            <td class="col-xs-8">
-              <%= @generic_page.course.course_name %>
-            </td>
-          </tr>
-
           <!-- テストタイトル　-->
           <tr>
             <td>
-              <%= t("common.COMMON_SUBJECT") %>
+              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE1") %>
             </td>
             <td>
               <%= @generic_page.generic_page_title %>
             </td>
           </tr>
-
-          <!-- 氏名　-->
+          <!-- 受験回数 -->
           <tr>
             <td>
-              <%= t("common.COMMON_TARGETNAME") %>
+              <%= t("execution.COMMONMATERIALSEXECUTION_EXAMINATIONCOUNT") %>
             </td>
             <td>
-              <%= current_user.user_name %>
+              <%== @message %>
             </td>
           </tr>
         </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%== @message %>
       </div>
     </div>
   </div>

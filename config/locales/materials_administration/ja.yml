@@ -57,7 +57,7 @@ ja:
     MAT_ADM_COM_COMPOUNDTOTALRESULT_EXPLANATION1_html: "下記の表は複合式テストの結果の一覧です。赤で表示されている点数は合格点数以上を記録した点数となっています。<br>ステータス欄には不受験、未受験、未採点、採点済みのいずれかが表示されます。<br>未採点の場合は採点ができます。また、採点済みの場合は採点結果を表示します。<br>（平均点は未受験者を除いて算出しています。）"
     MAT_ADM_COM_COMPOUNDGRAPHRESLT_TESTTYPE: "テストタイプ"
     MAT_ADM_COM_SCORE_EXPLANATION: "（得点）"
-    MAT_ADM_COM_ANSWER_EXPLANATION: "（設問／解答）"
+    MAT_ADM_COM_ANSWER_EXPLANATION: "CSV出力（設問／解答）"
 
     #gradeCompound.jsp
     MAT_ADM_COM_GRADECOMPOUND_GRADECOMPOND: "複合式テスト採点"
