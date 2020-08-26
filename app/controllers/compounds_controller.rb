@@ -163,21 +163,35 @@ class CompoundsController < ApplicationController
         ## 担任者の採点が終わっている
 				## 選択式のみの設問構成の時
 				if question_composition == Settings.QUESTIONCOMPOSITIONCD_MULTIPLEONLY
-          ## 【すでに受付終了している時→解答結果画面へ】
-          if @generic_page.expired?
-            @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+					## 【すでに合格している時→解答結果画面へ】
+					if @generic_page.passed?(current_user.id)
+						if @generic_page.expired?
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+            elsif @generic_page.max_count <= @latest_score.answer_count
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
+            end
+
             render "mark"
             return
 
-          else
-            ## 受付終了していない
-            ## 【すでに受験回数分受験している時→解答結果画面へ】
-            if @generic_page.max_count <= @latest_score.answer_count
-              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
+					else
+            ## 合格していない
+						## 【すでに受付終了している時→解答結果画面へ】
+						if @generic_page.expired?
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
               render "mark"
               return
-            end
-          end
+
+						else
+              ## 受付終了していない
+							## 【すでに受験回数分受験している時→解答結果画面へ】
+							if @generic_page.max_count <= @latest_score.answer_count
+                @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
+                render "mark"
+                return
+							end
+						end
+					end
 
 				elsif question_composition == Settings.QUESTIONCOMPOSITIONCD_ESSAYONLY || question_composition == Settings.QUESTIONCOMPOSITIONCD_COMPOUND
           ## 記述式のみ||複合式の設問構成の時
@@ -191,7 +205,7 @@ class CompoundsController < ApplicationController
             ## 受付終了していない
 						## 【すでに受験回数分受験している時→解答結果画面へ】
             if @generic_page.max_count <= @latest_score.answer_count
-              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", limit: @generic_page.max_count)
+              @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", param0: @generic_page.max_count)
 							render "mark"
               return
 						end
