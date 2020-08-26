@@ -45,25 +45,10 @@
               <%= t("execution.COMMONMATERIALSEXECUTION_EXAMINATIONCOUNT") %>
             </td>
             <td>
-              <% if @latest_score.present? %>
-                <%= t("execution.MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT", current: @latest_score.answer_count, total: @generic_page.max_count) %>
-              <% else %>
-                <%= t("execution.MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT", current: 0, total: @generic_page.max_count) %>
-              <% end %>
+              <%== @message %>
             </td>
           </tr>
         </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- エラー表示 -->
-<div class="row">
-  <div class="col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%== @message %>
       </div>
     </div>
   </div>

@@ -41,6 +41,11 @@ class MultiplefibsController < ApplicationController
     end
 
     if @generic_page.passed?(current_user.id)
+      if !@generic_page.valid_term?
+        @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
+      elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
+        @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYEXAMEDMAXCOUNT_html", :param0 => @generic_page.max_count)
+      end
     elsif !@generic_page.valid_term?
       @message = I18n.t("execution.MAT_EXE_MUL_ERROREXECUTEMULTIPLEFIB_ALREADYPASSEDENDTIME_html", :param0 => I18n.l(@generic_page.end_time))
       render "error"
