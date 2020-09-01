@@ -83,7 +83,12 @@ class Teacher::AllocationsController < ApplicationController
             assigned.class_session_id = @class_session.id
             assigned.generic_page_id = key
           end
-          assigned.view_rank = value["view_rank"] unless value["view_rank"].blank?
+
+          if value["view_rank"].blank?
+            assigned.view_rank = 0
+          else
+            assigned.view_rank = value["view_rank"]
+          end
           assigned.save!
         end
       end

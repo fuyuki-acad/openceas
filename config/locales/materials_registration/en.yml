@@ -163,6 +163,7 @@ en:
     COMMONMATERIALSREGISTRATION_UPFILE_NOCHANGE: "No change"
     COMMONMATERIALSREGISTRATION_ERRORTYPE6: "Select a file."
     COMMONMATERIALSREGISTRATION_NOUPFILE: "Do not upload."
+    COMMONMATERIALSREGISTRATION_VIEW_RANK_NUMERIC_ERROR: "Use only one-byte numeric letters for Display priority."
 
     #####複合式テスト作成#####
     ##registerCompound.jsp
