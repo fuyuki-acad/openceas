@@ -63,8 +63,6 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENT") %>
     </td>
     <td>
-      <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_NOFILEUPLOAD, :checked => true %> <%= t('materials_registration.COMMONMATERIALSREGISTRATION_NOUPFILE') %></label><br/>
-      <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
       <%= form.file_field :file, {:class => "inputForm"} %>
       <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION2') %></div>
       <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %></div>
