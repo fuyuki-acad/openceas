@@ -30,7 +30,7 @@ class GenericPageClassSessionAssociation < ApplicationRecord
   validate :check_data
   
   def check_data
-    validate_numeric(:view_rank_before_type_cast, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_VIEW_RANK_NUMERIC_ERROR")) if view_rank.present?
+    validate_numeric(:view_rank_before_type_cast, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_VIEW_RANK_NUMERIC_ERROR")) if view_rank_before_type_cast.present?
   end
 
   XML_CONVERT_CEAS10 = {:class_session => {:tag => 'classSessionNo', :field => :class_session_no}, :generic_page_id => :pageId, :view_rank => :viewRank}
