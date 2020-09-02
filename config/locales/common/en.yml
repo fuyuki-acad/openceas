@@ -185,6 +185,7 @@ en:
     COMMON_ERROR_NOTEXISTFILE: "File not found"
     COMMON_RAWSCORE: "Raw score"
     COMMON_PERCENTAGE: "Precentile score"
+    COMMON_ANSWER_DATE: "Answer date"
     COMMON_NOTHING: "None"
     COMMON_BARCHARTTITLE: "Histogram of Quiz results"
     COMMON_BARCHARTDATASET: "No. of students in a quiz score range"
