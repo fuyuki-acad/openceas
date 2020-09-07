@@ -289,7 +289,7 @@ class CompoundsController < ApplicationController
     end
 
     @latest_score = @generic_page.latest_score(current_user.id)
-    if @latest_score && @generic_page.max_count <= @latest_score.answer_count
+    if @latest_score && !@latest_score.saved? && @generic_page.max_count <= @latest_score.answer_count
       redirect_to :action => :show, :id => @generic_page
       return
     end
