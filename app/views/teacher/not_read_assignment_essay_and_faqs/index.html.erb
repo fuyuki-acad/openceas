@@ -48,9 +48,23 @@
           <% @not_read_assignment_essay_and_faqs.each.with_index(1) do |info, index| %>
             <tr>
               <!-- 年度 -->
-              <td class="td-bold"><%= info.school_year %></td>
+              <td class="hidden-xs td-bold"><%= info.school_year %></td>
               <!-- 学期 -->
-              <td class="td-bold"><%= convert_season_cd(info.season_cd) %></td>
+              <td class="hidden-xs td-bold"><%= convert_season_cd(info.season_cd) %></td>
+              <td class="visible-xs td-bold">
+                <div class='row'>
+                  <!-- 年度 -->
+                  <div class='col-xs-1'>
+                    <%= info.school_year %>
+                  </div>
+                </div>
+                <div class='row'>
+                  <!-- 学期 -->
+                  <div class='col-xs-1'>
+                    <%= convert_season_cd(info.season_cd) %>
+                  </div>
+                </div>
+              </td>
               <!-- 科目名称 -->
               <td class="td-bold"><%= info.course_name %></td>
               <!-- 未読ボタン -->
