@@ -399,6 +399,10 @@ td.blocklink a {
   width: 45px;
 }
 
+.label_weight_normal {
+  font-weight: normal;
+}
+
 @media (min-width: 768px) {
   .form-username {
     width: 250px;

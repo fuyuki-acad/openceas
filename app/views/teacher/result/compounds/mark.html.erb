@@ -190,11 +190,14 @@
               </div>
 
               <div class="col-xs-12">
-                <%= radio_button_tag :next_cd, "0", true %> <%= t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO1') %>
-                <%= radio_button_tag :next_cd, "1", params[:next_cd] == "1" %> <%= t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO2') %>
+                <%= radio_button_tag :next_cd, "0", true %>
+                <%= label_tag "next_cd_0", t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO1'), class: "label_weight_normal" %>
+                <%= radio_button_tag :next_cd, "1", params[:next_cd] == "1" %>
+                <%= label_tag "next_cd_1", t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO2'), class: "label_weight_normal" %>
                 <!--最終受験回のみ表示の場合は、非表示 -->
                 <% if @latest_answer == false %>
-                  <%= radio_button_tag :next_cd, "2", params[:next_cd] == "2" %> <%= t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO3') %>
+                  <%= radio_button_tag :next_cd, "2", params[:next_cd] == "2" %>
+                  <%= label_tag "next_cd_2", t('materials_administration.MAT_ADM_COM_GRADECOMPOUND_RADIO3'), class: "label_weight_normal" %>
                 <% end %>
               </div>
             </div>

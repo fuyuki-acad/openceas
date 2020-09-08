@@ -51,7 +51,7 @@
           </div>
           <div class="col-xs-12 col-sm-4">
             <%= check_box_tag :descend, "1", params[:descend] == "1" %>
-            <%= t("system_usage.SYS_CONFIRMSYSTEMLOG_EXPLANATION1") %>
+            <%= label_tag "descend", t('system_usage.SYS_CONFIRMSYSTEMLOG_EXPLANATION1'), class: "label_weight_normal" %>
           </div>
           <div class="col-xs-12 col-sm-2">
             <div class="text-center">

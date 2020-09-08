@@ -133,8 +133,12 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <div class="checkbox">
-                  <%= radio_button_tag "search[order1]", "0", params[:search][:order1] == "0" %> <%= t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM1') %><br/>
-                  <%= radio_button_tag "search[order1]", "2", params[:search][:order1] == "2" %> <%= t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM3') %><br/>
+                  <%= radio_button_tag "search[order1]", "0", params[:search][:order1] == "0" %>
+                  <%= label_tag "search_order1_0", t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM1') %>
+                  <br/>
+                  <%= radio_button_tag "search[order1]", "2", params[:search][:order1] == "2" %>
+                  <%= label_tag "search_order1_2", t('materials_administration.MAT_ADM_ASS_SEARCHREQUIREMENT_ORDERTERM3') %>
+                  <br/>
                 </div>
               </div>
             </div>

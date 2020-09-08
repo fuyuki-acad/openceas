@@ -121,8 +121,10 @@
             <div class="col-xs-12 col-sm-5">
               <div class="col-xs-12">
                 <div class="form-group">
-                  <%= radio_button_tag :term_flag, "0", params[:term_flag] == "0" %><label><%= t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM1') %></label>
-                  <%= radio_button_tag :term_flag, "2", params[:term_flag] == "2" %><label><%= t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM3') %></label>
+                  <%= radio_button_tag :term_flag, "0", params[:term_flag] == "0" %>
+                  <%= label_tag "term_flag_0", t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM1') %>
+                  <%= radio_button_tag :term_flag, "2", params[:term_flag] == "2" %>
+                  <%= label_tag "term_flag_2", t('materials_administration.MAT_ADM_COM_SEARCHREQUIREMENT_ORDERTERM3') %>
                 </div>
               </div>
 

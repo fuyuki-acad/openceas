@@ -136,8 +136,10 @@
               <span class='badge badge-essencial'><%= t("common.COMMON_ESSENCIAL") %></span>
             </td>
             <td class="col-xs-9">
-              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_MALE %> <%= t('common.COMMON_MALE') %><br/>
-              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_FEMALE %> <%= t('common.COMMON_FEMALE') %>
+              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_MALE %>
+              <%= f.label :sex_cd, t('common.COMMON_MALE'), value: Settings.USR_SEXCD_MALE, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :sex_cd, Settings.USR_SEXCD_FEMALE %>
+              <%= f.label :sex_cd, t('common.COMMON_FEMALE'), value: Settings.USR_SEXCD_FEMALE, class: "label_weight_normal" %>
             </td>
           </tr>
 
@@ -165,9 +167,12 @@
               <%= t("common.COMMON_AUTHCD2") %>
             </td>
             <td class="col-xs-9">
-              <%= f.radio_button :role_id, Settings.USR_AUTHCD_ADMINISTRATOR %> <%= t('common.COMMON_ADMINISTRATOR') %><br/>
-              <%= f.radio_button :role_id, Settings.USR_AUTHCD_INSTRUCTOR %> <%= t('common.COMMON_INSTRUCTOR') %><br/>
-              <%= f.radio_button :role_id, Settings.USR_AUTHCD_STUDENT %> <%= t('common.COMMON_STUDENT') %>
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_ADMINISTRATOR %>
+              <%= f.label :role_id, t('common.COMMON_ADMINISTRATOR'), value: Settings.USR_AUTHCD_ADMINISTRATOR, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_INSTRUCTOR %>
+              <%= f.label :role_id, t('common.COMMON_INSTRUCTOR'), value: Settings.USR_AUTHCD_INSTRUCTOR, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :role_id, Settings.USR_AUTHCD_STUDENT %>
+              <%= f.label :role_id, t('common.COMMON_STUDENT'), value: Settings.USR_AUTHCD_STUDENT, class: "label_weight_normal" %>
             </td>
           </tr>
 
@@ -177,8 +182,10 @@
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM1") %>
             </td>
             <td class="col-xs-9">
-              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_EFFECTIVE %> <%= t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION8') %><br/>
-              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_INVALIDITY %> <%= t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION9') %>
+              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_EFFECTIVE %>
+              <%= f.label :term_flag, t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION8'), value: Settings.USR_TERMFLG_EFFECTIVE, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :term_flag, Settings.USR_TERMFLG_INVALIDITY %>
+              <%= f.label :term_flag, t('admin.user.COMMON_ADMINISTRATEUSR_EXPLANATION9'), value: Settings.USR_TERMFLG_INVALIDITY, class: "label_weight_normal" %>
             </td>
           </tr>
 
@@ -188,8 +195,10 @@
               <%= t("admin.user.COMMON_ADMINISTRATEUSR_LEFTFORM2") %>
             </td>
             <td class="col-xs-9">
-              <%= f.radio_button :delete_flag, "1" %> <%= t('common.COMMON_ON') %><br/>
-              <%= f.radio_button :delete_flag, "0" %> <%= t('common.COMMON_OFF') %>
+              <%= f.radio_button :delete_flag, "1" %>
+              <%= f.label :delete_flag, t('common.COMMON_ON'), value: "1", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :delete_flag, "0" %>
+              <%= f.label :delete_flag, t('common.COMMON_OFF'), value: "0", class: "label_weight_normal" %>
             </td>
           </tr>
 
@@ -231,9 +240,12 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="col-xs-12 col-sm-6">
-          <%= radio_button_tag :type1, "0", true %> <%= t('common.COMMON_COURSENAME') %>
-          <%= radio_button_tag :type1, "1", params[:type1] == "1" %> <%= t('common.COMMON_INSTRUCTORNAME') %>
-          <%= radio_button_tag :type1, "2", params[:type1] == "2" %> <%= t('common.COMMON_COURSECD') %>
+          <%= radio_button_tag :type1, "0", true %>
+          <%= label_tag "type1_0", t('common.COMMON_COURSENAME'), class: "label_weight_normal" %>
+          <%= radio_button_tag :type1, "1", params[:type1] == "1" %>
+          <%= label_tag "type1_1", t('common.COMMON_INSTRUCTORNAME'), class: "label_weight_normal" %>
+          <%= radio_button_tag :type1, "2", params[:type1] == "2" %>
+          <%= label_tag "type1_2", t('common.COMMON_COURSECD'), class: "label_weight_normal" %>
 
           <div class="input-group">
             <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>

@@ -128,11 +128,14 @@
       <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE") %>
     </td>
     <td>
-      <label><%= radio_button :generic_page, :self_type, "0", :checked => true, :class => "self_type" %> <%= t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE1') %></label>
+      <%= radio_button :generic_page, :self_type, "0", :checked => true, :class => "self_type" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE1'), value: "0" %>
       <br/>
-      <label><%= radio_button :generic_page, :self_type, "1", :class => "self_type" %> <%= t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE2') %></label>
+      <%= radio_button :generic_page, :self_type, "1", :class => "self_type" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE2'), value: "1" %>
       <br/>
-      <label><%= radio_button :generic_page, :self_type, "2", :class => "self_type" %> <%= t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE3') %></label>
+      <%= radio_button :generic_page, :self_type, "2", :class => "self_type" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE3'), value: "2" %>
       <br/>
       <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPEEXPLANATION") %>
     </td>
