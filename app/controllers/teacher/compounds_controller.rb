@@ -166,8 +166,8 @@ class Teacher::CompoundsController < ApplicationController
 
     def generic_page_params
       params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :max_count,
-        :pass_grade, :file, :start_pass, :start_time,
-        :end_time, :self_type, :self_pass, :material_memo)
+        :pass_grade, :file, :start_pass, :start_time, :end_time, :self_type,
+        :correct_answer_display_flag, :self_pass, :material_memo)
     end
 
     def material_file_params

@@ -129,15 +129,28 @@
     </td>
     <td>
       <%= radio_button :generic_page, :self_type, "0", :checked => true, :class => "self_type" %>
-      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE1'), value: "0" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE1'), value: "0", class: "label_weight_normal" %>
       <br/>
       <%= radio_button :generic_page, :self_type, "1", :class => "self_type" %>
-      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE2'), value: "1" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE2'), value: "1", class: "label_weight_normal" %>
       <br/>
       <%= radio_button :generic_page, :self_type, "2", :class => "self_type" %>
-      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE3'), value: "2" %>
+      <%= form.label :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE3'), value: "2", class: "label_weight_normal" %>
       <br/>
       <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPEEXPLANATION") %>
+    </td>
+  </tr>
+
+  <!-- 正答表示 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY") %>
+    </td>
+    <td>
+      <%= form.check_box :correct_answer_display_flag %>
+      <%= form.label :correct_answer_display_flag, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT1'), class: "label_weight_normal" %>
+      <br/>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT2") %>
     </td>
   </tr>
 
