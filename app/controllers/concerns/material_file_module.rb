@@ -104,6 +104,7 @@ module MaterialFileModule
     xml_page.scoreOpenFlg generic_page.score_open_flag
     xml_page.materialMemo generic_page.material_memo
     xml_page.materialMemoClosed generic_page.material_memo_closed
+    xml_page.correctAnswerDisplayFlg generic_page.correct_answer_display_flag
   end
 
   def set_question_elements(xml_question, question)
@@ -305,6 +306,7 @@ module MaterialFileModule
     generic_page.assignment_essay_return_method_cd = get_xml_value(xml_page.elements['assignmentEssayReturnMethodCd'])
     generic_page.score_open_flag = xml_page.elements['scoreOpenFlg'].text if set_value?(xml_page.elements['scoreOpenFlg'])
     generic_page.material_memo = get_xml_value(xml_page.elements['materialMemo'].text)
+    generic_page.correct_answer_display_flag = get_xml_value(xml_page.elements['correctAnswerDisplayFlg'].text)
     generic_page.save!
 
     generic_page
