@@ -150,7 +150,7 @@ class User < ApplicationRecord
     if self.errors.messages.count > 0
       result = false
     else
-      update_attributes(params, *options)
+      update(params, *options)
       result = true
     end
 
@@ -224,7 +224,7 @@ class User < ApplicationRecord
     if self.errors.messages.count > 0
       result = false
     else
-      result = update_attributes(email: params[:new_email])
+      result = update(email: params[:new_email])
     end
 
     result
