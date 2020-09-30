@@ -26,19 +26,24 @@ FactoryBot.define do
     season_cd {1}
     day_cd {1}
     hour_cd {1}
-    indirect_use_flag {0}
-    term_flag {0}
-    courseware_flag {0}
+    indirect_use_flag {false}
+    term_flag {true}
+    courseware_flag {false}
     sequence(:course_cd) { |n| "code#{n}" }
-    sequence(:course_name) { |n| "course #{n}" }
     overview {"over view"}
 
     trait :year_of_2019 do
       school_year {2019}
+      sequence(:course_name) { |n| "course 2019 #{n}" }
+      sequence(:course_cd) { |n| "2019-#{n}" }
+      instructor_name {"担任者 2019"}
     end
 
     trait :year_of_2018 do
       school_year {2018}
+      sequence(:course_name) { |n| "course 2018 #{n}" }
+      sequence(:course_cd) { |n| "2018-#{n}" }
+      instructor_name {"担任者 2018"}
     end
   end
 end
