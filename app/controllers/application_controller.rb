@@ -22,6 +22,9 @@
 #++
 
 class ApplicationController < ActionController::Base
+
+  class Forbidden < ActionController::ActionControllerError; end
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -33,12 +36,14 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :check_permission
 
+  rescue_from Exception, with: :render_500
+  rescue_from Forbidden, with: :render_403
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActionController::RoutingError, with: :render_404
-  rescue_from Exception, with: :render_500
 
-  NOT_ASSIGNED = "not assigned"
-  NOT_ENROLLED = "not enrolled"
+  def render_403
+    render template: 'errors/error500', status: :forbidden
+  end
 
   def render_404
     render template: 'errors/error404', status: :not_found
@@ -190,7 +195,9 @@ class ApplicationController < ActionController::Base
         assigned = course.course_assigned_users.where(user_id: current_user.id).first
       end
       
-      raise NOT_ASSIGNED if assigned.blank?
+      if assigned.blank?
+        raise Forbidden
+      end
     end
 
     def require_enrolled
@@ -198,13 +205,15 @@ class ApplicationController < ActionController::Base
 
       course = get_require_course
       if current_user.teacher?
-        assigned = course.course_assigned_users.where(user_id: current_user.id).first
-        raise NOT_ASSIGNED if assigned.blank?
+        enrolled = course.course_assigned_users.where(user_id: current_user.id).first
 
       else
         enrolled = course.course_enrollment_users.where(user_id: current_user.id).first
-        raise NOT_ENROLLED if enrolled.blank?
 
+      end
+
+      if enrolled.blank?
+        raise Forbidden
       end
     end
 
@@ -221,7 +230,10 @@ class ApplicationController < ActionController::Base
       if assigned.blank? && course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PUBLIC
         assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
       end
-      raise NOT_ENROLLED if assigned.blank?
+
+      if assigned.blank?
+        raise Forbidden
+      end
     end
 
     def get_content_type(file_name)

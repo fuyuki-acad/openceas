@@ -124,8 +124,10 @@ class Question < ApplicationRecord
       validate_presence(:content, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR4"))
 
       checked_items = []
-      self.quizzes_attributes.each do |key, quiz|
-        checked_items.push(key) if quiz['select_correct_flag'] == '1' || quiz['select_mark_flag'] == '1'
+      if self.quizzes_attributes
+        self.quizzes_attributes.each do |key, quiz|
+          checked_items.push(key) if quiz['select_correct_flag'] == '1' || quiz['select_mark_flag'] == '1'
+        end
       end
       if checked_items.count == 0
         if self.generic_page_type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE
