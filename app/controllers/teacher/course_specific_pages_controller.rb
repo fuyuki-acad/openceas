@@ -30,7 +30,7 @@ class Teacher::CourseSpecificPagesController < ApplicationController
   def upload
     @specific_page.file = params[:file]
     if @specific_page.save_file
-      redirect_to action: :show, id: @specific_page
+      redirect_to action: :show, course_id: @specific_page
     else
       render action: :show
     end

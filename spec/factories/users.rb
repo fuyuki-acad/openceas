@@ -53,9 +53,9 @@ FactoryBot.define do
   end
 
   factory :test_user, class: User do
-    account {"testuser"}
-    user_name {"test user"}
-    email {"testuser@ceas.bownet.co.jp"}
+    sequence(:account) { |n| "testuser#{n}"}
+    sequence(:user_name) { |n| "test user#{n}"}
+    sequence(:email) { |n| "testuser#{n}@ceas.bownet.co.jp"}
     role_id {2}
     name_no_prefix {""}
     sex_cd {2}
@@ -65,9 +65,9 @@ FactoryBot.define do
   end
 
   factory :teacher_user, class: User do
-    account {"teacher_user"}
-    user_name {"teacher user"}
-    email {"teacher@ceas.bownet.co.jp"}
+    sequence(:account) { |n| "teacher_user#{n}"}
+    sequence(:user_name) { |n| "teacher user#{n}"}
+    sequence(:email) { |n| "teacher#{n}@ceas.bownet.co.jp"}
     role_id {2}
     name_no_prefix {""}
     sex_cd {2}
@@ -77,9 +77,9 @@ FactoryBot.define do
   end
 
   factory :student_user, class: User do
-    account {"student_user"}
-    user_name {"student user"}
-    email {"student@ceas.bownet.co.jp"}
+    sequence(:account) { |n| "student_user#{n}"}
+    sequence(:user_name) { |n| "student user#{n}"}
+    sequence(:email) { |n| "student#{n}@ceas.bownet.co.jp"}
     role_id {3}
     name_no_prefix {""}
     sex_cd {1}
