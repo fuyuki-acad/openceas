@@ -186,7 +186,7 @@ class Admin::UsersController < ApplicationController
     def user_params
       params.require(:user).permit(
         :user_name, :kana_name, :email, :email_mobile, :sex_cd, :birth_date, :account,
-        :password, :name_no_prefix, :role_id, :term_flag, :delete_flag, :move_cd, :role_id,
+        :password, :name_no_prefix, :role_id, :term_flag, :delete_flag, :move_cd,
         :add_courses => [], :delete_courses => [])
     end
 
