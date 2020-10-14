@@ -18,7 +18,7 @@ RSpec.describe Course, type: :model do
       expect(@course.errors.messages[:course_name]).to include I18n.t("admin.course.PRI_ADM_COU_REGISTERCOURSE_ERROR1")
     end
 
-    it "コース名" do
+    it "概要" do
       @course.overview = nil
       @course.valid?
       expect(@course.errors.count).to eq 0

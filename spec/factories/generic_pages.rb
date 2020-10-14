@@ -38,7 +38,7 @@ FactoryBot.define do
     sequence(:material_memo) { |n| "compound memo #{n}" }
   end
 
-  factory :multiplefib, class: GenericPage do
+  factory :multiplefib, class: Multiplefib do
     sequence(:generic_page_title) { |n| "multiplefib title #{n}" }
     type_cd  { Settings.GENERICPAGE_TYPECD_MULTIPLEFIBCODE }
     max_count  {"1"}
