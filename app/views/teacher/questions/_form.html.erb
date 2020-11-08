@@ -81,8 +81,10 @@
                 <%= form.select :score, option_range(1, 100), {}, {:class => "form-control form-number-3"} %>
                 <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE4") %>
               <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
-                <label><%= form.radio_button :must_flag, "0" %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE1') %></label>
-                <label><%= form.radio_button :must_flag, "1" %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE2') %></label>
+                <%= form.radio_button :must_flag, "0" %>
+                <%= form.label :must_flag, t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE1'), value: "0" %>
+                <%= form.radio_button :must_flag, "1" %>
+                <%= form.label :must_flag, t('materials_registration.MAT_REG_REGISTERQUESTION_QUESTIONNAIRETYPE2'), value: "1" %>
               <% end %>
             </td>
           </tr>
@@ -92,10 +94,17 @@
               <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE5") %>
             </td>
             <td>
-              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_RADIO, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE1') %></label><br/>
-              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ONELIST, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE2') %></label><br/>
-              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_CHECK, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE3') %></label><br/>
-              <label><%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ESSAY, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE4') %></label>
+              <%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_RADIO, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.label :pattern_cd, t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE1'), value: Settings.QUESTION_PATTERNCD_RADIO %>
+              <br/>
+              <%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ONELIST, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.label :pattern_cd, t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE2'), value: Settings.QUESTION_PATTERNCD_ONELIST %>
+              <br/>
+              <%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_CHECK, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.label :pattern_cd, t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE3'), value: Settings.QUESTION_PATTERNCD_CHECK %>
+              <br/>
+              <%= form.radio_button :pattern_cd, Settings.QUESTION_PATTERNCD_ESSAY, :class => "pattern_cd", :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+              <%= form.label :pattern_cd, t('materials_registration.MAT_REG_REGISTERQUESTION_SELECTTYPE4'), value: Settings.QUESTION_PATTERNCD_ESSAY %>
             </td>
           </tr>
           <!-- 選択肢の数-->
@@ -123,10 +132,10 @@
                     <%= text_area_tag 'question[quizzes_attributes]['+index.to_s+'][content]', quiz.content, {:class => "form-control", :rows => 2} %>
                     <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
                       <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', "1", question_checked(params['question'], index, quiz) %>
-                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE13")  %>
+                      <%= label_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE13'), class: "label_weight_normal" %>
                     <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
                       <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', "1", question_checked(params['question'], index, quiz) %>
-                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE23")  %>
+                      <%= label_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE23'), class: "label_weight_normal" %>
                     <% end %>
                   </div>
                   <div class="col-xs-2">
@@ -149,10 +158,10 @@
                     <%= text_area_tag 'question[quizzes_attributes]['+index.to_s+'][content]', params['question'] ? params['question']['quizzes_attributes'][index.to_s]['content'] : "", {:class => "form-control", :rows => 2} %>
                     <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
                       <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', "1", question_checked(params['question'], index) %>
-                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE13")  %>
+                      <%= label_tag 'question[quizzes_attributes]['+index.to_s+'][select_correct_flag]', t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE13'), class: "label_weight_normal" %>
                     <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
                       <%= check_box_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', "1", question_checked(params['question'], index) %>
-                      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE23")  %>
+                      <%= label_tag 'question[quizzes_attributes]['+index.to_s+'][select_mark_flag]', t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE23'), class: "label_weight_normal" %>
                     <% end %>
                   </div>
                   <div class="col-xs-2">
@@ -169,8 +178,10 @@
                 <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE7")  %>
               </td>
               <td>
-                <label><%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_NOTEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE11') %></label>
-                <label><%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_TEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %> <%= t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE12') %></label>
+                <%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_NOTEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+                <%= form.label :text_flag, t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE11'), value: Settings.SELECT_TEXTROW_NOTEXT %>
+                <%= form.radio_button :text_flag, Settings.SELECT_TEXTROW_TEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+                <%= form.label :text_flag, t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE12'), value: Settings.SELECT_TEXTROW_TEXT %>
               </td>
             </tr>
             <!-- 解答文又は補足分-->

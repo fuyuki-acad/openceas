@@ -234,8 +234,10 @@
               <%= t("faq.COMMONFAQ_FAQOPEN") %>
             </td>
             <td>
-              <%= form.radio_button :open_flag, Settings.FAQ_OPENFLG_PRIVATE.to_s %> <%= t('faq.FAQ_ANSWERFAQ_CLOSED') %>
-              <%= form.radio_button :open_flag, Settings.FAQ_OPENFLG_PUBLIC.to_s %> <%= t('faq.COMMONFAQ_OPEN') %>
+              <%= form.radio_button :open_flag, Settings.FAQ_OPENFLG_PRIVATE.to_s %>
+              <%= form.label :open_flag, t('faq.FAQ_ANSWERFAQ_CLOSED'), value: Settings.FAQ_OPENFLG_PRIVATE, class: "label_weight_normal" %>
+              <%= form.radio_button :open_flag, Settings.FAQ_OPENFLG_PUBLIC.to_s %>
+              <%= form.label :open_flag, t('faq.COMMONFAQ_OPEN'), value: Settings.FAQ_OPENFLG_PUBLIC, class: "label_weight_normal" %>
             </td>
           </tr>
         </table>

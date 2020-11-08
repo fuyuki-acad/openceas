@@ -177,10 +177,10 @@
                           <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
                             <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
                             <% question.select_quizzes.each do |quiz| %>
-                              <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                              <label><%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <%= quiz.content %></label><br/>
                             <% end %>
                             <% if question.text_flag == 1 %>
-                              <%= radio_button_tag "answers[#{question.id}][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
+                              <label><%= radio_button_tag "answers[#{question.id}][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
                               <!-- その他の時の入力フィールド -->
                               <%= text_field_tag "answers[#{question.id}][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
                             <% end %>
@@ -197,10 +197,10 @@
                           <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
                             <%= hidden_field_tag "answers[#{question.id}][]" %>
                             <% question.select_quizzes.each do |quiz| %>
-                              <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                              <label><%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <%= quiz.content %></label><br/>
                             <% end %>
                             <% if question.text_flag == 1 %>
-                              <%= check_box_tag "answers[#{question.id}][][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <label><%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
+                              <label><%= check_box_tag "answers[#{question.id}][][select_answer_id]", Answer::OTHER_ANSWER_ID, checked_other(@answers, question.id) %> <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OTHER") %></label><br/>
                               <!-- その他の時の入力フィールド -->
                               <%= text_field_tag "answers[#{question.id}][][text_answer]", answered_text_value(@answers, question.id), {:class => "form-control", :rows => 3} %>
                             <% end %>

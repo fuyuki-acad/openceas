@@ -35,7 +35,6 @@ class Teacher::QuestionnairesController < ApplicationController
     @generic_page = GenericPage.new()
     @generic_page.course = @course
     @generic_page.type_cd = Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE
-    @generic_page.upload_flag = GenericPage::TYPE_NOFILEUPLOAD
     @generic_page.edit_flag = 0
     @generic_page.anonymous_flag = 0
   end
@@ -156,7 +155,7 @@ class Teacher::QuestionnairesController < ApplicationController
     end
 
     def generic_page_params
-      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag,
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title,
         :file, :start_pass, :start_time, :end_time, :edit_flag,
         :anonymous_flag, :material_memo)
     end

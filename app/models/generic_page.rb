@@ -53,6 +53,7 @@ class GenericPage < ApplicationRecord
     :url_content => :urlContent, :pre_grading_enable_flag => :preGradingEnableFlg,
     :assignment_essay_return_method_cd => :assignmentEssayReturnMethodCd, :score_open_flag => :scoreOpenFlg,
     :material_memo => :materialMemo, :material_memo_closed => :materialMemoClosed,
+    :correct_answer_display_flag => :correctAnswerDisplayFlg,
     :parent_questions => {:tag => 'parentQuestion', :xml_convertor => Question::XML_CONVERT_PARENT_CEAS10}}
   XML_CONVERT_MANIFEST_CEAS10 = {:type_cd => :typeCd, :id => :pageId, :generic_page_title => :pageTitle}
 

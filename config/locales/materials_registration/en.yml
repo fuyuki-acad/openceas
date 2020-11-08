@@ -163,6 +163,7 @@ en:
     COMMONMATERIALSREGISTRATION_UPFILE_NOCHANGE: "No change"
     COMMONMATERIALSREGISTRATION_ERRORTYPE6: "Select a file."
     COMMONMATERIALSREGISTRATION_NOUPFILE: "Do not upload."
+    COMMONMATERIALSREGISTRATION_VIEW_RANK_NUMERIC_ERROR: "Use only one-byte numeric letters for Display priority."
 
     #####複合式テスト作成#####
     ##registerCompound.jsp
@@ -183,6 +184,11 @@ en:
     MAT_REG_COM_REGISTERCOMPOUND_EXPLANATION3: "Some students already done this test. You are not allowed to add a quiz task."
     MAT_REG_COM_REGISTERCOMPOUND_LENGTHALERT: ""
     MAT_REG_COM_REGISTERCOMPOUND_STARTGRADEPASSWORD_ALERT: "You need to set the password to start marking for the grading mode selected."
+    MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY: "Show correct answers"
+    MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT1: "Show"
+    MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT2: "Select if you want to show the correct answer after the quiz."
+    MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_YES: "Yes"
+    MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_NO: "No"
 
     ##registerParentQuestion.jsp
     MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html: "You can edit the quiz profile later by clicking the edit button on the table below."

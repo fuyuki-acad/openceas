@@ -150,6 +150,19 @@
 
           <tr>
             <td>
+              <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY") %>
+            </td>
+            <td>
+              <% if @generic_page.correct_answer_display_flag == 1 %>
+                <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_YES") %>
+              <% else %>
+                <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_NO") %>
+              <% end %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
               <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_STARTGRADEPASSWORD") %>
             </td>
             <td>

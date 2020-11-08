@@ -58,12 +58,15 @@
               <%= t("general_announcement.GEN_GENERALINFO_INFOMATIONWAY") %>
             </td>
             <td class="col-xs-9">
-              <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_LOGIN, :checked => true %> <%= t('general_announcement.GEN_GENERALINFO_BYUSINGLOGIN') %>
+              <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_LOGIN, :checked => true %>
+              <%= f.label :type_cd, t('general_announcement.GEN_GENERALINFO_BYUSINGLOGIN'), value: GeneralAnnouncement::TYPE_LOGIN, class: "label_weight_normal" %>
               <br/>
-              <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_SYSTEM %> <%= t('general_announcement.GEN_GENERALINFO_BYUSINGSYSTEMINFO') %>
+              <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_SYSTEM %>
+              <%= f.label :type_cd, t('general_announcement.GEN_GENERALINFO_BYUSINGSYSTEMINFO'), value: GeneralAnnouncement::TYPE_SYSTEM, class: "label_weight_normal" %>
               <% if !@announcement.new_record? %>
                 <br/>
-                <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_HIDDEN %> <%= t('general_announcement.GEN_GENERALINFO_HIDE') %>
+                <%= f.radio_button :type_cd, GeneralAnnouncement::TYPE_HIDDEN %>
+                <%= f.label :type_cd, t('general_announcement.GEN_GENERALINFO_HIDE'), value: GeneralAnnouncement::TYPE_HIDDEN, class: "label_weight_normal" %>
               <% end %>
             </td>
           </tr>
