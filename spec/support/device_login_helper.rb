@@ -26,4 +26,25 @@ module DeviceLoginHelper
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in admin
   end
+
+  def login(user)
+    visit sign_in_path
+    fill_in 'user_account', with: user.account
+    fill_in 'user_password', with: 'hogehoge'
+    click_button I18n.t('login.COMMONLOGIN_LOGIN')
+    expect(page).to have_content I18n.t('devise.sessions.signed_in')
+  end
+
+  def logout
+    visit root_path
+    find("a.dropdown-toggle").click
+    click_link I18n. t("top.COMMONTOP_LOGOUT")
+    expect(page).to have_content I18n.t('devise.failure.unauthenticated')
+  end
+
+  def act_as(user)
+    login user
+    yield
+    logout
+  end
 end

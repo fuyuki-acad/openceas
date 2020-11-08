@@ -140,7 +140,7 @@ class Api::V1::CoursesController < ApiController
       sql_params[:hour_cd] = params[:hour_cd]
     end
 
-    courses = Course.order(VIEW_COUSE_ORER)
+    courses = Course.order("school_year DESC, season_cd, day_cd, hour_cd")
       .where(sql_texts.join(" AND "), sql_params)
     render json: courses
   end
