@@ -237,11 +237,13 @@ class CompoundsController < ApplicationController
       session[:start_pass_flag] = true
       show
       render :action => :show
+      return
     else
       @message = I18n.t("execution.COMMONMATERIALSEXECUTION_STARTPASSWORDCHECK2")
       @execution_count = get_execution_count(@generic_page)
-      render "start_password"
     end
+
+    render "start_password"
   end
 
   def confirm

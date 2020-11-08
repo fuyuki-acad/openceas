@@ -65,10 +65,10 @@ class OpenCoursesController < ApplicationController
     def get_data
       ## 割付していない公開科目を取得する
       user_assigned_courses = current_user.open_course_assigned_users.select("course_id")
-      @courses = Course.
+      @courses = Course.order(VIEW_COUSE_ORER).
         where("open_course_flag = ? AND id NOT IN (?) AND course_name LIKE ?",
           Settings.COURSE_OPENCOURSEFLG_PUBLIC, user_assigned_courses, "%#{params[:key_word]}%").page(params[:page])
-      @assigned_courses = Course.joins(:open_course_assigned_users).
+      @assigned_courses = Course.joins(:open_course_assigned_users).order(VIEW_COUSE_ORER).
         where("courses.open_course_flag = ? AND open_course_assigned_users.user_id = ?", Settings.COURSE_OPENCOURSEFLG_PUBLIC, current_user.id)
     end
 end

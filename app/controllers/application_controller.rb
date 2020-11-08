@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
 
   class Forbidden < ActionController::ActionControllerError; end
 
+  VIEW_COUSE_ORER = "school_year DESC, season_cd, day_cd, hour_cd"
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -89,23 +91,21 @@ class ApplicationController < ActionController::Base
     def set_courses
       if current_user.admin?
         if params[:course_name].blank?
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+          @courses = Course.order(VIEW_COUSE_ORER).page(params[:page])
         else
-          @courses = Course.where("course_name LIKE ?", "%#{params[:course_name]}%").order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+          @courses = Course.where("course_name LIKE ?", "%#{params[:course_name]}%").order(VIEW_COUSE_ORER).page(params[:page])
         end
-#          @courses = Course.all.order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
       elsif current_user.teacher?
         if params[:course_name].blank?
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true).page(params[:page])
+          @courses = Course.order(VIEW_COUSE_ORER).joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true).page(params[:page])
         else
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
+          @courses = Course.order(VIEW_COUSE_ORER).joins(:course_assigned_users).where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
         end
       else
-#        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, true, "%#{params[:course_name]}%").page(params[:page])
         if params[:course_name].blank?
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ?", current_user.id, false, true, false).page(params[:page])
+          @courses = Course.order(VIEW_COUSE_ORER).joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ?", current_user.id, false, true, false).page(params[:page])
         else
-          @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, false, "%#{params[:course_name]}%").page(params[:page])
+          @courses = Course.order(VIEW_COUSE_ORER).joins(:course_enrollment_users).where("user_id = ? AND indirect_use_flag = ? AND courses.term_flag = ? AND courseware_flag = ? AND course_name LIKE ?", current_user.id, false, true, false, "%#{params[:course_name]}%").page(params[:page])
         end
       end
     end
@@ -114,13 +114,13 @@ class ApplicationController < ActionController::Base
       if current_user.admin?
         if params[:course_name].blank?
           @courses = Course.where("courses.id != ?", params[:course_id]).
-            order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+            order(VIEW_COUSE_ORER).page(params[:page])
         else
           @courses = Course.where("courses.id != ? AND course_name LIKE ?", params[:course_id], "%#{params[:course_name]}%").
-            order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+            order(VIEW_COUSE_ORER).page(params[:page])
         end
       elsif current_user.teacher?
-        @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users).
+        @courses = Course.order(VIEW_COUSE_ORER).joins(:course_assigned_users).
           where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND courses.id != ? AND course_name LIKE ?",
             current_user.id, false, true, true, params[:course_id], "%#{params[:course_name]}%")
           .page(params[:page])

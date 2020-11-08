@@ -27,14 +27,10 @@ module Admin::AccessLogsHelper
 
       if User.current_user.admin?
         list << [t("access_log.ACC_ACCESSLOG_NAVITEXT2"), "0"]
-        #courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").limit(200)
         @courses.each do |course|
           list << [course.course_cd.to_s + " " + course.course_name.to_s + " " + course.instructor_name.to_s, course.id]
         end
       elsif User.current_user.teacher?
-        #courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:course_assigned_users)
-        #  .where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?)", current_user.id, false, true, true)
-        #  .limit(200)
         @courses.each do |course|
           list << [course.course_cd.to_s + " " + course.course_name.to_s + " " + course.instructor_name.to_s, course.id]
         end
