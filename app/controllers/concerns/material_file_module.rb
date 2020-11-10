@@ -303,7 +303,7 @@ module MaterialFileModule
     generic_page.timelag_flag = xml_page.elements['timelagFlg'].text if set_value?(xml_page.elements['timelagFlg'])
     generic_page.url_content = get_xml_value(xml_page.elements['urlContent'].text)
     generic_page.pre_grading_enable_flag = xml_page.elements['preGradingEnableFlg'].text if set_value?(xml_page.elements['preGradingEnableFlg'])
-    generic_page.assignment_essay_return_method_cd = get_xml_value(xml_page.elements['assignmentEssayReturnMethodCd'])
+    generic_page.assignment_essay_return_method_cd = get_xml_value(xml_page.elements['assignmentEssayReturnMethodCd'].text)
     generic_page.score_open_flag = xml_page.elements['scoreOpenFlg'].text if set_value?(xml_page.elements['scoreOpenFlg'])
     generic_page.material_memo = get_xml_value(xml_page.elements['materialMemo'].text)
     generic_page.correct_answer_display_flag = get_xml_value(xml_page.elements['correctAnswerDisplayFlg'].text)
