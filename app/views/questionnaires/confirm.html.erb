@@ -28,43 +28,8 @@
   <%= render :partial => "shared/smartphone", :locals => { title: t("execution.COMMONMATERIALSEXECUTION_TITLEQUESTIONNAIRE") } %>
 <% end %>
 
-<!-- 氏名、テスト/アンケートタイトル -->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <table class="table table-striped table-hover">
-          <!-- 氏名　-->
-          <tr>
-            <td class="col-xs-4">
-              <%= t('common.COMMON_TARGETNAME') %>
-            </td>
-            <td class="col-xs-8">
-              <%= current_user.user_name %>
-            </td>
-          </tr>
-
-          <!-- テストタイトル　-->
-          <tr>
-            <td>
-              <%= t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE1') %>
-            </td>
-            <td>
-              <%= @generic_page.generic_page_title %>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% if !@generic_page.can_edit?(current_user) %>
-  <!-- alertメッセージ -->
-  <div class='alert alert-warning alert-dismissible' role='alert'>
-    <%= t('execution.MAT_EXE_QUE_CONFIRMEXECUTEQUESTIONNAIRE_EXPLANATION1') %>
-  </div>
-<% end %>
+<!-- アンケートタイトル -->
+<%= render partial: "title_panel", locals: {can_answer: false} %>
 
 <!-- 授業画面の表示 -->
 <% @generic_page.parent_questions.each.with_index(1) do |parent_question, i| %>
