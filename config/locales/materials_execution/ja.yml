@@ -184,6 +184,9 @@ ja:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ERROR1: "は回答必須項目です。回答を入力してください。"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT1: "回答データを送信します。よろしいですか？"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT2: "学生のみ回答データが登録されます。（このまま送信を行なってもデータの登録は行われません。）"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED: "未回答"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "回答済み"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "未回答（回答締切）"
     ##errorExecuteQuestionnaire.jsp
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "このアンケートの期限は『<strong>%{param0}</strong>』までです。<br>回答することができません。"
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "このアンケートの受付期間は『<strong>%{param0}から%{param1}</strong>』までです。<br>回答することができません。"

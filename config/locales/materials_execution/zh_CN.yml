@@ -184,6 +184,9 @@ zh_CN:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ERROR1: "是必须答复项目。请输入答复。"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT1: "可以发送答复数据吗?"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT2: "只能登录学生的答复数据。(即使这样发送,数据也不会被登录。)"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED: "Not Submitted"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "Submitted"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "Not Submitted (Exprired)"
     ##errorExecuteQuestionnaire.jsp
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "此问卷调查的期限为“<strong>%{param0}</strong>”。<br>已经不能答复。"
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "此问卷调查的期限为“<strong>%{param0}～%{param1}</strong>”。<br>已经不能答复。"
