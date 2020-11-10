@@ -29,6 +29,7 @@ $(document).on 'click', '.btn_order_update', (e) ->
   action = form.attr("action").replace("destroy", "update_order")
   form.attr("action", action)
   form.find('input[name=_method]').val("patch")
+  form.find('input[name=authenticity_token]').val($("meta[name=csrf-token]").attr("content"))
 
   $(this).addClass('disabled')
   setTimeout ->
