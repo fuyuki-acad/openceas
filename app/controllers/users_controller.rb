@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       begin
         if @user_image
-          @user_image.assign_attributes(user_image_params)
+          @user_image.mount_url = user_image_params[:mount_url]
           raise unless @user_image.image_valid?
           @user_image.save!
           flash.now[:notice] = I18n.t('change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_INSERT_SUCCESS')
