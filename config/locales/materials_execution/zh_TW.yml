@@ -188,8 +188,8 @@ zh_TW:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "Submitted"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "Not Submitted (Exprired)"
     ##errorExecuteQuestionnaire.jsp
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "此問卷的回答期限為%{param0}。現在無法作答。"
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "此問卷的回答期限為%{param0}～%{param1}。現在無法作答。"
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "此問卷的回答期限為%{param0}。"
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "此問卷的回答期限為%{param0}～%{param1}。"
     ##startPasswordQuestinonnaire.jsp
     MAT_EXE_QUE_STARTPASSWORDQUESTIONNAIRE_TITLE: "請輸入開始填寫問卷的密碼"
     ##confirmExecuteQuestionnaire.jsp

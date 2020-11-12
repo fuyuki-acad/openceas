@@ -188,8 +188,8 @@ ja:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "回答済み"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "未回答（回答締切）"
     ##errorExecuteQuestionnaire.jsp
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "このアンケートの期限は『<strong>%{param0}</strong>』までです。<br>回答することができません。"
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "このアンケートの受付期間は『<strong>%{param0}から%{param1}</strong>』までです。<br>回答することができません。"
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "このアンケートの期限は『<strong>%{param0}</strong>』までです。"
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "このアンケートの受付期間は『<strong>%{param0}から%{param1}</strong>』までです。"
     ##startPasswordQuestinonnaire.jsp
     MAT_EXE_QUE_STARTPASSWORDQUESTIONNAIRE_TITLE: "アンケート開始パスワード入力"
     ##confirmExecuteQuestionnaire.jsp
