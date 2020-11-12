@@ -63,6 +63,9 @@ class ApplicationController < ActionController::Base
   end
 
   def other_courses
+    @list_controller_name = params[:controller_name]
+    @list_action = params[:list_action]
+
     set_course
     set_other_courses
     render :partial => "shared/courses/course_list"
