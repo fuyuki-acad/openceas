@@ -135,4 +135,17 @@ module QuestionnairesHelper
 
     selected_answer.html_safe
   end
+
+  def questionnaire_status(generic_page)
+    latest_score = generic_page.latest_score(current_user.id)
+    if latest_score.present? && latest_score.total_score != Settings.ANSWERSCORE_TMP_SAVED_SCORE
+      t("execution.MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED")
+    else
+      if generic_page.expired?
+        t("execution.MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED")
+      else
+        t("execution.MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED")
+      end
+    end
+  end
 end

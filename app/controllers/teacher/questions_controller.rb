@@ -24,7 +24,7 @@
 class Teacher::QuestionsController < ApplicationController
   include QuestionFileModule
 
-  before_action :require_assigned, only: [:show, :create_parent, :edit_parent, :update_parent,
+  before_action :require_assigned, only: [:show, :create_parent, :edit_parent, :update_parent, :update_order,
     :new, :create, :edit, :update, :confirm, :destroy, :select_upload, :confirm_upload, :upload, :download, :sample_xml, :sample_csv]
   before_action :set_generic_page, only: [:show, :create_parent, :edit_parent, :update_parent,
     :new, :create, :edit, :update, :confirm, :destroy, :select_upload, :confirm_upload, :upload, :download, :sample_xml, :sample_csv]

@@ -53,7 +53,7 @@ class Teacher::FaqsController < ApplicationController
     response_flag = @faq.response_flag
     @faq.response_flag = Settings.FAQ_RESPONSEFLG_REPLIED
     ActiveRecord::Base.transaction do
-      @faq.update_attributes!(session[:faq])
+      @faq.update!(session[:faq])
       if response_flag == Settings.FAQ_RESPONSEFLG_UNREPLY
         FaqMailer.answer(@faq.faq_answer, @faq.user).deliver_now
 

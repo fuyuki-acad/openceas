@@ -43,6 +43,10 @@ class QuestionnairesController < ApplicationController
           return
         end
       else
+        if latest_score && !@generic_page.answer_saved?(current_user)
+          render "confirm"
+          return
+        end
         render "error"
         return
       end

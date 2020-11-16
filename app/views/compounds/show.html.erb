@@ -121,7 +121,7 @@
                         <% if question.pattern_cd == Settings.QUESTION_PATTERNCD_RADIO %>
                           <%= hidden_field_tag "answers[#{question.id}][select_answer_id]" %>
                           <% question.select_quizzes.each do |quiz| %>
-                            <%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                            <label><%= radio_button_tag "answers[#{question.id}][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <%= quiz.content %></label><br/>
                           <% end %>
 
                         <!-- リストボックスの時 -->
@@ -131,7 +131,7 @@
                         <!-- チェックボックスの時 -->
                         <% elsif question.pattern_cd == Settings.QUESTION_PATTERNCD_CHECK %>
                           <% question.select_quizzes.each do |quiz| %>
-                            <%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <label><%= quiz.content %></label><br/>
+                            <label><%= check_box_tag "answers[#{question.id}][][select_answer_id]", quiz.id, checked(quiz, @answers, question.id) %> <%= quiz.content %></label><br/>
                           <% end %>
 
                         <!-- 記述の時 -->

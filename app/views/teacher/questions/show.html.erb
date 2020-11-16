@@ -282,7 +282,7 @@
                                   <% if parent_question.questions.count > 0 %>
                                     <span id="order_update_<%= parent_question.id %>" style="display: none">
                                       <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE6"), "#",
-                                        :data => {:target => "question[#{parent_question.id}]"}, class: "btn btn-primary ceas-button-margin-5 btn_order_update" %>
+                                        :data => {:target => "question[#{parent_question.id}]", :parent_id => "#{parent_question.id}"}, class: "btn btn-primary ceas-button-margin-5 btn_order_update" %>
                                     </span>
                                     <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
                                       :data => {:target => "question[#{parent_question.id}]", :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
@@ -305,6 +305,8 @@
                           </div>
                         </div>
                       </div>
+                      <% end %>
+                      <%= form_tag url_for(:action => "update_order", :generic_page_id => @generic_page, :parent_id => parent_question), {:id => "frm_update_order_#{parent_question.id}", :method => "patch"} do %>
                       <% end %>
                     </div>
                   </div>

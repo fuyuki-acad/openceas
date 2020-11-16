@@ -32,10 +32,10 @@ class Teacher::PackagedLoadingsController < ApplicationController
 
   def index
     if current_user.admin?
-      @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").
+      @courses = Course.order(VIEW_COUSE_ORER).
         where("indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", 0, Settings.COURSE_SELFSTUDY_INVALIDITY, 0, "%#{params[:course_name]}%").page(params[:page])
     else
-      @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").
+      @courses = Course.order(VIEW_COUSE_ORER).
         joins(:course_assigned_users).
         where("user_id = ? AND indirect_use_flag = ? AND (courses.term_flag = ? OR courseware_flag = ?) AND course_name LIKE ?", current_user.id, 0, Settings.COURSE_SELFSTUDY_INVALIDITY, 0, "%#{params[:course_name]}%").page(params[:page])
     end

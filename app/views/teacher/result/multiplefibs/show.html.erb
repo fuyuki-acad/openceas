@@ -33,7 +33,7 @@
       <div class="btn-group">
         <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
         <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
-          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
+          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: "result/#{controller.controller_name}"} %>
       </div>
     </div>
   </div>

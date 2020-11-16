@@ -70,7 +70,7 @@ class Admin::CoursesController < ApplicationController
     sql_texts.push("courseware_flag = :courseware_flag")
     sql_params[:courseware_flag] = "0"
 
-    @courses = Course.where(sql_texts.join(" AND "), sql_params).order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+    @courses = Course.where(sql_texts.join(" AND "), sql_params).order(VIEW_COUSE_ORER).page(params[:page])
   end
 
   def new
@@ -379,7 +379,8 @@ class Admin::CoursesController < ApplicationController
   def create_delete_list
     file_name = "courseDeleteList.csv"
     if params[:course] == "1"
-      courses = Course.joins("LEFT JOIN class_sessions ON courses.id = class_sessions.course_id").where("courses.school_year = #{params[:school_year].to_i} AND class_sessions.id IS NULL")
+      courses = Course.joins("LEFT JOIN class_sessions ON courses.id = class_sessions.course_id").
+        where("courses.school_year = #{params[:school_year].to_i} AND class_sessions.id IS NULL")
     else
       courses = Course.where("courses.school_year = #{params[:school_year].to_i}")
     end
@@ -467,7 +468,8 @@ class Admin::CoursesController < ApplicationController
 
   def parent_course
     key_word = params[:course_name].presence || ""
-    @courses = Course.where("course_name like ? AND courseware_flag = 0", "%" + key_word + "%").order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+    @courses = Course.where("course_name like ? AND courseware_flag = 0", "%" + key_word + "%").
+      order(VIEW_COUSE_ORER).page(params[:page])
     if request.xhr?
       respond_to do |format|
         format.html

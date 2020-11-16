@@ -389,6 +389,11 @@ crumb :attendances do
   parent :root
 end
 
+crumb :attendance do |course|
+  link t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ADMIN"), teacher_attendance_path(course)
+  parent :attendances
+end
+
 #
 # 連結評価一覧用
 #

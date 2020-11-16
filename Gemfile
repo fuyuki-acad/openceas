@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.7'
+gem 'rails', '5.2.4'
 # Use mysql as the database for Active Record
 gem "mysql2"
 # Use postgresql as the database for Active Record
@@ -98,6 +98,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 group :development do

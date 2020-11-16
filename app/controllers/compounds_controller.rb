@@ -237,11 +237,13 @@ class CompoundsController < ApplicationController
       session[:start_pass_flag] = true
       show
       render :action => :show
+      return
     else
       @message = I18n.t("execution.COMMONMATERIALSEXECUTION_STARTPASSWORDCHECK2")
       @execution_count = get_execution_count(@generic_page)
-      render "start_password"
     end
+
+    render "start_password"
   end
 
   def confirm
@@ -289,7 +291,7 @@ class CompoundsController < ApplicationController
     end
 
     @latest_score = @generic_page.latest_score(current_user.id)
-    if @latest_score && @generic_page.max_count <= @latest_score.answer_count
+    if @latest_score && !@latest_score.saved? && @generic_page.max_count <= @latest_score.answer_count
       redirect_to :action => :show, :id => @generic_page
       return
     end

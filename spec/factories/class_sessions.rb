@@ -24,6 +24,9 @@
 FactoryBot.define do
   factory :class_session do
     sequence(:class_session_title) { |n| "class session #{n}" }
+    sequence(:class_session_day) { |n| I18n.t("common.COMMON_COUNTFORM", :param0 => n) }
     sequence(:overview) { |n| "overview #{n}" }
+    sequence(:class_session_memo_closed) { |n| "class_session_memo_closed #{n}" }
+    sequence(:class_session_memo) { |n| "class_session_memo #{n}" }
   end
 end

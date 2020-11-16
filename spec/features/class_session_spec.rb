@@ -45,7 +45,7 @@ RSpec.describe "ClassSession", type: :request do
     end
 
     it 'status OK' do
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.status).to eq 200
     end
 

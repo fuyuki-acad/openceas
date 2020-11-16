@@ -87,7 +87,7 @@
           </div>
           <div class="col-xs-6 col-sm-4">
             <%= form.check_box :not_overwrite, {:checked => true}, true, nil %>
-            <%= t("registerUsrList1.PRI_REG_UPLOADLIST_UPLOADEXPLANATION2") %>
+            <%= form.label :not_overwrite, t('registerUsrList1.PRI_REG_UPLOADLIST_UPLOADEXPLANATION2'), class: "label_weight_normal" %>
           </div>
           <div class="col-xs-6 col-sm-4">
             <%= form.submit t('registerUsrList1.PRI_REG_UPLOADLIST_UPLOADEXPLANATION3'), class: 'btn btn-default' %>

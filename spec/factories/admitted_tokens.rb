@@ -23,10 +23,15 @@
 
 FactoryBot.define do
   factory :admitted_token do
-    description {"token"}
   end
 
   trait :token_admin do
+    description {"token"}
+    user_id {1}
+  end
+
+  trait :token_test do
+    description {"test token"}
     user_id {1}
   end
 end

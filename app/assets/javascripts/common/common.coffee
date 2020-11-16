@@ -229,8 +229,11 @@ $(document).on 'click', '.close_and_clear_password', (e) ->
 $(document).on('show.bs.modal', '.select-course-modal', (event) ->
   course_id = $(event.relatedTarget).data('id')
   controller = $(event.relatedTarget).data('controller')
+  action = $(event.relatedTarget).data('action')
+  if (action == undefined) 
+    action = ""
 
-  $.ajax '/other_courses/'+course_id+"?controller_name="+controller,
+  $.ajax '/other_courses/'+course_id+"?controller_name="+controller+"&list_action="+action,
     type: "get",
     cache: false,
     success: (data, textStatus, jqXHR) ->

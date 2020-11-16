@@ -186,7 +186,7 @@ class Admin::UsersController < ApplicationController
     def user_params
       params.require(:user).permit(
         :user_name, :kana_name, :email, :email_mobile, :sex_cd, :birth_date, :account,
-        :password, :name_no_prefix, :role_id, :term_flag, :delete_flag, :move_cd, :role_id,
+        :password, :name_no_prefix, :role_id, :term_flag, :delete_flag, :move_cd,
         :add_courses => [], :delete_courses => [])
     end
 
@@ -238,7 +238,7 @@ class Admin::UsersController < ApplicationController
       end
 
       @courses = Course.where(sql_texts.join(" AND "), sql_params).
-        order("school_year DESC, day_cd, hour_cd, season_cd")
+        order(VIEW_COUSE_ORER)
     end
 
     def get_assigned_courses(user)
@@ -281,10 +281,10 @@ class Admin::UsersController < ApplicationController
 
       if user.teacher?
         @courses = user.assigned_courses.where(sql_texts.join(" AND "), sql_params).
-          order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+          order(VIEW_COUSE_ORER).page(params[:page])
       elsif @user.student?
         @courses = user.enrollment_courses.where(sql_texts.join(" AND "), sql_params).
-          order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+          order(VIEW_COUSE_ORER).page(params[:page])
       end
     end
 end

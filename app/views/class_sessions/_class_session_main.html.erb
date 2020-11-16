@@ -141,7 +141,7 @@
 
           <div class="panel-body">
             <% @class_session.materials.each do |material| %>
-              <p>
+              <div>
                 <%= link_to material.generic_page_title, material_path(material.id), :target => "_blank" %>
 
                 <!-- 非公開メモ -->
@@ -154,11 +154,11 @@
                 <% end %>
                 &nbsp;
                 <% unless material.material_memo.blank? %>
-                  <span>
+                  <p>
                     <%= convert_html(material.material_memo) %>
-                  </span>
+                  </p>
                 <% end %>
-              </p>
+              </div>
             <% end %>
           </div>
         </div>
@@ -191,7 +191,6 @@
                     <%= convert_html(url.material_memo) %>
                   </p>
                 <% end %>
-                &nbsp;
                 <% unless url.content.blank? %>
                   <p>
                     <%== url.content %>
@@ -222,20 +221,20 @@
             <% if @open_flag %>
               <!--************************公開科目のとき*******************-->
               <% @class_session.questionnaires.each do |questionnaire| %>
-                <p>
+                <div>
                   <%= questionnaire.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless questionnaire.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(questionnaire.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
 
             <% else %>
 
               <% @class_session.questionnaires.each do |questionnaire| %>
-                <p>
+                <div>
                   <%= link_to questionnaire.generic_page_title, "javascript:void();",
                     {:onclick => "openWindow3('" +
                       url_for(:controller => "/questionnaires", :action => :show, :id => questionnaire, :class_session_no => @class_session.class_session_no) +
@@ -252,11 +251,11 @@
                     <% end %>
                   <% end %>
                   <% unless questionnaire.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(questionnaire.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
             <% end %>
           </div>
@@ -280,20 +279,20 @@
             <% if @open_flag %>
               <!--************************公開科目のとき*******************-->
               <% @class_session.componds.each do |compond| %>
-                <p>
+                <div>
                   <%= compond.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless compond.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(compond.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
 
             <% else %>
 
               <% @class_session.componds.each do |compond| %>
-                <p>
+                <div>
                   <%= link_to compond.generic_page_title, "javascript:void();",
                     {:onclick => "openWindow3('" +
                       url_for(:controller => "/compounds", :action => :show, :id => compond, :class_session_no => @class_session.class_session_no) +
@@ -310,11 +309,11 @@
                     <% end %>
                   <% end %>
                   <% unless compond.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(compond.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
             <% end %>
           </div>
@@ -338,20 +337,20 @@
             <% if @open_flag %>
               <!--************************公開科目のとき*******************-->
               <% @class_session.multiplefibs.each do |multiplefib| %>
-                <p>
+                <div>
                   <%= multiplefib.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless multiplefib.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(multiplefib.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
 
             <% else %>
 
               <% @class_session.multiplefibs.each do |multiplefib| %>
-                <p>
+                <div>
                   <%= link_to multiplefib.generic_page_title, "javascript:void();",
                     {:onclick => "openWindow3('" +
                       url_for(:controller => "/multiplefibs", :action => :show, :id => multiplefib, :class_session_no => @class_session.class_session_no) +
@@ -368,11 +367,11 @@
                     <% end %>
                   <% end %>
                   <% unless multiplefib.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(multiplefib.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
             <% end %>
 
@@ -397,20 +396,20 @@
             <% if @open_flag %>
               <!--************************公開科目のとき*******************-->
               <% @class_session.essays.each do |essay| %>
-                <p>
+                <div>
                   <%= essay.generic_page_title %> <%= t("class_session_execution.CLA_CLASSSESSIONEXECUTION_NOTAVAILABLE") %>
                   <% unless essay.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(essay.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
 
             <% else %>
 
               <% @class_session.essays.each do |essay| %>
-                <p>
+                <div>
                   <%= link_to essay.generic_page_title, "javascript:void();",
                     {:onclick => "openWindow3('" + url_for(:controller => "/essays", :action => :show, :id => essay) +"', 'executeAssignmentEssay', '800', '600')"} %>
                   <% if essay.start_time.blank? %>
@@ -425,11 +424,11 @@
                     <% end %>
                   <% end %>
                   <% unless essay.material_memo.blank? %>
-                    <span>
+                    <p>
                       <%= convert_html(essay.material_memo) %>
-                    </span>
+                    </p>
                   <% end %>
-                </p>
+                </div>
               <% end %>
             <% end %>
 
@@ -452,14 +451,14 @@
 
           <div class="panel-body">
             <% @class_session.evaluations.each do |evaluation| %>
-              <<p></p>>
+              <div>
                 <%= evaluation.generic_page_title %>
                 <% unless evaluation.material_memo.blank? %>
-                  <span>
+                  <p>
                     <%= convert_html(evaluation.material_memo) %>
-                  </span>
+                  </p>
                 <% end %>
-              </p>
+              </div>
             <% end %>
           </div>
         </div>

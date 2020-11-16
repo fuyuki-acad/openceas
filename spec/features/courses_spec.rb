@@ -24,7 +24,7 @@
 require 'rails_helper'
 
 RSpec.describe "Courses", type: :request do
-  before :all do
+  before do
     FactoryBot.create_list(:course, 5, :year_of_2018)
     FactoryBot.create_list(:course, 5, :year_of_2019)
   end
@@ -37,7 +37,7 @@ RSpec.describe "Courses", type: :request do
     end
 
     it 'status OK' do
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.status).to eq 200
     end
 
@@ -55,7 +55,7 @@ RSpec.describe "Courses", type: :request do
     end
 
     it 'status OK' do
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.status).to eq 200
     end
 
@@ -80,7 +80,7 @@ RSpec.describe "Courses", type: :request do
     end
 
     it 'status OK' do
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.status).to eq 200
     end
 

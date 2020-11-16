@@ -75,11 +75,13 @@
                                 <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
                                 <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%== question.content %></span></td>
                               </tr>
-                              <tr>
-                                <!-- 正解 -->
-                                <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></td>
-                                <td class="col-xs-10"><%== question.answer_memo %></td>
-                              </tr>
+                              <% if can_display_correct_answer?(@generic_page, @latest_score) %>
+                                <tr>
+                                  <!-- 正解 -->
+                                  <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_CORRECT") %></td>
+                                  <td class="col-xs-10"><%== question.answer_memo %></td>
+                                </tr>
+                              <% end %>
                               <tr>
                                 <!-- あなたの解答 -->
                                 <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>
@@ -163,13 +165,15 @@
                                 <td class="col-xs-2"><%= t("execution.COMMONMATERIALSEXECUTION_QUESTION") + j.to_s %></td>
                                 <td class="col-xs-10"><span class="question_frame_right2 questionFooter5"><%== question.content %></span></td>
                               </tr>
-                              <tr>
-                                <!-- 正解 -->
-                                <td class="col-xs-2"><%= t("common.COMMON_CORRECTANSWER") %></td>
-                                <td class="col-xs-10">
-                                  <%== convert_html(question.correct_values.map { |value| value.content }.join("\n")) %>
-                                </td>
-                              </tr>
+                              <% if can_display_correct_answer?(@generic_page, @latest_score) %>
+                                <tr>
+                                  <!-- 正解 -->
+                                  <td class="col-xs-2"><%= t("common.COMMON_CORRECTANSWER") %></td>
+                                  <td class="col-xs-10">
+                                    <%== convert_html(question.correct_values.map { |value| value.content }.join("\n")) %>
+                                  </td>
+                                </tr>
+                              <% end %>
                               <tr>
                                 <!-- あなたの解答 -->
                                 <td class="col-xs-2"><%= t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_YOURANSWER") %></td>

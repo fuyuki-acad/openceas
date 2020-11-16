@@ -88,4 +88,12 @@ module CompoundsHelper
     end
   end
 
+  def can_display_correct_answer?(generic_page, latest_score)
+    if generic_page.correct_answer_display_flag == 1 
+      return true if @generic_page.passed?(current_user.id) || generic_page.max_count <= latest_score.answer_count
+    end
+
+    false
+  end
+
 end

@@ -23,7 +23,7 @@
 
 <%= javascript_include_tag 'admin/attendanceAdministration' %>
 
-<% breadcrumb :combined_records %>
+<% breadcrumb :attendance, @course %>
 
 <!-- スマートフォンタイトル　-->
 <%= render :partial => "shared/smartphone", :locals => { title: t("attendanceAdministration.COMMONATTENDANCEADMINISTRATION_ADMIN") } %>
@@ -36,6 +36,9 @@
       <div class="btn-group">
         <!-- 他の作業ボタン -->
         <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+        <!-- 科目選択ボタン -->
+        <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+          data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
       </div>
     </div>
   </div>

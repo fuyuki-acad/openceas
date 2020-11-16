@@ -74,25 +74,37 @@ class Teacher::AllocationsController < ApplicationController
       end
 
       params["allocation"].each do |key, value|
-        assigned = GenericPageClassSessionAssociation.where(:class_session_id => @class_session.id, :generic_page_id => key).first
+        @assigned = GenericPageClassSessionAssociation.where(:class_session_id => @class_session.id, :generic_page_id => key).first
         if value["assign"] == "0"
-          assigned.destroy! if assigned
+          @assigned.destroy! if @assigned
         else
-          unless assigned
-            assigned = GenericPageClassSessionAssociation.new
-            assigned.class_session_id = @class_session.id
-            assigned.generic_page_id = key
+          unless @assigned
+            @assigned = GenericPageClassSessionAssociation.new
+            @assigned.class_session_id = @class_session.id
+            @assigned.generic_page_id = key
           end
-          assigned.view_rank = value["view_rank"] unless value["view_rank"].blank?
-          assigned.save!
+
+          if value["view_rank"].blank?
+            @assigned.view_rank = 0
+          else
+            @assigned.view_rank = value["view_rank"]
+          end
+          @assigned.save!
         end
       end
     end
     render action: :show
 
   rescue => e
-    logger.error e.backtrace.join("\n")
-    flash.now[:notice] = e.message
+    if @assigned && @assigned.errors.count > 0
+      @assigned.errors.messages.each do |key, msg|
+        flash.now[:notice] = msg.join("")
+        break
+      end
+    else
+      logger.error e.backtrace.join("\n")
+      flash.now[:notice] = e.message
+    end
     render action: :show
 
   end

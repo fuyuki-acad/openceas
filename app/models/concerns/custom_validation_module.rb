@@ -127,7 +127,7 @@ module CustomValidationModule
   end
 
   def validate_date(target, message)
-    value = self.send target.to_sym
+    value = self.send "#{target}_before_type_cast".to_sym
     unless value.blank?
       begin
         date = value.to_date

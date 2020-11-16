@@ -81,7 +81,13 @@
                 <% if other_course.id != @course.id %>
                 <tr>
                   <!-- 確認／修正 -->
-                  <td><%= link_to t("common.COMMON_SELECT"), {controller: "/teacher/"+params[:controller_name], action: :show, course_id: other_course.id}, class: "btn btn-warning" %></td>
+                  <td>
+                    <% if @list_action.blank? %>
+                      <%= link_to t("common.COMMON_SELECT"), {controller: "/teacher/"+@list_controller_name, action: :show, course_id: other_course.id}, class: "btn btn-warning" %>
+                    <% else %>
+                      <%= link_to t("common.COMMON_SELECT"), {controller: "/teacher/"+@list_controller_name, :action => @list_action, course_id: other_course.id}, class: "btn btn-warning" %>
+                    <% end %>
+                  </td>
 
                   <!-- No. -->
                   <td class="td-bold"><%= index %></td>

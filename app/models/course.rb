@@ -71,7 +71,7 @@ class Course < ApplicationRecord
       sql_params[:indirect_use_flag] = false
       sql_params[:term_flag] = true
       sql_params[:courseware_flag] = true
-      Course.joins(:course_assigned_users).where(sql_text, sql_params).order("school_year DESC, day_cd, hour_cd, season_cd").page(page)
+      Course.joins(:course_assigned_users).where(sql_text, sql_params).order(VIEW_COUSE_ORER).page(page)
     end
 
     def get_count_not_confirmed(user_id)
@@ -81,7 +81,7 @@ class Course < ApplicationRecord
       sql_params[:indirect_use_flag] = false
       sql_params[:term_flag] = true
       sql_params[:courseware_flag] = true
-      Course.joins(:course_assigned_users, :unread_assignment_essay_count_views).order("school_year DESC, day_cd, hour_cd, season_cd").where(sql_text, sql_params).limit(3)
+      Course.joins(:course_assigned_users, :unread_assignment_essay_count_views).order(VIEW_COUSE_ORER).where(sql_text, sql_params).limit(3)
     end
 
     def get_enrollment(user_id, page)
@@ -91,7 +91,7 @@ class Course < ApplicationRecord
       sql_params[:indirect_use_flag] = false
       sql_params[:term_flag] = true
       sql_params[:courseware_flag] = false
-      Course.joins(:course_enrollment_users).where(sql_text, sql_params).order("school_year DESC, day_cd, hour_cd, season_cd").page(page)
+      Course.joins(:course_enrollment_users).where(sql_text, sql_params).order(VIEW_COUSE_ORER).page(page)
     end
   end
 
