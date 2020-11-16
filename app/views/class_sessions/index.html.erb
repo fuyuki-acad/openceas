@@ -175,32 +175,68 @@
             <div id="collapseClassSessionDetail_<%= index %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseClassSessionDetail_<%= index %>_Heading">
               <div class="panel-body">
                 <ul class="list-group">
-                  <% session.assigned_generic_pages.each do |generic_page| %>
-                    <li class="list-group-item">
-                      <% if generic_page.material? %>
-                        <!-- 授業資料 -->
+                  <!-- 授業資料 -->
+                  <% if session.assigned_materials? %>
+                    <% session.materials.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "siryo.gif" %>
-                      <% elsif generic_page.url? %>
-                        <!-- URL教材資料 -->
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- URL教材資料 -->
+                  <% if session.assigned_urls? %>
+                    <% session.urls.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "url.gif" %>
-                      <% elsif generic_page.essay? %>
-                        <!-- レポート一覧 -->
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- アンケート一覧 -->
+                  <% if session.assigned_questionnaires? %>
+                    <% session.questionnaires.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "repo.gif" %>
-                      <% elsif generic_page.questionnaire? %>
-                        <!-- アンケート一覧 -->
-                        <%= image_tag "enq.gif" %>
-                      <% elsif generic_page.compond? %>
-                        <!-- 複合式テスト一覧 -->
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- 複合式テスト一覧 -->
+                  <% if session.assigned_componds? %>
+                    <% session.componds.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "test.gif" %>
-                      <% elsif generic_page.multiplefib? %>
-                        <!-- 記号入力式テスト一覧 -->
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- 記号入力式テスト一覧 -->
+                  <% if session.assigned_multiplefibs? %>
+                    <% session.multiplefibs.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "test.gif" %>
-                      <% elsif generic_page.evaluation? %>
-                        <!-- 評価記入リスト一覧 -->
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- レポート一覧 -->
+                  <% if session.assigned_essays? %>
+                    <% session.essays.each do |generic_page| %>
+                      <li class="list-group-item">
+                        <%= image_tag "repo.gif" %>
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <!-- 評価記入リスト一覧 -->
+                  <% if session.assigned_evaluations? %>
+                    <% session.evaluations.each do |generic_page| %>
+                      <li class="list-group-item">
                         <%= image_tag "eva.gif" %>
-                      <% end %>
-                      <%= generic_page.generic_page_title %>
-                    </li>
+                        <%= generic_page.generic_page_title %>
+                      </li>
+                    <% end %>
                   <% end %>
                 </ul>
                 <div class="pull-right">

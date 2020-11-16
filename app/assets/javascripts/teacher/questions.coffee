@@ -25,10 +25,9 @@ $(document).on 'click', '.btn-delete-question', (e) ->
 $(document).on 'click', '.btn_order_update', (e) ->
   e.preventDefault()
   e.stopPropagation()
-  form = $(this).parents('form')
-  action = form.attr("action").replace("destroy", "update_order")
-  form.attr("action", action)
-  form.find('input[name=_method]').val("patch")
+
+  parent_id = $(this).data('parent-id')
+  form = $('#frm_update_order_'+parent_id)
 
   $(this).addClass('disabled')
   setTimeout ->

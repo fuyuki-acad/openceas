@@ -184,9 +184,12 @@ en:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ERROR1: "is a required field. Enter your response."
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT1: "Are you sure to submit your response?"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_JAVASCRIPT2: "Only students can send their response. (No data is saved for you.)"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED: "Not Submitted"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "Submitted"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "Not Submitted (Exprired)"
     ##errorExecuteQuestionnaire.jsp
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "This survey was already closed (submission period: <strong> %{param0} </strong>). You cannot submit your response."
-    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "This survey was already closed (submission period: <strong> %{param0}～%{param1} </strong>). You cannot submit your response."
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "This survey was already closed (submission period: <strong> %{param0} </strong>). "
+    MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "This survey was already closed (submission period: <strong> %{param0}～%{param1} </strong>). "
     ##startPasswordQuestinonnaire.jsp
     MAT_EXE_QUE_STARTPASSWORDQUESTIONNAIRE_TITLE: "Enter Password to start the survey."
     ##confirmExecuteQuestionnaire.jsp

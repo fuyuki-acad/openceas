@@ -43,6 +43,6 @@ class Teacher::NotReadAssignmentEssayAndFaqsController < ApplicationController
       joins("LEFT JOIN unread_assignment_essay_count_view ON unread_assignment_essay_count_view.course_id = courses.id").
       joins("LEFT JOIN non_answer_faq_count_view ON non_answer_faq_count_view.course_id = courses.id").
       where(sql_text, sql_params).
-      order("school_year DESC, day_cd, hour_cd, season_cd").distinct
+      order(VIEW_COUSE_ORER).distinct
   end
 end

@@ -109,11 +109,11 @@ class Teacher::MultiplefibsController < ApplicationController
 
   def select_course
     if current_user.admin?
-      @other_courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").
+      @other_courses = Course.order(VIEW_COUSE_ORER).
         where("courses.id != ? AND course_name LIKE ?", params[:course_id], "%#{params[:course_name]}%").
         page(params[:page])
     else
-      @other_courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").
+      @other_courses = Course.order(VIEW_COUSE_ORER).
         joins(:course_assigned_users).
         where("user_id = ? AND courses.id != ? AND course_name LIKE ?", current_user.id, params[:course_id], "%#{params[:course_name]}%").
         page(params[:page])

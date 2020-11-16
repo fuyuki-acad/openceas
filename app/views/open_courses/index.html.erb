@@ -112,7 +112,7 @@
             <% @courses.each.with_index(1) do |course, index| %>
               <tr>
                 <!-- No. -->
-                <td class="td-bold"><%= index %></td>
+                <td class="td-bold" style="min-width: 40px"><%= index %></td>
 
                 <!-- 割付 -->
                 <td class="td-bold">
@@ -145,7 +145,7 @@
                 <td class="td-bold td-nowrap hidden-xs"><%= convert_season_cd(course.season_cd) %></td>
 
                 <!-- 科目名称 -->
-                <td class="td-bold"><%= course.course_name %></td>
+                <td class="td-bold" style="min-width: 200px"><%= course.course_name %></td>
 
                 <!-- 科目概要 -->
                 <td class="td-bold hidden-xs">
@@ -225,7 +225,7 @@
               <% @assigned_courses.each.with_index(1) do |course, index| %>
               <tr>
                 <!-- No. -->
-                <td class="td-bold"><%= index %></td>
+                <td class="td-bold" style="min-width: 40px"><%= index %></td>
 
                 <!-- 解除 -->
                 <td class="td-bold">
@@ -251,7 +251,7 @@
                 <td class="td-bold td-nowrap hidden-xs"><%= convert_season_cd(course.season_cd) %></td>
 
                 <!-- 科目名称 -->
-                <td class="td-bold"><%= course.course_name %></td>
+                <td class="td-bold" style="min-width: 200px"><%= course.course_name %></td>
 
                 <!-- 科目概要 -->
                 <td class="td-bold hidden-xs">

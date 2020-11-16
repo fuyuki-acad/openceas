@@ -57,7 +57,6 @@ module MarkModule
             answer_score.view_total_score = answer_score.self_total_score.to_s + "/100"
 					else
             answer_score.view_total_score = ANDER_SCORE
-						answer_score.order = ANDER_SCORE
 					end
 
 				elsif question_composition != Settings.QUESTIONCOMPOSITIONCD_MULTIPLEONLY && exam.self_flag == Settings.GENERICPAGE_SELFFLG_NONE

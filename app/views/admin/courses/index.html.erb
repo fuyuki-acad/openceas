@@ -34,9 +34,12 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="col-xs-12 col-sm-6">
-                <%= radio_button_tag :type1, "0", true %> <%= t('common.COMMON_COURSENAME') %>
-                <%= radio_button_tag :type1, "1", params[:type1] == "1" %> <%= t('common.COMMON_INSTRUCTORNAME') %>
-                <%= radio_button_tag :type1, "2", params[:type1] == "2" %> <%= t('common.COMMON_COURSECD') %>
+                <%= radio_button_tag :type1, "0", true %>
+                <%= label_tag "type1_0", t('common.COMMON_COURSENAME'), class: "label_weight_normal" %>
+                <%= radio_button_tag :type1, "1", params[:type1] == "1" %>
+                <%= label_tag "type1_1", t('common.COMMON_INSTRUCTORNAME'), class: "label_weight_normal" %>
+                <%= radio_button_tag :type1, "2", params[:type1] == "2" %>
+                <%= label_tag "type1_2", t('common.COMMON_COURSECD'), class: "label_weight_normal" %>
 
                 <div class="input-group">
                   <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>

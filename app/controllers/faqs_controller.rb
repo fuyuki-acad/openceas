@@ -22,8 +22,9 @@
 #++
 
 class FaqsController < ApplicationController
-  before_action :require_enrolled, only: [:course, :new, :show]
+  before_action :require_enrolled_or_open_assigned, only: [:course, :new, :show]
   before_action :set_course, only: [:course, :new]
+  before_action :permited_open_course, only: [:course, :new]
 
   def index
     sql_texts = []
@@ -113,4 +114,18 @@ class FaqsController < ApplicationController
     def faq_params
       params.require(:faq).permit(:course_id, :faq_title, :question)
     end
-end
+
+    def permited_open_course
+      if @course.open_course_flag == Settings.COURSE_OPENCOURSEFLG_PUBLIC
+        if @course.announcement_cd != Settings.COURSE_ANNOUNCEMENTCD_NORMAL ||
+           @course.open_course_announcement_flag != Settings.COURSE_OPENCOURSEANNOUNCEMENTFLG_ON
+          raise Forbidden
+        end
+      else
+        if @course.announcement_cd != Settings.COURSE_ANNOUNCEMENTCD_NORMAL
+         raise Forbidden
+       end
+     end
+    end
+
+  end

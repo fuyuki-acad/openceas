@@ -44,7 +44,7 @@ class Teacher::AccessLogsController < ApplicationController
       else
         assigned = course.course_assigned_users.where(user_id: current_user.id).first
       end
-      raise NOT_ASSIGNED if assigned.blank?
+      raise Forbidden if assigned.blank?
 
       sql_texts.push("course_access_logs.course_id = :course_id")
       sql_params[:course_id] = params[:type]
@@ -88,14 +88,14 @@ class Teacher::AccessLogsController < ApplicationController
 
     end
 
+  rescue Forbidden => e
+    raise e
+
   rescue => e
-    if e.message == NOT_ASSIGNED
-      raise e
-    else
-      logger.error e.backtrace.join("\n")
-      @logs = nil
-      flash[:notice] = e.message
-    end
+    logger.error e.backtrace.join("\n")
+    @logs = nil
+    flash[:notice] = e.message
+
   end
 
   def date_valid?(date)

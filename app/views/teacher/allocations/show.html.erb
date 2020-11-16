@@ -26,16 +26,20 @@
 
 <div class="row">
   <div class="col-xs-12 col-sm-4">
-    <!-- 授業ページ参照 -->
-    <% if @class_session %>
-      <div class='panel panel-default'>
-        <div class='panel-body'>
-          <div class='row text-center'>
-            <%= link_to t("select_class_session.MAT_ALL_SELECTCLASSSESSION_SERCHCLASSSESSIONALTTEXT1"), {action: :confirm, course_id: @course, :session_no => @class_session.class_session_no}, :class => "btn btn-primary", :target => "_new" %>
-          </div>
+    <div class='panel panel-default'>
+      <div class='panel-body'>
+        <div class='row text-center'>
+          <% if @class_session %>
+            <%= link_to t("select_class_session.MAT_ALL_SELECTCLASSSESSION_SERCHCLASSSESSIONALTTEXT1"), {action: :confirm, course_id: @course, :session_no => @class_session.class_session_no}, :class => "btn btn-primary ceas-button-margin-5", :target => "_new" %>
+          <% end %>
+          <!-- 他の作業ボタン -->
+          <%= submit_tag t("common.COMMON_MOVEOTHERPAGE"), class: "btn btn-primary ceas-button-margin-5", data: {toggle: 'modal', target: '.global-navi-modal'} %>
+          <!-- 科目選択ボタン -->
+          <%= submit_tag t("common.COMMON_COURSECHANGE"), class: "btn btn-primary ceas-button-margin-5",
+            data: {toggle: 'modal', target: '.select-course-modal', id: @course.id, controller: controller.controller_name} %>
         </div>
       </div>
-    <% end %>
+    </div>
 
 
     <div class="row">
@@ -604,3 +608,19 @@
     <% end %>
   </div>
 </div>
+
+<!-- global-navigation modal-->
+<div class="modal fade global-navi-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h6 class="modal-title"><%= t("common.COMMON_SELECTWORK") %></h6>
+    </div>
+    <div class="modal-body">
+      <%= render :partial => "layouts/nav/work_navi", :locals => {:course_id => @course.id} %>
+    </div>
+  </div>
+</div>
+
+<!-- コース一覧 modal-->
+<%= render :partial => "shared/courses/courses_modal", :locals => {:course => @course, :courses => @courses} %>

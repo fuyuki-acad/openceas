@@ -36,8 +36,10 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="col-xs-12 col-sm-6">
-            <%= radio_button_tag :type, "0", true %> <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION4') %>
-            <%= radio_button_tag :type, "1", params[:type] == "1" %> <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION5') %>
+            <%= radio_button_tag :type, "0", true %>
+            <%= label_tag "type_0", t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION4'), class: "label_weight_normal" %>
+            <%= radio_button_tag :type, "1", params[:type] == "1" %>
+            <%= label_tag "type_1", t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION5'), class: "label_weight_normal" %>
             <div class="input-group">
               <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
               <span class="input-group-btn">
@@ -46,7 +48,7 @@
             </div>
           </div>
           <div class="col-xs-12 col-sm-6">
-            <%= t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION1') %>
+            <%= label_tag "", t('admin.user.PRI_ADM_USR_SELECTUSR_EXPLANATION1'), class: "label_weight_normal" %>
             <div class="input-group">
               <%= select_tag :role,
                 options_for_select(Role::role_list, params[:role]), {:include_blank => '', :class => "form-control"}

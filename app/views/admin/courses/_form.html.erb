@@ -97,8 +97,10 @@
               <%= t('common.COMMON_INDIRECTUSE') %>
             </td>
             <td>
-              <%= f.radio_button :indirect_use_flag, Settings.COURSE_INDIRECTUSEFLG_DIRECT.to_s %> <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INDIRECTUSEFLG_DIRECT') %><br/>
-              <%= f.radio_button :indirect_use_flag, Settings.COURSE_INDIRECTUSEFLG_INDIRECT.to_s %> <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INDIRECTUSEFLG_INDIRECT') %><br/>
+              <%= f.radio_button :indirect_use_flag, Settings.COURSE_INDIRECTUSEFLG_DIRECT.to_s %>
+              <%= f.label :indirect_use_flag, t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INDIRECTUSEFLG_DIRECT'), value: Settings.COURSE_INDIRECTUSEFLG_DIRECT, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :indirect_use_flag, Settings.COURSE_INDIRECTUSEFLG_INDIRECT.to_s %>
+              <%= f.label :indirect_use_flag, t('admin.course.PRI_ADM_COU_REGISTERCOURSE_INDIRECTUSEFLG_INDIRECT'), value: Settings.COURSE_INDIRECTUSEFLG_INDIRECT, class: "label_weight_normal" %><br/>
               <%= link_to t("admin.course.PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSE_HELP"), asset_path(t("admin.course.PRI_ADM_COU_REGISTERCOURSE_PARENTCOURSE_HELP_PDF")), {target: "_blank"} %>
             </td>
           </tr>
@@ -186,8 +188,10 @@
               <%= t('admin.course.COMMON_ADMINISTRATECOURSE_TERMFLG_html') %>
             </td>
             <td>
-              <%= f.radio_button :term_flag, "1" %> <%= t('common.COMMON_USE') %><br/>
-              <%= f.radio_button :term_flag, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
+              <%= f.radio_button :term_flag, "1" %>
+              <%= f.label :term_flag, t('common.COMMON_USE'), value: "1", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :term_flag, "0" %>
+              <%= f.label :term_flag, t('common.COMMON_NOTUSE'), value: "0", class: "label_weight_normal" %><br/>
               <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_TERMFLGEXPLANATION') %>
             </td>
           </tr>
@@ -215,8 +219,10 @@
               <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSE') %>
             </td>
             <td>
-              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PUBLIC, {:checked => true, :onclick => "changeRadio('registerCourse');"} %> <%= t('common.COMMON_OPEN') %><br/>
-              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PRIVATE, {:onclick => "changeRadio('registerCourse');"} %> <%= t('common.COMMON_NOTOPEN') %><br/>
+              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PUBLIC, {:checked => true, :onclick => "changeRadio('registerCourse');"} %>
+              <%= f.label :open_course_flag, t('common.COMMON_OPEN'), value: Settings.COURSE_OPENCOURSEFLG_PUBLIC, class: "label_weight_normal" %><br/>
+              <%= f.radio_button :open_course_flag, Settings.COURSE_OPENCOURSEFLG_PRIVATE, {:onclick => "changeRadio('registerCourse');"} %>
+              <%= f.label :open_course_flag, t('common.COMMON_NOTOPEN'), value: Settings.COURSE_OPENCOURSEFLG_PRIVATE, class: "label_weight_normal" %><br/>
               <%= t('admin.course.PRI_ADM_COU_REGISTERCOURSE_OPENCOURSEEXPLANATION') %>
             </td>
           </tr>
@@ -235,9 +241,12 @@
               <%= t('common.COMMON_ANNOUNCEMENT') %>
             </td>
             <td>
-              <%= f.radio_button :announcement_cd, "1" %> <%= t('common.COMMON_USE') %><br/>
-              <%= f.radio_button :announcement_cd, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
-              <%= f.check_box :open_course_announcement_flag %> <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG') %>
+              <%= f.radio_button :announcement_cd, "1" %>
+              <%= f.label :announcement_cd, t('common.COMMON_USE'), value: "1", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :announcement_cd, "0" %>
+              <%= f.label :announcement_cd, t('common.COMMON_NOTUSE'), value: "0", class: "label_weight_normal" %><br/>
+              <%= f.check_box :open_course_announcement_flag %>
+              <%= f.label :open_course_announcement_flag, t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG'), class: "label_weight_normal" %><br/>
             </td>
           </tr>
           <!--ＦＡＱ-->
@@ -246,9 +255,12 @@
               <%= t('common.COMMON_FAQ') %>
             </td>
             <td>
-              <%= f.radio_button :faq_cd, "1" %> <%= t('common.COMMON_USE') %><br/>
-              <%= f.radio_button :faq_cd, "0" %> <%= t('common.COMMON_NOTUSE') %><br/>
-              <%= f.check_box :open_course_faq_flag %> <%= t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG') %>
+              <%= f.radio_button :faq_cd, "1" %>
+              <%= f.label :faq_cd, t('common.COMMON_USE'), value: "1", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :faq_cd, "0" %>
+              <%= f.label :faq_cd, t('common.COMMON_NOTUSE'), value: "0", class: "label_weight_normal" %><br/>
+              <%= f.check_box :open_course_faq_flag %>
+              <%= f.label :open_course_faq_flag, t('admin.course.COMMON_ADMINISTRATECOURSE_OPENCOURSEUSEFLG'), class: "label_weight_normal" %><br/>
             </td>
           </tr>
           <!--未読レポート表示-->
@@ -257,8 +269,10 @@
               <%= t('common.COMMON_NOTREAD_ASSIGNMENT') %>
             </td>
             <td>
-              <%= f.radio_button :unread_assignment_display_cd, "0" %> <%= t('common.COMMON_DO_DISPLAY') %><br/>
-              <%= f.radio_button :unread_assignment_display_cd, "1" %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+              <%= f.radio_button :unread_assignment_display_cd, "0" %>
+              <%= f.label :unread_assignment_display_cd, t('common.COMMON_DO_DISPLAY'), value: "0", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :unread_assignment_display_cd, "1" %>
+              <%= f.label :unread_assignment_display_cd, t('common.COMMON_DONOT_DISPLAY'), value: "1", class: "label_weight_normal" %>
             </td>
           </tr>
           <!--未読FAQ表示-->
@@ -267,8 +281,10 @@
               <%= t('common.COMMON_NOTREAD_FAQ') %>
             </td>
             <td>
-              <%= f.radio_button :unread_faq_display_cd, "0" %> <%= t('common.COMMON_DO_DISPLAY') %><br/>
-              <%= f.radio_button :unread_faq_display_cd, "1" %> <%= t('common.COMMON_DONOT_DISPLAY') %>
+              <%= f.radio_button :unread_faq_display_cd, "0" %>
+              <%= f.label :unread_faq_display_cd, t('common.COMMON_DO_DISPLAY'), value: "0", class: "label_weight_normal" %><br/>
+              <%= f.radio_button :unread_faq_display_cd, "1" %>
+              <%= f.label :unread_faq_display_cd, t('common.COMMON_DONOT_DISPLAY'), value: "1", class: "label_weight_normal" %>
             </td>
           </tr>
           <!--出席有効IP-->

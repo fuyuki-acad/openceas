@@ -342,8 +342,7 @@ module XmlConvertorModule
   def file_convert_to_utf8(filename)
     content = File.read(filename)
     if NKF.guess(content).to_s == "Shift_JIS"
-      content = File.read(f, :encoding => Encoding::Shift_JIS).encode(Encoding::UTF_8)
-      File.open(filename, "w") { |f| f.puts(content) }
+      File.open(filename, "w") { |f| f.puts(content.toutf8.gsub("\\", "/")) }
     end
   end
 

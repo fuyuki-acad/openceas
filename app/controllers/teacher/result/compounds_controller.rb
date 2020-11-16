@@ -479,6 +479,7 @@ class Teacher::Result::CompoundsController < ApplicationController
       @average_list.each do |key, average|
         line << "#{key}#{I18n.t('common.COMMON_COUNT2')}#{I18n.t('common.COMMON_RAWSCORE')}"
         line << "#{key}#{I18n.t('common.COMMON_COUNT2')}#{I18n.t('common.COMMON_PERCENTAGE')}"
+        line << "#{key}#{I18n.t('common.COMMON_COUNT2')}#{I18n.t('common.COMMON_ANSWER_DATE')}"
       end
       csv << line
 
@@ -489,10 +490,8 @@ class Teacher::Result::CompoundsController < ApplicationController
         @results.each do |count, result|
           if result[user.id] && result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE
             line << result[user.id].total_raw_score
-          end
-
-          if result[user.id] && result[user.id].total_score > Settings.ANSWERSCORE_TMP_SAVED_SCORE
             line << result[user.id].total_score
+            line << I18n.l(result[user.id].created_at)
           end
         end
         csv << line
@@ -524,6 +523,7 @@ class Teacher::Result::CompoundsController < ApplicationController
         header = []
         header << I18n.t('materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_REPORTDOWNLOADCARD2')
         header << I18n.t('materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_REPORTDOWNLOADCARD1')
+        header << I18n.t('common.COMMON_ANSWER_DATE')
 
         parent.questions.each.with_index(1) do |parent_question, question_index|
           line << parent_question.content.html_safe
@@ -547,6 +547,13 @@ class Teacher::Result::CompoundsController < ApplicationController
           else
             line << user.account
             line << user.get_name_no_prefix + user.user_name
+          end
+
+          latest_answer = user.answer_score_histories.where(page_id: @generic_page.id).order("answer_count DESC").first
+          if latest_answer.present?
+            line << I18n.l(latest_answer.created_at)
+          else
+            line << ""
           end
 
           parent.questions.each.with_index do |question, index|

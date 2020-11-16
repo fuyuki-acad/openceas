@@ -100,8 +100,10 @@
               <%= t("materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_RECIEVEORREPRESENT") %>
             </td>
             <td>
-              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_SUBMITTED %> <%= t('materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_RECIEVE') %>
-              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_UNSUBMITTING %> <%= t('materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_REPRESENT') %>
+              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_SUBMITTED %>
+              <%= form.label :pass_cd, t('materials_administration.MAT_ADM_ASS_GRADEASSIGNMENTESSAY_RECIEVE'), value: Settings.ANSWERSCORE_PASSCD_SUBMITTED, class: "label_weight_normal" %>
+              <%= form.radio_button :pass_cd, Settings.ANSWERSCORE_PASSCD_UNSUBMITTING %>
+              <%= form.label :pass_cd, t('materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_REPRESENT'), value: Settings.ANSWERSCORE_PASSCD_UNSUBMITTING, class: "label_weight_normal" %>
             </td>
           </tr>
 
@@ -140,8 +142,10 @@
               <%= t("materials_administration.MAT_ADM_ASS_ASSIGNMENTESSAYTOTALRESULT_SENDMAIL") %>
             </td>
             <td>
-              <%= comment.radio_button :mail_flag, Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF %> <%= t('common.COMMON_NOTDO') %>
-              <%= comment.radio_button :mail_flag, Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON %> <%= t('common.COMMON_DO') %>
+              <%= comment.radio_button :mail_flag, Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF %>
+              <%= comment.label :mail_flag, t('common.COMMON_NOTDO'), value: Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_OFF, class: "label_weight_normal" %>
+              <%= comment.radio_button :mail_flag, Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON %>
+              <%= comment.label :mail_flag, t('common.COMMON_DO'), value: Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON, class: "label_weight_normal" %>
             </td>
           </tr>
           <% end %>

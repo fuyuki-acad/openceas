@@ -48,8 +48,11 @@
                   <%= t("access_log.ACC_ACCESSLOG_LOGTYPE") %>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                  <%= radio_button_tag :type, "0", true, class: "radio_log_type" %> <%= t('access_log.ACC_ACCESSLOG_NAVITEXT2') %>&nbsp;&nbsp;&nbsp;&nbsp;
-                  <%= radio_button_tag :type, "1", params[:type] == "1", class: "radio_log_type" %> <%= t('access_log.ACC_ACCESSLOG_NAVITEXT1') %>
+                  <%= radio_button_tag :type, "0", true, class: "radio_log_type" %>
+                  <%= label_tag "type_0", t('access_log.ACC_ACCESSLOG_NAVITEXT2'), class: "label_weight_normal" %>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <%= radio_button_tag :type, "1", params[:type] == "1", class: "radio_log_type" %>
+                  <%= label_tag "type_1", t('access_log.ACC_ACCESSLOG_NAVITEXT1'), class: "label_weight_normal" %>
                 </div>
               </td>
             </tr>
@@ -59,9 +62,12 @@
                   <%= t("access_log.ACC_ACCESSLOG_SEARCHTABLE1") %>
                 </div>
                 <div class="col-xs-12 col-sm-9">
-                  <%= radio_button_tag :search_type, "0", true %> <%= t('common.COMMON_COURSENAME') %>
-                  <%= radio_button_tag :search_type, "1", params[:search_type] == "1" %> <%= t('common.COMMON_INSTRUCTORNAME') %>
-                  <%= radio_button_tag :search_type, "2", params[:search_type] == "2" %> <%= t('common.COMMON_COURSECD') %>
+                  <%= radio_button_tag :search_type, "0", true %>
+                  <%= label_tag "search_type_0", t('common.COMMON_COURSENAME'), class: "label_weight_normal" %>
+                  <%= radio_button_tag :search_type, "1", params[:search_type] == "1" %>
+                  <%= label_tag "search_type_1", t('common.COMMON_INSTRUCTORNAME'), class: "label_weight_normal" %>
+                  <%= radio_button_tag :search_type, "2", params[:search_type] == "2" %>
+                  <%= label_tag "search_type_2", t('common.COMMON_COURSECD'), class: "label_weight_normal" %>
                   <%= text_field_tag :keyword, params[:keyword], {:class => "form-control"} %>
                 </div>
                 <div class="col-xs-12 col-sm-3">

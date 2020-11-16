@@ -50,7 +50,8 @@
                 <div class="col-xs-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true %> <%= t('page_management.MAT_REG_MAT_PAGEMENAGEMENT_FILEUPLOAD') %></label>
+                      <%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true %>
+                      <%= form.label :upload_flag, t('page_management.MAT_REG_MAT_PAGEMENAGEMENT_FILEUPLOAD'), value: GenericPage::TYPE_FILEUPLOAD %><br/>
                       <div class="strong"><%= t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_UPFILEEXPLANATION') %></div>
                       <%= form.file_field :file, {:class => "inputForm"} %>
                     </div>
@@ -65,7 +66,8 @@
                 <div class="col-xs-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_CREATEHTML %> <%= t('page_management.MAT_REG_MAT_PAGEMENAGEMENT_CREATEHTML') %></label>
+                      <%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_CREATEHTML %>
+                      <%= form.label :upload_flag, t('page_management.MAT_REG_MAT_PAGEMENAGEMENT_CREATEHTML'), value: GenericPage::TYPE_CREATEHTML %><br/>
                       <%= t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_CREATEHTMLEXPLANATION') %>
                       <%= form.text_field :file_name, {:class => 'form-control', :maxlength => "100"} %>
                     </div>
@@ -83,8 +85,12 @@
         <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSION") %>
       </td>
       <td>
-        <%= radio_button :generic_page, :extract_flag, false, :checked => true %> <label><%= t('common.COMMON_NOTDO') %></label><br/>
-        <%= radio_button :generic_page, :extract_flag, true %> <label><%= t('common.COMMON_DO') %><%= t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION1') %></label><br/>
+        <%= radio_button :generic_page, :extract_flag, false, :checked => true %>
+        <%= form.label :extract_flag, t('common.COMMON_NOTDO'), value: false %>
+        <br/>
+        <%= radio_button :generic_page, :extract_flag, true %>
+        <%= form.label :extract_flag, t('common.COMMON_DO') + t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION1'), value: true %>
+        <br/>
         <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION3"), teacher_materials_help2_path, {target: "_new"} %>
       </td>
     </tr>

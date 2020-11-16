@@ -185,6 +185,7 @@ zh_TW:
     COMMON_ERROR_NOTEXISTFILE: "未找到此文件"
     COMMON_RAWSCORE: "原始分數"
     COMMON_PERCENTAGE: "百分比"
+    COMMON_ANSWER_DATE: "Answer date"
     COMMON_NOTHING: "None"
     COMMON_BARCHARTTITLE: "測驗的得分柱狀圖"
     COMMON_BARCHARTDATASET: "此得分範圍內的學生數"

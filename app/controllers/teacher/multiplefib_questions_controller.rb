@@ -279,9 +279,7 @@ class Teacher::MultiplefibQuestionsController < ApplicationController
 						unless next_value['random_cd'].blank?
 							if value['random_cd'] == next_value['random_cd']
                 ## 同じ順不同コードの時
-                p value['answer_in_full_cd']
-                p next_value['answer_in_full_cd']
-								## 完全解答コードが違うならエラー
+                ## 完全解答コードが違うならエラー
 								return false if value['answer_in_full_cd'] != next_value['answer_in_full_cd']
 
 							else

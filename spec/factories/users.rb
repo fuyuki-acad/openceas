@@ -27,6 +27,7 @@ FactoryBot.define do
     sex_cd {1}
     term_flag {1}
     password {"hogehoge"}
+    locale {"ja"}
   end
 
   trait :admin do
@@ -49,5 +50,41 @@ FactoryBot.define do
     sequence(:user_name) { |n| "student#{n}" }
     sequence(:email) { |n| "student#{n}@ceas.bownet.co.jp"}
     role_id {3}
+  end
+
+  factory :test_user, class: User do
+    sequence(:account) { |n| "testuser#{n}"}
+    sequence(:user_name) { |n| "test user#{n}"}
+    sequence(:email) { |n| "testuser#{n}@ceas.bownet.co.jp"}
+    role_id {2}
+    name_no_prefix {""}
+    sex_cd {2}
+    term_flag {1}
+    password {"hogehoge"}
+    locale {"ja"}
+  end
+
+  factory :teacher_user, class: User do
+    sequence(:account) { |n| "teacher_user#{n}"}
+    sequence(:user_name) { |n| "teacher user#{n}"}
+    sequence(:email) { |n| "teacher#{n}@ceas.bownet.co.jp"}
+    role_id {2}
+    name_no_prefix {""}
+    sex_cd {2}
+    term_flag {1}
+    password {"hogehoge"}
+    locale {"ja"}
+  end
+
+  factory :student_user, class: User do
+    sequence(:account) { |n| "student_user#{n}"}
+    sequence(:user_name) { |n| "student user#{n}"}
+    sequence(:email) { |n| "student#{n}@ceas.bownet.co.jp"}
+    role_id {3}
+    name_no_prefix {""}
+    sex_cd {1}
+    term_flag {1}
+    password {"hogehoge"}
+    locale {"ja"}
   end
 end

@@ -48,7 +48,7 @@ class TopController < ApplicationController
       @faq_answers = FaqAnswer.order("faq_answers.updated_at desc")
         .joins({:faq => :course})
         .where("open_flag = ?", true).limit(OPEN_FAQ_COUNT_LIMIT)
-      @courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd")
+      @courses = Course.order(VIEW_COUSE_ORER)
         .where(sql_texts.join(" AND "), sql_params).page(params[:page])
 
     elsif current_user.teacher?
@@ -85,7 +85,7 @@ class TopController < ApplicationController
 
       @courses = Course.joins(:course_assigned_users)
         .where(sql_texts.join(" AND "), sql_params)
-        .order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+        .order(VIEW_COUSE_ORER).page(params[:page])
 
       # 未読レポート・未回答FAQ
       unread_sql_params = {}
@@ -100,10 +100,11 @@ class TopController < ApplicationController
       @not_read_assignment_essay_and_faqs = Course.joins(:course_assigned_users)
         .joins("LEFT JOIN unread_assignment_essay_count_view ON unread_assignment_essay_count_view.course_id = courses.id")
         .joins("LEFT JOIN non_answer_faq_count_view ON non_answer_faq_count_view.course_id = courses.id")
-        .where(unread_sql_text, unread_sql_params).order("school_year DESC, day_cd, hour_cd, season_cd").distinct.limit(MAX_UNREAD_COUNT)
+        .where(unread_sql_text, unread_sql_params).order(VIEW_COUSE_ORER).distinct.limit(MAX_UNREAD_COUNT)
 
       #登録した公開科目一覧
-      @allocated_open_courses = Course.joins(:open_course_assigned_users).where("open_course_assigned_users.user_id = ?", current_user.id).order("courses.updated_at desc")
+      @allocated_open_courses = Course.order(VIEW_COUSE_ORER).
+        joins(:open_course_assigned_users).where("open_course_assigned_users.user_id = ?", current_user.id)
 
       #学習可能なコース一覧
       #コース関係は現在未定
@@ -126,11 +127,11 @@ class TopController < ApplicationController
       sql_params[:term_flag] = true
       sql_params[:courseware_flag] = false
       @courses = Course.joins(:course_enrollment_users)
-        .where(sql_text, sql_params).order("school_year DESC, day_cd, hour_cd, season_cd").page(params[:page])
+        .where(sql_text, sql_params).order(VIEW_COUSE_ORER).page(params[:page])
 
     end
 
-    @open_courses = Course.order("school_year DESC, day_cd, hour_cd, season_cd").joins(:open_course_assigned_users)
+    @open_courses = Course.joins(:open_course_assigned_users).order(VIEW_COUSE_ORER)
       .where("open_course_assigned_users.user_id = ? AND courses.term_flag = ?", current_user.id, true).page(params[:page])
   end
 end

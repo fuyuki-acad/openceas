@@ -185,6 +185,7 @@ ja:
     COMMON_ERROR_NOTEXISTFILE: "ファイルが見つかりません"
     COMMON_RAWSCORE: "素点"
     COMMON_PERCENTAGE: "百分率"
+    COMMON_ANSWER_DATE: "回答日時"
     COMMON_NOTHING: "なし"
     COMMON_BARCHARTTITLE: "テストの得点分布図"
     COMMON_BARCHARTDATASET: "得点範囲内の学生数"
