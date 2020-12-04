@@ -191,6 +191,11 @@ class Teacher::Result::EssaysController < ApplicationController
   end
 
   def save
+    if @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_SIMULTANEOUSLY
+      params[:answer_score][:assignment_essay_comments_attributes][:return_flag] = Settings.ASSIGNMENTESSAYMAILCOMMENT_RETURNFLG_NOTRETURN
+    elsif @essay.assignment_essay_return_method_cd == Settings.GENERICPAGE_RETURN_METHOD_INDIVIDUALLY
+      params[:answer_score][:assignment_essay_comments_attributes][:return_flag] = Settings.ASSIGNMENTESSAYMAILCOMMENT_RETURNFLG_RETURNED
+    end
     @comment = params[:answer_score][:assignment_essay_comments_attributes]
     ## ユーザを取得
     @user = User.find(params[:answer_score][:user_id])
@@ -1166,7 +1171,7 @@ class Teacher::Result::EssaysController < ApplicationController
 
     def answer_score_params
       params.require(:answer_score).permit(:page_id, :user_id, :answer_count, :pass_cd, :assignment_essay_score,
-        assignment_essay_comments_attributes: [:memo, :mail_flag, :id, :answer_score_id])
+        assignment_essay_comments_attributes: [:memo, :mail_flag, :id, :answer_score_id, :return_flag])
     end
 
     def get_users(search_params)
