@@ -52,7 +52,10 @@ class EssaysController < ApplicationController
         ## 終了の判定
       elsif @essay.end_time && Time.zone.now > @essay.end_time
         @is_can_submit = false
-        @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html", :param0 => l(@essay.end_time))
+
+        if @assignmentEssayStatus != AssignmentEssay::STATUS_PRESENTED
+          @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html", :param0 => l(@essay.end_time))
+        end
       end
 
     end
