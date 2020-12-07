@@ -94,7 +94,10 @@
               <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_STATUS") %>
             </td>
             <td>
-              <%= essay_status_name(@assignmentEssayStatus) %>
+              <%= student_essay_status_name(@assignmentEssayStatus) %>
+              <% if @message.present? %>
+                <br/><%== @message %>
+              <% end %>
             </td>
           </tr>
         </table>

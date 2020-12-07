@@ -31,38 +31,32 @@ class EssaysController < ApplicationController
 		@answer_scores = @essay.answer_score_histories.where("user_id = ?", current_user.id).order("answer_count ASC")
 
 		## 今回取得した配列には一人のユーザについてのレポートの状態だけが入っている。その配列の末尾(=最新のもの)を現在の状態として取得
-		@assignmentEssayStatus = @essay.essay_status(current_user.id)
+    @assignmentEssayStatus = @essay.essay_status(current_user.id)
 
 		## レポートの提出可否を表すフラグ
 		@is_can_submit = true
 
 		## 受理されている場合は提出不可
-		if @assignmentEssayStatus == AssignmentEssay::STATUS_GRADED_ACCEPTANCE ||
+    if @assignmentEssayStatus == AssignmentEssay::STATUS_GRADED_ACCEPTANCE ||
        @assignmentEssayStatus == AssignmentEssay::STATUS_GRADED_ACCEPTANCE_FEEDBACK ||
        @assignmentEssayStatus == AssignmentEssay::STATUS_RETURNED_ACCEPTANCE_FEEDBACK
+      
 			@is_can_submit = false
 
-			## 未提出の時は期限前・終了かどうかの判定を行う
-		elsif @assignmentEssayStatus == AssignmentEssay::STATUS_NOTPRESENT
-			## 期限前の判定
-			if @essay.start_time && Time.zone.now < @essay.start_time
-				@is_can_submit = false
-				@assignmentEssayStatus = AssignmentEssay::STATUS_BEFORE_START
+    else
+      ## 期限前の判定
+      if @essay.start_time && Time.zone.now < @essay.start_time
+        @is_can_submit = false
+        @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html", :param0 => l(@essay.start_time), :param1 => l(@essay.end_time)) 
 
-				## 終了の判定
-			elsif @essay.end_time && Time.zone.now > @essay.end_time
-				@is_can_submit = false
-				@assignmentEssayStatus = AssignmentEssay::STATUS_AFTER_END
-			end
+        ## 終了の判定
+      elsif @essay.end_time && Time.zone.now > @essay.end_time
+        @is_can_submit = false
+        @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html", :param0 => l(@essay.end_time))
+      end
 
-			## 提出済の時は終了かどうかの判定を行う
-		elsif @assignmentEssayStatus == AssignmentEssay::STATUS_PRESENTED
-			## 終了の判定
-			if @essay.end_time && Time.zone.now > @essay.end_time
-        @assignmentEssayStatus = AssignmentEssay::STATUS_AFTER_END
-				@is_can_submit = false
-			end
-		end
+    end
+  
 
     render "password" if !@essay.start_pass.blank? && !session[:essay_start_pass_flag]
   end
