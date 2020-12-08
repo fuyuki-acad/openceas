@@ -174,11 +174,6 @@ zh_CN:
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_MYFOLDER_SELECTFILE: "请选择文件"
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html: "This essay was already closed (submission period: <strong> %{param0} </strong>). You cannot upload your essay."
     MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html: "This essay was already closed (submission period: <strong> %{param0}～%{param1} </strong>). You cannot upload your essay."
-    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_GRADED: "已评分"
-    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_GRADED_ACCEPTANCE: "评分完毕（受理）"
-    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_RETUENED_ACCEPTANCE: "退还完毕（受理）"
-    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_GRADED_REPRESENT: "评分完毕（再次提交）"
-    MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_RETUENED_REPRESENT: "退还完毕（再次提交）"
 
     #####アンケート実施#####
     ##executeQuestionnaire.jsp

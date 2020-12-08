@@ -47,15 +47,12 @@ class EssaysController < ApplicationController
       ## 期限前の判定
       if @essay.start_time && Time.zone.now < @essay.start_time
         @is_can_submit = false
-        @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_INVALIDTERM_html", :param0 => l(@essay.start_time), :param1 => l(@essay.end_time)) 
+        @assignmentEssayStatus = Essay::STATUS_BEFORE_START
 
         ## 終了の判定
       elsif @essay.end_time && Time.zone.now > @essay.end_time
         @is_can_submit = false
-
-        if @assignmentEssayStatus != AssignmentEssay::STATUS_PRESENTED
-          @message = I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ALREADYPASSEDENDTIME_html", :param0 => l(@essay.end_time))
-        end
+        @assignmentEssayStatus = Essay::STATUS_AFTER_END
       end
 
     end
