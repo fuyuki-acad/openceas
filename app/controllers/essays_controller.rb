@@ -43,18 +43,17 @@ class EssaysController < ApplicationController
       
 			@is_can_submit = false
 
-    else
-      ## 期限前の判定
-      if @essay.start_time && Time.zone.now < @essay.start_time
-        @is_can_submit = false
-        @assignmentEssayStatus = Essay::STATUS_BEFORE_START
+    end
 
-        ## 終了の判定
-      elsif @essay.end_time && Time.zone.now > @essay.end_time
-        @is_can_submit = false
-        @assignmentEssayStatus = Essay::STATUS_AFTER_END
-      end
+    ## 期限前の判定
+    if @essay.start_time && Time.zone.now < @essay.start_time
+      @is_can_submit = false
+      @assignmentEssayStatus = Essay::STATUS_BEFORE_START
 
+      ## 終了の判定
+    elsif @essay.end_time && Time.zone.now > @essay.end_time
+      @is_can_submit = false
+      @assignmentEssayStatus = Essay::STATUS_AFTER_END
     end
   
 
