@@ -340,9 +340,9 @@ class Teacher::Result::CompoundsController < ApplicationController
         if params[:score]
           params[:score].each do |question_id, score|
             ## 各解答に点数をセットしupdateする
-            answer = Answer.where(:question_id => question_id, :user_id => @user.id).first
+            answer = Answer.where(:question_id => question_id, :user_id => @user.id, :answer_count => @count).first
             if answer.nil?
-              answer = Answer.new(:question_id => question_id, :user_id => @user.id, :select_answer_id => 0, answer_score_id: answer_score.id)
+              answer = Answer.new(:question_id => question_id, :user_id => @user.id, :answer_count => @count, :select_answer_id => 0, answer_score_id: answer_score.id)
             elsif answer.answer_count != @count.to_i
               answer = AnswerHistory.where(:question_id => question_id, :user_id => @user.id, :answer_count => @count).first
             end
