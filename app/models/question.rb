@@ -131,12 +131,12 @@ class Question < ApplicationRecord
       end
       if checked_items.count == 0
         if self.generic_page_type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE
-          errors[:base] << I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR3")
+          errors.add(:base, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR3"))
         end
       elsif checked_items.count == 1
-        errors[:base] << I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR6") if self.quizzes_attributes[checked_items[0]]['content'].blank?
+        errors.add(:base, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR6")) if self.quizzes_attributes[checked_items[0]]['content'].blank?
       else
-        errors[:base] << I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR2")
+        errors.add(:base, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR2"))
       end
 
     when Settings.QUESTION_PATTERNCD_CHECK
@@ -148,13 +148,13 @@ class Question < ApplicationRecord
           if quiz['select_correct_flag'] == '1'
             checked_count += 1
             if quiz['content'].blank?
-              errors[:base] << I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR6")
+              errors.add(:base, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR6"))
               break
             end
           end
         end
         if checked_count == 0
-          errors[:base] << I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR3")
+          errors.add(:base, I18n.t("materials_registration.MAT_REG_REGISTERQUESTION_ERROR3"))
         end
       end
 

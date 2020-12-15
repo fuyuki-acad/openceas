@@ -25,6 +25,9 @@
 <html>
 <head>
   <title><%= Settings.APPLICATION_NAME %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
   <script>
     var config = {
       ai_bot: <%== Settings.USEAGE_AI_BOT.to_s.downcase == 'yes' ? true : false %>
@@ -34,7 +37,6 @@
   <%#= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
   <%= render "layouts/common/favicon" %>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>

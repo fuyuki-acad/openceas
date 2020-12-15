@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Teacher::OpenCoursesController, type: :controller do
+RSpec.describe OpenCoursesController, type: :controller do
   let(:admin) { User.where(account: 'admin').first }
   let(:teacher) { create(:teacher_user) }
   let(:student) { create(:student_user) }

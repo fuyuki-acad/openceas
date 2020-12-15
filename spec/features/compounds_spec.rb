@@ -126,7 +126,7 @@ RSpec.feature "Compounds", type: :feature do
 
               #登録＆合格
               page.accept_confirm(I18n.t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT1")) {
-                find("input[type=submit").click
+                find("input[type=submit]").click
               }
               expect(page).to have_content ApplicationController.helpers.strip_tags(I18n.t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_PASS_html"))
             end
@@ -154,7 +154,7 @@ RSpec.feature "Compounds", type: :feature do
 
               #登録＆不合格
               page.accept_confirm(I18n.t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT1")) {
-                find("input[type=submit").click
+                find("input[type=submit]").click
               }
               expect(page).to have_content ApplicationController.helpers.strip_tags(I18n.t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_NOTPASS_html"))
             end
@@ -200,7 +200,7 @@ RSpec.feature "Compounds", type: :feature do
 
               #登録＆合格
               page.accept_confirm(I18n.t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT1")) {
-                find("input[type=submit").click
+                find("input[type=submit]").click
               }
               expect(page).to have_content ApplicationController.helpers.strip_tags(I18n.t("execution.MAT_EXE_COM_GRADEEXECUTECOMPOUND_PASS_html"))
             end
@@ -232,7 +232,7 @@ RSpec.feature "Compounds", type: :feature do
 
               #登録＆期限切れエラー
               page.accept_confirm(I18n.t("execution.MAT_EXE_COM_EXECUTECOMPOUND_JAVASCRIPT1")) {
-                find("input[type=submit").click
+                find("input[type=submit]").click
               }
 
               expect(page.html.strip).to have_content ApplicationController.helpers.strip_tags(

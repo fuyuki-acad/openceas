@@ -24,10 +24,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ceas</title>
+  <title><%= Settings.APPLICATION_NAME %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
   <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
 </head>
 <body>

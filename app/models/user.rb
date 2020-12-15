@@ -75,12 +75,12 @@ class User < ApplicationRecord
 
     unless self.email.blank?
       count = self.class.where("email_mobile = ?", self.email).count
-      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
+      self.errors.add(:base, I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email"))) if count > 0
     end
 
     unless self.email_mobile.blank?
       count = self.class.where("email = ? OR (email_mobile = ? AND id != ?)", self.email_mobile, self.email_mobile, self.id).count
-      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile")) if count > 0
+      self.errors.add(:base, I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile"))) if count > 0
     end
   end
 
@@ -132,19 +132,19 @@ class User < ApplicationRecord
     current_password = params.delete(:current_password)
 
     if current_password.blank?
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE1")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE1"))
     elsif !valid_password?(current_password)
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE9")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE9"))
     elsif params[:password].blank?
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE2")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE2"))
     elsif !params[:password].match(/^[ -~。-゜]*$/)
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2"))
     elsif params[:password].length < 6 || params[:password].length > 256
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE10")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE10"))
     elsif params[:password_confirmation].blank?
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE3")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE3"))
     elsif params[:password] != params[:password_confirmation]
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE11")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE11"))
     end
 
     if self.errors.messages.count > 0
@@ -160,18 +160,18 @@ class User < ApplicationRecord
 
   def update_with_email(params)
     if params[:new_email].blank?
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE4")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE4"))
     elsif !params[:new_email].match(/^[ -~。-゜]*$/)
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2"))
     elsif params[:new_email] !~ VALID_ADDRESS
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE12")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE12"))
     elsif params[:new_email] != params[:email_confirmation]
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE14")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE14"))
     end
 
     unless params[:new_email].blank?
       count = self.class.where("email_mobile = ? OR (email = ? AND id != ?)", params[:new_email], params[:new_email], self.id).count
-      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email")) if count > 0
+      self.errors.add(:base, I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email"))) if count > 0
     end
 
     if self.errors.messages.count > 0
@@ -186,18 +186,18 @@ class User < ApplicationRecord
 
   def update_with_email_mobile(params)
     if params[:new_email_mobile].blank?
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE6")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE6"))
     elsif !params[:new_email_mobile].match(/^[ -~。-゜]*$/)
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2"))
     elsif params[:new_email_mobile] !~ VALID_ADDRESS
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE13")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE13"))
     elsif params[:new_email_mobile] != params[:email_mobile_confirmation]
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE15")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ERRORTYPE15"))
     end
 
     unless params[:new_email_mobile].blank?
       count = self.class.where("email = ? OR (email_mobile = ? AND id != ?)", params[:new_email_mobile], params[:new_email_mobile], self.id).count
-      self.errors[:base] << I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile")) if count > 0
+      self.errors.add(:base, I18n.t("views.message.exist", item: I18n.t("activerecord.attributes.user.email_mobile"))) if count > 0
     end
 
     if self.errors.messages.count > 0
@@ -212,13 +212,13 @@ class User < ApplicationRecord
 
   def update_unset_email(params)
     if params[:new_email].blank?
-      self.errors[:base] << I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT1")
+      self.errors.add(:base, I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT1"))
     elsif !params[:new_email].match(/^[ -~。-゜]*$/)
-      self.errors[:base] << I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2")
+      self.errors.add(:base, I18n.t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_ATTENTION2"))
     elsif params[:new_email] !~ VALID_ADDRESS
-      self.errors[:base] << I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT3")
+      self.errors.add(:base, I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT3"))
     elsif params[:new_email] != params[:email_confirmation]
-      self.errors[:base] << I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT5")
+      self.errors.add(:base, I18n.t("login.LOG_REGISTERMAIL_JAVASCRIPT5"))
     end
 
     if self.errors.messages.count > 0

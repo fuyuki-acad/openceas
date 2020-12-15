@@ -151,9 +151,18 @@ class Admin::AccessLogsController < ApplicationController
 
       else
         if params[:type] == "0"
-          @logs = SystemLog.joins(:user).preload(:user).where(sql_texts.join(" AND "), sql_params).order("system_logs.created_at DESC").page(params[:page])
+          @logs = SystemLog.joins(:user).preload(:user)
+          if sql_texts.length > 0
+            @logs = @logs.where(sql_texts.join(" AND "), sql_params)
+          end
+          @logs = @logs.order("system_logs.created_at DESC").page(params[:page])
+
         else
-          @logs = CourseAccessLog.joins(:user, :course).preload(:user).where(sql_texts.join(" AND "), sql_params).order("course_access_logs.created_at DESC").page(params[:page])
+          @logs = CourseAccessLog.joins(:user, :course).preload(:user)
+          if sql_texts.length > 0
+            @logs = @logs.where(sql_texts.join(" AND "), sql_params)
+          end
+          @logs = @logs.order("course_access_logs.created_at DESC").page(params[:page])
         end
       end
     end

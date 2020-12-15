@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe GenericPage, type: :model do
+  let(:no_ext_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test'), 'text/txt') }
+  let(:exe_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.exe'), 'text/txt') }
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
+
   before do
     User.current_user = create(:teacher_user)
     @course = create(:course, :year_of_2019)
@@ -32,16 +36,16 @@ RSpec.describe GenericPage, type: :model do
       expect(@questionnaire.errors.messages[:file]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE2")
 
       #ファイル拡張子なし
-      @questionnaire.file = fixture_file_upload('test', 'text/txt')
+      @questionnaire.file = no_ext_file
       @questionnaire.valid?
       expect(@questionnaire.errors.messages[:file]).to include I18n.t("materials_registration.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")
 
       #ファイル拡張子（exe）
-      @questionnaire.file = fixture_file_upload('test.exe', 'text/txt')
+      @questionnaire.file = exe_file
       @questionnaire.valid?
       expect(@questionnaire.errors.messages[:file]).to include I18n.t("materials_registration.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE4")
 
-      @questionnaire.file = fixture_file_upload('test.txt', 'text/txt')
+      @questionnaire.file = test_file
       @questionnaire.valid?
       expect(@questionnaire.errors.count).to eq 0
     end
@@ -87,7 +91,7 @@ RSpec.describe GenericPage, type: :model do
   describe '登録' do
     it "ファイルアップロード成功" do
       file_name = 'test.txt'
-      questionnaire = build(:questionnaire, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      questionnaire = build(:questionnaire, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
       expect{
@@ -101,10 +105,10 @@ RSpec.describe GenericPage, type: :model do
   describe '更新' do
     it "ファイルアップロード成功" do
       file_name = 'test_update.txt'
-      questionnaire = create(:questionnaire, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      questionnaire = create(:questionnaire, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
-      questionnaire.file = fixture_file_upload(file_name, 'text/txt')
+      questionnaire.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         questionnaire.save
       }.to change(GenericPage, :count).by(0)
@@ -115,7 +119,7 @@ RSpec.describe GenericPage, type: :model do
 
   describe '他コースへコピー' do
     before do
-      @questionnaire = create(:questionnaire, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @questionnaire = create(:questionnaire, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         start_pass: "pass12345",
         start_time: "2020/01/01",
@@ -148,7 +152,7 @@ RSpec.describe GenericPage, type: :model do
 
   describe '他テストからの設問コピー' do
     before do
-      @questionnaire = create(:questionnaire, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @questionnaire = create(:questionnaire, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         start_pass: "pass12345",
         start_time: "2020/03/01",
@@ -157,7 +161,7 @@ RSpec.describe GenericPage, type: :model do
         anonymous_flag: "1"
       )
 
-      @src_questionnaire = create(:questionnaire, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @src_questionnaire = create(:questionnaire, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         start_pass: "pass12345",
         start_time: "2020/01/01",

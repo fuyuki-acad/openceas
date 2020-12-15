@@ -5,12 +5,13 @@ RSpec.describe EssayMailer, type: :mailer do
   describe '#send_mail' do
     let(:teacher) { create(:teacher_user) }
     let(:student) { create(:student_user) }
+    let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
 
     before do
       User.current_user = teacher
       course = create(:course, :year_of_2019)
       @essay = create(:essay, course_id: course.id, upload_flag: GenericPage::TYPE_NOFILEUPLOAD)
-      answer_score = create(:answer_score, page_id: @essay.id, user_id: student.id, file: fixture_file_upload('test.txt', 'text/txt'))
+      answer_score = create(:answer_score, page_id: @essay.id, user_id: student.id, file: test_file)
       @comment = create(:assignment_essay_comment, answer_score_id: answer_score.id, memo: "test send mail memo")
     end
 

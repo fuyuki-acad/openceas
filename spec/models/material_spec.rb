@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe GenericPage, type: :model do
+  let(:no_ext_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test'), 'text/txt') }
+  let(:exe_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.exe'), 'text/txt') }
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
+  let(:non_zip_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test_fail.zip'), 'text/txt') }
+  let(:zip_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test_html.zip'), 'text/txt') }
+
   before do
     @course = create(:course, :year_of_2019)
   end
 
   describe 'バリデーション' do
     before do
-      @material = build(:material, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @material = build(:material, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
     end
 
@@ -30,12 +36,12 @@ RSpec.describe GenericPage, type: :model do
       expect(@material.errors.messages[:file]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE2")
 
       #ファイル拡張子なし
-      @material.file = fixture_file_upload('test', 'text/txt')
+      @material.file = no_ext_file
       @material.valid?
       expect(@material.errors.messages[:file_name]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")
 
       #ファイル拡張子（exe）
-      @material.file = fixture_file_upload('test.exe', 'text/txt')
+      @material.file = exe_file
       @material.valid?
       expect(@material.errors.messages[:file_name]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE4")
     end
@@ -44,18 +50,18 @@ RSpec.describe GenericPage, type: :model do
       @material.extract_flag = "true"
 
       #ファイル名対象外
-      @material.file = fixture_file_upload('test.txt', 'text/txt')
+      @material.file = test_file
       @material.valid?
       expect(@material.errors.messages[:file_name]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE5")
 
       #解凍失敗（対象外ファイル）
-      @material.file = fixture_file_upload('test_fail.zip', 'text/txt')
+      @material.file = non_zip_file
       expect {
         @material.valid?
       }.to raise_error(Exception)
 
       #解凍成功
-      @material.file = fixture_file_upload('test_html.zip', 'text/txt')
+      @material.file = zip_file
       @material.valid?
       expect(@material.errors.count).to eq 0
       expect(@material).to be_valid
@@ -103,7 +109,7 @@ RSpec.describe GenericPage, type: :model do
   describe '登録' do
     it "ファイルアップロード成功" do
       file_name = 'test.txt'
-      material = build(:material, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      material = build(:material, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
       expect{
@@ -129,10 +135,10 @@ RSpec.describe GenericPage, type: :model do
   describe '更新' do
     it "ファイルアップロード成功" do
       file_name = 'test_update.txt'
-      material = create(:material, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      material = create(:material, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
-      material.file = fixture_file_upload(file_name, 'text/txt')
+      material.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         material.save
       }.to change(GenericPage, :count).by(0)
@@ -145,7 +151,7 @@ RSpec.describe GenericPage, type: :model do
       material = create(:material, course_id: @course.id, file_name: file_name, upload_flag: GenericPage::TYPE_CREATEHTML,
         html_text: "test text")
   
-      material.file = fixture_file_upload(file_name, 'text/txt')
+      material.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         material.save
       }.to change(GenericPage, :count).by(0)
@@ -156,7 +162,7 @@ RSpec.describe GenericPage, type: :model do
 
   describe 'コピー' do
     before do
-      @material = create(:material, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @material = create(:material, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
       @other_course = create(:course, :year_of_2019)

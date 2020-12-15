@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe AssignmentEssayComment, type: :model do
   let(:student) { create(:student_user) }
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
 
   before do
     User.current_user = student
     course = create(:course, :year_of_2019)
     essay = create(:essay, course_id: course.id, upload_flag: GenericPage::TYPE_NOFILEUPLOAD)
-    @answer_score = create(:answer_score, page_id: essay.id, user_id: student.id, file: fixture_file_upload('test.txt', 'text/txt'))
+    @answer_score = create(:answer_score, page_id: essay.id, user_id: student.id, file: test_file)
 end
 
   context '保存' do
