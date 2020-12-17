@@ -21,7 +21,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-sFactoryBot.define do
+FactoryBot.define do
   factory :course_enrollment_user do
 
   end
