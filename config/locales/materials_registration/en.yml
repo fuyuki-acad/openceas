@@ -277,7 +277,7 @@ en:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_TITLE: "Create Essay Assignment Page"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_NEWWINDOW: "New Essay assignment upload"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION1_html: "Press the New Essay assignment upload button and enter the information on the window, and then press \"Create new assignment\" button there. You can edit the information afterwards. After setting up the page, create the assignment from the list of uploaded pages."
-    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION2: "(Some students already done this task. You are not allowed to delete the Essay Assignment.)"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION2: "(Some students already done this task. You are not allowed to edit or delete the Essay Assignment.)"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION3: "Essay format accepted:"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION4: "PDF files only. (On PDF files you can add your comment and return to the student.)"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION5: "Any formats acceptable."
@@ -290,6 +290,7 @@ en:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "On returning the essay: <br> When the essay has \"Returned\" status, students can download the essay from OpenCEAS. (Students can be notified by email.)"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION13_html: ""
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT: "Create Essay Assignment"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_CONFIRMASSIGNMENT: "Confirm Essay Assignment"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_SCRIPT: "Only one-byte characters are accepted as Password."
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_ERRORTYPE: "No zero byte file is allowed."
 

@@ -277,7 +277,7 @@ ja:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_TITLE: "レポート新規作成画面"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_NEWWINDOW: "新規レポート登録"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION1_html: "「新規レポート登録」ボタンを押し、開いたウインドウでレポートのタイトルなどを入力した後、その中の「新規作成」ボタンを押してください。<br>登録内容は登録後も編集可能です。<br>ページ登録後「登録済みページ一覧」から課題内容を作成してください。"
-    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION2: "（既に提出した人がいます。削除を行えません。）"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION2: "（既に提出した人がいます。編集/削除を行えません。）"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION3: "受付レポートの種類"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION4: "PDF形式限定（提出レポート上にコメントを直接上書きして学生に返却できます）"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION5: "任意のファイル形式"
@@ -290,6 +290,7 @@ ja:
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION12_html: "◎レポートの返却について<br>レポートが返却中の状態になった場合、学生はOpenCEASから返却レポートをダウンロードすることができます。（学生にメールで通知することもできます。）"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_EXPLANATION13_html: "レポート受付時間の設定は年→月→日の順に行ってください。設定された受付終了時間になると自動的にレポートの受付を終了します。"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT: "課題作成"
+    MAT_REG_ASS_REGISTERASSIGNMENTESSAY_CONFIRMASSIGNMENT: "課題確認"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_SCRIPT: "パスワードは半角英数字にしてください"
     MAT_REG_ASS_REGISTERASSIGNMENTESSAY_ERRORTYPE: "0バイトのファイルは許可されません"
 
