@@ -53,7 +53,7 @@ en:
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION2: "The following files are ready to upload. Click Add button to start uploading."
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION3_html: "The course contents are successfully added. The list below shows the page created and the preview for the Quiz/Essay. You can edit the profile for these files from the Edit Page for each file."
     COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION: "Some students answered this quiz. You are not able to edit or delete it."
-    COMMONMATERIALSREGISTRATION_CANNOTDELETEQUESTIONNAIRE: "Some students did this survey. You are not able to delete it."
+    COMMONMATERIALSREGISTRATION_CANNOTDELETEQUESTIONNAIRE: "Some students did this survey. You are not able to edit or delete it."
     COMMONMATERIALSREGISTRATION_ERRORTYPE1: "This is not an Essay Assignment file. Check the CSV file by uncompressing."
     COMMONMATERIALSREGISTRATION_ERRORTYPE2: "Wrong Due Date!"
     COMMONMATERIALSREGISTRATION_ERRORTYPE3: "Enter the password in lowercase."
@@ -215,7 +215,7 @@ en:
     MAT_REG_REGISTERPARENTQUESTION_TABLE7: "Confirm"
     MAT_REG_REGISTERPARENTQUESTION_ERROR1: "Write the Quiz Question Description here."
     MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEEXAMINATION: "(The quiz has been attempted by students. You cannot delete or change order of the questions.)"
-    MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE: "(The quiz has been attempted by students. You cannot delete or change order of the questions.)"
+    MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE: "(The quiz has been attempted by students. You cannot edit, delete or change order of the questions.)"
     MAT_REG_REGISTERUPLOADQUESTION_EXPLANATION1_html: "Uploading of Question File has been finished. The list below is the preview of the questions created. <br/> If the new Quiz has the same ID No. with an existing Quiz, then the old Quiz is retained. <br/> If you want to modify the Quiz, upload the Quiz again or modify the Quiz where necessary after uploading it. <br/>If you want to proceed, click the \"Start Upload\" button."
 
     ##registerQuestion.jsp

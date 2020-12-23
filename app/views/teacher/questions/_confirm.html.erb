@@ -144,9 +144,9 @@
                 <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE7")  %>
               </td>
               <td>
-                <%= radio_button :quiz, :text_flag, Settings.SELECT_TEXTROW_NOTEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+                <%= radio_button :question, :text_flag, Settings.SELECT_TEXTROW_NOTEXT, :disabled => true %>
                 <%= label_tag :text_flag, t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE11'), value: Settings.SELECT_TEXTROW_NOTEXT %>
-                <%= radio_button :quiz, :text_flag, Settings.SELECT_TEXTROW_TEXT, :disabled => @generic_page.answer_scores.count == 0 ? false : true %>
+                <%= radio_button :question, :text_flag, Settings.SELECT_TEXTROW_TEXT, :disabled => true %>
                 <%= label_tag :text_flag, t('materials_registration.COMMONMATERIALSREGISTRATION_TABLE12'), value: Settings.SELECT_TEXTROW_TEXT %>
               </td>
             </tr>

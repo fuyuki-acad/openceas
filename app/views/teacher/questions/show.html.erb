@@ -258,6 +258,11 @@
                                         <td class="td-bold"><%= index %></td>
                                         <td class="td-bold">
                                           <%== question.content %>
+                                          <% if @generic_page.answer_scores.count > 0 %>
+                                            <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                                              <%= t("common.COMMON_BR_html") %><code><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE") %></code>
+                                            <% end %>
+                                          <% end %>
                                         </td>
                                         <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
                                           <td class="td-bold"><%= question.score %></td>

@@ -53,7 +53,7 @@ ja:
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION2: "以下のファイルをアップロードします。これでよろしければ「登録開始」ボタンを押してください。"
     COMMONMATERIALSREGISTRATION_UPLOADMATERIALSEXPLANATION3_html: "教材の登録が終了しました<br>下の一覧は作成されたページと問題(課題)のプレビューです。<br>これら登録情報はそれぞれの編集画面から変更することができます。"
     COMMONMATERIALSREGISTRATION_CANNOTDELETEEXAMINATION: "（既に解答した人がいます。編集/削除を行えません。）"
-    COMMONMATERIALSREGISTRATION_CANNOTDELETEQUESTIONNAIRE: "（既に回答した人がいます。削除を行えません。）"
+    COMMONMATERIALSREGISTRATION_CANNOTDELETEQUESTIONNAIRE: "（既に回答した人がいます。編集/削除を行えません。）"
     COMMONMATERIALSREGISTRATION_ERRORTYPE1: "レポート教材ではありません。圧縮ファイルを解凍してCSVファイルを確認してください。"
     COMMONMATERIALSREGISTRATION_ERRORTYPE2: "受付開始／終了時間が不正です"
     COMMONMATERIALSREGISTRATION_ERRORTYPE3: "パスワードは半角英数で入力してください"
@@ -215,7 +215,7 @@ ja:
     MAT_REG_REGISTERPARENTQUESTION_TABLE7: "設問確認"
     MAT_REG_REGISTERPARENTQUESTION_ERROR1: "問題記述部を入力してください"
     MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEEXAMINATION: "（既に解答した人がいます。削除および設問の並び替えは行えません。）"
-    MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE: "（既に回答した人がいます。削除および設問の並び替えは行えません。）"
+    MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE: "（既に回答した人がいます。編集/削除および設問の並び替えは行えません。）"
     MAT_REG_REGISTERUPLOADQUESTION_EXPLANATION1_html: "問題ファイルのアップロードが終了しました。下の一覧は作成される問題のプレビューです。<br/>同じ識別Noで異なる値が設定されていた場合には、先に読み込まれた内容を優先して登録しています。<br/>修正が必要な場合はアップロードをやり直すか、登録後に画面から修正してください。<br/>登録してよければ「登録開始」ボタンをクリックしてください。"
 
     ##registerQuestion.jsp
