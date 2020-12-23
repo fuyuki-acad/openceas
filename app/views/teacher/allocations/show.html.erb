@@ -351,9 +351,9 @@
         </div>
       </div>
 
-      <!-- 授業資料 -->
-      <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
       <div class="row">
+        <!-- 授業資料 -->
+        <%= form_tag url_for(:action => :assign, :course_id => @course, :session_no => @class_session.class_session_no), {:class => "form-horizontal", :method => :patch} do %>
         <div class="col-xs-12">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="collapseListMaterialHeading">
@@ -450,7 +450,8 @@
 
                   <div class="text-center">
                     <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block",
+                        onclick: "return confirmAllocate('collapseListQuestionnaire', '" + t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22") +"');" %>
                     </div>
                   </div>
                 <% end %>
@@ -486,7 +487,8 @@
 
                   <div class="text-center">
                     <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block",
+                        onclick: "return confirmAllocate('collapseListCompound', '" + t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22") +"');" %>
                     </div>
                   </div>
                 <% end %>
@@ -522,7 +524,8 @@
 
                   <div class="text-center">
                     <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block",
+                        onclick: "return confirmAllocate('collapseListMultipleFib', '" + t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22") +"');" %>
                     </div>
                   </div>
                 <% end %>
@@ -558,7 +561,8 @@
 
                   <div class="text-center">
                     <div class="btn-group">
-                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block" %>
+                      <%= submit_tag t("select_class_session.MAT_ALL_SELECTCLASSSESSION_EXECUTE"), class: "btn btn-primary center-block",
+                        onclick: "return confirmAllocate('collapseListAssignmentEssay', '" + t("select_class_session.MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22") +"');" %>
                     </div>
                   </div>
                 <% end %>

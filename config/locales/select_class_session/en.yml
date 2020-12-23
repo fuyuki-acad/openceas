@@ -53,6 +53,7 @@ en:
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT19: "No SCORM contents in this course."
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT20: "Evaluation fill-in list"
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT21: "No evaluation fill-in list in this course."
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22: "The assignments will not be able to edit after student submit it. Are you sure to assign？"
 
     #SelectClassSessionBean.java
     BEA_MAT_ALL_SELECTCLASSSESSIONBEAN_ERROR1: "Successfully updated!"
