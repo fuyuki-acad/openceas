@@ -370,7 +370,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListMaterial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListMaterialHeading">
+            <div id="collapseListMaterial" class="panel-collapse collapse<%= initial_panel_state("materials", @course.materials) %>" role="tabpanel" aria-labelledby="collapseListMaterialHeading">
               <div class="panel-body">
 
                 <% if @course.materials.count > 0 %>
@@ -406,7 +406,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListURL" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListURLHeading">
+            <div id="collapseListURL" class="panel-collapse collapse<%= initial_panel_state("urls", @course.urls) %>" role="tabpanel" aria-labelledby="collapseListURLHeading">
               <div class="panel-body">
 
                 <% if @course.urls.count > 0 %>
@@ -442,7 +442,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListQuestionnaire" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListQuestionnaireHeading">
+            <div id="collapseListQuestionnaire" class="panel-collapse collapse<%= initial_panel_state("questionnaires", @course.questionnaires) %>" role="tabpanel" aria-labelledby="collapseListQuestionnaireHeading">
               <div class="panel-body">
 
                 <% if @course.questionnaires.count > 0 %>
@@ -479,7 +479,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListCompound" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListCompoundHeading">
+            <div id="collapseListCompound" class="panel-collapse collapse<%= initial_panel_state("compounds", @course.compounds) %>" role="tabpanel" aria-labelledby="collapseListCompoundHeading">
               <div class="panel-body">
 
                 <% if @course.compounds.count > 0 %>
@@ -516,7 +516,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListMultipleFib" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListMultipleFibHeading">
+            <div id="collapseListMultipleFib" class="panel-collapse collapse<%= initial_panel_state("multiplefibs", @course.multiplefibs) %>" role="tabpanel" aria-labelledby="collapseListMultipleFibHeading">
               <div class="panel-body">
 
                 <% if @course.multiplefibs.count > 0 %>
@@ -553,7 +553,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListAssignmentEssay" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListAssignmentEssayHeading">
+            <div id="collapseListAssignmentEssay" class="panel-collapse collapse<%= initial_panel_state("essays", @course.essays) %>" role="tabpanel" aria-labelledby="collapseListAssignmentEssayHeading">
               <div class="panel-body">
 
                 <% if @course.essays.count > 0 %>
@@ -590,7 +590,7 @@
                 </a>
               </h3>
             </div>
-            <div id="collapseListEvaluationlist" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListEvaluationlistHeading">
+            <div id="collapseListEvaluationlist" class="panel-collapse collapse<%= initial_panel_state("evaluations", @course.evaluations) %>" role="tabpanel" aria-labelledby="collapseListEvaluationlistHeading">
               <div class="panel-body">
 
                 <% if @course.evaluations.count > 0 %>

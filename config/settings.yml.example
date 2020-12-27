@@ -498,6 +498,32 @@ HEADER_USER_PROFILE: true
 #イメージ画像(true/false)
 USER_IMAGE_PICTURE: true
 
+#授業別教材割付
+TEACHER:
+  ALLOCATION:
+    CONTENT_PANEL:
+      MATERIAL:
+        INITIAL_OPEN: true
+        MAXIMUM_NUMBER: 5
+      URL:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+      QUESTIONNAIRE:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+      COMPOUND:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+      MULTIPLE_FIB:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+      ESSAY:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+      EVALUATION:
+        INITIAL_OPEN: false
+        MAXIMUM_NUMBER: 5
+
 #学生画面
 STUDENT:
   #ヘッダー
