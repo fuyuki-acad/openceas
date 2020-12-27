@@ -103,7 +103,12 @@
             <%= t('admin.course.PRI_ADM_COU_COURSEBATCHDELETE_UPLOADFILEMESSAGE') %>
           </div>
           <div class="col-xs-8">
-            <%= form.file_field :file %>
+            <div class="form-file">
+              <label for="upload_file" >
+                <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+              </label>
+              <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+            </div >
           </div>
         </div>
         <div class="text-center">

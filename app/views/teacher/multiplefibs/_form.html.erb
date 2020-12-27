@@ -77,7 +77,12 @@
                 <div class="panel panel-default">
                   <div class="panel-body">
                     <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
-                    <%= form.file_field :file, {:class => "inputForm"} %>
+                    <div class="form-file">
+                      <label for="generic_page_file" >
+                        <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+                      </label>
+                      <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                    </div >
                     <div class="strong"><%= t('materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_QUESTIONFILEEXPLANATION') %></div>
                     <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %></div>
                   </div>
@@ -107,7 +112,12 @@
         </tr>
       </table>
       <% else %>
-        <%= form.file_field :file, {:class => "inputForm"} %>
+        <div class="form-file">
+          <label for="generic_page_file" >
+            <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+          </label>
+          <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+        </div >
         <% if @generic_page.link_name.blank? %>
           <div class="strong"><%= t('materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_QUESTIONFILEEXPLANATION') %></div>
         <% else %>
@@ -128,7 +138,12 @@
       <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWEREXPLANATIONFILE") %>
     </td>
     <td>
-      <%= form.file_field :explanation_file, {:class => "inputForm"} %>
+      <div class="form-file">
+        <label for="generic_page_explanation_file" >
+          <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
+        </label>
+        <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+      </div >
       <% if @generic_page.explanation_link_name.blank? %>
         <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWERFILEEXPLANATION") %>
       <% else %>
