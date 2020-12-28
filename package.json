@@ -5,11 +5,13 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@rails/webpacker": "4.3.0",
     "bootstrap-vue": "^2.21.1",
+    "pdfjs-dist": "^2.5.207",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-loading-overlay": "^3.4.2",
     "vue-pdf": "^4.2.0",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "worker-loader": "^3.0.7"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"

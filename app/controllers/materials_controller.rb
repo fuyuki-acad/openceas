@@ -22,8 +22,8 @@
 #++
 
 class MaterialsController < ApplicationController
-  before_action :require_enrolled_or_open_assigned, only: [:show, :explain_file]
-  before_action :set_generic_page, only: [:show, :explain_file]
+  before_action :require_enrolled_or_open_assigned, only: [:show, :explain_file, :pdf]
+  before_action :set_generic_page, only: [:show, :explain_file, :pdf]
 
   def show
     if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_URLCODE
@@ -41,6 +41,10 @@ class MaterialsController < ApplicationController
 
   def explain_file
     send_material_file(@generic_page.get_explanation_file_path, @generic_page.explanation_file_name)
+  end
+
+  def pdf
+    render "pdf", layout: false
   end
 
   private
