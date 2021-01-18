@@ -4,13 +4,13 @@
 
 @confirmAllocate = (target, message) ->
   ret = true
-
-  $("[id='"+target+"'] input[name^='allocation']:checked").each ->
-    if $(this).val() == '1'
-      if confirm(message)
-        return true
-      else
-        ret = false
-        return true
   
+  items = $("[id='"+target+"'] input[name^='allocation']:checked").filter ->
+    $(this).val() == '1'
+  
+  if items.length > 0
+    if confirm(message)
+    else
+      ret = false
+
   return ret
