@@ -79,7 +79,12 @@
       <div class="panel-body">
         <%= form_for :upload, :url => {:action => :course_enrollment_confirm} do |form| %>
           <div class="col-xs-12 col-sm-4">
-            <%= form.file_field :file %>
+            <div class="form-file">
+              <label for="upload_file" >
+                <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+              </label>
+              <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+            </div >
           </div>
           <div class="col-xs-6 col-sm-4">
             <%= form.check_box :not_overwrite, {:checked => true}, true, nil %>

@@ -75,7 +75,12 @@
                 <%= t("materials_administration.MAT_ADM_CSV_UPLOAD_UPLOADCSV") %>
               </td>
               <td>
-                <%= form.file_field :file %>
+                <div class="form-file">
+                  <label for="upload_file" >
+                    <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+                  </label>
+                  <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                </div >
               </td>
             </tr>
           </table>

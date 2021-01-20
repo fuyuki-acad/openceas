@@ -1,0 +1,120 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<!-- 大問 -->
+<% @generic_page.parent_questions.each.with_index(1) do |parent, index| %>
+  <table width="100%">
+    <tr>
+      <td>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_PARENTQUESTION") + index.to_s %>
+              </div>
+              <div class="panel-body">
+                <%= form_tag url_for(:action => "destroy", :generic_page_id => @generic_page), {:class => "form-horizontal", :method => "delete"} do %>
+                  <!-- 設問テーブル -->
+                  <table class="table table-striped table-hover multiplefib_questions">
+                    <tr>
+                      <th><%= t("common.COMMON_DELETE") %></th>
+                      <th><%= t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION") %></th>
+                      <th><%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_CORRECT") %></th>
+                      <th><%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE4") %></th>
+                      <th><%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_RANDOM") %></th>
+                      <th><%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ANSWERINFULLCD") %></th>
+                    </tr>
+                    <% @questions[parent.id.to_s].values.each.with_index(1) do |question, index2| %>
+                      <tr>
+                        <td class="td-bold">
+                          <%= check_box_tag "delete[#{question.id}]", question.id, false, {} %>
+                        </td>
+                        <td class="td-bold">
+                          <%= index2 %>
+                        </td>
+                        <td class="td-bold">
+                          <%= text_field_tag "question[#{question.id}][answer_memo]", question.answer_memo, :maxlength => 3, :size => 3 %>
+                        </td>
+                        <td class="td-bold">
+                          <%= text_field_tag "question[#{question.id}][score]", question.score, :maxlength => 3, :size => 3 %>
+                        </td>
+                        <td class="td-bold">
+                          <%= text_field_tag "question[#{question.id}][random_cd]", question.random_cd, :maxlength => 5, :size => 5 %>
+                        </td>
+                        <td class="td-bold">
+                          <%= text_field_tag "question[#{question.id}][answer_in_full_cd]", question.answer_in_full_cd, :maxlength => 3, :size => 5 %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </table>
+
+                  <!-- 設問ボタン -->
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEQUESTION"), "#", :data => {:parent_id => parent.id}, :class => "btn btn-default ceas-button-margin-5 btn_add_question" %>
+                      <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_DELETEQUESTION"), "#",
+                        :data => {:target => :delete, :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+                        class: "btn btn-danger ceas-button-margin-5 multi_delete" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- 設問テーブル -->
+              <div class="panel-footer">
+                <div class="text-center">
+                  <div class="btn-group">
+                    <!-- 設問ボタン -->
+                    <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_DELETEPARENTQUESTION"), {:action => :destroy_parent, :generic_page_id => @generic_page, :id => parent}, {:class => "btn btn-default ceas-button-margin-5", :method => :delete, :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}} %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<div style="display: none">
+  <%= form_tag url_for(:action => "create"), {:class => "form-horizontal add_question_form", :method => "post"} do %>
+  <% end %>
+</div>
+
+<div class="text-center">
+  <div class="btn-group">
+    <%= form_tag url_for(:action => "update", :generic_page_id => @generic_page), {:class => "form-horizontal", :method => "patch"} do %>
+      <div id="form_contents" style="display: none;"></div>
+      <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPARENTQUESTION"), {:action => :create_parent, :generic_page_id => @generic_page}, {:class => "btn btn-primary ceas-button-margin-5", :method => :post} %>
+      <%= submit_tag t("materials_registration.COMMONMATERIALSREGISTRATION_REGISTEPARENTQUESTION"),
+        :class => "btn btn-default ceas-button-margin-5 update_multiplefib",
+        :data => {:msg_not_alphanumeric => t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR1"),
+                  :msg_not_input_correct => t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR5"),
+                  :msg_not_input_score => t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR6"),
+                  :msg_success => t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_SUCCESS")} %>
+      <%= link_to t("common.COMMON_RETURN"), {:controller => :multiplefibs, :action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5", :target => "_top"} %>
+    <% end %>
+  </div>
+</div>

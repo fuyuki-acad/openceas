@@ -1,0 +1,154 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<table class="table table-striped table-hover">
+  <!-- タイトル -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("common.COMMON_SUBJECT") %>
+      <span class='badge badge-essencial'>
+        <%= t("common.COMMON_ESSENCIAL") %>
+      </span>
+    </td>
+    <td class="col-xs-9">
+      <%= @generic_page.generic_page_title %>
+    </td>
+  </tr>
+
+  <!-- 受験回数 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_EXAMINATIONCOUNT") %>
+    </td>
+    <td>
+      <%= @generic_page.max_count %>
+    </td>
+  </tr>
+
+  <!-- 合格ライン -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_PASSINGMARK") %>
+    </td>
+    <td>
+      <%= @generic_page.pass_grade %>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_POINT") %>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_PASSINGMARKEXPLANATION2") %>
+    </td>
+  </tr>
+
+  <!-- 添付資料 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENT") %>
+    </td>
+    <td>
+      <% unless @generic_page.link_name.blank? %>
+        <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
+        <%= link_to t("common.COMMON_READ"), material_path(@generic_page.id), {target: "_blank"} %>
+      <% end %>
+    </td>
+  </tr>
+
+  <!-- 開始指示パスワード	 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTPASSWORD") %>
+    </td>
+    <td>
+      <%= @generic_page.start_pass %>
+    </td>
+  </tr>
+
+  <!-- 受付開始時間 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTTIME") %>
+    </td>
+    <td>
+      <%= l(@generic_page.start_time, format: :short) if @generic_page.start_time.present? %>
+    </td>
+  </tr>
+
+  <!-- 受付終了時間 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DEADLINE") %>
+    </td>
+    <td>
+      <%= l(@generic_page.end_time, format: :short) if @generic_page.end_time.present? %>
+    </td>
+  </tr>
+
+  <!-- 学生による採点と採点方式 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE") %>
+    </td>
+    <td>
+      <%= radio_button :generic_page, :self_type, "0", :checked => true, :class => "self_type", disabled: true %>
+      <%= label_tag :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE1'), value: "0", class: "label_weight_normal" %>
+      <br/>
+      <%= radio_button :generic_page, :self_type, "1", :class => "self_type", disabled: true %>
+      <%= label_tag :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE2'), value: "1", class: "label_weight_normal" %>
+      <br/>
+      <%= radio_button :generic_page, :self_type, "2", :class => "self_type", disabled: true %>
+      <%= label_tag :self_type, t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPE3'), value: "2", class: "label_weight_normal" %>
+      <br/>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_GRADETYPEEXPLANATION") %>
+    </td>
+  </tr>
+
+  <!-- 正答表示 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY") %>
+    </td>
+    <td>
+      <%= check_box_tag "correct_answer_display_flag", @generic_page.correct_answer_display_flag, @generic_page.correct_answer_display_flag == 1 ? true : false, { disabled: true } %>
+      <%= label_tag "correct_answer_display_flag", t('materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT1'), class: "label_weight_normal" %>
+      <br/>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_CORRECT_ANSWER_DISPLAY_TEXT2") %>
+    </td>
+  </tr>
+
+  <!-- 採点開始パスワード	 -->
+  <tr>
+    <td>
+      <%= t("materials_registration.MAT_REG_COM_REGISTERCOMPOUND_STARTGRADEPASSWORD") %>
+    </td>
+    <td>
+      <%= @generic_page.self_pass %>
+    </td>
+  </tr>
+
+  <!-- 授業メモ（公開メモ） -->
+  <tr>
+    <td>
+      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_OPENCOMMENT") %>
+    </td>
+    <td>
+      <%= convert_string(@generic_page.material_memo) %>
+    </td>
+  </tr>
+</table>

@@ -227,3 +227,5 @@ ja:
     COMMON_NOTREAD_MSG: "未読・未回答件数を表示させたくない場合、科目環境設定で「表示しない」に設定してください。"
     COMMON_SELECTWORK: "作業機能選択"
     COMMON_UPLOADED: "アップロードが完了しました"
+    COMMON_SELECT_FILE: "ファイルを選択"
+    COMMON_NO_FILE_SELECTED: "選択されていません"

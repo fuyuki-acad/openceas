@@ -1,6 +1,31 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
 require 'rails_helper'
 
 RSpec.describe Compound, type: :model do
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
+
   before do
     User.current_user = create(:teacher_user)
     @course = create(:course, :year_of_2019)
@@ -28,7 +53,7 @@ RSpec.describe Compound, type: :model do
       @compound.valid?
       expect(@compound.errors.count).to eq 0
 
-      @compound.file = fixture_file_upload('test.txt', 'text/txt')
+      @compound.file = test_file
       @compound.valid?
       expect(@compound.errors.count).to eq 0
     end
@@ -89,7 +114,7 @@ RSpec.describe Compound, type: :model do
   describe '登録' do
     it "ファイルアップロード成功" do
       file_name = 'test.txt'
-      compound = build(:compound, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      compound = build(:compound, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
       expect{
@@ -103,10 +128,10 @@ RSpec.describe Compound, type: :model do
   describe '更新' do
     it "ファイルアップロード成功" do
       file_name = 'test_update.txt'
-      compound = create(:compound, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      compound = create(:compound, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
-        compound.file = fixture_file_upload(file_name, 'text/txt')
+        compound.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         compound.save
       }.to change(GenericPage, :count).by(0)
@@ -117,7 +142,7 @@ RSpec.describe Compound, type: :model do
 
   describe '他コースへコピー' do
     before do
-      @compound = create(:compound, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @compound = create(:compound, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -155,7 +180,7 @@ RSpec.describe Compound, type: :model do
 
   describe '他テストからの設問コピー' do
     before do
-      @compound = create(:compound, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @compound = create(:compound, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -166,7 +191,7 @@ RSpec.describe Compound, type: :model do
         self_pass: "pass67890"
       )
 
-      @src_compound = create(:compound, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @src_compound = create(:compound, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 1,
         pass_grade: 65,

@@ -72,7 +72,14 @@
               <label for="current-Password" class="col-lg-10">
                 <%= t("change_personal_data.PRI_ADM_USR_CHANGEPERSONALDATA_IMAGETITLE") %>
               </label>
-              <div class="col-lg-10"><%= form.file_field :mount_url %></div>
+              <div class="col-lg-10">
+                <div class="form-file">
+                  <label for="user_image_mount_url" >
+                    <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :mount_url %>
+                  </label>
+                  <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                </div >
+              </div>
             </div>
             <div class="form-group">
               <div class="pull-right">

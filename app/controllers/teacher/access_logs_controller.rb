@@ -39,11 +39,7 @@ class Teacher::AccessLogsController < ApplicationController
       sql_params = {}
 
       course = Course.where("id = ?", params[:type]).first
-      if course.open_course_flag ==  Settings.COURSE_OPENCOURSEFLG_PUBLIC
-        assigned = course.open_course_assigned_users.where(user_id: current_user.id).first
-      else
-        assigned = course.course_assigned_users.where(user_id: current_user.id).first
-      end
+      assigned = course.course_assigned_users.where(user_id: current_user.id).first
       raise Forbidden if assigned.blank?
 
       sql_texts.push("course_access_logs.course_id = :course_id")

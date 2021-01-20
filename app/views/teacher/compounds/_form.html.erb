@@ -63,7 +63,12 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENT") %>
     </td>
     <td>
-      <%= form.file_field :file, {:class => "inputForm"} %>
+      <div class="form-file">
+        <label for="generic_page_file" >
+          <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+        </label>
+        <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+      </div >
       <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION2') %></div>
       <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %></div>
       <% unless @generic_page.link_name.blank? %>

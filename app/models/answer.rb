@@ -62,7 +62,7 @@ class Answer < ApplicationRecord
   end
 
   def create_historty
-    history = AnswerHistory.where(answer_id: self.id, answer_count: self.answer_count).first
+    history = AnswerHistory.where(question_id: self.question_id, user_id: self.user_id, answer_count: self.answer_count).first
     if history.blank?
       history = AnswerHistory.new(
         answer_id: self.id,

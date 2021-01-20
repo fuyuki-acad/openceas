@@ -237,14 +237,20 @@ class Admin::UsersController < ApplicationController
         sql_params[:season] = params[:season]
       end
 
-      @courses = Course.where(sql_texts.join(" AND "), sql_params).
-        order(VIEW_COUSE_ORER)
+      if sql_texts.length > 0
+        @courses = Course.where(sql_texts.join(" AND "), sql_params)
+      else
+        @courses = Course
+      end
+      if @courses.present?
+        @courses = @courses.order(VIEW_COUSE_ORER)
+      end
     end
 
     def get_assigned_courses(user)
       sql_params = {}
       sql_texts = []
-
+      
       if !params[:keyword].blank?
         case params[:type1]
         when "1"
@@ -280,11 +286,15 @@ class Admin::UsersController < ApplicationController
       end
 
       if user.teacher?
-        @courses = user.assigned_courses.where(sql_texts.join(" AND "), sql_params).
-          order(VIEW_COUSE_ORER).page(params[:page])
+        @courses = user.assigned_courses
       elsif @user.student?
-        @courses = user.enrollment_courses.where(sql_texts.join(" AND "), sql_params).
-          order(VIEW_COUSE_ORER).page(params[:page])
+        @courses = user.enrollment_courses
       end
-    end
+      if @courses.present?
+        if sql_texts.length > 0
+          @courses = @courses.where(sql_texts.join(" AND "), sql_params)
+        end
+        @courses = @courses.order(VIEW_COUSE_ORER).page(params[:page])
+      end
+  end
 end
