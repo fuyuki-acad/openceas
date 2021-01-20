@@ -49,7 +49,10 @@ class TopController < ApplicationController
         .joins({:faq => :course})
         .where("open_flag = ?", true).limit(OPEN_FAQ_COUNT_LIMIT)
       @courses = Course.order(VIEW_COUSE_ORER)
-        .where(sql_texts.join(" AND "), sql_params).page(params[:page])
+      if sql_texts.length > 0
+        @courses = @courses.where(sql_texts.join(" AND "), sql_params)
+      end
+      @courses = @courses.page(params[:page])
 
     elsif current_user.teacher?
       @announcements = Announcement.eager_load(:course)
@@ -84,8 +87,10 @@ class TopController < ApplicationController
       end
 
       @courses = Course.joins(:course_assigned_users)
-        .where(sql_texts.join(" AND "), sql_params)
-        .order(VIEW_COUSE_ORER).page(params[:page])
+      if sql_texts.length > 0
+        @courses = @courses.where(sql_texts.join(" AND "), sql_params)
+      end
+      @courses = @courses.order(VIEW_COUSE_ORER).page(params[:page])
 
       # 未読レポート・未回答FAQ
       unread_sql_params = {}

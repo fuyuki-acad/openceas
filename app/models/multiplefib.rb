@@ -24,6 +24,8 @@
 class Multiplefib < GenericPage
   include UploadFileModule
 
+  EXT_PDF = ".pdf"
+
   attr_accessor :explanation_file
 
   before_save do
@@ -57,6 +59,14 @@ class Multiplefib < GenericPage
       false
     else
       HTML_TYPES.include?(File.extname(self.link_name)) ? true : false
+    end
+  end
+
+  def pdf?
+    if self.link_name.blank?
+      false
+    else
+      EXT_PDF == File.extname(self.link_name) ? true : false
     end
   end
 

@@ -49,6 +49,14 @@
   </div>
 </div>
 
-<%= form_for :question, :url => {:action => "update", :generic_page_id => @generic_page, :parent_id => @parent}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
-  <%= render form %>
+<% if @generic_page.answer_scores.count > 0 %>
+
+  <%= render 'confirm' %>
+
+<% else %>
+
+  <%= form_for :question, :url => {:action => "update", :generic_page_id => @generic_page, :parent_id => @parent}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+    <%= render form %>
+  <% end %>
+
 <% end %>

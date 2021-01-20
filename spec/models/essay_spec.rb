@@ -1,6 +1,33 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
 require 'rails_helper'
 
 RSpec.describe Essay, type: :model do
+  let(:no_ext_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test'), 'text/txt') }
+  let(:exe_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.exe'), 'text/txt') }
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
+
   before do
     User.current_user = create(:teacher_user)
     @course = create(:course, :year_of_2019)
@@ -32,16 +59,16 @@ RSpec.describe Essay, type: :model do
       expect(@essay.errors.messages[:file]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE2")
 
       #ファイル拡張子なし
-      @essay.file = fixture_file_upload('test', 'text/txt')
+      @essay.file = no_ext_file
       @essay.valid?
       expect(@essay.errors.messages[:file]).to include I18n.t("materials_registration.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")
 
       #ファイル拡張子（exe）
-      @essay.file = fixture_file_upload('test.exe', 'text/txt')
+      @essay.file = exe_file
       @essay.valid?
       expect(@essay.errors.messages[:file]).to include I18n.t("materials_registration.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE4")
 
-      @essay.file = fixture_file_upload('test.txt', 'text/txt')
+      @essay.file = test_file
       @essay.valid?
       expect(@essay.errors.count).to eq 0
     end
@@ -92,7 +119,7 @@ RSpec.describe Essay, type: :model do
   describe '登録' do
     it "ファイルアップロード成功" do
       file_name = 'test.txt'
-      essay = build(:essay, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      essay = build(:essay, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
       expect{
@@ -106,10 +133,10 @@ RSpec.describe Essay, type: :model do
   describe '更新' do
     it "ファイルアップロード成功" do
       file_name = 'test_update.txt'
-      essay = create(:essay, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      essay = create(:essay, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD)
 
-        essay.file = fixture_file_upload(file_name, 'text/txt')
+        essay.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         essay.save
       }.to change(GenericPage, :count).by(0)
@@ -120,7 +147,7 @@ RSpec.describe Essay, type: :model do
 
   describe '他コースへコピー' do
     before do
-      @essay = create(:essay, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @essay = create(:essay, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -157,7 +184,7 @@ RSpec.describe Essay, type: :model do
 
   describe '他テストからの設問コピー' do
     before do
-      @essay = create(:essay, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @essay = create(:essay, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -168,7 +195,7 @@ RSpec.describe Essay, type: :model do
         pre_grading_enable_flag: Settings.GENERICPAGE_PREGRADINGENABLEFLG_ON
       )
 
-      @src_essay = create(:essay, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @src_essay = create(:essay, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,

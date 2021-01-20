@@ -119,7 +119,7 @@ class CompoundsController < ApplicationController
 				@execute_flag = true
 				@finish_cd = 1
 
-        if @latest_score.self_total_score < Settings.ANSWERSCORE_TMP_SAVED_SCORE
+        if @latest_score.self_total_score && @latest_score.self_total_score < Settings.ANSWERSCORE_TMP_SAVED_SCORE
           if !@generic_page.self_pass.blank? || session[:mark_pass_flag]
             ## 採点開始パスワードがある時
             @execution_count = get_execution_count(@generic_page, false)

@@ -29,7 +29,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'cd809a4d6edaa8556511c76b16190d030928fabeda98928202996084b0bf48b25e20f6cbe2cbede431d53c0628db4ce4ef94c66339203e317b8158082c850b6d'
+   config.secret_key = 'cd809a4d6edaa8556511c76b16190d030928fabeda98928202996084b0bf48b25e20f6cbe2cbede431d53c0628db4ce4ef94c66339203e317b8158082c850b6d'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -69,12 +69,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [:email]
+  config.case_insensitive_keys = [:account]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [:email]
+  config.strip_whitespace_keys = [:account]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the

@@ -1,6 +1,32 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
 require 'rails_helper'
 
 RSpec.describe Multiplefib, type: :model do
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
+  let(:test_update_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test_update.txt'), 'text/txt') }
+
   before do
     User.current_user = create(:teacher_user)
     @course = create(:course, :year_of_2019)
@@ -9,8 +35,8 @@ RSpec.describe Multiplefib, type: :model do
   describe 'バリデーション' do
     before do
       @multiplefib = build(:multiplefib, course_id: @course.id,
-        file: fixture_file_upload('test.txt', 'text/txt'),
-        explanation_file: fixture_file_upload('test.txt', 'text/txt'))
+        file: test_file,
+        explanation_file: test_file)
     end
 
     it "正常" do
@@ -30,7 +56,7 @@ RSpec.describe Multiplefib, type: :model do
       @multiplefib.valid?
       expect(@multiplefib.errors.messages[:file]).to include I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE6")
 
-      @multiplefib.file = fixture_file_upload('test.txt', 'text/txt')
+      @multiplefib.file = test_file
       @multiplefib.valid?
       expect(@multiplefib.errors.count).to eq 0
     end
@@ -76,8 +102,8 @@ RSpec.describe Multiplefib, type: :model do
   describe '登録' do
     it "ファイルアップロード成功" do
       file_name = 'test.txt'
-      multiplefib = build(:multiplefib, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
-        explanation_file: fixture_file_upload('test.txt', 'text/txt'))
+      multiplefib = build(:multiplefib, course_id: @course.id, file: test_file,
+        explanation_file: test_file)
 
       expect{
         multiplefib.save
@@ -90,10 +116,10 @@ RSpec.describe Multiplefib, type: :model do
   describe '更新' do
     it "ファイルアップロード成功" do
       file_name = 'test_update.txt'
-      multiplefib = create(:multiplefib, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
-        explanation_file: fixture_file_upload('test.txt', 'text/txt'))
+      multiplefib = create(:multiplefib, course_id: @course.id, file: test_file,
+        explanation_file: test_file)
 
-      multiplefib.file = fixture_file_upload(file_name, 'text/txt')
+      multiplefib.file = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', file_name), 'text/txt')
       expect{
         multiplefib.save
       }.to change(GenericPage, :count).by(0)
@@ -106,8 +132,8 @@ RSpec.describe Multiplefib, type: :model do
     before do
       @fine_name = 'test.txt'
       @explanation_file_name = 'test_update.txt'
-      @multiplefib = create(:multiplefib, course_id: @course.id, file: fixture_file_upload(@fine_name, 'text/txt'),
-        explanation_file: fixture_file_upload(@explanation_file_name, 'text/txt'),
+      @multiplefib = create(:multiplefib, course_id: @course.id, file: test_file,
+        explanation_file: test_update_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -144,7 +170,7 @@ RSpec.describe Multiplefib, type: :model do
 
   describe '他テストからの設問コピー' do
     before do
-      @multiplefib = create(:multiplefib, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @multiplefib = create(:multiplefib, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 2,
         pass_grade: 70,
@@ -153,7 +179,7 @@ RSpec.describe Multiplefib, type: :model do
         end_time: "2020/03/31",
       )
 
-      @src_multiplefib = create(:multiplefib, course_id: @course.id, file: fixture_file_upload('test.txt', 'text/txt'),
+      @src_multiplefib = create(:multiplefib, course_id: @course.id, file: test_file,
         upload_flag: GenericPage::TYPE_FILEUPLOAD,
         max_count: 1,
         pass_grade: 65,

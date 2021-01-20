@@ -462,7 +462,7 @@
                                 <%= t("common.COMMON_CONFIRM2") %>
                               <% end %>
                             <% elsif !@scores[user.id].link_name.blank? %>
-                              <%= link_to t("common.COMMON_CONFIRM2"), {:action => :file_confirm, :id => @essay, :user => user}, :class => "btn btn-warning btn-block ceas-button-margin-5", :target => "_blank" %>
+                              <%= link_to t("common.COMMON_CONFIRM2"), {:action => :file_confirm, :id => @essay, :user => user}, :class => "btn btn-warning btn-block ceas-button-margin-5 ceas-button-margin-5", :target => "_blank" %>
                             <% end %>
                           <% end %>
                         <% end %>

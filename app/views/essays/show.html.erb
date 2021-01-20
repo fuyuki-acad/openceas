@@ -153,7 +153,12 @@
                       <%= t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_PCFILE") %>
                     </td>
                     <td class="submit_table_under">
-                      <%= file_field_tag "file", {:class => "inputForm"} %>
+                      <div class="form-file">
+                        <label for="file" >
+                          <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= file_field_tag :file %>
+                        </label>
+                        <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                      </div >
                     </td>
                     <td class="submit_table_under_narrow">
                       <%= submit_tag t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_SUBMIT"), :class => "btn btn-default center-block" %>

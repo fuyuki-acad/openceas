@@ -38,7 +38,7 @@ module DeviceLoginHelper
   def logout
     visit root_path
     find("a.dropdown-toggle").click
-    click_link I18n. t("top.COMMONTOP_LOGOUT")
+    click_link I18n.t('top.COMMONTOP_LOGOUT')
     expect(page).to have_content I18n.t('devise.failure.unauthenticated')
   end
 

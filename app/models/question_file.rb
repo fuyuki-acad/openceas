@@ -38,7 +38,7 @@ class QuestionFile
     elsif File.extname(@file.original_filename).length == 0
       errors.add(:file, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3"))
     else
-      errors.add(:file, I18n.t("common.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD_FILECHECK")) unless UPLOAD_FILE_TYPES.include?(File.extname(@file.original_filename))
+      errors.add(:file, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD_FILECHECK")) unless UPLOAD_FILE_TYPES.include?(File.extname(@file.original_filename))
     end
   end
 

@@ -1,7 +1,34 @@
+#--
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
+
 require 'rails_helper'
 
 RSpec.describe AnswerScore, type: :model do
   let(:student) { create(:student_user) }
+  let(:no_ext_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test'), 'text/txt') }
+  let(:exe_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.exe'), 'text/txt') }
+  let(:size_0_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'file_size_0.txt'), 'text/txt') }
+  let(:test_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'files', 'test.txt'), 'text/txt') }
 
   before do
     User.current_user = student
@@ -25,23 +52,23 @@ RSpec.describe AnswerScore, type: :model do
         expect(@answer_score.errors.messages[:file_name]).to include I18n.t("execution.MAT_EXE_ASS_EXECUTEASSIGNMENTESSAY_ERRORTYPE1")
 
         #拡張子なし
-        @answer_score.file = fixture_file_upload('test', 'text/txt')
+        @answer_score.file = no_ext_file
         @answer_score.valid?
         expect(@answer_score.errors.messages[:file_name]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE3")
 
         #拡張子exe
-        @answer_score.file = fixture_file_upload('test.exe', 'text/txt')
+        @answer_score.file = exe_file
         @answer_score.valid?
         expect(@answer_score.errors.messages[:file_name]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE8")
 
         #size 0
-        @answer_score.file = fixture_file_upload('file_size_0.txt', 'text/txt')
+        @answer_score.file = size_0_file
         @answer_score.valid?
         expect(@answer_score.errors.messages[:base]).to include I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE19")
       end
 
       it "正常" do
-        @answer_score.file = fixture_file_upload('test.txt', 'text/txt')
+        @answer_score.file = test_file
         @answer_score.valid?
         expect(@answer_score.errors.count).to eq 0
         expect(@answer_score).to be_valid
@@ -50,7 +77,7 @@ RSpec.describe AnswerScore, type: :model do
 
     context '保存' do
       it '新規登録' do
-        answer_score = build(:answer_score, user_id: student.id, file: fixture_file_upload('test.txt', 'text/txt'))
+        answer_score = build(:answer_score, user_id: student.id, file: test_file)
         answer_score.generic_page = @essay
 
         expect{
@@ -73,7 +100,7 @@ RSpec.describe AnswerScore, type: :model do
 
       context '更新' do
         before do
-          @answer_score = create(:answer_score, page_id: @essay.id, user_id: student.id, file: fixture_file_upload('test.txt', 'text/txt'))
+          @answer_score = create(:answer_score, page_id: @essay.id, user_id: student.id, file: test_file)
         end
 
         it 'answer_count変更なし' do
@@ -142,7 +169,7 @@ RSpec.describe AnswerScore, type: :model do
         expect(@answer_score.errors.count).to eq 0
         expect(@answer_score).to be_valid
 
-        @answer_score.file = fixture_file_upload('test.txt', 'text/txt')
+        @answer_score.file = test_file
         @answer_score.valid?
         expect(@answer_score.errors.count).to eq 0
         expect(@answer_score).to be_valid

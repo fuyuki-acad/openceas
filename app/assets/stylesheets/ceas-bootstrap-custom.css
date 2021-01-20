@@ -450,3 +450,24 @@ td.blocklink a {
     width: 180px;
   }
 }
+
+ .form-file input[type="file"]{
+   display: none;
+ }
+
+ .form-file label{
+   border: 1px solid rgb(49, 49, 49);
+   background-color: rgb(241, 241, 241);
+   border-radius: 3px;
+   padding: 2px 5px;
+   font-size: 14px;
+   font-weight: normal !important;
+   letter-spacing: 0;
+   cursor: pointer;
+ }
+  
+ .form-file-name{
+   display: inline-block;
+   font-size: 14px;
+   margin-left: 10px;
+ }

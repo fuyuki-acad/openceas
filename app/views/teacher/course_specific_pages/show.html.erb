@@ -106,7 +106,12 @@
             <td>
               <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION2") %>
               <br/>
-              <%= file_field_tag :file, {:class => "inputForm"} %>
+              <div class="form-file">
+                <label for="file" >
+                  <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= file_field_tag :file %>
+                </label>
+                <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+              </div >
               <br/>
               <%= t("specific_page.MAT_ALL_COU_REGISTERSPECIFICPAGE_ATTENTION3") %>
             </td>

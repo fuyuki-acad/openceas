@@ -69,7 +69,12 @@
           <table class="table table-striped table-hover">
             <tr>
               <td>
-                <%= file_field_tag :upload %>
+                <div class="form-file">
+                  <label for="upload" >
+                    <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= file_field_tag :upload %>
+                  </label>
+                  <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                </div >
               </td>
             </tr>
           </table>

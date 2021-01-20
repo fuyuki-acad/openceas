@@ -1,0 +1,52 @@
+.pdf-viewer-navi {
+  background: gray;
+}
+
+.pdf-page {
+  color: gray;
+}
+
+.pdf-viewer {
+  width: 100px;
+  height:300px;
+  overflow-y: scroll;
+}
+
+#pdf-viewer-canvas {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+#pageNumber, #totalPage {
+  color: lightgrey;
+  background-color: #343a40;
+  text-align: right;
+  width: 35px;
+}
+
+
+.icon_lightgrey {
+  color: lightgrey;
+}
+
+.is-hide {
+  display: none;
+}
+
+#pdf-loader-bg {
+  background: #26262a;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+}
+
+#pdf-loader {
+  left: 45%;
+  position: fixed;
+  top: 50%;
+}
+
+#pdf-loader p {
+  color: #ffffff;
+}

@@ -41,39 +41,69 @@
   </div>
 </div>
 
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <p class="annotation">
-      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPAGE") %>
-      <%= t("materials_registration.MAT_REG_QUE_REGISTERQUESTIONNAIRE_EXPLANATION2_html") %>
-    </p>
-  </div>
-</div>
+<% if @generic_page.answer_scores.count > 0 %>
 
-<%= form_for :generic_page, :url => {:action => "update", :id => @generic_page}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
-<!-- 入力フォーム -->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONQUESTIONNAIRE") %>
-          <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONANDEDIT") %>
-        </h3>
+  <!-- 確認 -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONQUESTIONNAIRE") %>
+            <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONANDEDIT") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%= render 'confirm' %>
+        </div>
       </div>
-      <div class="panel-body">
-        <%= render form %>
-      </div>
-    </div>
 
-    <!-- ボタン -->
-    <div class="text-center">
-      <div class="btn-group">
-        <%= form.submit t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
-        <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+      <!-- ボタン -->
+      <div class="text-center">
+        <div class="btn-group">
+          <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+<% else %>
+
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="annotation">
+        <%= t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPAGE") %>
+        <%= t("materials_registration.MAT_REG_QUE_REGISTERQUESTIONNAIRE_EXPLANATION2_html") %>
+      </p>
+    </div>
+  </div>
+
+  <%= form_for :generic_page, :url => {:action => "update", :id => @generic_page}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+  <!-- 入力フォーム -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONQUESTIONNAIRE") %>
+            <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TITLEREGISTRATIONANDEDIT") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%= render form %>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div class="text-center">
+        <div class="btn-group">
+          <%= form.submit t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
+          <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
 <% end %>

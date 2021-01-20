@@ -24,7 +24,7 @@ zh_TW:
       format: "DD-MM-YYYY HH:mm:ss"
     formats:
       default: "%d-%m-%Y %H:%M:%S"
-      short: "%d-%m-%y %H:%M"
+      short: "%d-%m-%Y %H:%M"
       long: "%d-%m-%Y(%a) %H:%M:%S %Z"
       ym: "%m-%Y"
     am: "AM"

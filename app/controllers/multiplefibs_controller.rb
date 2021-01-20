@@ -58,6 +58,8 @@ class MultiplefibsController < ApplicationController
         render "password"
       end
     end
+
+    @is_mobile = (request.env['HTTP_USER_AGENT'] =~ /iPhone|Android.+Mobile/) ? true : false
   end
 
   def quiz

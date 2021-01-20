@@ -103,7 +103,11 @@ class Api::V1::UsersController < ApiController
       sql_params[:role] = params[:role]
     end
 
-    users = User.where(sql_texts.join(" AND "), sql_params)
+    if sql_texts.length > 0
+      users = User.where(sql_texts.join(" AND "), sql_params)
+    else
+      users = User.all
+    end
     render json: users
   end
 

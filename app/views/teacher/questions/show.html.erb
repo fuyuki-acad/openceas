@@ -66,44 +66,44 @@
           </div>
         </div>
 
-        <!-- 説明文 -->
-        <div class="row">
-          <div class="col-sm-12">
-            <p class="annotation">
-              <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
-              <% if @generic_page.answer_scores.count == 0 %>
+        <% if @generic_page.answer_scores.count == 0 %>
+          <!-- 説明文 -->
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="annotation">
+                <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
                 <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE || @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
                   <%= t("common.COMMON_BR_html") %>
                   <%= t("materials_registration.COMMONMATERIALSREGISTRATION_UPLOADQUESTIONSEXPLANATION4_html") %>
                 <% end %>
-              <% end %>
-            </p>
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 問題一括アップロードボタン表示 -->
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="text-center">
-              <div class="btn-group">
-                <% if @generic_page.answer_scores.count == 0 %>
-                  <!-- 問題一括アップロードボタン(複合式テスト)-->
-                  <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
-                    <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD"), {controller: :questions, action: :select_upload, generic_page_id: @generic_page.id}, class: "btn btn-primary ceas-button-margin-5" %>
-                  <% end %>
+          <!-- 問題一括アップロードボタン表示 -->
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-center">
+                <div class="btn-group">
+                  <% if @generic_page.answer_scores.count == 0 %>
+                    <!-- 問題一括アップロードボタン(複合式テスト)-->
+                    <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
+                      <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD"), {controller: :questions, action: :select_upload, generic_page_id: @generic_page.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% end %>
 
-                  <!-- 問題一括アップロードボタン(アンケート)-->
-                  <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
-                    <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD"), {controller: :questions, action: :select_upload, generic_page_id: @generic_page.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <!-- 問題一括アップロードボタン(アンケート)-->
+                    <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                      <%= link_to t("materials_registration.COMMONMATERIALSREGISTRATION_QUESTION_UPLOAD"), {controller: :questions, action: :select_upload, generic_page_id: @generic_page.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% end %>
                   <% end %>
-                <% end %>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <%= form_for :question, :url => {:action => "create_parent", :generic_page_id => @generic_page.id}, :html => {:class => "form-horizontal"} do |form| %>
-          <%= render 'form_parent', :form => form %>
+          <%= form_for :question, :url => {:action => "create_parent", :generic_page_id => @generic_page.id}, :html => {:class => "form-horizontal"} do |form| %>
+            <%= render 'form_parent', :form => form %>
+          <% end %>
         <% end %>
 
       </div>
@@ -205,19 +205,21 @@
                           <%== parent_question.content %>
                         </div>
 
-                        <div class="row">
-                          <div class="col-xs-12">
-                            <div class="pull-right">
-                              <div class="text-center">
-                                <div class="btn-group">
-                                  <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION5"), {action: :edit_parent, :generic_page_id => @generic_page, id: parent_question}, class: "btn btn-default ceas-button-margin-5 center-block" %>
-                                  <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION11"), {action: :destroy, :generic_page_id => @generic_page, parent_id: parent_question},
-                                    :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :method => :delete, class: "btn btn-danger ceas-button-margin-5 center-block" %>
+                        <% if @generic_page.answer_scores.count == 0 %>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="pull-right">
+                                <div class="text-center">
+                                  <div class="btn-group">
+                                    <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION5"), {action: :edit_parent, :generic_page_id => @generic_page, id: parent_question}, class: "btn btn-default ceas-button-margin-5 center-block" %>
+                                    <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION11"), {action: :destroy, :generic_page_id => @generic_page, parent_id: parent_question},
+                                      :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :method => :delete, class: "btn btn-danger ceas-button-margin-5 center-block" %>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        <% end %>
                       </div>
 
                       <%= form_tag url_for(:action => "destroy", :generic_page_id => @generic_page, :parent_id => parent_question), {:class => "form-horizontal", :method => "delete"} do %>
@@ -233,7 +235,9 @@
                                   <table class="table table-striped table-hover<%= @generic_page.answer_scores.count == 0 ? ' sortable-question' : '' %>">
                                     <thead>
                                       <tr>
-                                        <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
+                                        <% if @generic_page.answer_scores.count == 0 %>
+                                          <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
+                                        <% end %>
                                         <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
                                         <th class="hidden-xs"><%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE3") %></th>
                                         <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
@@ -246,18 +250,16 @@
                                     <tbody>
                                     <% parent_question.questions.each.with_index(1) do |question, index| %>
                                       <tr data-parent-id="<%= parent_question.id %>">
-                                        <td class="td-bold">
-                                          <% if @generic_page.answer_scores.count == 0 %>
+                                        <% if @generic_page.answer_scores.count == 0 %>
+                                          <td class="td-bold">
                                             <%= check_box_tag "question[#{parent_question.id}][#{question.id}]", question.id, false, {} %>
-                                          <% end %>
-                                        </td>
+                                          </td>
+                                        <% end %>
                                         <td class="td-bold"><%= index %></td>
                                         <td class="td-bold">
                                           <%== question.content %>
                                           <% if @generic_page.answer_scores.count > 0 %>
-                                            <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_COMPOUNDCODE %>
-                                              <%= t("common.COMMON_BR_html") %><code><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEEXAMINATION") %></code>
-                                            <% elsif @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
+                                            <% if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>
                                               <%= t("common.COMMON_BR_html") %><code><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_CANNOTDELETEQUESTIONNAIRE") %></code>
                                             <% end %>
                                           <% end %>
@@ -268,7 +270,11 @@
                                         <td class="td-bold"><%= convert_pattern_cd(question.pattern_cd) %></td>
                                         <td class="td-bold">
                                           <div class="image_block_button3">
-                                            <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE4"), {action: :edit, :generic_page_id => @generic_page, id: question}, class: "btn btn-warning ceas-button-margin-5" %>
+                                            <% if @generic_page.answer_scores.count == 0 %>
+                                              <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE4"), {action: :edit, :generic_page_id => @generic_page, id: question}, class: "btn btn-warning ceas-button-margin-5" %>
+                                            <% else %>
+                                              <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE7"), {action: :edit, :generic_page_id => @generic_page, id: question}, class: "btn btn-warning ceas-button-margin-5" %>
+                                            <% end %>
                                           </div>
                                         </td>
                                       </tr>
@@ -277,29 +283,32 @@
                                   </table>
                                 <% end %>
 
-                                <div class="col-xs-12">
-                                  <div id="order_message_<%= parent_question.id %>" style="display: none"><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION14") %></div>
-                                  <% if parent_question.questions.count > 0 %>
-                                    <span id="order_update_<%= parent_question.id %>" style="display: none">
-                                      <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE6"), "#",
-                                        :data => {:target => "question[#{parent_question.id}]", :parent_id => "#{parent_question.id}"}, class: "btn btn-primary ceas-button-margin-5 btn_order_update" %>
-                                    </span>
-                                    <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
-                                      :data => {:target => "question[#{parent_question.id}]", :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
-                                      class: "btn btn-primary ceas-button-margin-5 check_selector" %>
-                                    <%= link_to t("common.COMMON_DELETE"), "javascript:void();",
-                                      :data => {:target => "question[#{parent_question.id}]", :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
-                                      class: "btn btn-danger ceas-button-margin-5 multi_delete" %>
-                                  <% end %>
+                                <% if @generic_page.answer_scores.count == 0 %>
+                                  <div class="col-xs-12">
+                                    <div id="order_message_<%= parent_question.id %>" style="display: none"><%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION14") %></div>
+                                    <% if parent_question.questions.count > 0 %>
+                                      <span id="order_update_<%= parent_question.id %>" style="display: none">
+                                        <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_TABLE6"), "#",
+                                          :data => {:target => "question[#{parent_question.id}]", :parent_id => "#{parent_question.id}"}, class: "btn btn-primary ceas-button-margin-5 btn_order_update" %>
+                                      </span>
+                                      <%= link_to t("common.COMMON_ALLCHECK"), "javascript:void();",
+                                        :data => {:target => "question[#{parent_question.id}]", :on_title => t("common.COMMON_ALLCHECK"), :off_title => t("common.COMMON_ALLCLEAR")},
+                                        class: "btn btn-primary ceas-button-margin-5 check_selector" %>
+                                      <%= link_to t("common.COMMON_DELETE"), "javascript:void();",
+                                        :data => {:target => "question[#{parent_question.id}]", :msg_confirm => t("common.COMMON_CONFIRMDELETE"), :msg_not_checked => t("common.COMMON_SELECTDELETEOBJECT")},
+                                        class: "btn btn-danger ceas-button-margin-5 multi_delete" %>
+                                    <% end %>
 
-                                  <div class="pull-right">
-                                    <div class="text-center">
-                                      <div class="btn-group">
-                                        <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION6"), {action: :new, :generic_page_id => @generic_page, parent_id: parent_question}, class: "btn btn-primary ceas-button-margin-5 center-block" %>
+                                    <div class="pull-right">
+                                      <div class="text-center">
+                                        <div class="btn-group">
+                                          <%= link_to t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION6"), {action: :new, :generic_page_id => @generic_page, parent_id: parent_question}, class: "btn btn-primary ceas-button-margin-5 center-block" %>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                <% end %>
+
                               </div>
                             </div>
                           </div>

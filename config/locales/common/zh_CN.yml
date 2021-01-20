@@ -227,3 +227,5 @@ zh_CN:
     COMMON_NOTREAD_MSG: "If you do not want to display the unread, unanswered number, please set to \"Do not show\" in subject preferences."
     COMMON_UPLOADED: "File upload has been completed"
     COMMON_SELECTWORK: "Work function selection"
+    COMMON_SELECT_FILE: "Choose File"
+    COMMON_NO_FILE_SELECTED: "no file selected"

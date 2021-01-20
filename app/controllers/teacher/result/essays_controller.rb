@@ -809,7 +809,7 @@ class Teacher::Result::EssaysController < ApplicationController
     session[:return_extract_path] = essay_file.extracted_file_path
 
     @user_files = []
-    @essay.course.course_enrollment_users.each do |enrollment_user|
+    @essay.course.course_enrollment_users.joins(:user).order("users.name_no_prefix, users.user_name").each do |enrollment_user|
       next if enrollment_user.user.blank? || enrollment_user.user.get_name_no_prefix.to_s.length == 0
 
       extracted_files.each do |file_name|

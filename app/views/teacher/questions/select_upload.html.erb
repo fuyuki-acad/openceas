@@ -89,7 +89,7 @@
 <p/>
 
 <%= form_for :question_file, :url => {:action => :confirm_upload, :course_id => @course}, :class => "form-horizontal" do |form| %>
-<%= form.hidden_field :file %>
+<%= hidden_field_tag "question_file[dummy]", "" %>
 <!-- 入力フォーム -->
 <div class="row">
   <div class="col-xs-12">
@@ -101,7 +101,12 @@
               <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE26") %>
             </td>
             <td>
-              <%= form.file_field :file, {:class => "inputForm"} %>
+              <div class="form-file">
+                <label for="question_file_file" >
+                  <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+                </label>
+                <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+              </div >
             </td>
           </tr>
         </table>

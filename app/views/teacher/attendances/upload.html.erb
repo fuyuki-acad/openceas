@@ -21,7 +21,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 %>
 
-<%= javascript_include_tag 'admin/attendanceAdministration' %>
+<%#= javascript_include_tag 'admin/attendanceAdministration' %>
 
 <% breadcrumb :combined_records %>
 
@@ -101,7 +101,12 @@
                 <%= t("attendanceAdministration.ATT_ADM_CLASSSESSIONATTENDANCE_CSV_UPLOAD_EXPLANATION9") %>
               </td>
               <td>
-                <%= form.file_field :file %>
+                <div class="form-file">
+                  <label for="upload_file" >
+                    <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+                  </label>
+                  <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                </div >
               </td>
             </tr>
           </table>

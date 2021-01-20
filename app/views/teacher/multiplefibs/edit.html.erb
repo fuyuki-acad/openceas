@@ -56,32 +56,56 @@
 
 <br />
 
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <p class="annotation">
-      <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_EXPLANATION1") %>
-    </p>
-  </div>
-</div>
+<% if @generic_page.answer_scores.count > 0 %>
 
-<!-- 入力フォーム -->
-<div class="row">
-  <%= form_for :generic_page, :url => {:action => "update", :id => @generic_page}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+  <!-- 確認フォーム -->
+  <div class="row">
     <div class="col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body">
-            <%= render form %>
+            <%= render 'confirm' %>
         </div>
 
         <!-- ボタン -->
         <div class="text-center">
           <div class="btn-group">
-            <%= form.submit t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
-            <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+              <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
           </div>
         </div>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+
+<% else %>
+
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="annotation">
+        <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_EXPLANATION1") %>
+      </p>
+    </div>
+  </div>
+
+  <!-- 入力フォーム -->
+  <div class="row">
+    <%= form_for :generic_page, :url => {:action => "update", :id => @generic_page}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+              <%= render form %>
+          </div>
+
+          <!-- ボタン -->
+          <div class="text-center">
+            <div class="btn-group">
+              <%= form.submit t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
+              <%= link_to t("common.COMMON_RETURN"), {:action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% end %>

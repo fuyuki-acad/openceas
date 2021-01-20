@@ -137,11 +137,19 @@
                 <td class="td-bold">
                   <!-- 編集 -->
                   <div class='col-xs-12 col-sm-4'>
-                    <%= link_to t("common.COMMON_EDIT"), {action: :edit, id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% if essay.answer_scores.count > 0 %>
+                      <%= link_to t("common.COMMON_CONFIRM"), {action: :edit, id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% else %>
+                      <%= link_to t("common.COMMON_EDIT"), {action: :edit, id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% end %>
                   </div>
                   <!-- 課題作成 -->
                   <div class='col-xs-12 col-sm-4'>
-                    <%= link_to t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT"), {controller: :essay_questions, action: :show, generic_page_id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% if essay.answer_scores.count > 0 %>
+                      <%= link_to t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_CONFIRMASSIGNMENT"), {controller: :essay_questions, action: :show, generic_page_id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% else %>
+                      <%= link_to t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT"), {controller: :essay_questions, action: :show, generic_page_id: essay.id}, class: "btn btn-primary ceas-button-margin-5" %>
+                    <% end %>
                   </div>
                   <!-- 教材ダウンロード -->
                   <div class='col-xs-12 col-sm-4'>

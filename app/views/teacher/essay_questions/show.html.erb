@@ -41,60 +41,91 @@
   </div>
 </div>
 
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <p class="annotation">
-      <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
-    </p>
-  </div>
-</div>
+<% if @generic_page.answer_scores.count == 0 %>
 
-<%= form_for :question, :url => {:action => "create", :generic_page_id => @generic_page}, :html => {:class => "form-horizontal"} do |form| %>
-<!-- 入力フォーム -->
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT") %>
-        </h3>
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover">
-          <!--　レポートタイトル-->
-          <tr>
-            <td>
-              <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE14") %>
-            </td>
-            <td>
-              <%= @generic_page.generic_page_title %>
-            </td>
-          </tr>
-
-          <!--　問題記述部-->
-          <tr>
-            <td>
-              <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %>
-              <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
-            </td>
-            <td>
-              <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <!-- ボタン -->
-    <div class="text-center">
-      <div class="btn-group">
-        <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
-        <%= link_to t("common.COMMON_RETURN"), {:controller => :essays, :action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
-      </div>
+  <!-- 説明文 -->
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="annotation">
+        <%= t("materials_registration.MAT_REG_REGISTERPARENTQUESTION_EXPLANATION1_html") %>
+      </p>
     </div>
   </div>
-</div>
+
+  <%= form_for :question, :url => {:action => "create", :generic_page_id => @generic_page}, :html => {:class => "form-horizontal"} do |form| %>
+  <!-- 入力フォーム -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!--　レポートタイトル-->
+            <tr>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE14") %>
+              </td>
+              <td>
+                <%= @generic_page.generic_page_title %>
+              </td>
+            </tr>
+
+            <!--　問題記述部-->
+            <tr>
+              <td>
+                <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %>
+                <span class='badge badge-essencial'><%= t('common.COMMON_ESSENCIAL') %></span>
+              </td>
+              <td>
+                <%= form.cktext_area :content, {:class => 'form-control', :rows => 5}%>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ボタン -->
+      <div class="text-center">
+        <div class="btn-group">
+          <%= form.submit t("common.COMMON_REGISTER"), class: "btn btn-primary ceas-button-margin-5" %>
+          <%= link_to t("common.COMMON_RETURN"), {:controller => :essays, :action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+<% else %>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENTESSAY_MAKEASSIGNMENT") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped table-hover">
+            <!--　レポートタイトル-->
+            <tr>
+              <td>
+                <%= t("materials_registration.COMMONMATERIALSREGISTRATION_TABLE14") %>
+              </td>
+              <td>
+                <%= @generic_page.generic_page_title %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <% end %>
 
 <!-- 新規ウィンドウのボタン -->
@@ -128,31 +159,44 @@
             <tbody>
               <% @generic_page.questions.each.with_index(1) do |question, index| %>
                 <tr>
-                  <td>
+                  <% if @generic_page.answer_scores.count == 0 %>
 
-                    <%= form_tag url_for(:action => "update", :generic_page_id => @generic_page, :id =>question), :class => "form-horizontal", :method => :patch do %>
-                      <table border="0" class="assignment_panelgrid_frame">
-                        <thead>
-                          <tr>
-                            <th class="assignment_header" scope="colgroup" colspan="2">
-                              <span class="large parentQuestion_header"><%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") + index.to_s %></span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                      <span><%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %></span>
-                      <%= cktext_area_tag "question[#{index}][content]", get_content_value(index, question), {:class => 'form-control', :rows => 5}%>
-                      <br/>
-                      <div class='text-center'>
-                        <div class='btn-group'>
-                          <%= submit_tag t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
-                          <%= link_to t("common.COMMON_DELETE"), {:action => :destroy, :generic_page_id => @generic_page, :id => question}, {:class => "btn btn-danger ceas-button-margin-5", :method => "delete", :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}} %>
+                    <td>
+                      <%= form_tag url_for(:action => "update", :generic_page_id => @generic_page, :id =>question), :class => "form-horizontal", :method => :patch do %>
+                        <table border="0" class="assignment_panelgrid_frame">
+                          <thead>
+                            <tr>
+                              <th class="assignment_header" scope="colgroup" colspan="2">
+                                <span class="large parentQuestion_header"><%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") + index.to_s %></span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                        <span><%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %></span>
+                        <%= cktext_area_tag "question[#{index}][content]", get_content_value(index, question), {:class => 'form-control', :rows => 5}%>
+                        <br/>
+                        <div class='text-center'>
+                          <div class='btn-group'>
+                            <%= submit_tag t("common.COMMON_REVISE"), class: "btn btn-primary ceas-button-margin-5" %>
+                            <%= link_to t("common.COMMON_DELETE"), {:action => :destroy, :generic_page_id => @generic_page, :id => question}, {:class => "btn btn-danger ceas-button-margin-5", :method => "delete", :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}} %>
+                          </div>
                         </div>
-                      </div>
-                    <% end %>
-                  </td>
+                      <% end %>
+                    </td>
+                    
+                  <% else %>
+
+                    <td>
+                      <%= t("materials_registration.MAT_REG_ASS_REGISTERASSIGNMENT_ASSIGNMENT") %>
+                    </td>
+                    <td>
+                      <%== get_content_value(index, question) %>
+                    </td>
+
+                  <% end %>
+
                 </tr>
               <% end %>
             </tbody>
@@ -160,5 +204,11 @@
         <% end %>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to t("common.COMMON_RETURN"), {:controller => "teacher/essays", :action => :show, :course_id => @generic_page.course}, {:class => "btn btn-default ceas-button-margin-5 center-block"} %>
   </div>
 </div>
