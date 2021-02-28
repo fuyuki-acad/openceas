@@ -179,7 +179,7 @@ class GenericPage < ApplicationRecord
         end
 
       when GenericPage::TYPE_CREATEHTML
-        validate_presence(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE2"))
+        validate_presence(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE20"))
         validate_file_name(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE16"))
       end
 
