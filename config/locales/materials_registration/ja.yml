@@ -314,7 +314,7 @@ ja:
 
     #####評価記入リスト作成#####
     ##registerEvaluationlist.jsp
-    MAT_REG_EVA_REGISTEREVALUATIONLIST_EXPLANATION1_html: "「新規評価記入リスト登録」ボタンを押し、開いたウィンドウでタイトルなどを入力することにより、評価記入リストを登録できます。登録した評価記入リストは、このページ上部の「教材割付画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>の「<strong>教材割付</strong>」を選択）より教材割付ページへ行き、授業への割付を行うことによって授業教材として用いることができます。なお、評価記入リストを登録すると、登録リストの最後に追加されます。"
+    MAT_REG_EVA_REGISTEREVALUATIONLIST_EXPLANATION1_html: "「新規評価記入リスト登録」ボタンを押し、開いたウィンドウでタイトルなどを入力することにより、評価記入リストを登録できます。登録した評価記入リストは、このページ上部の「教材割付画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>」の「<strong>教材割付</strong>」を選択）より教材割付ページへ行き、授業への割付を行うことによって授業教材として用いることができます。なお、評価記入リストを登録すると、登録リストの最後に追加されます。"
     MAT_REG_EVA_EVALUATIONLIST_NEWWINDOW: "新規評価記入リスト登録"
     MAT_REG_EVA_EVALUATIONLIST_NEWWINDOWEXPLANATION: "（このボタンを押すと新規登録ウィンドウが開きます）"
     MAT_REG_EVA_EVALUATIONLIST_RATE_NOTIFY: "評点を学生に通知"
