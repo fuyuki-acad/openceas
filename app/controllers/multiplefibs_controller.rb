@@ -128,7 +128,7 @@ class MultiplefibsController < ApplicationController
           end
           if count == questions.count
             mark_score += score
-            @your_scores = answer_scores
+            @your_scores.merge!(answer_scores)
           end
         end
 
@@ -174,7 +174,7 @@ class MultiplefibsController < ApplicationController
           end
           if count == questions.count
             mark_score += score
-            @your_scores = answer_scores
+            @your_scores.merge!(answer_scores)
           end
         end
 
