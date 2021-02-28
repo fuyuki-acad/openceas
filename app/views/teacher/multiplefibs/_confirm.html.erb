@@ -100,7 +100,16 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_STARTTIME") %>
     </td>
     <td>
-      <%= l(@generic_page.start_time, format: :short) if @generic_page.start_time.present? %>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <div class='input-group date datetimepicker form-datetime'>
+            <%= form.text_field :start_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
     </td>
   </tr>
 
@@ -110,7 +119,16 @@
       <%= t("materials_registration.COMMONMATERIALSREGISTRATION_DEADLINE") %>
     </td>
     <td>
-      <%= l(@generic_page.end_time, format: :short) if @generic_page.end_time.present? %>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <div class='input-group date datetimepicker form-datetime'>
+            <%= form.text_field :end_time, :data => {:date_format => 'YYYY/MM/DD HH:mm'}, :class => 'form-control', placeholder: 'YYYY/MM/DD hh:mm'  %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
     </td>
   </tr>
 
