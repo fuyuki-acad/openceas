@@ -42,18 +42,6 @@
 </div>
 
 
-<% if @generic_page.answer_scores.count == 0 %>
-<!-- 説明文 -->
-<div class="row">
-  <div class="col-sm-12">
-    <p class="annotation">
-      <%= t("materials_registration.COMMONMATERIALSREGISTRATION_MAKEPAGE") %>
-      <%= t("materials_registration.MAT_REG_QUE_REGISTERQUESTIONNAIRE_EXPLANATION2_html") %>
-    </p>
-  </div>
-</div>
-<% end %>
-
 <%= form_for :generic_page, :url => {:action => "update", :id => @generic_page}, :html => {:class => "form-horizontal", :method => :patch} do |form| %>
 <!-- 入力フォーム -->
 <div class="row">
