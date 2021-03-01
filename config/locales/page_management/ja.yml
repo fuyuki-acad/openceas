@@ -15,7 +15,7 @@ ja:
     MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION4: "※履修者に公開されます。"
     MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION5: "※履修者には公開されません。"
     MAT_REG_MAT_PAGEMANAGEMENT_REGISTERMATERIALEXPLANATION: "※作業を終了し上の画面への移動は「グローバルナビゲーション表示」をクリックしてください。画面の最上部、黒いベルト上にあります。"
-    MAT_REG_MAT_PAGEMANAGEMENT_EXPLANATION1_html: "「新規資料登録」ボタンを押し、開いたウインドウでタイトルなどを入力することにより、資料を登録できます。登録した資料は、このページ上部の「教材授業割り付け画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>」の「<strong>教材割付</strong>」を選択）より教材割付ページへ行き、授業への割付けを行うことによって教材として用いることができます。なお、資料を登録すると、登録した資料一覧の最後に追加されます。"
+    MAT_REG_MAT_PAGEMANAGEMENT_EXPLANATION1_html: "「新規資料登録」ボタンを押し、開いたウインドウでタイトルなどを入力することにより、資料を登録できます。登録した資料は、このページ上部の「教材割付画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>」の「<strong>教材割付</strong>」を選択）より教材割付ページへ行き、授業への割付けを行うことによって教材として用いることができます。なお、資料を登録すると、登録した資料一覧の最後に追加されます。"
     MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTTITLE: "登録した資料一覧"
     MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN3: "資料タイトル"
     MAT_REG_MAT_PAGEMANAGEMENT_MATERIALLISTCOLUMN4: "ファイル名"
