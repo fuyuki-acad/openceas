@@ -169,6 +169,7 @@ class Teacher::QuestionsController < ApplicationController
   end
 
   def confirm_upload
+    flash[:notice] = nil
     @question_file = QuestionFile.new(question_file_params)
     if @question_file.valid?
       if @question_file.xml?
