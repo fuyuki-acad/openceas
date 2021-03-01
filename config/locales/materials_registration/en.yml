@@ -266,6 +266,7 @@ en:
     MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR4_html: "<strong> Invalid setting of the Random order code and/or the Complete set of answers code. </strong>"
     MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR5: "No correct answer is entered."
     MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR6: "No grade point is entered."
+    MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR7: "Correct answer value is not accepted."
     MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_SUCCESS: "The Quiz data is now added."
 
     ##help.jsp

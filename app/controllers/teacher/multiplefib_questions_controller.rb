@@ -83,6 +83,13 @@ class Teacher::MultiplefibQuestionsController < ApplicationController
     if params[:question]
       question_values = params[:question].to_unsafe_h.values
 
+      unless valid_value?(question_values)
+        flash[:notice] = I18n.t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR7")
+        get_questions
+        render action: :show, :layout => false
+        return
+      end
+
       unless check_random_cd(question_values)
         flash[:notice] = I18n.t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIBQUESTIONMAIN_ERROR2_html")
         get_questions
@@ -182,6 +189,14 @@ class Teacher::MultiplefibQuestionsController < ApplicationController
           end
         end
       end
+    end
+
+    def valid_value?(question_values)
+      question_values.each do |question_value|
+        return false unless question_value['answer_memo'] =~ /\A[0-9０-９a-zA-Zａ-ｚＡ-Ｚｧ-ﾝァ-ヶ]+\z/
+      end
+
+      true
     end
 
     def check_random_cd(question_values)
