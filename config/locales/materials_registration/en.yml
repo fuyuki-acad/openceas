@@ -59,6 +59,8 @@ en:
     COMMONMATERIALSREGISTRATION_ERRORTYPE3: "Enter the password in lowercase."
     COMMONMATERIALSREGISTRATION_ERRORTYPE4: "Specify the question sheet."
     COMMONMATERIALSREGISTRATION_ERRORTYPE5: "No exe.file can be uploaded."
+    COMMONMATERIALSREGISTRATION_ERRORTYPE6: "Select a file."
+    COMMONMATERIALSREGISTRATION_ERRORTYPE3: "Enter the Submission starts / Submission closes date."
     COMMONMATERIALSREGISTRATION_ERRORUPLOADCOMPOUND1: "This is not a Mixed Format Quiz file. Check the compressed file."
     COMMONMATERIALSREGISTRATION_ERRORUPLOADMULTIPLEFIB1: "This is not a Multiple-choice Quiz file. Check the compressed file."
     COMMONMATERIALSREGISTRATION_ERRORUPLOADASSIGNMENTESSAY1: "This is not a Essay Assignment file. Check the compressed file."
@@ -163,7 +165,6 @@ en:
     COMMONMATERIALSREGISTRATION_MYSTUDY: "Upload from MyStudy."
     COMMONMATERIALSREGISTRATION_MYSTUDYEXPLANATION: "Select a file from MyStudy."
     COMMONMATERIALSREGISTRATION_UPFILE_NOCHANGE: "No change"
-    COMMONMATERIALSREGISTRATION_ERRORTYPE6: "Select a file."
     COMMONMATERIALSREGISTRATION_NOUPFILE: "Do not upload."
     COMMONMATERIALSREGISTRATION_VIEW_RANK_NUMERIC_ERROR: "Use only one-byte numeric letters for Display priority."
 
