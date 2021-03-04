@@ -54,6 +54,8 @@ zh_CN:
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT20: "评价填写一览表"
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT21: "此科目无评价填写一览表"
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22: "The assignments will not be able to edit after student submit it. Are you sure to assign？"
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT23: "The assignments will not be able to edit after student submit it. Are you sure to assign？"
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT24: "The assignments will not be able to edit after student submit it. Are you sure to assign？"
 
     #SelectClassSessionBean.java
     BEA_MAT_ALL_SELECTCLASSSESSIONBEAN_ERROR1: "正常结束。"

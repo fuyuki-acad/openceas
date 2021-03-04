@@ -54,7 +54,7 @@ ja:
     COURSEWARE_PAGE_TITLE: "SCORM学習教材登録"
     COURSEWARE_TITLE_SUBTITLE: "--登録/編集--"
     COURSEWARE_CREATE_COURSEWARE_NOTE1: "SCORM学習教材に関する権限などの設定は当該SCORM学習教材の確認画面からSCORM学習教材の設定を行えます。"
-    COURSEWARE_CREATE_COURSEWARE_NOTE2_html: "登録したSCORM学習教材は、このページ上部の「教材割り付け画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>」の「<strong>教材割付</strong>」を選択)より教材割付ページへ行き、授業への割付を行うことによって授業教材として用いることができます。"
+    COURSEWARE_CREATE_COURSEWARE_NOTE2_html: "登録したSCORM学習教材は、このページ上部の「教材割付画面へ」ボタン（またはメインメニューから「<strong>教材の授業への割付</strong>」の「<strong>教材割付</strong>」を選択)より教材割付ページへ行き、授業への割付を行うことによって授業教材として用いることができます。"
     COURSEWARE_CREATE_COURSEWARE_NOTE3: "下の削除ボタンを押すことで、表の1列目にチェックを入れたSCORM学習教材を削除します。"
     COURSEWARE_REGISTER: "新規登録"
     COURSEWARE_REGISTERED_COURSEWARE: "登録済みSCORM学習教材"

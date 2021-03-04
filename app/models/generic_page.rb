@@ -179,7 +179,7 @@ class GenericPage < ApplicationRecord
         end
 
       when GenericPage::TYPE_CREATEHTML
-        validate_presence(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE2"))
+        validate_presence(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE20"))
         validate_file_name(:file_name, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE16"))
       end
 
@@ -235,9 +235,9 @@ class GenericPage < ApplicationRecord
       end
       validate_alphanumeric(:start_pass, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE3"))
       validate_max_length(:material_memo, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_COMMENT_TOO_LONG"), 4096)
-      validate_presence(:start_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE2"))
-      validate_presence(:end_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE2"))
-      unless start_time.blank? || end_time.blank?
+      if start_time.blank? || end_time.blank?
+        errors.add(:start_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE7"))
+      else
         errors.add(:start_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE2")) if self.start_time > self.end_time
       end
 
