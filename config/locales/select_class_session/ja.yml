@@ -53,7 +53,9 @@ ja:
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT19: "この科目には、SCORM学習教材がありません"
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT20: "評価記入リスト"
     MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT21: "この科目には、評価記入リストがありません"
-    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22: "学生が回答した教材は編集できなくなります。割付してよろしいですか？"
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT22: "学生が解答した教材は受付期間以外の編集ができなくなります。割付してよろしいですか？"
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT23: "学生が回答した教材は受付期間以外の編集ができなくなります。割付してよろしいですか？"
+    MAT_ALL_SELECTCLASSSESSION_MATERIALTEXT24: "学生が提出した教材は受付期間以外の編集ができなくなります。割付してよろしいですか？"
 
     #SelectClassSessionBean.java
     BEA_MAT_ALL_SELECTCLASSSESSIONBEAN_ERROR1: "正常終了しました。"

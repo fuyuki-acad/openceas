@@ -59,6 +59,20 @@
                         </label>
                         <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
                       </div >
+                      <br/>
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSION") %>
+                          <br/>
+                          <%= radio_button :generic_page, :extract_flag, false, :checked => true %>
+                          <%= form.label :extract_flag, t('common.COMMON_NOTDO'), value: false %>
+                          <br/>
+                          <%= radio_button :generic_page, :extract_flag, true %>
+                          <%= form.label :extract_flag, t('common.COMMON_DO') + t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION1'), value: true %>
+                          <br/>
+                          <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION3"), teacher_materials_help2_path, {target: "_new"} %>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -82,21 +96,6 @@
             </td>
           </tr>
         </table>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSION") %>
-      </td>
-      <td>
-        <%= radio_button :generic_page, :extract_flag, false, :checked => true %>
-        <%= form.label :extract_flag, t('common.COMMON_NOTDO'), value: false %>
-        <br/>
-        <%= radio_button :generic_page, :extract_flag, true %>
-        <%= form.label :extract_flag, t('common.COMMON_DO') + t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION1'), value: true %>
-        <br/>
-        <%= link_to t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMPRESSIONEXPLANATION3"), teacher_materials_help2_path, {target: "_new"} %>
       </td>
     </tr>
   <% else %>

@@ -119,7 +119,7 @@ class MultiplefibsController < ApplicationController
             questions.each do |question|
               next if answerd_questions.include?(question.id)
 
-              if user_answer == question.answer_memo
+              if user_answer == full_to_half(question.answer_memo)
                 count += 1
                 answerd_questions << question.id
                 answer_scores[question.id] = question.score
@@ -128,7 +128,7 @@ class MultiplefibsController < ApplicationController
           end
           if count == questions.count
             mark_score += score
-            @your_scores = answer_scores
+            @your_scores.merge!(answer_scores)
           end
         end
 
@@ -143,7 +143,7 @@ class MultiplefibsController < ApplicationController
         user_answers.each do |user_answer|
           questions.each do |question|
             next if answerd_questions.include?(question.id)
-            if user_answer == question.answer_memo
+            if user_answer == full_to_half(question.answer_memo)
               mark_score += question.score
               answerd_questions << question.id
               @your_scores[question.id] = question.score
@@ -166,7 +166,7 @@ class MultiplefibsController < ApplicationController
             end
             user_answer = full_to_half(params[:answer][question.id.to_s])
             unless user_answer.nil?
-              if user_answer.to_s == question.answer_memo
+              if user_answer.to_s == full_to_half(question.answer_memo)
                 count += 1
                 answer_scores[question.id] = question.score
               end
@@ -174,7 +174,7 @@ class MultiplefibsController < ApplicationController
           end
           if count == questions.count
             mark_score += score
-            @your_scores = answer_scores
+            @your_scores.merge!(answer_scores)
           end
         end
 
@@ -183,7 +183,7 @@ class MultiplefibsController < ApplicationController
           total_score += question.score
           user_answer = full_to_half(params[:answer][question.id.to_s])
           unless user_answer.nil?
-            if user_answer == question.answer_memo
+            if user_answer == full_to_half(question.answer_memo)
               mark_score += question.score
               @your_scores[question.id] = question.score
             end
