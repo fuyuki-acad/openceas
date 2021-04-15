@@ -26,13 +26,17 @@ class MaterialsController < ApplicationController
   before_action :set_generic_page, only: [:show, :explain_file, :pdf]
 
   def show
-    if @generic_page.type_cd == Settings.GENERICPAGE_TYPECD_URLCODE
+    if @generic_page.url?
       redirect_to @generic_page.url_content
       return
 
     #elsif @generic_page.html?
     #  redirect_to @generic_page.get_link_url
     #  return
+
+    elsif @generic_page.material? && @generic_page.html?
+      redirect_to @generic_page.get_link_url
+      return
 
     else
       send_material_file(@generic_page.get_material_file_path, @generic_page.file_name)
@@ -44,7 +48,7 @@ class MaterialsController < ApplicationController
   end
 
   def pdf
-    render "pdf", layout: false
+    render "pdf", layout: false, formats: :html
   end
 
   private
@@ -75,13 +79,19 @@ class MaterialsController < ApplicationController
           content = File.read(file_path)
           if NKF.guess(content).to_s == "UTF-8"
             type = "#{type}; charset=utf-8"
+            send_data(content, filename: file_name, type: type, disposition: :inline)
+          else
+            send_data(content, filename: file_name, type: type, disposition: :inline)
           end
-          send_data(content, filename: file_name, type: type, disposition: :inline)
         else
           send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :inline)
+#          file_name = URI.encode_www_form_component(file_name)
+          headers['Content-Disposition'] = "inline; filename=#{file_name}; filename*=UTF-8''#{file_name}"
         end
       else
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :attachment)
+#        file_name = URI.encode_www_form_component(file_name)
+        headers['Content-Disposition'] = "attachment; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       end
     end
 end

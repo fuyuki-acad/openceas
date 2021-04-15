@@ -475,6 +475,7 @@ module XmlCeas10Module
     child.content = xml_question['content'].presence || ""
     child.pattern_cd = xml_question['patternCd'] unless null?(xml_question['patternCd'])
     child.score = xml_question['score'] unless null?(xml_question['score'])
+    child.view_rank = xml_question['viewRank'] unless null?(xml_question['viewRank'])
     child.correct_answer_memo = xml_question['correctAnswerMemo'] unless null?(xml_question['correctAnswerMemo'])
     child.wrong_answer_memo = xml_question['wrongAnswerMemo'] unless null?(xml_question['wrongAnswerMemo'])
     child.answer_memo = xml_question['answerMemo'] unless null?(xml_question['answerMemo'])
