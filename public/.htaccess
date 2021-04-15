@@ -1,0 +1,8 @@
+#ErrorDocument 503 /maintenance.html
+#
+#<IfModule mod_rewrite.c>
+#  RewriteEngine On
+#  RewriteCond %{REQUEST_URI} !=/maintenance.html
+#  RewriteCond %{REQUEST_URI} !(^/assets/)
+#  RewriteRule ^.*$ - [R=503,L]
+#</IfModule>

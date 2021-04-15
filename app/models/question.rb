@@ -45,7 +45,7 @@ class Question < ApplicationRecord
   MAX_SELECT_COUNT = 100
   MAX_ROWS = 60
 
-  XML_CONVERT_CEAS10 = {:content => :content, :pattern_cd => :patternCd, :score => :score,
+  XML_CONVERT_CEAS10 = {:content => :content, :pattern_cd => :patternCd, :score => :score, :view_rank => :viewRank,
     :correct_answer_memo => :correctAnswerMemo, :wrong_answer_memo => :wrongAnswerMemo, :answer_memo => :answerMemo,
     :must_flag => :mustFlg, :otherFlg => :otherFlg, :random_cd => :randomCd, :answer_in_full_cd => :answerInFullCd, :text_row => :textRow,
     :all_quizzes => {:tag => 'sel', :xml_convertor => SelectQuiz::XML_CONVERT_CEAS10}}

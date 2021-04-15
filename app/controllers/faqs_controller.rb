@@ -22,7 +22,7 @@
 #++
 
 class FaqsController < ApplicationController
-  before_action :require_enrolled_or_open_assigned, only: [:course, :new, :show]
+  before_action :require_enrolled_or_open_assigned, only: [:course, :new]
   before_action :set_course, only: [:course, :new]
   before_action :permited_open_course, only: [:course, :new]
 
