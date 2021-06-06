@@ -141,7 +141,8 @@ class Teacher::MaterialsController < ApplicationController
     if File.exist?(file_path)
       file_stat = File::stat(file_path)
       send_file(file_path, :filename => @generic_page.file_name, :length => file_stat.size)
-    else
+      headers['Content-Disposition'] = "attachment; filename=#{@generic_page.file_name}; filename*=UTF-8''#{@generic_page.file_name}"
+     else
       render text: t("page_management.MAT_COM_MYFOLDER_NOCONTENTS")
     end
   end

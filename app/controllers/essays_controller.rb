@@ -40,7 +40,7 @@ class EssaysController < ApplicationController
     if @assignmentEssayStatus == AssignmentEssay::STATUS_GRADED_ACCEPTANCE ||
        @assignmentEssayStatus == AssignmentEssay::STATUS_GRADED_ACCEPTANCE_FEEDBACK ||
        @assignmentEssayStatus == AssignmentEssay::STATUS_RETURNED_ACCEPTANCE_FEEDBACK
-      
+
 			@is_can_submit = false
 
     end
@@ -55,7 +55,7 @@ class EssaysController < ApplicationController
       @is_can_submit = false
       @assignmentEssayStatus = Essay::STATUS_AFTER_END
     end
-  
+
 
     render "password" if !@essay.start_pass.blank? && !session[:essay_start_pass_flag]
   end
@@ -188,8 +188,10 @@ class EssaysController < ApplicationController
       type, is_inline = get_content_type(file_name)
       if is_inline
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :inline)
+        headers['Content-Disposition'] = "inline; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       else
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :attachment)
+        headers['Content-Disposition'] = "attachment; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       end
     end
   end
@@ -219,8 +221,10 @@ class EssaysController < ApplicationController
       type, is_inline = get_content_type(file_name)
       if is_inline
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :inline)
+        headers['Content-Disposition'] = "inline; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       else
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :attachment)
+        headers['Content-Disposition'] = "attachment; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       end
     end
   end
