@@ -35,7 +35,10 @@
 
 <div class="row">
   <div class="col-sm-7 col-xs-12">
-    <% if @generic_page.edit_file? %>
+    <% if @generic_page.azure_video %>
+      <iframe align="middle" height="500px" src="/media/azure_player.html" width="100%"></iframe>
+      <%= render 'shared/azure_media_payer' %>
+    <% elsif @generic_page.edit_file? %>
       <iframe id="question_file" srcdoc="<%== @generic_page.get_html_file %>" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>
     <% else %>
       <iframe id="question_file" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>

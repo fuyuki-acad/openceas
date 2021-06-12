@@ -34,6 +34,14 @@
 	  return false
   @
 
+@fadeOut =(classname) ->
+  $("."+classname).fadeOut();
+  @
+
+@fadeIn =(classname) ->
+  $("."+classname).fadeIn();
+  @
+
 #
 # アンカースクロール
 @smoothScrolling = (className) ->

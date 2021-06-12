@@ -12,11 +12,13 @@
     if (url_content) url_content.classList.add('none');
     if (window.parent.document.getElementById("azure_message")) var azure_message = window.parent.document.getElementById("azure_message");
 
+    var controls = false;
     var rewind_count = 0;
     var seeked_count = 0;
     var video_width = 640;
     var video_height = 400;
     var start_date = get_datetime();
+    if (window.parent.document.getElementById("panel_display")) controls = window.parent.document.getElementById("panel_display").textContent;
     if (window.parent.document.getElementById("video_width")) video_width = window.parent.document.getElementById("video_width").textContent;
     if (window.parent.document.getElementById("video_height")) video_height = window.parent.document.getElementById("video_height").textContent;
 
@@ -31,7 +33,7 @@
 
     var myOptions = {
       "nativeControlsForTouch": false,
-      controls: true,
+      controls: controls,
       autoplay: true,
       width: video_width,
       height: video_height,
