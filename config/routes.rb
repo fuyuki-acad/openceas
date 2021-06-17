@@ -252,6 +252,7 @@ Rails.application.routes.draw do
 
   # マテリアル
   resources :materials,   only: [:show] do
+    get   :explain_video,         on: :member
     get   :explain_file,          on: :member
     get   :pdf,                   on: :member
   end

@@ -41,20 +41,11 @@
     myPlayer = amp("azuremediaplayer", myOptions);
     myPlayer.addEventListener(amp.eventName.ended, function () {
       params = ''
-      if (forwarding_url) {
-        if (forwarding_url.indexOf('?')) {
-          forwarding_url = forwarding_url+'&seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
+      if (forwarding == 'true') {
+        if (ended_message) {
+          if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+ended_message+"</a>";
         } else {
-          forwarding_url = forwarding_url+'?seeked='+seeked_count+'&rewind='+rewind_count+'&start='+start_date+'&end='+get_datetime();
-        }
-        if (forwarding == 'true') {
-          parent.location.href = forwarding_url;
-        } else {
-          if (ended_message) {
-            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+ended_message+"</a>";
-          } else {
-            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+forwarding_url+"</a>";
-          }
+          if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+forwarding_url+"</a>";
         }
       } else {
         if (ended_message && azure_message) azure_message.innerHTML = ended_message;

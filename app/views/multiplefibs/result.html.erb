@@ -82,7 +82,13 @@
     </div>
   </div>
 
-  <% unless @generic_page.explanation_link_name.blank? %>
+  <% if @generic_page.azure_explanation.present? %>
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), explain_video_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
+      </div>
+    </div>
+  <% elsif @generic_page.explanation_link_name.present? %>
     <div class="text-center">
       <div class="btn-group">
         <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), explain_file_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>

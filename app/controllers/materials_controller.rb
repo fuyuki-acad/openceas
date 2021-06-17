@@ -23,7 +23,7 @@
 
 class MaterialsController < ApplicationController
   before_action :require_enrolled_or_open_assigned, only: [:show, :explain_file, :pdf]
-  before_action :set_generic_page, only: [:show, :explain_file, :pdf]
+  before_action :set_generic_page, only: [:show, :explain_file, :explain_video, :pdf]
 
   def show
     if @generic_page.url?
@@ -41,6 +41,9 @@ class MaterialsController < ApplicationController
     else
       send_material_file(@generic_page.get_material_file_path, @generic_page.file_name)
     end
+  end
+
+  def explain_video
   end
 
   def explain_file

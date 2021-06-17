@@ -49,19 +49,6 @@
               <%= @generic_page.generic_page_title %>
             </td>
           </tr>
-          <!-- 受験回数 -->
-          <tr>
-            <td>
-              <%= t("execution.COMMONMATERIALSEXECUTION_EXAMINATIONCOUNT") %>
-            </td>
-            <td>
-              <% if @message.present? %>
-                <%== @message %>
-              <% else %>
-                <%= t("execution.MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT", current: @execution_count, total: @generic_page.max_count) %>
-              <% end %>
-            </td>
-          </tr>
         </table>
       </div>
     </div>
@@ -69,19 +56,7 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-8 col-xs-12">
-    <% if @generic_page.azure_video %>
-      <iframe align="middle" height="500px" src="/media/azure_player.html" width="100%"></iframe>
-      <%= render partial: 'shared/media/azure_media_player', locals: { azure_video: @generic_page.azure_video } %>
-    <% elsif @generic_page.pdf? && @is_mobile %>
-      <iframe src="<%= pdf_material_url(@generic_page.id) %>" width="100%" height="400px"></iframe>
-    <% elsif @generic_page.edit_file? %>
-      <iframe id="question_file" srcdoc="<%== @generic_page.get_html_file %>" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>
-    <% else %>
-      <iframe id="question_file" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>
-    <% end %>
-  </div>
-  <div class="col-sm-4 col-xs-12">
-    <iframe id="multiple_fibMain" src="<%= url_for(:controller => "/multiplefibs", :action => :quiz, :id => @generic_page.id, :view_only => @is_view_only) %>" width="100%"></iframe>
-  </div>
+  <iframe align="middle" height="500px" src="/media/azure_player.html" width="100%"></iframe>
+  <%= render partial: 'shared/media/azure_media_player', locals: { azure_video: @generic_page.azure_explanation } %>
 </div>
+

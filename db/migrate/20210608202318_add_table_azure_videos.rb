@@ -2,6 +2,7 @@ class AddTableAzureVideos < ActiveRecord::Migration[5.1]
   def change
     create_table "azure_videos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
       t.bigint "page_id", null: false
+      t.integer "video_type", null: false
       t.string "video_url", null: false
       t.integer "forwarding", limit: 1, default: 0, null: false
       t.string "forwarding_url"
