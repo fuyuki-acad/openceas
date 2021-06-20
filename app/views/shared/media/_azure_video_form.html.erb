@@ -58,13 +58,13 @@
       <%= t("azure_video.AZURE_FORWARDING") %>
     </td>
     <td class="col-xs-9">
-      <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_FORWARDING, :checked => (azure_video && azure_video.forwarding == AzureVideo::TYPE_FORWARDING.to_i), :onclick => "fadeIn('fade_forwarding_url');" %> <%= t('common.COMMON_DO') %></label>
-      <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_NOTFORWARDING, :checked => (!azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i), :onclick => "fadeOut('fade_forwarding_url');" %> <%= t('common.COMMON_NOTDO') %></label>
+	    <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_FORWARDING, :checked => (azure_video && azure_video.forwarding == AzureVideo::TYPE_FORWARDING.to_i), :onclick => "fadeIn('fade_forwarding_url_"+index+"');" %> <%= t('common.COMMON_DO') %></label>
+      <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_NOTFORWARDING, :checked => (!azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i), :onclick => "fadeOut('fade_forwarding_url_"+index+"');" %> <%= t('common.COMMON_NOTDO') %></label>
     </td>
   </tr>
 
   <!-- 転送URL -->
-  <tr class="fade_forwarding_url<% if !azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i %> none<% end %>">
+  <tr class="fade_forwarding_url_<%= index %><% if !azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i %> none<% end %>">
     <td class="col-xs-3">
       <%= t("azure_video.AZURE_FORWARDING_URL") %>
       <span class='badge badge-essencial'>
