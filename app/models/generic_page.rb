@@ -321,6 +321,21 @@ class GenericPage < ApplicationRecord
     else
       new_object.link_name = file_name
     end
+    # material
+    if self.azure_video_material
+      new_azure_video_material = self.azure_video_material.dup
+      new_object.azure_video_material = new_azure_video_material
+    end
+    # multiplefib question
+    if self.azure_video_multiplefib_question
+      new_azure_video_multiplefib_question = self.azure_video_multiplefib_question.dup
+      new_object.azure_video_multiplefib_question = new_azure_video_multiplefib_question
+    end
+    # multiplefib explanation
+    if self.azure_video_multiplefib_explanation
+      new_azure_video_multiplefib_explanation = self.azure_video_multiplefib_explanation.dup
+      new_object.azure_video_multiplefib_explanation = new_azure_video_multiplefib_explanation
+    end
     new_object
   end
 
