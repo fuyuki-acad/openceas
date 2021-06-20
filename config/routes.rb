@@ -251,10 +251,14 @@ Rails.application.routes.draw do
   patch   "helps/:id/upload",             to: 'helps#upload'
 
   # マテリアル
+  get     'materials/:id/azure_video',    to: 'materials#azure_video'
   resources :materials,   only: [:show] do
-    get   :explain_video,         on: :member
+    get   :material_video,        on: :member
+    get   :multiplefib_video,     on: :member
     get   :explain_file,          on: :member
     get   :pdf,                   on: :member
+    resources :materials,   only: [:show] do
+    end
   end
 
   # support

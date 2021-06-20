@@ -37,35 +37,83 @@
     </td>
   </tr>
 
-  <!-- URL登録内容 -->
+  <!-- リンク／動画選択 -->
   <tr>
     <td>
-      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URL") %>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS") %>
     </td>
+
     <td>
-      <%= form.text_field :url_content, {:class => 'form-control', :maxlength => '2083'} %>
-      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLEXPLANATION2") %>
+      <table width="100%">
+        <tr>
+          <td>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <label><%= radio_button :generic_page, :content_type, GenericPage::CONTENT_TYPE_MATERIAL_LINK, :checked => true, :onclick => "fadeOut('video_panel');fadeIn('link_panel');" %> <%= t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_LINK') %></label>
+                    <div class="link_panel<% if @generic_page.content_type != GenericPage::CONTENT_TYPE_MATERIAL_LINK %> none<% end %>">
+                      <table class="table table table-hover">
+                        <!-- URL登録内容 -->
+                        <tr>
+                          <td class="col-xs-3">
+                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URL") %>
+                          </td>
+                          <td class="col-xs-9">
+                            <%= form.text_field :url_content, {:class => 'form-control', :maxlength => '2083'} %>
+                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLEXPLANATION2") %>
+                          </td>
+                        </tr>
+
+                        <!-- 授業メモ -->
+                        <tr>
+                          <td class="col-xs-3">
+                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OPENCOMMENT") %>
+                          </td>
+                          <td class="col-xs-9">
+                            <%= form.text_area :material_memo, {:class => 'form-control', :rows => '5'} %>
+                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT1") %>
+                          </td>
+                        </tr>
+
+                        <!-- 追加情報 -->
+                        <tr>
+                          <td class="col-xs-3">
+                            <%= t("page_management.extra_content") %>
+                          </td>
+                          <td class="col-xs-9">
+                            <%= form.cktext_area :content, {:class => 'form-control', :rows => '5'} %>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table width="100%">
+        <tr>
+          <td>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <label><%= radio_button :generic_page, :content_type, GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO, :onclick => "fadeOut('link_panel');fadeIn('video_panel');" %> <%= t('page_management.MAT_REG_MAT_PAGEMANAGEMENT_AZUREVIDEO') %></label>
+                    <div class="video_panel<% if @generic_page.content_type != GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO %> none<% end %>">
+		      <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_material_attributes", azure_video: @generic_page.azure_video_material, video_type: AzureVideo::TYPE_MATERIAL } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
     </td>
   </tr>
 
-  <!-- 授業メモ -->
-  <tr>
-    <td>
-      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OPENCOMMENT") %>
-    </td>
-    <td>
-      <%= form.text_area :material_memo, {:class => 'form-control', :rows => '5'} %>
-      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT1") %>
-    </td>
-  </tr>
-
-  <!-- 追加情報 -->
-  <tr>
-    <td>
-      <%= t("page_management.extra_content") %>
-    </td>
-    <td>
-      <%= form.cktext_area :content, {:class => 'form-control', :rows => '5'} %>
-    </td>
-  </tr>
 </table>

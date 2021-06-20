@@ -23,7 +23,7 @@
 
 class MaterialsController < ApplicationController
   before_action :require_enrolled_or_open_assigned, only: [:show, :explain_file, :pdf]
-  before_action :set_generic_page, only: [:show, :explain_file, :explain_video, :pdf]
+  before_action :set_generic_page, only: [:show, :explain_file, :material_video, :multiplefib_video, :pdf]
 
   def show
     if @generic_page.url?
@@ -43,7 +43,14 @@ class MaterialsController < ApplicationController
     end
   end
 
-  def explain_video
+  def material_video
+    @azure_video = @generic_page.azure_video_material
+    render "azure_video"
+  end
+
+  def multiplefib_video
+    @azure_video = @generic_page.azure_video_multiplefib_explanation
+    render "azure_video"
   end
 
   def explain_file

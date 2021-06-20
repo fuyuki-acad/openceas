@@ -118,8 +118,7 @@
                   <div class="panel-body">
                     <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
                     <div class="fade_panel<% if @generic_page.upload_flag != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
-                      <%= hidden_field_tag "generic_page[azure_video[question]][video_type]", AzureVideo::TYPE_QUESTION %>
-                      <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "question", azure_video: @azure_video } %>
+                      <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_question_attributes", azure_video: @generic_page.azure_video_multiplefib_question, video_type: AzureVideo::TYPE_MULTIPLEFIB_QUESTION } %>
                     </div>
                     <br />
                   </div>
@@ -133,8 +132,8 @@
         <% if @generic_page.upload_flag == GenericPage::TYPE_AZURE_VIDEO %>
         <div class="panel panel-default">
           <div class="panel-body">
-            <%= hidden_field_tag "generic_page[azure_video[question]][video_type]", AzureVideo::TYPE_QUESTION %>
-            <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "question", azure_video: @azure_video } %>
+            <%= hidden_field_tag "generic_page[upload_flag]", GenericPage::TYPE_AZURE_VIDEO %>
+            <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_question_attributes", azure_video: @generic_page.azure_video_multiplefib_question, video_type: AzureVideo::TYPE_MULTIPLEFIB_QUESTION } %>
           </div>
         </div>
         <% else %>
@@ -169,7 +168,7 @@
         <div class="col-sm-12">
           <div class="panel panel-default">
             <div class="panel-body">
-	      <label><%= radio_button :generic_page, :explanation_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
+	      <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
               <div class="form-file">
                 <label for="generic_page_explanation_file" >
                   <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
@@ -194,10 +193,9 @@
         <div class="col-sm-12">
           <div class="panel panel-default">
             <div class="panel-body">
-              <label><%= radio_button :generic_page, :explanation_flag, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
-              <div class="fade_explanation_panel<% if @generic_page.explanation_flag != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
-                <%= hidden_field_tag "generic_page[azure_video[explanation]][video_type]", AzureVideo::TYPE_EXPLANATION %>
-                <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "explanation", azure_video: @azure_explanation } %>
+              <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
+              <div class="fade_explanation_panel<% if @generic_page.content_type != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
+                <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_explanation_attributes", azure_video: @generic_page.azure_video_multiplefib_explanation, video_type: AzureVideo::TYPE_MULTIPLEFIB_EXPLANATION } %>
               </div>
              <br />
             </div>
@@ -205,14 +203,14 @@
         </div>
       </div>
       <% else %>
-        <% if @generic_page.explanation_flag == GenericPage::TYPE_AZURE_VIDEO %>
+        <% if @generic_page.content_type == GenericPage::TYPE_AZURE_VIDEO %>
           <div class="row">
             <div class="col-sm-12">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <div class="fade_explanation_panel<% if @generic_page.explanation_flag != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
-                    <%= hidden_field_tag "generic_page[azure_video[explanation]][video_type]", AzureVideo::TYPE_EXPLANATION %>
-                    <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "explanation", azure_video: @azure_explanation } %>
+                  <div class="fade_explanation_panel<% if @generic_page.content_type != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
+                    <%= hidden_field_tag "generic_page[content_type]", GenericPage::TYPE_AZURE_VIDEO %>
+                    <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_explanation_attributes", azure_video: @generic_page.azure_video_multiplefib_explanation, video_type: AzureVideo::TYPE_MULTIPLEFIB_EXPLANATION } %>
                    </div>
                  <br />
                 </div>

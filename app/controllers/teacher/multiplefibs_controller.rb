@@ -39,22 +39,15 @@ class Teacher::MultiplefibsController < ApplicationController
     @generic_page.course = @course
     @generic_page.type_cd = Settings.GENERICPAGE_TYPECD_MULTIPLEFIBCODE
     @generic_page.pass_grade = 60
-
-    @azure_video = AzureVideo.new
-    @azure_explanation = AzureVideo.new
   end
 
   def create
     begin
       @generic_page = Multiplefib.new(generic_page_params)
-      @azure_video = AzureVideo.new(azure_question_params[:azure_video][:question])
-      @azure_explanation = AzureVideo.new(azure_explanation_params[:azure_video][:explanation])
-      @generic_page.azure_video = @azure_video
-      @generic_page.azure_explanation = @azure_explanation
       raise unless @generic_page.valid?
 
-      @generic_page.azure_video = nil unless @generic_page.upload_flag == Multiplefib::TYPE_AZURE_VIDEO
-      @generic_page.azure_explanation = nil unless @generic_page.explanation_flag == Multiplefib::TYPE_AZURE_VIDEO
+      @generic_page.azure_video_multiplefib_question = nil unless @generic_page.upload_flag == Multiplefib::TYPE_AZURE_VIDEO
+      @generic_page.azure_video_multiplefib_explanation = nil unless @generic_page.content_type == Multiplefib::TYPE_AZURE_VIDEO
 
       if @generic_page.upload_flag == Multiplefib::TYPE_CREATEHTML
         @course = Course.find(@generic_page.course_id)
@@ -65,10 +58,7 @@ class Teacher::MultiplefibsController < ApplicationController
       unless params[:generic_page][:file].blank?
         @generic_page.file = params[:generic_page][:file]
       end
-
-      @generic_page.transaction do
-        raise unless @generic_page.save
-      end
+      raise unless @generic_page.save
 
       redirect_to action: :show, :course_id => @generic_page.course
 
@@ -80,65 +70,31 @@ class Teacher::MultiplefibsController < ApplicationController
   end
 
   def edit
-    if @generic_page.azure_video
+    if @generic_page.azure_video_multiplefib_question
       @generic_page.upload_flag = Multiplefib::TYPE_AZURE_VIDEO
-      @azure_video = @generic_page.azure_video
     end
-    if @generic_page.azure_explanation
-      @generic_page.explanation_flag = Multiplefib::TYPE_AZURE_VIDEO
-      @azure_explanation = @generic_page.azure_explanation
+    if @generic_page.azure_video_multiplefib_explanation
+      @generic_page.content_type = Multiplefib::TYPE_AZURE_VIDEO
     end
   end
 
   def update
-    if @generic_page.azure_video
-      @generic_page.upload_flag = Multiplefib::TYPE_AZURE_VIDEO
-      azure_video = azure_question_params[:azure_video][:question]
-      @generic_page.azure_video.video_url = azure_video[:video_url]
-      @generic_page.azure_video.forwarding = azure_video[:forwarding]
-      @generic_page.azure_video.forwarding_url = azure_video[:forwarding_url]
-      @generic_page.azure_video.init_message = azure_video[:init_message]
-      @generic_page.azure_video.firstquartile_message = azure_video[:firstquartile_message]
-      @generic_page.azure_video.midpoint_message = azure_video[:midpoint_message]
-      @generic_page.azure_video.thirdquartile_message = azure_video[:thirdquartile_message]
-      @generic_page.azure_video.ended_message = azure_video[:ended_message]
-      @generic_page.azure_video.panel_display = azure_video[:panel_display]
-    end
-    if @generic_page.azure_explanation
-      @generic_page.explanation_flag = Multiplefib::TYPE_AZURE_VIDEO
-      azure_explanation = azure_explanation_params[:azure_video][:explanation]
-      @generic_page.azure_explanation.video_url = azure_explanation[:video_url]
-      @generic_page.azure_explanation.forwarding = azure_explanation[:forwarding]
-      @generic_page.azure_explanation.forwarding_url = azure_explanation[:forwarding_url]
-      @generic_page.azure_explanation.init_message = azure_explanation[:init_message]
-      @generic_page.azure_explanation.firstquartile_message = azure_explanation[:firstquartile_message]
-      @generic_page.azure_explanation.midpoint_message = azure_explanation[:midpoint_message]
-      @generic_page.azure_explanation.thirdquartile_message = azure_explanation[:thirdquartile_message]
-      @generic_page.azure_explanation.ended_message = azure_explanation[:ended_message]
-      @generic_page.azure_explanation.panel_display = azure_explanation[:panel_display]
-    end
     begin
-      AzureVideo.transaction do
-        if @generic_page.update(generic_page_params)
-          if @generic_page.azure_video
-            @generic_page.azure_video.update(azure_question_params[:azure_video][:question])
-          end
-          if @generic_page.azure_explanation
-            @generic_page.azure_explanation.update(azure_explanation_params[:azure_video][:explanation])
-          end
-        else
-          raise
-        end
+      if params[:generic_page][:upload_flag] == Multiplefib::TYPE_AZURE_VIDEO &&
+         params[:generic_page][:content_type] == Multiplefib::TYPE_AZURE_VIDEO
+        raise unless @generic_page.update(generic_page_params)
+      elsif params[:generic_page][:upload_flag] == Multiplefib::TYPE_AZURE_VIDEO &&
+         params[:generic_page][:content_type] != Multiplefib::TYPE_AZURE_VIDEO
+        raise unless @generic_page.update(generic_page_params_without_explanation)
+      elsif params[:generic_page][:upload_flag] != Multiplefib::TYPE_AZURE_VIDEO &&
+         params[:generic_page][:content_type] == Multiplefib::TYPE_AZURE_VIDEO
+        raise unless @generic_page.update(generic_page_params_without_question)
+      else
+        raise unless @generic_page.update(generic_page_params_without_video)
       end
       redirect_to action: :show, :course_id => @generic_page.course
 
     rescue => e
-      if @generic_page.azure_video
-        @azure_video = AzureVideo.new(azure_question_params[:azure_video][:question])
-      end
-      if @generic_page.azure_explanation
-        @azure_explanation = AzureVideo.new(azure_explanation_params[:azure_video][:explanation])
-      end
       render action: :edit
     end
   end
@@ -263,15 +219,30 @@ class Teacher::MultiplefibsController < ApplicationController
 
     def generic_page_params
       params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :explanation_flag,
-        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text)
+        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text, :content_type,
+        azure_video_multiplefib_question_attributes: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display],
+        azure_video_multiplefib_explanation_attributes: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display])
     end
 
-    def azure_question_params
-      params.require("generic_page").permit(azure_video: [question: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display]])
+    def generic_page_params_without_question
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :explanation_flag,
+        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text, :content_type,
+        azure_video_multiplefib_question_attributes: [:id, :video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display, :_destroy],
+        azure_video_multiplefib_explanation_attributes: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display])
     end
 
-    def azure_explanation_params
-      params.require("generic_page").permit(azure_video: [explanation: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display]])
+    def generic_page_params_without_explanation
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :explanation_flag,
+        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text, :content_type,
+        azure_video_multiplefib_question_attributes: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display],
+        azure_video_multiplefib_explanation_attributes: [:id, :video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display, :_destroy])
+    end
+
+    def generic_page_params_without_video
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :explanation_flag,
+        :max_count, :pass_grade, :file, :explanation_file, :start_pass, :start_time, :end_time, :material_memo, :html_text, :content_type,
+        azure_video_multiplefib_question_attributes: [:id, :video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display, :_destroy],
+        azure_video_multiplefib_explanation_attributes: [:id, :video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display, :_destroy])
     end
 
     def material_file_params

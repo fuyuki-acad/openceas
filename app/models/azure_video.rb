@@ -22,16 +22,16 @@
 #++
 
 class AzureVideo < ApplicationRecord
-#  belongs_to :generic_page,  :foreign_key => :page_id
-#  belongs_to :generic_page
+  belongs_to :generic_page, :foreign_key => :page_id, optional: true
 
   TYPE_PANEL_NOTDISPLAY = '0'
   TYPE_PANEL_DISPLAY = '1'
   TYPE_NOTFORWARDING = '0'
   TYPE_FORWARDING = '1'
 
-  TYPE_QUESTION = 10
-  TYPE_EXPLANATION = 11
+  TYPE_MATERIAL = 10
+  TYPE_MULTIPLEFIB_QUESTION = 30
+  TYPE_MULTIPLEFIB_EXPLANATION = 31
 
 #  validates :video_url, :presence => true
   def panel?
