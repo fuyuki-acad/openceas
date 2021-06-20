@@ -180,6 +180,10 @@
           <div class="panel-body">
             <% @class_session.urls.each do |url| %>
               <div>
+                <% if url.azure_video_material.present? %>
+                  <iframe align="middle" height="500px" src="/media/azure_player.html" width="100%"></iframe>
+                  <%= render partial: 'shared/media/azure_media_player', locals: { azure_video: url.azure_video_material } %>
+                <% else %>
                 <% if url.url_content.present? %>
                   <%= link_to url.generic_page_title, url.url_content,  :target => "_blank", :id => 'url_content' %>
                 <% else %>
@@ -197,6 +201,7 @@
                   </p>
                 <% end %>
                 <p id='azure_message'></p>
+                <% end %>
                 <hr>
               </div>
             <% end %>
