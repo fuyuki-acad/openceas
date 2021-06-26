@@ -87,16 +87,21 @@
     </div>
   </div>
 
-  <% if @generic_page.azure_video_multiplefib_explanation.present? %>
-    <div class="text-center">
-      <div class="btn-group">
+  <% if @generic_page.azure_video_multiplefib_explanation.present? || @generic_page.explanation_link_name.present? %>
+  <div class="text-center">
+    <div class="btn-group">
+      <% if @generic_page.azure_video_multiplefib_question %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(multiplefib_question_video_material_path(@generic_page.id))}');" %>
+      <% elsif @generic_page.pdf? && @is_mobile %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(pdf_material_path(@generic_page.id))}');" %>
+      <% else %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(material_path(@generic_page.id))}');" %>
+      <% end %>
+      <% if @generic_page.azure_video_multiplefib_explanation.present? %>
 	<%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(multiplefib_video_material_path(@generic_page.id))}');" %>
-      </div>
-    </div>
-  <% elsif @generic_page.explanation_link_name.present? %>
-    <div class="text-center">
-      <div class="btn-group">
+      <% elsif @generic_page.explanation_link_name.present? %>
 	<%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(explain_file_material_path(@generic_page.id))}');" %>
+      <% end %>
       </div>
     </div>
   <% end %>

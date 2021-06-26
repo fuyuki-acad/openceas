@@ -253,10 +253,11 @@ Rails.application.routes.draw do
   # マテリアル
   get     'materials/:id/azure_video',    to: 'materials#azure_video'
   resources :materials,   only: [:show] do
-    get   :material_video,        on: :member
-    get   :multiplefib_video,     on: :member
-    get   :explain_file,          on: :member
-    get   :pdf,                   on: :member
+    get   :material_video,              on: :member
+    get   :multiplefib_question_video,  on: :member
+    get   :multiplefib_video,           on: :member
+    get   :explain_file,                on: :member
+    get   :pdf,                         on: :member
     resources :materials,   only: [:show] do
     end
   end
