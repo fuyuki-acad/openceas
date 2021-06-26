@@ -1,5 +1,7 @@
 $(document).on 'turbolinks:load', ->
   height = document.body.scrollHeight
+  if (height < 500)
+    height = 500
   $("#question_file", window.parent.document).height(height)
   $("#multiple_fibMain", window.parent.document).height(height)
   @
