@@ -37,12 +37,22 @@
     </td>
   </tr>
 
+  <!-- 授業メモ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OPENCOMMENT") %>
+    </td>
+    <td class="col-xs-9">
+      <%= form.text_area :material_memo, {:class => 'form-control', :rows => '5'} %>
+      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT1") %>
+    </td>
+  </tr>
+
   <!-- リンク／動画選択 -->
   <tr>
     <td>
       <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS") %>
     </td>
-
     <td>
       <table width="100%">
         <tr>
@@ -62,17 +72,6 @@
                           <td class="col-xs-9">
                             <%= form.text_field :url_content, {:class => 'form-control', :maxlength => '2083'} %>
                             <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLEXPLANATION2") %>
-                          </td>
-                        </tr>
-
-                        <!-- 授業メモ -->
-                        <tr>
-                          <td class="col-xs-3">
-                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_OPENCOMMENT") %>
-                          </td>
-                          <td class="col-xs-9">
-                            <%= form.text_area :material_memo, {:class => 'form-control', :rows => '5'} %>
-                            <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT1") %>
                           </td>
                         </tr>
 

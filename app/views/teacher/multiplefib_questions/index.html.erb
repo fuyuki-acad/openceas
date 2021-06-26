@@ -36,7 +36,7 @@
 <div class="row">
   <div class="col-sm-7 col-xs-12">
     <% if @generic_page.azure_video_multiplefib_question %>
-      <iframe align="middle" height="500px" src="/media/azure_player.html" width="100%"></iframe>
+      <iframe align="middle" height="500px" src="/media/azure_player.html?generic_id=<%= @generic_page.azure_video_multiplefib_question.page_id %>" width="100%"></iframe>
       <%= render partial: 'shared/media/azure_media_player', locals: { azure_video: @generic_page.azure_video_multiplefib_question } %>
     <% elsif @generic_page.edit_file? %>
       <iframe id="question_file" srcdoc="<%== @generic_page.get_html_file %>" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>

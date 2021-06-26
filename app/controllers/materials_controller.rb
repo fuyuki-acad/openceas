@@ -45,12 +45,12 @@ class MaterialsController < ApplicationController
 
   def material_video
     @azure_video = @generic_page.azure_video_material
-    render "azure_video"
+    render "azure_video", layout: false
   end
 
   def multiplefib_video
     @azure_video = @generic_page.azure_video_multiplefib_explanation
-    render "azure_video"
+    render "azure_video", layout: false
   end
 
   def explain_file

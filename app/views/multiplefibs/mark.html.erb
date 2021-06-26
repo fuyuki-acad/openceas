@@ -87,16 +87,16 @@
     </div>
   </div>
 
-  <% if @generic_page.azure_explanation.present? %>
+  <% if @generic_page.azure_video_multiplefib_explanation.present? %>
     <div class="text-center">
       <div class="btn-group">
-        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), multiplefib_video_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
+	<%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(multiplefib_video_material_path(@generic_page.id))}');" %>
       </div>
     </div>
   <% elsif @generic_page.explanation_link_name.present? %>
     <div class="text-center">
       <div class="btn-group">
-        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), explain_file_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
+	<%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void();', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(explain_file_material_path(@generic_page.id))}');" %>
       </div>
     </div>
   <% end %>

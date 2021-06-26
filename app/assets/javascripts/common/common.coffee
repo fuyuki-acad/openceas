@@ -42,6 +42,11 @@
   $("."+classname).fadeIn();
   @
 
+@changeFrame =(frameId, url) ->
+  question_file=window.top.document.getElementById(frameId);
+  question_file.src = url;
+  @
+
 #
 # アンカースクロール
 @smoothScrolling = (className) ->
