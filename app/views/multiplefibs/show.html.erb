@@ -75,10 +75,13 @@
       <%= render partial: 'shared/media/azure_media_player', locals: { azure_video: @generic_page.azure_video_multiplefib_question } %>
     <% elsif @generic_page.pdf? && @is_mobile %>
       <iframe name="question_file" id="question_file" src="<%= pdf_material_url(@generic_page.id) %>" width="100%" height="400px"></iframe>
+      <%= render partial: 'shared/media/azure_media_empty_player', locals: { azure_video: @generic_page } %>
     <% elsif @generic_page.edit_file? %>
       <iframe name="question_file" id="question_file" srcdoc="<%== @generic_page.get_html_file %>" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>
+      <%= render partial: 'shared/media/azure_media_empty_player', locals: { azure_video: @generic_page } %>
     <% else %>
       <iframe name="question_file" id="question_file" src="<%= material_path(@generic_page.id) %>" width="100%"></iframe>
+      <%= render partial: 'shared/media/azure_media_empty_player', locals: { azure_video: @generic_page } %>
     <% end %>
   </div>
   <div class="col-sm-4 col-xs-12">

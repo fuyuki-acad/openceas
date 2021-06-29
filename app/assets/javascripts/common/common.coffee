@@ -47,6 +47,30 @@
   question_file.src = url;
   @
 
+@changeVideoFrame =(frameId, generic_id, video_url, forwarding, forwarding_url, panel_display, init_message, firstquartile_message, midpoint_message, thirdquartile_message, ended_message) ->
+  if (window.top.document.getElementById("video_url_"+generic_id))
+    window.top.document.getElementById("video_url_"+generic_id).innerHTML = video_url;
+  if (window.top.document.getElementById("forwarding_"+generic_id))
+    window.top.document.getElementById("forwarding_"+generic_id).innerHTML = forwarding;
+  if (window.top.document.getElementById("forwarding_url_"+generic_id))
+    window.top.document.getElementById("forwarding_url_"+generic_id).innerHTML = forwarding_url;
+  if (window.top.document.getElementById("panel_display_"+generic_id))
+    window.top.document.getElementById("panel_display_"+generic_id).innerHTML = panel_display;
+  if (window.top.document.getElementById("init_message_"+generic_id))
+    window.top.document.getElementById("init_message_"+generic_id).innerHTML = init_message;
+  if (window.top.document.getElementById("firstquartile_message_"+generic_id))
+    window.top.document.getElementById("firstquartile_message_"+generic_id).innerHTML = firstquartile_message;
+  if (window.top.document.getElementById("midpoint_message_"+generic_id))
+    window.top.document.getElementById("midpoint_message_"+generic_id).innerHTML = midpoint_message;
+  if (window.top.document.getElementById("thirdquartile_message_"+generic_id))
+    window.top.document.getElementById("thirdquartile_message_"+generic_id).innerHTML = thirdquartile_message;
+  if (window.top.document.getElementById("ended_message_"+generic_id))
+    window.top.document.getElementById("ended_message_"+generic_id).innerHTML = ended_message;
+
+  question_file=window.top.document.getElementById(frameId);
+  question_file.src = '/media/azure_player.html?generic_id='+generic_id;
+  @
+
 #
 # アンカースクロール
 @smoothScrolling = (className) ->

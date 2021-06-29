@@ -16,6 +16,7 @@
     if (window.parent.document.getElementById("azure_message"+generic_id)) var azure_message = window.parent.document.getElementById("azure_message"+generic_id);
 
     var controls = true;
+    var auto_play = false;
     var rewind_count = 0;
     var seeked_count = 0;
     var video_width = 640;
@@ -32,11 +33,18 @@
     if (window.parent.document.getElementById("midpoint_message"+generic_id)) var midpoint_message = window.parent.document.getElementById("midpoint_message"+generic_id).textContent;
     if (window.parent.document.getElementById("thirdquartile_message"+generic_id)) var thirdquartile_message = window.parent.document.getElementById("thirdquartile_message"+generic_id).textContent;
     if (window.parent.document.getElementById("ended_message"+generic_id)) var ended_message = window.parent.document.getElementById("ended_message"+generic_id).textContent;
+    if (controls == "true") {
+      controls = true;
+      auto_play = false;
+    } else {
+      controls = false;
+      auto_play = true;
+    }
 
     var myOptions = {
       "nativeControlsForTouch": false,
       controls: controls,
-      autoplay: true,
+      autoplay: auto_play,
       width: video_width,
       height: video_height,
     }
