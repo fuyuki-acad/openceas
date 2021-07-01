@@ -66,12 +66,12 @@
                 <!-- 科目名称 -->
                 <td class="hidden-xs td-bold"><%= essay.course.course_name %></td>
                 <!-- 授業名 -->
-                <td class="hidden-xs td-bold"><%= essay.course.class_session(0) ? essay.course.class_session(0).class_session_title : "" %></td>
+                <td class="hidden-xs td-bold"><%= class_session_day(essay) %></td>
                 <!-- 課題タイトル -->
                 <td class="td-bold"><%= essay.generic_page_title %></td>
                 <!-- 提出期限 -->
                 <td class="hidden-xs td-bold td-nowrap">
-                  <%= t("common.COMMON_FROMTO", :param0 => l(essay.start_time, format: :short), :param1 => l(essay.end_time, format: :short)) %>
+                  <%= t("common.COMMON_FROMTO_BR", :param0 => l(essay.start_time, format: :short), :param1 => l(essay.end_time, format: :short)).html_safe %>
                 </td>
                 <!-- 提出回数 -->
                 <td class="hidden-xs td-bold">

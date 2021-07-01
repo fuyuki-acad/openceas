@@ -22,4 +22,11 @@
 #++
 
 module EssayResultsHelper
+  def class_session_day(essay)
+    if essay.generic_page_class_session_associations.size > 0
+      essay.generic_page_class_session_associations.first.class_session.class_session_day
+    else
+      essay.course.class_session(0) ? essay.course.class_session(0).class_session_title : ""
+    end
+  end
 end

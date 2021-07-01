@@ -181,6 +181,7 @@ ja:
     COMMON_MAIL2: "e-mail"
     COMMON_MAILEXPLANATION: "ラーニングシステムへのアクセスはこちら↓"
     COMMON_FROMTO: "%{param0}～%{param1}"
+    COMMON_FROMTO_BR: "%{param0}<BR>～%{param1}"
     COMMON_CORRECTANSWER: "正解"
     COMMON_ERROR_NOTEXISTFILE: "ファイルが見つかりません"
     COMMON_RAWSCORE: "素点"

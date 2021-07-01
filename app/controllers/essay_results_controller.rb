@@ -35,21 +35,21 @@ class EssayResultsController < Teacher::Result::EssaysController
 			## 管理者の時
 			if current_user.admin?
         @essays = Essay.eager_load(:answer_scores).where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?)",
-          Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids).page(params[:page])
+          Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids).order(end_time: "DESC").page(params[:page])
 
 				## 担任者の時
 			elsif current_user.teacher?
 				## 担任科目でレポート課題がある科目情報を一括取得
         @essays = Essay.eager_load(:answer_scores).joins(:course => :course_assigned_users).
           where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_assigned_users.user_id = ?",
-            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).page(params[:page])
+            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).order(end_time: "DESC").page(params[:page])
 
 				## 学生の時
 			elsif current_user.student?
 				## 履修している科目にレポート課題が出題されていた場合、そのレポートの情報を取得する
         @essays = Essay.joins(:class_sessions, :course => [:course_enrollment_users, :class_sessions]).
           where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_enrollment_users.user_id = ?",
-            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).distinct.page(params[:page])
+            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).order(end_time: "DESC").distinct.page(params[:page])
 			end
     end
   end
