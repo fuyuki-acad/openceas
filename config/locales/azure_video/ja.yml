@@ -1,6 +1,6 @@
 ja:
   azure_video:
-    AZURE_VIDEO_URL: "動画URL"
+    AZURE_VIDEO_URL: "ストリーミングURL(manifest)"
     AZURE_FORWARDING: "視聴完了後転送"
     AZURE_FORWARDING_URL: "転送URL"
     AZURE_INIT_MESSAGE: "初期メッセージ"

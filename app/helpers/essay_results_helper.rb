@@ -26,7 +26,11 @@ module EssayResultsHelper
     if essay.generic_page_class_session_associations.size > 0
       essay.generic_page_class_session_associations.first.class_session.class_session_day
     else
-      essay.course.class_session(0) ? essay.course.class_session(0).class_session_title : ""
+#      if essay.course.class_session(0).class_session_title.present?
+#        essay.course.class_session(0).class_session_title
+#      else
+        t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0")
+#      end
     end
   end
 end

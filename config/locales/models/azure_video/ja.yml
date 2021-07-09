@@ -6,7 +6,7 @@ ja:
 
     attributes:
       azure_video:
-        video_url: "動画URL"
+        video_url: "ストリーミングURL(manifest)"
         panel_display: "操作パネル"
         forwarding: "視聴完了後転送"
         forwarding_url: "転送URL"
