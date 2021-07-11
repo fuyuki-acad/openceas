@@ -49,9 +49,19 @@ class EssayResultsController < Teacher::Result::EssaysController
       ## 学生の時
       elsif current_user.student?
         ## 履修している科目にレポート課題が出題されていた場合、そのレポートの情報を取得する
-        @essays = Essay.joins(:class_sessions, :course => [:course_enrollment_users, :class_sessions]).
-          where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_enrollment_users.user_id = ? AND end_time > ?",
-            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id, now).order(end_time: "ASC").distinct.page(params[:page])
+        essays = Essay.joins(:class_sessions, :course => [:course_enrollment_users, :class_sessions]).
+          where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_enrollment_users.user_id = ?",
+            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).order(end_time: "ASC").distinct
+        @essays = []
+        essays.each do |essay|
+          essay_status = essay.result_essay_status(current_user.id)
+          if essay_status == AssignmentEssay::STATUS_NOTPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT_FEEDBACK ||
+             essay_status == AssignmentEssay::STATUS_RETURNED_REPRESENT_FEEDBACK
+            @essays << essay
+          end
+        end
       end
     end
   end

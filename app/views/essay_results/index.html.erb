@@ -59,10 +59,10 @@
                 <th class="hidden-xs"><%= t("common.COMMON_CONFIRM") %></th>
               </tr>
             </thead>
-            <% @essays.each.with_index(@essays.offset_value + 1) do |essay, index| %>
+            <% @essays.each.with_index(1) do |essay, index| %>
               <tr>
                 <!-- No. -->
-                <td><%= index %></td>
+                <td><%= current_user.student? ? index : (@essays.offset_value + index) %></td>
                 <!-- 科目名称 -->
                 <td class="hidden-xs td-bold"><%= essay.course.course_name %></td>
                 <!-- 授業名 -->
@@ -136,9 +136,11 @@
           </table>
 
           <!-- 改ページボタン -->
+          <% unless current_user.student? %>
           <div class="pull-right">
             <%= paginate(@essays) %>
           </div>
+          <% end %>
         <% end %>
       </div>
     </div>
