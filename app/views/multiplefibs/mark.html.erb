@@ -87,10 +87,42 @@
     </div>
   </div>
 
-  <% unless @generic_page.explanation_link_name.blank? %>
-    <div class="text-center">
-      <div class="btn-group">
-        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), explain_file_material_path(@generic_page.id), :class => 'btn btn-default ceas-button-margin-5', :target => "_blank" %>
+  <% if @generic_page.azure_video_multiplefib_explanation.present? || @generic_page.explanation_link_name.present? %>
+  <div class="text-center">
+    <div class="btn-group">
+      <% if @generic_page.azure_video_multiplefib_question %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeVideoFrame('question_file',
+                                                                                                                                                          '#{@generic_page.id}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.video_url}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.forwarding?}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.forwarding_url}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.panel?}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.init_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.firstquartile_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.midpoint_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.thirdquartile_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_question.ended_message}');" %>
+      <% elsif @generic_page.pdf? && @is_mobile %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(pdf_material_path(@generic_page.id))}');" %>
+      <% else %>
+        <%= link_to t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLPAGE'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(material_path(@generic_page.id))}');" %>
+      <% end %>
+      <% if @generic_page.azure_video_multiplefib_explanation.present? %>
+        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeVideoFrame('question_file',
+                                                                                                                                                          '#{@generic_page.id}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.video_url}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.forwarding?}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.forwarding_url}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.panel?}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.init_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.firstquartile_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.midpoint_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.thirdquartile_message}',
+                                                                                                                                                          '#{@generic_page.azure_video_multiplefib_explanation.ended_message}');" %>
+      <% elsif @generic_page.explanation_link_name.present? %>
+        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_fo
+r(explain_file_material_path(@generic_page.id))}');" %>
+      <% end %>
       </div>
     </div>
   <% end %>

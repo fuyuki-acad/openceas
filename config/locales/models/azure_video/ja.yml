@@ -1,0 +1,18 @@
+## YAML Template.
+ja:
+  activerecord:
+    models:
+      azure_video: "Azure動画"
+
+    attributes:
+      azure_video:
+        video_url: "ストリーミングURL(manifest)"
+        panel_display: "操作パネル"
+        forwarding: "視聴完了後転送"
+        forwarding_url: "転送URL"
+        init_message: "初期メッセージ"
+        firstquartile_message: "1/4視聴メッセージ"
+        midpoint_message: "1/2視聴メッセージ"
+        thirdquartile_message: "3/4視聴メッセージ"
+        ended_message: "視聴完了メッセージ"
+

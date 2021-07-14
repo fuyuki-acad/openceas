@@ -29,28 +29,40 @@ class EssayResultsController < Teacher::Result::EssaysController
     session[:essay_search] = nil
 
     ## 履修または担任している科目数が存在するかどうかチェック
-		if @courses.count > 0
+    if @courses.count > 0
       course_ids = @courses.map {|course| course.id}
+      now = Time.zone.now
 
-			## 管理者の時
-			if current_user.admin?
-        @essays = Essay.eager_load(:answer_scores).where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?)",
-          Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids).page(params[:page])
+      ## 管理者の時
+      if current_user.admin?
+        @essays = Essay.eager_load(:generic_page_class_session_associations).eager_load(:answer_scores).
+          where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND end_time > ?",
+          Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, now).order(end_time: "ASC").page(params[:page])
 
-				## 担任者の時
-			elsif current_user.teacher?
-				## 担任科目でレポート課題がある科目情報を一括取得
-        @essays = Essay.eager_load(:answer_scores).joins(:course => :course_assigned_users).
-          where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_assigned_users.user_id = ?",
-            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).page(params[:page])
+      ## 担任者の時
+      elsif current_user.teacher?
+        ## 担任科目でレポート課題がある科目情報を一括取得
+        @essays = Essay.eager_load(:generic_page_class_session_associations).eager_load(:answer_scores).joins(:course => :course_assigned_users).
+          where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_assigned_users.user_id = ? AND end_time > ?",
+            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id, now).order(end_time: "ASC").page(params[:page])
 
-				## 学生の時
-			elsif current_user.student?
-				## 履修している科目にレポート課題が出題されていた場合、そのレポートの情報を取得する
-        @essays = Essay.joins(:class_sessions, :course => [:course_enrollment_users, :class_sessions]).
+      ## 学生の時
+      elsif current_user.student?
+        ## 履修している科目にレポート課題が出題されていた場合、そのレポートの情報を取得する
+        essays = Essay.joins(:class_sessions, :course => [:course_enrollment_users, :class_sessions]).
           where("generic_pages.type_cd = ? AND generic_pages.course_id IN (?) AND course_enrollment_users.user_id = ?",
-            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).distinct.page(params[:page])
-			end
+            Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE, course_ids, current_user.id).order(end_time: "ASC").distinct
+        @essays = []
+        essays.each do |essay|
+          essay_status = essay.result_essay_status(current_user.id)
+          if essay_status == AssignmentEssay::STATUS_NOTPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT_FEEDBACK ||
+             essay_status == AssignmentEssay::STATUS_RETURNED_REPRESENT_FEEDBACK
+            @essays << essay
+          end
+        end
+      end
     end
   end
 

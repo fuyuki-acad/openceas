@@ -240,8 +240,10 @@ class Teacher::Result::EssaysController < ApplicationController
       type, is_inline = get_content_type(file_name)
       if is_inline
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :inline)
+        headers['Content-Disposition'] = "inline; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       else
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :attachment)
+        headers['Content-Disposition'] = "attachment; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       end
     end
   end
@@ -268,8 +270,10 @@ class Teacher::Result::EssaysController < ApplicationController
       type, is_inline = get_content_type(file_name)
       if is_inline
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :inline)
+        headers['Content-Disposition'] = "inline; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       else
         send_file(file_path, filename: file_name, length: stat.size, type: type, disposition: :attachment)
+        headers['Content-Disposition'] = "attachment; filename=#{file_name}; filename*=UTF-8''#{file_name}"
       end
     end
   end
@@ -539,7 +543,7 @@ class Teacher::Result::EssaysController < ApplicationController
         params[:user].each do |user|
           user = User.find(user)
           answer_score = @essay.latest_score(user.id)
-          if answer_score && answer_score.latest_comment && 
+          if answer_score && answer_score.latest_comment &&
             answer_score.latest_comment.mail_flag == Settings.ASSIGNMENTESSAYMAILCOMMENT_MAILFLG_ON
             latest_comment = answer_score.latest_comment
             EssayMailer.send_mail(@essay, latest_comment, user).deliver_now

@@ -91,7 +91,9 @@
             <% when Settings.GENERICPAGE_TYPECD_MATERIALCODE %>
                 <%= link_to t("common.COMMON_CONFIRM"), material_path(generic_page.id), :class => "btn btn-warning", :target => "_blank" %>
             <% when Settings.GENERICPAGE_TYPECD_URLCODE %>
-              <% if generic_page.url_content.present? %>
+              <% if generic_page.azure_video_material.present? %>
+                <%= link_to t('common.COMMON_CONFIRM'), material_video_material_path(id: generic_page.id), :class => 'btn btn-warning', :target => "_blank" %>
+              <% elsif generic_page.url_content.present? %>
                 <%= link_to t("common.COMMON_CONFIRM"), generic_page.url_content, :class => "btn btn-warning", :target => "_blank" %>
               <% end %>
             <% when Settings.GENERICPAGE_TYPECD_COMPOUNDCODE, Settings.GENERICPAGE_TYPECD_QUESTIONNAIRECODE %>

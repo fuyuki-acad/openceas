@@ -76,6 +76,8 @@ module MaterialFileModule
             end
           end
         end
+        set_azure_video_multiplefib_question(xml_page, generic_page.azure_video_multiplefib_question) if generic_page.azure_video_multiplefib_question
+        set_azure_video_multiplefib_explanation(xml_page, generic_page.azure_video_multiplefib_explanation) if generic_page.azure_video_multiplefib_explanation
       end
     end
 
@@ -128,6 +130,36 @@ module MaterialFileModule
     xml_sel.selectMarkFlg quiz.select_mark_flag
     xml_sel.textRow quiz.text_row
     xml_sel.viewRank quiz.view_rank
+  end
+
+  def set_azure_video_multiplefib_question(xml_page, azure_video)
+    xml_page.azureVideoMultiplefibQuestion do |xml_azure_video|
+      xml_azure_video.videoType azure_video.video_type
+      xml_azure_video.videoUrl azure_video.video_url
+      xml_azure_video.forwarding azure_video.forwarding
+      xml_azure_video.forwardingUrl azure_video.forwarding_url
+      xml_azure_video.initMessage azure_video.init_message 
+      xml_azure_video.firstquartileMessage azure_video.firstquartile_message
+      xml_azure_video.midpointMessage azure_video.midpoint_message
+      xml_azure_video.thirdquartileMessage azure_video.thirdquartile_message
+      xml_azure_video.endedMessage azure_video.ended_message
+      xml_azure_video.panelDisplay azure_video.panel_display
+    end
+  end
+
+  def set_azure_video_multiplefib_explanation(xml_page, azure_video)
+    xml_page.azureVideoMultiplefibExplanation do |xml_azure_video|
+      xml_azure_video.videoType azure_video.video_type
+      xml_azure_video.videoUrl azure_video.video_url
+      xml_azure_video.forwarding azure_video.forwarding
+      xml_azure_video.forwardingUrl azure_video.forwarding_url
+      xml_azure_video.initMessage azure_video.init_message 
+      xml_azure_video.firstquartileMessage azure_video.firstquartile_message
+      xml_azure_video.midpointMessage azure_video.midpoint_message
+      xml_azure_video.thirdquartileMessage azure_video.thirdquartile_message
+      xml_azure_video.endedMessage azure_video.ended_message
+      xml_azure_video.panelDisplay azure_video.panel_display
+    end
   end
 
   def write_xml(xml)
@@ -268,6 +300,37 @@ module MaterialFileModule
           end
         end
       end
+
+      xml_page.elements.each('azureVideoMultiplefibQuestion') do |xml_azure_video|
+        azure_video_multiplefib_question = AzureVideo.new
+	azure_video_multiplefib_question.page_id = generic_page.id
+        azure_video_multiplefib_question.video_type = xml_azure_video.elements['videoType'].text
+        azure_video_multiplefib_question.video_url = xml_azure_video.elements['videoUrl'].text
+        azure_video_multiplefib_question.forwarding = xml_azure_video.elements['forwarding'].text
+        azure_video_multiplefib_question.forwarding_url = xml_azure_video.elements['forwardingUrl'].text
+        azure_video_multiplefib_question.init_message = xml_azure_video.elements['initMessage'].text
+        azure_video_multiplefib_question.firstquartile_message = xml_azure_video.elements['firstquartileMessage'].text
+        azure_video_multiplefib_question.midpoint_message = xml_azure_video.elements['midpointMessage'].text
+        azure_video_multiplefib_question.thirdquartile_message = xml_azure_video.elements['thirdquartileMessage'].text
+        azure_video_multiplefib_question.ended_message = xml_azure_video.elements['endedMessage'].text
+        azure_video_multiplefib_question.panel_display = xml_azure_video.elements['panelDisplay'].text
+	azure_video_multiplefib_question.save
+      end
+      xml_page.elements.each('azureVideoMultiplefibExplanation') do |xml_azure_video|
+        azure_video_multiplefib_explanation = AzureVideo.new
+	azure_video_multiplefib_explanation.page_id = generic_page.id
+        azure_video_multiplefib_explanation.video_type = xml_azure_video.elements['videoType'].text
+        azure_video_multiplefib_explanation.video_url = xml_azure_video.elements['videoUrl'].text
+        azure_video_multiplefib_explanation.forwarding = xml_azure_video.elements['forwarding'].text
+        azure_video_multiplefib_explanation.forwarding_url = xml_azure_video.elements['forwardingUrl'].text
+        azure_video_multiplefib_explanation.init_message = xml_azure_video.elements['initMessage'].text
+        azure_video_multiplefib_explanation.firstquartile_message = xml_azure_video.elements['firstquartileMessage'].text
+        azure_video_multiplefib_explanation.midpoint_message = xml_azure_video.elements['midpointMessage'].text
+        azure_video_multiplefib_explanation.thirdquartile_message = xml_azure_video.elements['thirdquartileMessage'].text
+        azure_video_multiplefib_explanation.ended_message = xml_azure_video.elements['endedMessage'].text
+        azure_video_multiplefib_explanation.panel_display = xml_azure_video.elements['panelDisplay'].text
+	azure_video_multiplefib_explanation.save
+      end
     end
 
     generic_page
@@ -392,3 +455,4 @@ module MaterialFileModule
       value && !value.text.blank? && value != "null" ? true : false
     end
 end
+

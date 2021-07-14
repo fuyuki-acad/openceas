@@ -199,6 +199,7 @@
                     <th><%= t("common.COMMON_DELETE") %></th>
                     <th><%= t("common.COMMON_NO1") %></th>
                     <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLLISTCOLUMN3") %></th>
+                    <th style="white-space: nowrap;"><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS") %></th>
                     <th><%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLLISTCOLUMN4") %></th>
                     <th></th>
                     <th></th>
@@ -218,11 +219,28 @@
                     <td class="td-bold"><%= url.generic_page_title %></td>
 
                     <!-- ファイル名 -->
-                    <td class="td-bold"><%= url.url_content %></td>
+		    <td class="td-bold">
+		    <% if url.azure_video_material %>
+                      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS_VIDEO") %>
+                    <% else %>
+                      <%= t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS_LINK") %>
+                    <% end %>
+                    </td>
+
+                    <!-- URL -->
+		    <td class="td-bold">
+		    <% if url.azure_video_material %>
+                      <%= url.azure_video_material.video_url %>
+                    <% else %>
+                      <%= url.url_content %>
+                    <% end %>
+                    </td>
 
                     <!-- 確認ボタン -->
                     <td>
-                      <% if url.url_content.present? %>
+		      <% if url.azure_video_material %>
+                        <%= link_to t('common.COMMON_CONFIRM'), material_video_material_path(id: url.id), :class => 'btn btn-warning', :target => "_blank" %>
+                      <% elsif url.url_content.present? %>
                         <%= link_to t("common.COMMON_CONFIRM"), url.url_content, {class: "btn btn-warning", target: "_blank"} %>
                       <% end %>
                     </td>

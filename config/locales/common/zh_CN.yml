@@ -181,6 +181,7 @@ zh_CN:
     COMMON_MAIL2: "e-mail"
     COMMON_MAILEXPLANATION: "从这里访问学习系统↓"
     COMMON_FROMTO: "%{param0}～%{param1}"
+    COMMON_FROMTO_BR: "%{param0}<BR>～%{param1}"
     COMMON_CORRECTANSWER: "正确的解答"
     COMMON_ERROR_NOTEXISTFILE: "找不到文件"
     COMMON_RAWSCORE: "原始分数"

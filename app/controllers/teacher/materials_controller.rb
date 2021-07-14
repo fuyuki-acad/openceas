@@ -44,12 +44,15 @@ class Teacher::MaterialsController < ApplicationController
   def new_url
     new
     @generic_page.type_cd = Settings.GENERICPAGE_TYPECD_URLCODE
+    @generic_page.content_type = GenericPage::CONTENT_TYPE_MATERIAL_LINK
   end
 
   def create
     begin
       @generic_page = GenericPage.new(generic_page_params)
       raise unless @generic_page.valid?
+
+      @generic_page.azure_video_material = nil unless @generic_page.content_type == GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO
 
       case @generic_page.upload_flag
       when GenericPage::TYPE_FILEUPLOAD
@@ -71,7 +74,6 @@ class Teacher::MaterialsController < ApplicationController
       raise unless @generic_page.save
 
       redirect_to action: :show, :course_id => @course
-
     rescue => e
       logger.error e.backtrace.join("\n")
       flash.now[:notice] = e.message unless e.message.blank?
@@ -80,6 +82,14 @@ class Teacher::MaterialsController < ApplicationController
       else
         render action: :new
       end
+    end
+  end
+
+  def edit_url
+    if @generic_page.azure_video_material
+      @generic_page.content_type = GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO
+    else
+      @generic_page.content_type = GenericPage::CONTENT_TYPE_MATERIAL_LINK
     end
   end
 
@@ -113,7 +123,12 @@ class Teacher::MaterialsController < ApplicationController
       unless params[:generic_page][:file].blank?
         @generic_page.file = params[:generic_page][:file]
       end
-      raise unless @generic_page.update(generic_page_params)
+ 
+      if params[:generic_page][:content_type] == GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO
+        raise unless @generic_page.update(generic_page_params)
+      else
+        raise unless @generic_page.update(generic_page_params_without_video)
+      end
 
       redirect_to action: :show, :course_id => @generic_page.course
 
@@ -141,7 +156,8 @@ class Teacher::MaterialsController < ApplicationController
     if File.exist?(file_path)
       file_stat = File::stat(file_path)
       send_file(file_path, :filename => @generic_page.file_name, :length => file_stat.size)
-    else
+      headers['Content-Disposition'] = "attachment; filename=#{@generic_page.file_name}; filename*=UTF-8''#{@generic_page.file_name}"
+     else
       render text: t("page_management.MAT_COM_MYFOLDER_NOCONTENTS")
     end
   end
@@ -254,8 +270,15 @@ class Teacher::MaterialsController < ApplicationController
     end
 
     def generic_page_params
-      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag,
-        :file, :file_name, :extract_flag, :link_name, :url_content, :material_memo_closed, :material_memo,
-        :extract_path, :html_text, :content)
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :contents_flag,
+        :file, :file_name, :extract_flag, :link_name, :url_content, :material_memo_closed, :material_memo, :extract_path, :html_text, :content, :content_type,
+        azure_video_material_attributes: [:video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display])
     end
+
+    def generic_page_params_without_video
+      params.require(:generic_page).permit(:course_id, :type_cd, :generic_page_title, :upload_flag, :contents_flag,
+        :file, :file_name, :extract_flag, :link_name, :url_content, :material_memo_closed, :material_memo, :extract_path, :html_text, :content, :content_type,
+        azure_video_material_attributes: [:id, :video_type, :video_url, :forwarding, :forwarding_url, :init_message, :firstquartile_message, :midpoint_message, :thirdquartile_message, :ended_message, :panel_display, :_destroy])
+    end
+
 end

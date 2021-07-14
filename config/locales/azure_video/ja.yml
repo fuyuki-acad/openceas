@@ -1,0 +1,18 @@
+ja:
+  azure_video:
+    AZURE_VIDEO_URL: "ストリーミングURL(manifest)"
+    AZURE_FORWARDING: "視聴完了後転送"
+    AZURE_FORWARDING_URL: "転送URL"
+    AZURE_INIT_MESSAGE: "初期メッセージ"
+    AZURE_FIRSTQUARTILE_MESSAGE: "1/4視聴メッセージ"
+    AZURE_MIDPOINT_MESSAGE: "1/2視聴メッセージ"
+    AZURE_THIRDQUARTILE_MESSAGE: "3/4視聴メッセージ"
+    AZURE_ENDED_MESSAGE: "視聴完了メッセージ"
+    AZURE_PANEL: "操作パネル"
+
+    error_message:
+      AZURE_REGISTRATION_ERROR_VIDEO_URL: "動画URLを入力してください"
+      AZURE_REGISTRATION_ERROR_VIDEO_URL_FORMAT: "動画URLが正しくありません"
+      AZURE_REGISTRATION_ERROR_FORWARDING_URL: "転送URLを入力してください"
+      AZURE_REGISTRATION_ERROR_FORWARDING_URL_FORMAT: "転送URLが正しくありません"
+

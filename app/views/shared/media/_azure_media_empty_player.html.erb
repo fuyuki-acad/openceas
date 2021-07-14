@@ -1,4 +1,4 @@
-#--
+<%
 # Copyright (c) 2019 Fuyuki Academy
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,18 +19,19 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#++
+%>
 
-module EssayResultsHelper
-  def class_session_day(essay)
-    if essay.generic_page_class_session_associations.size > 0
-      essay.generic_page_class_session_associations.first.class_session.class_session_day
-    else
-#      if essay.course.class_session(0).class_session_title.present?
-#        essay.course.class_session(0).class_session_title
-#      else
-        t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0")
-#      end
-    end
-  end
-end
+<div style="display:none;">
+<div id="video_url_<%= azure_video.id %>"></div>
+<div id="video_width_<%= azure_video.id %>">100%</div>
+<div id="video_height_<%= azure_video.id %>">100%</div>
+<div id="panel_display_<%= azure_video.id %>"></div>
+<div id="forwarding_url_<%= azure_video.id %>"></div>
+<div id="forwarding_<%= azure_video.id %>"></div>
+<div id="init_message_<%= azure_video.id %>"></div>
+<div id="firstquartile_message_<%= azure_video.id %>"></div>
+<div id="midpoint_message_<%= azure_video.id %>"></div>
+<div id="thirdquartile_message_<%= azure_video.id %>"></div>
+<div id="ended_message_<%= azure_video.id %>"></div>
+</div>
+<p id='azure_message_<%= azure_video.id %>'></p>

@@ -63,10 +63,12 @@
       <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_QUESTIONFILE") %>
     </td>
     <td>
-        <% if @generic_page.link_name.present? %>
-          <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
-          <%= link_to t("common.COMMON_READ"), material_path(@generic_page.id), {target: "_blank"} %>
-        <% end %>
+      <% if @generic_page.azure_video_multiplefib_question.present? %>
+        <%= render partial: 'shared/media/azure_video_confirm', locals: { azure_video: @generic_page.azure_video_multiplefib_question } %>
+      <% elsif @generic_page.link_name.present? %>
+        <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
+        <%= link_to t("common.COMMON_READ"), material_path(@generic_page.id), {target: "_blank"} %>
+      <% end %>
     </td>
   </tr>
 
@@ -76,7 +78,9 @@
       <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWEREXPLANATIONFILE") %>
     </td>
     <td>
-      <% if @generic_page.explanation_link_name.present? %>
+      <% if @generic_page.azure_video_multiplefib_explanation.present? %>
+        <%= render partial: 'shared/media/azure_video_confirm', locals: { azure_video: @generic_page.azure_video_multiplefib_explanation } %>
+      <% elsif @generic_page.explanation_link_name.present? %>
         <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
         <%= link_to t("common.COMMON_READ"), explain_file_material_path(@generic_page.id), :class => "explanation", :target => "_blank" %>
       <% end %>

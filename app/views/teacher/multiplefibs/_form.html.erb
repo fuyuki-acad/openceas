@@ -76,7 +76,7 @@
               <div class="col-sm-12">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
+                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
                     <div class="form-file">
                       <label for="generic_page_file" >
                         <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
@@ -101,7 +101,7 @@
               <div class="col-sm-12">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_CREATEHTML %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTML') %></label>
+                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_CREATEHTML, :onclick => "fadeOut('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTML') %></label>
                     <br />
                     <%= t("materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLEXPLANATION") %>
                   </div>
@@ -110,14 +110,38 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
+                    <div class="fade_panel<% if @generic_page.upload_flag != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
+                      <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_question_attributes", azure_video: @generic_page.azure_video_multiplefib_question, video_type: AzureVideo::TYPE_MULTIPLEFIB_QUESTION } %>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
       </table>
       <% else %>
+        <% if @generic_page.upload_flag == GenericPage::TYPE_AZURE_VIDEO %>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= hidden_field_tag "generic_page[upload_flag]", GenericPage::TYPE_AZURE_VIDEO %>
+            <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_question_attributes", azure_video: @generic_page.azure_video_multiplefib_question, video_type: AzureVideo::TYPE_MULTIPLEFIB_QUESTION } %>
+          </div>
+        </div>
+        <% else %>
         <div class="form-file">
           <label for="generic_page_file" >
             <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
           </label>
           <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
-        </div >
         <% if @generic_page.link_name.blank? %>
           <div class="strong"><%= t('materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_QUESTIONFILEEXPLANATION') %></div>
         <% else %>
@@ -127,7 +151,8 @@
             <%= link_to t("materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_EDITHTMLPAGE"), {:action => :edit_html, :id => @generic_page}, :class => "btn btn-default" %>
           <% end %>
         <% end %>
-        <div class="strong"><%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %></div>
+        </div>
+        <% end %>
       <% end %>
     </td>
   </tr>
@@ -138,21 +163,86 @@
       <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWEREXPLANATIONFILE") %>
     </td>
     <td>
-      <div class="form-file">
-        <label for="generic_page_explanation_file" >
-          <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
-        </label>
-        <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
-      </div >
-      <% if @generic_page.explanation_link_name.blank? %>
-        <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWERFILEEXPLANATION") %>
+      <% if @generic_page.new_record? %>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+	      <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
+              <div class="form-file">
+                <label for="generic_page_explanation_file" >
+                  <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
+                </label>
+                <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+              </div >
+              <% if @generic_page.explanation_link_name.blank? %>
+                <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWERFILEEXPLANATION") %>
+              <% else %>
+                <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
+                <%= link_to t("common.COMMON_READ"), explain_file_material_path(@generic_page.id), :class => "explanation", :target => "_blank" %>
+                <%= link_to t("common.COMMON_DELETE"), {:action => :destroy_file, id: @generic_page}, :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :class => "btn btn-danger", :method => :delete %>
+              <% end %>
+              <br/>
+              <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
+              <div class="fade_explanation_panel<% if @generic_page.content_type != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
+                <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_explanation_attributes", azure_video: @generic_page.azure_video_multiplefib_explanation, video_type: AzureVideo::TYPE_MULTIPLEFIB_EXPLANATION } %>
+              </div>
+             <br />
+            </div>
+          </div>
+        </div>
+      </div>
       <% else %>
-        <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
-        <%= link_to t("common.COMMON_READ"), explain_file_material_path(@generic_page.id), :class => "explanation", :target => "_blank" %>
-        <%= link_to t("common.COMMON_DELETE"), {:action => :destroy_file, id: @generic_page}, :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :class => "btn btn-danger", :method => :delete %>
+        <% if @generic_page.content_type == GenericPage::TYPE_AZURE_VIDEO %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="fade_explanation_panel<% if @generic_page.content_type != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
+                    <%= hidden_field_tag "generic_page[content_type]", GenericPage::TYPE_AZURE_VIDEO %>
+                    <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_explanation_attributes", azure_video: @generic_page.azure_video_multiplefib_explanation, video_type: AzureVideo::TYPE_MULTIPLEFIB_EXPLANATION } %>
+                   </div>
+                 <br />
+                </div>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="form-file">
+                    <label for="generic_page_explanation_file" >
+                      <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
+                    </label>
+                    <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
+                  </div >
+                  <% if @generic_page.explanation_link_name.blank? %>
+                    <%= t("materials_registration.MAT_REG_MUL_REGISTERMULTIPLEFIB_ANSWERFILEEXPLANATION") %>
+                  <% else %>
+                    <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHED') %>
+                    <%= link_to t("common.COMMON_READ"), explain_file_material_path(@generic_page.id), :class => "explanation", :target => "_blank" %>
+                    <%= link_to t("common.COMMON_DELETE"), {:action => :destroy_file, id: @generic_page}, :data => {:confirm => t("common.COMMON_CONFIRMDELETE")}, :class => "btn btn-danger", :method => :delete %>
+                  <% end %>
+                  <br/>
+                  <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
-      <br/>
-      <%= t('materials_registration.COMMONMATERIALSREGISTRATION_ATTACHMENTEXPLANATION1') %>
     </td>
   </tr>
 
@@ -215,3 +305,4 @@
     </td>
   </tr>
 </table>
+

@@ -37,11 +37,22 @@ class GenericPage < ApplicationRecord
   #  :join_table => :generic_page_class_session_associations, :foreign_key => :generic_page_id, :association_foreign_key => :class_session_id
   has_and_belongs_to_many :class_sessions, :join_table => :generic_page_class_session_associations
 
-  attr_accessor :upload_flag, :current_file, :html_text, :self_type, :edit_essay_flag, :answer_file
+  has_one  :azure_video_material, -> { where "video_type = #{AzureVideo::TYPE_MATERIAL}"}, :class_name => "AzureVideo", :foreign_key => :page_id, :dependent => :destroy
+  has_one  :azure_video_multiplefib_question, -> { where "video_type = #{AzureVideo::TYPE_MULTIPLEFIB_QUESTION}"}, :class_name => "AzureVideo", :foreign_key => :page_id, :dependent => :destroy
+  has_one  :azure_video_multiplefib_explanation, -> { where "video_type = #{AzureVideo::TYPE_MULTIPLEFIB_EXPLANATION}"}, :class_name => "AzureVideo", :foreign_key => :page_id, :dependent => :destroy
+  accepts_nested_attributes_for :azure_video_material, allow_destroy: true
+  accepts_nested_attributes_for :azure_video_multiplefib_question, allow_destroy: true
+  accepts_nested_attributes_for :azure_video_multiplefib_explanation, allow_destroy: true
+
+  attr_accessor :upload_flag, :content_type, :current_file, :html_text, :self_type, :edit_essay_flag, :answer_file
 
   TYPE_NOFILEUPLOAD = '0'
   TYPE_FILEUPLOAD = '1'
   TYPE_CREATEHTML = '2'
+  TYPE_AZURE_VIDEO = '3'
+
+  CONTENT_TYPE_MATERIAL_LINK = '10'
+  CONTENT_TYPE_MATERIAL_AZURE_VIDEO = '11'
 
   DEFAULT_PASS_GRADE = 60
 
@@ -188,15 +199,27 @@ class GenericPage < ApplicationRecord
 
     when Settings.GENERICPAGE_TYPECD_URLCODE.to_s
       validate_presence(:generic_page_title, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE6"))
-      if self.url_content.present?
-        result = self.url_content.match(/\A#{URI::regexp(%w(http https))}\z/)
-        unless result && result[4]
-          self.errors.add(:url_content, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE7"))
+      if self.content_type == GenericPage::CONTENT_TYPE_MATERIAL_LINK
+        if self.url_content.present?
+          result = self.url_content.match(/\A#{URI::regexp(%w(http https))}\z/)
+          unless result && result[4]
+            self.errors.add(:url_content, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_ERRORTYPE7"))
+          end
+        end
+        validate_max_length(:material_memo, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG"), 4096)
+        validate_max_length(:material_memo_closed, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG2"), 4096)
+      elsif self.content_type == GenericPage::CONTENT_TYPE_MATERIAL_AZURE_VIDEO
+        if self.azure_video_material.video_url.empty?
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL")) 
+        else
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL_FORMAT")) unless self.azure_video_material.video_url =~ URI::regexp
+        end
+        if self.azure_video_material.forwarding_url.empty?
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL")) if self.azure_video_material.forwarding == AzureVideo::TYPE_FORWARDING.to_i
+        else
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL_FORMAT")) unless self.azure_video_material.forwarding_url =~ URI::regexp
         end
       end
-      validate_max_length(:material_memo, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG"), 4096)
-      validate_max_length(:material_memo_closed, I18n.t("page_management.MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG2"), 4096)
-
     when Settings.GENERICPAGE_TYPECD_COMPOUNDCODE.to_s
       validate_presence(:generic_page_title, I18n.t("common.COMMON_SUBJECTCHECK"))
       if self.upload_flag == GenericPage::TYPE_FILEUPLOAD && self.file.blank?
@@ -219,6 +242,31 @@ class GenericPage < ApplicationRecord
       end
       unless start_time.blank? || end_time.blank?
         errors.add(:start_time, I18n.t("materials_registration.COMMONMATERIALSREGISTRATION_ERRORTYPE2")) if self.start_time > self.end_time
+      end
+      if self.upload_flag == GenericPage::TYPE_AZURE_VIDEO
+        if self.azure_video_multiplefib_question.video_url.empty?
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL")) 
+        else
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL_FORMAT")) unless self.azure_video_multiplefib_question.video_url =~ URI::regexp
+        end
+        if self.azure_video_multiplefib_question.forwarding_url.empty?
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL")) if self.azure_video_multiplefib_question.forwarding == AzureVideo::TYPE_FORWARDING.to_i
+        else
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL_FORMAT")) unless self.azure_video_multiplefib_question.forwarding_url =~ URI::regexp
+        end
+      end
+
+      if self.content_type == GenericPage::TYPE_AZURE_VIDEO
+        if self.azure_video_multiplefib_explanation.video_url.empty?
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL")) 
+        else
+          errors.add(:video_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_VIDEO_URL_FORMAT")) unless self.azure_video_multiplefib_explanation.video_url =~ URI::regexp
+        end
+        if self.azure_video_multiplefib_explanation.forwarding_url.empty?
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL")) if self.azure_video_multiplefib_explanation.forwarding == AzureVideo::TYPE_FORWARDING.to_i
+        else
+          errors.add(:forwarding_url, I18n.t("azure_video.error_message.AZURE_REGISTRATION_ERROR_FORWARDING_URL_FORMAT")) unless self.azure_video_multiplefib_explanation.forwarding_url =~ URI::regexp
+        end
       end
 
     when Settings.GENERICPAGE_TYPECD_ASSIGNMENTESSAYCODE.to_s
@@ -272,6 +320,21 @@ class GenericPage < ApplicationRecord
       new_object.link_name = nil
     else
       new_object.link_name = file_name
+    end
+    # material
+    if self.azure_video_material
+      new_azure_video_material = self.azure_video_material.dup
+      new_object.azure_video_material = new_azure_video_material
+    end
+    # multiplefib question
+    if self.azure_video_multiplefib_question
+      new_azure_video_multiplefib_question = self.azure_video_multiplefib_question.dup
+      new_object.azure_video_multiplefib_question = new_azure_video_multiplefib_question
+    end
+    # multiplefib explanation
+    if self.azure_video_multiplefib_explanation
+      new_azure_video_multiplefib_explanation = self.azure_video_multiplefib_explanation.dup
+      new_object.azure_video_multiplefib_explanation = new_azure_video_multiplefib_explanation
     end
     new_object
   end

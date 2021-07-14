@@ -89,6 +89,13 @@ ja:
     MAT_REG_MAT_PAGEMANAGEMENT_SCRIPT2: "非公開メモは4096文字以内にしてください。"
     MAT_REG_MAT_PAGEMANAGEMENT_COMMENT_TOO_LONG2: "非公開メモが長過ぎます。(4096文字まで)"
 
+    MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS: "コンテンツ"
+    MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS_LINK: "リンク"
+    MAT_REG_MAT_PAGEMANAGEMENT_URLCONTENTS_VIDEO: "動画"
+    MAT_REG_MAT_PAGEMANAGEMENT_LINK: "リンクを登録する"
+    MAT_REG_MAT_PAGEMANAGEMENT_AZUREVIDEO: "Azure Media Servicesへのリンクを登録する"
+
+
     #htmlMaterial.jsp
     MAT_REG_MAT_HTMLMATERIAL_TITLE: "ファイルのアップロード"
     MAT_REG_MAT_HTMLMATERIAL_EXPLANATION1_html: "圧縮ファイルの登録に成功しました。展開したファイルの中身の一覧があります。<br>以下からTOPリンクを選択してください。"

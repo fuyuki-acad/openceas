@@ -181,6 +181,7 @@ en:
     COMMON_MAIL2: "email"
     COMMON_MAILEXPLANATION: "Go to LMS"
     COMMON_FROMTO: "%{param0}～%{param1}"
+    COMMON_FROMTO_BR: "%{param0}<BR>～%{param1}"
     COMMON_CORRECTANSWER: "Correct Answer"
     COMMON_ERROR_NOTEXISTFILE: "File not found"
     COMMON_RAWSCORE: "Raw score"

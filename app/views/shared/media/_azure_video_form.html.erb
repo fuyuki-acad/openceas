@@ -1,0 +1,131 @@
+<%
+# Copyright (c) 2019 Fuyuki Academy
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%>
+
+<%= form.fields_for "#{index}", azure_video do |azure_video_form| %>
+<%= hidden_field_tag "generic_page[#{index}][video_type]", video_type %>
+<%= hidden_field_tag "generic_page[#{index}][_destroy]", true %>
+<% if azure_video %>
+<%= hidden_field_tag "generic_page[#{index}][id]", azure_video.id %>
+<% end %>
+<table class="table table table-hover">
+  <!-- 動画URL -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_VIDEO_URL") %>
+      <span class='badge badge-essencial'>
+        <%= t("common.COMMON_ESSENCIAL") %>
+      </span>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :video_url, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 操作パネル表示設定 -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_PANEL") %>
+    </td>
+    <td class="col-xs-9">
+      <label><%= radio_button "generic_page[#{index}]", 'panel_display', AzureVideo::TYPE_PANEL_DISPLAY, :checked => (!azure_video || azure_video.panel_display == AzureVideo::TYPE_PANEL_DISPLAY.to_i) %> <%= t('common.COMMON_DISPLAY') %></label>
+      <label><%= radio_button "generic_page[#{index}]", 'panel_display', AzureVideo::TYPE_PANEL_NOTDISPLAY, :checked => (azure_video && azure_video.panel_display == AzureVideo::TYPE_PANEL_NOTDISPLAY.to_i) %> <%= t('common.COMMON_NOTDISPLAY') %></label>
+    </td>
+  </tr>
+
+  <!-- 視聴完了後の転送 -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_FORWARDING") %>
+    </td>
+    <td class="col-xs-9">
+	    <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_FORWARDING, :checked => (azure_video && azure_video.forwarding == AzureVideo::TYPE_FORWARDING.to_i), :onclick => "fadeIn('fade_forwarding_url_"+index+"');" %> <%= t('common.COMMON_DO') %></label>
+      <label><%= radio_button "generic_page[#{index}]", 'forwarding', AzureVideo::TYPE_NOTFORWARDING, :checked => (!azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i), :onclick => "fadeOut('fade_forwarding_url_"+index+"');" %> <%= t('common.COMMON_NOTDO') %></label>
+    </td>
+  </tr>
+
+  <!-- 転送URL -->
+  <tr class="fade_forwarding_url_<%= index %><% if !azure_video || azure_video.forwarding == AzureVideo::TYPE_NOTFORWARDING.to_i %> none<% end %>">
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_FORWARDING_URL") %>
+      <span class='badge badge-essencial'>
+        <%= t("common.COMMON_ESSENCIAL") %>
+      </span>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :forwarding_url, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 初期メッセージ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_INIT_MESSAGE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :init_message, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 1/4視聴メッセージ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_FIRSTQUARTILE_MESSAGE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :firstquartile_message, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 1/2視聴メッセージ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_MIDPOINT_MESSAGE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :midpoint_message, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 3/4視聴メッセージ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_THIRDQUARTILE_MESSAGE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :thirdquartile_message, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+  <!-- 視聴完了メッセージ -->
+  <tr>
+    <td class="col-xs-3">
+      <%= t("azure_video.AZURE_ENDED_MESSAGE") %>
+    </td>
+    <td class="col-xs-9">
+      <%= azure_video_form.text_field :ended_message, {:class => 'form-control', :maxlength => 1024} %>
+    </td>
+  </tr>
+
+</table>
+<% end %>
+

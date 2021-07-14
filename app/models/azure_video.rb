@@ -21,16 +21,33 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-module EssayResultsHelper
-  def class_session_day(essay)
-    if essay.generic_page_class_session_associations.size > 0
-      essay.generic_page_class_session_associations.first.class_session.class_session_day
+class AzureVideo < ApplicationRecord
+  belongs_to :generic_page, :foreign_key => :page_id, optional: true
+
+  TYPE_PANEL_NOTDISPLAY = '0'
+  TYPE_PANEL_DISPLAY = '1'
+  TYPE_NOTFORWARDING = '0'
+  TYPE_FORWARDING = '1'
+
+  TYPE_MATERIAL = 10
+  TYPE_MULTIPLEFIB_QUESTION = 30
+  TYPE_MULTIPLEFIB_EXPLANATION = 31
+
+#  validates :video_url, :presence => true
+  def panel?
+    if self.panel_display == 1
+      return "true" 
     else
-#      if essay.course.class_session(0).class_session_title.present?
-#        essay.course.class_session(0).class_session_title
-#      else
-        t("class_session_execution.CLA_CLASSSESSIONEXECUTION_COUNT0")
-#      end
+      return "false" 
+    end
+  end
+
+  def forwarding?
+    if self.forwarding == 1
+      return "true" 
+    else
+      return "false" 
     end
   end
 end
+
