@@ -29,6 +29,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     callback_from :cas
   end
 
+  def azure_activedirectory_v2
+    callback_from :azure_activedirectory_v2
+  end
   private
 
   def callback_from(provider)

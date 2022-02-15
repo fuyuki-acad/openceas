@@ -295,4 +295,9 @@ Devise.setup do |config|
       # Take whatever action is necessary to remove any local reference to the user's session
       ServiceTickets.where(ticket: request.params[:session_index]).destroy
     }
+
+    config.omniauth :azure_activedirectory_v2,
+                    client_id: Settings.AZURE_CLIENT_ID,
+                    client_secret: Settings.AZURE_CLIENT_SECRET,
+                    tenant_id: Settings.AZURE_TENANT_ID
 end

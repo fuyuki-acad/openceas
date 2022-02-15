@@ -37,10 +37,10 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable,
-         :authentication_keys => [:account]
-
+ devise :database_authenticatable, :registerable,
+        :recoverable, :rememberable, :trackable, :validatable, :omniauthable,
+        :authentication_keys => [:account],
+        :omniauth_providers => [:cas, :azure_activedirectory_v2]
 
   UPDATED_TYPE_PASSWORD = 0
   UPDATED_TYPE_EMAIL = 1

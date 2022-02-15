@@ -323,6 +323,7 @@ class Teacher::Result::QuestionnairesController < ApplicationController
       end
       csv << line
 
+      lines = []
       @generic_page.course.enrolled_users.each do |user|
         line = []
         if @generic_page.anonymous_flag == Settings.GENERICPAGE_ANONYNOUSFLG_ON
@@ -358,8 +359,11 @@ class Teacher::Result::QuestionnairesController < ApplicationController
         line << answer_date
         line << answers_data
 
-        csv << line.flatten
+        lines << line.flatten
       end
+
+      lines = lines.sort {|a,b| a[1] <=> b[1]} if @generic_page.anonymous_flag == Settings.GENERICPAGE_ANONYNOUSFLG_ON
+      lines.each { |line| csv << line}
     end
 
     send_data csv_data, filename: "questionnaire.csv"

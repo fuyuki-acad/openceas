@@ -120,8 +120,7 @@
                                                                                                                                                           '#{@generic_page.azure_video_multiplefib_explanation.thirdquartile_message}',
                                                                                                                                                           '#{@generic_page.azure_video_multiplefib_explanation.ended_message}');" %>
       <% elsif @generic_page.explanation_link_name.present? %>
-        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_fo
-r(explain_file_material_path(@generic_page.id))}');" %>
+        <%= link_to t('execution.MAT_EXE_MUL_GRADEEXECUTEMULTIPLEFIB_EXPLANATION'), 'javascript:void(0);', class: 'btn btn-default ceas-button-margin-5', onclick: "changeFrame('question_file', '#{request.protocol}#{request.host}#{url_for(explain_file_material_path(@generic_page.id))}');" %>
       <% end %>
       </div>
     </div>

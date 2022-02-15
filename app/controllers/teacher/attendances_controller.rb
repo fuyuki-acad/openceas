@@ -344,7 +344,7 @@ class Teacher::AttendancesController < ApplicationController
         if attendance_information
           # 出席情報を更新
           attendance_information_params = {}
-          attendance_information_params[:attendance_data_cd] = attendance_data_cd
+          attendance_information_params[:attendance_data_cd] = params[:attendance_data_cd]
           attendance_information.update!(attendance_information_params)
         end
       end
@@ -364,7 +364,7 @@ class Teacher::AttendancesController < ApplicationController
          attendance_information_params = {}
          attendance_information_params[:attendance_id] = attendance.id
          attendance_information_params[:user_id] = user_id
-         attendance_information_params[:attendance_data_cd] = attendance_data_cd
+         attendance_information_params[:attendance_data_cd] = params[:attendance_data_cd]
          attendance_information_params[:insert_user_id] = User.current_user.id
          attendance_information = AttendanceInformation.new(attendance_information_params)
          attendance_information.save!

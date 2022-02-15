@@ -68,24 +68,24 @@ class MultiplefibsController < ApplicationController
 
     @latest_score = @generic_page.latest_score(current_user.id)
 
-    if @generic_page.passed?(current_user.id)
-      @score = @generic_page.latest_score(current_user.id)
-      template = "result"
-    elsif !@generic_page.valid_term?
-      template = "redirect"
-    elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
-      @score = @generic_page.latest_score(current_user.id)
-      template = "result"
-    elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
-      template = "redirect"
-    end
+#    if @generic_page.passed?(current_user.id)
+#      @score = @generic_page.latest_score(current_user.id)
+#      template = "result"
+#    elsif !@generic_page.valid_term?
+#      template = "redirect"
+#    elsif @latest_score && @latest_score.answer_count >= @generic_page.max_count
+#      @score = @generic_page.latest_score(current_user.id)
+#      template = "result"
+#    elsif !(@generic_page.start_pass.blank? || session[:multiplefib_start_pass_flag])
+#      template = "redirect"
+#    end
 
     render template, :layout => "content_only"
   end
 
   def mark
     @latest_score = @generic_page.latest_score(current_user.id)
-    
+
     if !@generic_page.valid_term? || (@latest_score && @latest_score.answer_count >= @generic_page.max_count)
       render "redirect", :layout => "content_only"
       return
