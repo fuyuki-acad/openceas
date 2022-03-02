@@ -203,7 +203,7 @@ class Teacher::AttendancesController < ApplicationController
         line1 = []
 
         line1 << CsvAttendance::BUS_SER_IMP_IMP_IDENTIFICATIONCD
-        line1 << user.id
+        line1 << user.account
         line1 << user.user_name
         if attendance_data[user.id][class_session_count.to_i]
           if attendance_data[user.id][class_session_count.to_i][attendance_count.to_i] == Settings.ATTENDANCEINFO_ATTENDANCEDATACD_UNREGISTRATION
@@ -340,7 +340,8 @@ class Teacher::AttendancesController < ApplicationController
       # 生徒数で繰り返し
       @attendance_data.each do |user_id, value|
         # 指定した出席と生徒の出席情報を取得
-        attendance_information = attendance.attendance_information.where(:user_id => user_id).first
+        user = User.where(:account => user_id)
+        attendance_information = attendance.attendance_information.where(:user_id => user.id).first
         if attendance_information
           # 出席情報を更新
           attendance_information_params = {}
@@ -464,6 +465,20 @@ class Teacher::AttendancesController < ApplicationController
   def upload
     @class_session_count = params[:class_session_count].to_i
     @attendance_count = params[:attendance_count].to_i
+  end
+
+  def user_id_to_account(user_id)
+    user = User.find(user_id)
+    user.account
+    rescue => e
+      user_id
+  end
+
+  def user_account_to_id(user_account)
+    user = User.where(account: user_account).first
+    user.id
+    rescue => e
+      user_account
   end
 
   def upload_confirm
@@ -635,7 +650,7 @@ class Teacher::AttendancesController < ApplicationController
       if lineno > (CsvAttendance::CSV_DATA_START_LINENO + CsvAttendance::HEADER_LINENO)
         line = {}
         line["identification_cd"] = csv_row[0]
-        line["usr_id"] = csv_row[1]
+        line["usr_id"] = user_account_to_id(csv_row[1]).to_s
         line["usr_name"] = csv_row[2]
         line["status"] = csv_row[3]
         index += 1
