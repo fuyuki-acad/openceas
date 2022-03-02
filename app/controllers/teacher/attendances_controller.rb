@@ -340,7 +340,6 @@ class Teacher::AttendancesController < ApplicationController
       # 生徒数で繰り返し
       @attendance_data.each do |user_id, value|
         # 指定した出席と生徒の出席情報を取得
-        user = User.where(:account => user_id)
         attendance_information = attendance.attendance_information.where(:user_id => user.id).first
         if attendance_information
           # 出席情報を更新
