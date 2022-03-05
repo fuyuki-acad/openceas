@@ -42,7 +42,7 @@
 </div>
 
 <!-- 一括登録／削除 -->
-<%= form_tag url_for({:action => :batch_update, :course_id => @course.id}), :method => :patch do %>
+<%= form_tag url_for({:action => :batch_update, :course_id => @course.id, :class_session_count => @class_session_count}), :method => :patch do %>
   <div class="row">
     <div class="col-sm-12">
       <div class="panel panel-default">
