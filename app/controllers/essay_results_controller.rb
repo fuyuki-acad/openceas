@@ -55,8 +55,10 @@ class EssayResultsController < Teacher::Result::EssaysController
         @essays = []
         essays.each do |essay|
           essay_status = essay.result_essay_status(current_user.id)
-          if essay_status &&
-             essay_status != AssignmentEssay::STATUS_AFTER_END
+          if essay_status == AssignmentEssay::STATUS_NOTPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT ||
+             essay_status == AssignmentEssay::STATUS_GRADED_REPRESENT_FEEDBACK ||
+             essay_status == AssignmentEssay::STATUS_RETURNED_REPRESENT_FEEDBACK
             @essays << essay
           end
         end
