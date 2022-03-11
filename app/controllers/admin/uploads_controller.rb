@@ -530,6 +530,12 @@ class Admin::UploadsController < ApplicationController
       courses << line
       lineno += 1
 
+      # 識別子コードが入力されていない場合
+      if line["identification_cd"].blank?
+        @errors[lineno] = I18n.t('registerList.PRI_REG_RESULTLIST_IDENTIFICATIONCDNULLERROR')
+        next
+      end
+
       if course_keys.include?(line["course_cd_key"] + line["school_year_key"] + line["season_cd_key"])
         @errors[lineno] = I18n.t('registerList.PRI_REG_RESULTLIST_DUPLICATIONINFILEERROR')
         next
@@ -545,12 +551,6 @@ class Admin::UploadsController < ApplicationController
       # 項目数が正しくない場合
       if line.count != CsvCourse::BUS_UTI_CSV_COLUMNCOUNT
         @errors[lineno] = I18n.t('registerList.PRI_REG_RESULTLIST_COLUMNCOUNTERROR')
-        next
-      end
-
-      # 識別子コードが入力されていない場合
-      if line["identification_cd"].blank?
-        @errors[lineno] = I18n.t('registerList.PRI_REG_RESULTLIST_IDENTIFICATIONCDNULLERROR')
         next
       end
 
