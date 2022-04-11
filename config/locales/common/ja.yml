@@ -83,6 +83,7 @@ ja:
     COMMON_OPENCOURSEOUTLINE: "コース概要"
     COMMON_CLASSSESSIONCOUNT: "授業回数"
     COMMON_MAJOR: "系・学科・コース"
+    COMMON_CLASSIFICATION: "区分"
     COMMON_SUBJECT: "タイトル"
     COMMON_CONTENT: "内容"
     COMMON_NOTFOUND: "まだデータは登録されていません"

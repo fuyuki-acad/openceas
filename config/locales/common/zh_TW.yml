@@ -83,6 +83,7 @@ zh_TW:
     COMMON_OPENCOURSEOUTLINE: "課程大綱"
     COMMON_CLASSSESSIONCOUNT: "授課次數"
     COMMON_MAJOR: "科系˙學部˙課程"
+    COMMON_CLASSIFICATION: "Classification"
     COMMON_SUBJECT: "標題"
     COMMON_CONTENT: "內容"
     COMMON_NOTFOUND: "數據尚未登錄"

@@ -26,7 +26,7 @@ class OpenceasSync < Admin::UploadsController
         uploads.user_upload(user_list)
       
         # バックアップ
-#        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["user_list"])
+        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["user_list"])
       else
         raise "ユーザリストが存在しません。 [#{user_list}]"
       end
@@ -39,7 +39,7 @@ class OpenceasSync < Admin::UploadsController
         uploads.course_upload(course_list)
       
         # バックアップ
-#        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["course_list"])
+        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["course_list"])
       else
         raise "科目リストが存在しません。 [#{course_list}]"
       end
@@ -52,7 +52,7 @@ class OpenceasSync < Admin::UploadsController
         uploads.course_assign_upload(course_assign_list)
       
         # バックアップ
-#        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["course_assign_list"])
+        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["course_assign_list"])
       else
         raise "科目担任関連リストが存在しません。 [#{course_assign_list}]"
       end
@@ -65,9 +65,9 @@ class OpenceasSync < Admin::UploadsController
         uploads.enrollment_upload(enrollment_list)
       
         # バックアップ
-#        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["enrollment_list"])
+        file_backup(settings["infile_path"], settings["backup_path"], settings["filename"]["enrollment_list"])
       else
-        raise "科目担任関連リストが存在しません。 [#{enrollment_list}]"
+        raise "履修情報リストが存在しません。 [#{enrollment_list}]"
       end
     end
 
