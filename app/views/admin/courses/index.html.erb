@@ -165,11 +165,6 @@
                   <td class="hidden-xs"><%= index %></td>
                   <td class="hidden-xs"><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></td>
                   <td class="hidden-xs"><%= link_to t("common.COMMON_CONFIRM"), {:action => :edit, :id => course.id}, {:class => "btn btn-warning ceas-button-margin-5"} %></td>
-                  <td class="visible-xs" rowspan="4">
-                    <%= index %><br/>
-                    <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
-                  </td>
-
 
                   <!-- 曜日 -->
                   <td class="td-nowrap"><%= convert_day_cd(course.day_cd) %></td>
