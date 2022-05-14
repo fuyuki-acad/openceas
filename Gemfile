@@ -48,6 +48,14 @@ gem 'devise'
 # CAS Authentication
 gem 'omniauth-cas'
 
+# AzureAD
+gem 'omniauth'
+gem 'omniauth-azure-activedirectory-v2'
+gem 'dotenv-rails'
+
+# SAML
+gem 'devise_saml_authenticatable'
+
 # For breadcrumb
 gem 'gretel'
 
