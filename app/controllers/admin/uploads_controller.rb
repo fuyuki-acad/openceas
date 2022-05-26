@@ -1560,14 +1560,14 @@ class Admin::UploadsController < ApplicationController
         # 指定された科目が登録されていない場合
         if find_course.blank?
           @errors[lineno] = I18n.t('registerCourseEnrollmentList1.PRI_REG_RESULTLIST_COURSENOTFOUNDERROR')+":"+
-                                   line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
+                                   line["identification_cd"]+","+line["status_cd"]+","+line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
           next
         end
 
         # 指定された科目担任関連情報が既に登録されている場合
         if !find_course_enrollment_user.blank?
           @errors[lineno] = I18n.t('registerCourseAssignedList1.PRI_REG_RESULTLIST_COURSEASSIGNEDDUPLICATIONERROR')+":"+
-                                   line["account"]+","+line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
+                                   line["identification_cd"]+","+line["status_cd"]+","+line["account"]+","+line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
           next
         end
       when BUS_SER_IMP_IMP_UPDATESTATUSCD,
@@ -1576,7 +1576,7 @@ class Admin::UploadsController < ApplicationController
         # 指定された科目担任関連情報が既に登録されている場合
         if find_course_enrollment_user.blank?
           @errors[lineno] = I18n.t('registerCourseAssignedList1.PRI_REG_RESULTLIST_COURSEASSIGNEDDUPLICATIONERROR')+":"+
-                                   line["account"]+","+line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
+                                   line["identification_cd"]+","+line["status_cd"]+","+line["account"]+","+line["course_cd"]+","+line["school_year"]+","+line["season_cd"]
           next
         end
       end

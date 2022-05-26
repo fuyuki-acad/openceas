@@ -43,7 +43,7 @@
       </div>
     <% end %>
 
-    <% if Settings.AZUREAD_AUTHENTICATION %>
+    <% if Settings.SAML_AUTHENTICATION %>
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="col-sm-12 text-center">
@@ -53,6 +53,7 @@
             </p>
           </div>
           <div class="col-sm-2 col-sm-offset-5 text-center">
+            <%= link_to (t('login.COMMONLOGIN_LOGIN'), { action: 'sso' }, { class: 'btn btn-primary btn-block' } ) %>
             <%= link_to t('login.COMMONLOGIN_LOGIN'), user_azure_activedirectory_v2_omniauth_authorize_path, class: "btn btn-primary btn-block" %>
            </div>
           <div class="col-sm-12 text-center">
@@ -62,7 +63,7 @@
       </div>
     <% end %>
 
-    <% if Settings.SAML_AUTHENTICATION %>
+    <% if Settings.AZUREAD_AUTHENTICATION %>
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="col-sm-12 text-center">
