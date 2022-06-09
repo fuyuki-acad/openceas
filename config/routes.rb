@@ -31,13 +31,16 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     # local sign in
-    get 'login',                to: 'users/sessions#new'
-    get 'sign_in',              to: 'users/sessions#new',       as: :new_user_session
+    get 'login',                  to: 'users/sessions#new'
+    get 'sign_in',                to: 'users/sessions#new',       as: :new_user_session
 
     # cas sign in
     #get     'login',              to: redirect('users/auth/cas')
     #get     'sign_in',            to: redirect('users/auth/cas'), as: :new_user_session
     #get     'omniauth_sign_out',  to: 'users/sessions#omniauth_sign_out'
+
+    # saml sign in
+    get 'users/saml/sign_in',     to: 'users/sessions#new',       as: :new_user_sso_session
 
     # Common settings
     delete  'logout',             to: 'users/sessions#destroy'

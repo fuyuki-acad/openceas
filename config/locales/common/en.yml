@@ -83,6 +83,7 @@ en:
     COMMON_OPENCOURSEOUTLINE: "Course description"
     COMMON_CLASSSESSIONCOUNT: "Class Session"
     COMMON_MAJOR: "School/department"
+    COMMON_CLASSIFICATION: "Classification"
     COMMON_SUBJECT: "Title"
     COMMON_CONTENT: "Contents"
     COMMON_NOTFOUND: "No data is registered."

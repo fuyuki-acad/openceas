@@ -83,6 +83,7 @@ zh_CN:
     COMMON_OPENCOURSEOUTLINE: "专业概要"
     COMMON_CLASSSESSIONCOUNT: "听讲次数"
     COMMON_MAJOR: "系·学科·专业"
+    COMMON_CLASSIFICATION: "Classification"
     COMMON_SUBJECT: "标题"
     COMMON_CONTENT: "内容"
     COMMON_NOTFOUND: "数据尚未登录。"

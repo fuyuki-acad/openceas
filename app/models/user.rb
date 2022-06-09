@@ -39,8 +39,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable,
-         :authentication_keys => [:account]
-
+         :authentication_keys => [:account],
+         :omniauth_providers => [:cas, :saml, :azure_activedirectory_v2]
 
   UPDATED_TYPE_PASSWORD = 0
   UPDATED_TYPE_EMAIL = 1
@@ -254,6 +254,12 @@ class User < ApplicationRecord
     def find_for_omniauth(auth)
       if auth.provider == :cas
         user = User.where(account: auth.uid).first
+        user.update(provider: auth.provider) if user
+      elsif auth.provider == "saml"
+        user = User.where(account: auth.uid).first
+        user.update(provider: auth.provider) if user
+      elsif auth.provider == "azure_activedirectory_v2"
+        user = User.where(account: auth.extra.raw_info.uid).first
         user.update(provider: auth.provider) if user
       else
         user = User.where(uid: auth.uid, provider: auth.provider).first

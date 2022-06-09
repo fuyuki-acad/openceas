@@ -38,6 +38,7 @@
 </div>
 
 <!-- 説明文 -->
+<% if current_user.admin? %>
 <div class="row">
   <div class="col-sm-12">
     <p class="annotation">
@@ -45,6 +46,7 @@
     </p>
   </div>
 </div>
+<% end %>
 
 <!-- コース一覧 -->
 <!-- 科目検索 -->
@@ -95,7 +97,7 @@
             <thead>
               <tr class="hidden-xs even">
                 <th class="hidden-xs"><%= t("common.COMMON_NO1") %></th>
-                <% if controller.controller_name == 'courses' %>
+                <% if controller.controller_name == 'courses' && current_user.admin? %>
                 <th class="hidden-xs"><%= t("common.COMMON_DELETE") %></th>
                 <% end %>
                 <th class="hidden-xs"><%= t("common.COMMON_CONFIRMREVISE") %></th>
@@ -119,14 +121,14 @@
                 <td class="visible-xs" rowspan="4">
                   <%= index %>
                   <!-- 削除チェックボックス -->
-                  <% if controller.controller_name == 'courses' %>
+                  <% if controller.controller_name == 'courses' && current_user.admin? %>
                     <br/>
                     <span><%= check_box_tag "course[#{course.id}]", course.id, false, {} %></span>
                   <% end %>
                 </td>
 
                 <!-- 削除チェックボックス -->
-                <% if controller.controller_name == 'courses' %>
+                <% if controller.controller_name == 'courses' && current_user.admin? %>
                   <td class="td-bold hidden-xs">
                     <%= check_box_tag "course[#{course.id}]", course.id, false, {} %>
                   </td>
@@ -196,7 +198,7 @@
         <% end %>
       </div>
 
-      <% if controller.controller_name == 'courses' %>
+      <% if controller.controller_name == 'courses' && current_user.admin? %>
         <!-- ボタン -->
         <div class="text-center">
           <div class="btn-group">
