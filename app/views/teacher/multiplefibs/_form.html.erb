@@ -101,21 +101,6 @@
               <div class="col-sm-12">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_CREATEHTML, :onclick => "fadeOut('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTML') %></label>
-                    <br />
-                    <%= t("materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_CREATEHTMLEXPLANATION") %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="panel panel-default">
-                  <div class="panel-body">
                     <label><%= radio_button :generic_page, :upload_flag, GenericPage::TYPE_AZURE_VIDEO, :onclick => "fadeIn('fade_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_AZUREVIDEO') %></label>
                     <div class="fade_panel<% if @generic_page.upload_flag != GenericPage::TYPE_AZURE_VIDEO %> none<% end %>">
                       <%= render partial: 'shared/media/azure_video_form', locals: { form: form, index: "azure_video_multiplefib_question_attributes", azure_video: @generic_page.azure_video_multiplefib_question, video_type: AzureVideo::TYPE_MULTIPLEFIB_QUESTION } %>
@@ -305,4 +290,3 @@
     </td>
   </tr>
 </table>
-

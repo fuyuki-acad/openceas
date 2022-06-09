@@ -43,7 +43,7 @@
       <div class="panel-body">
         <!-- 0件メッセージ -->
         <% if !@essays || @essays.count == 0 %>
-          <%= t("common.COMMON_NOTFOUND") %>
+          <%= t("confirm_assignment_essay.MAT_RES_ASS_CONFIRMASSIGNMENTESSAY_NOT_FOUND") %>
         <% else %>
           <!-- リスト表示 -->
           <table class="table table-striped table-hover">
@@ -95,7 +95,7 @@
                       <span class='badge badge-important'>
                     <% when 7 %>
                       <span class='badge badge-success'>
-                    <% when 9 %>
+                    <% else %>
                       <span class='badge'>
                     <% end %>
                     <%= essay.essay_status_name(current_user.id) %>
@@ -115,7 +115,7 @@
                       <span class='badge badge-important'>
                     <% when 7 %>
                       <span class='badge badge-success'>
-                    <% when 9 %>
+                    <% else %>
                       <span class='badge'>
                     <% end %>
                     <%= essay.confirm_status_name %>

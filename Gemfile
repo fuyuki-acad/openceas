@@ -48,6 +48,14 @@ gem 'devise'
 # CAS Authentication
 gem 'omniauth-cas'
 
+# SAML
+gem 'omniauth-saml'
+
+# AzureAD
+gem 'omniauth'
+gem 'omniauth-azure-activedirectory-v2'
+gem 'dotenv-rails'
+
 # For breadcrumb
 gem 'gretel'
 
@@ -91,6 +99,7 @@ gem 'chartkick', '~> 3.0', '>= 3.0.1'
 gem 'activerecord-session_store'
 
 gem 'sprockets', '~> 3.7.2'
+gem 'sprockets-rails', '3.2.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

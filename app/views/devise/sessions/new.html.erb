@@ -24,10 +24,9 @@
 <!-- ログインフォーム -->
 <div class="row">
   <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-
-        <% if Settings.CAS_AUTHENTICATION %>
+    <% if Settings.CAS_AUTHENTICATION %>
+      <div class="panel panel-default">
+        <div class="panel-body">
           <div class="col-sm-12 text-center">
             <p>
               <%=t "login.LOG_LOGIN_EXPLANATION1_CAS" %>
@@ -39,6 +38,111 @@
            </div>
           <div class="col-sm-12 text-center">
             <%= image_tag "openceas_qrcode.png", class: "hidden-xs hidden-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if Settings.SAML_AUTHENTICATION %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-sm-12 text-center">
+            <p>
+              <%=t "login.LOG_LOGIN_EXPLANATION1_CAS" %>
+            <br/>
+            </p>
+          </div>
+          <div class="col-sm-2 col-sm-offset-5 text-center">
+            <%= link_to "#{t('login.COMMONLOGIN_LOGIN')}", user_saml_omniauth_authorize_path, class: "btn btn-primary btn-block" %>
+           </div>
+          <div class="col-sm-12 text-center">
+            <%= image_tag "openceas_qrcode.png", class: "hidden-xs hidden-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if Settings.AZUREAD_AUTHENTICATION %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-sm-12 text-center">
+            <p>
+              <%=t "login.LOG_LOGIN_EXPLANATION1_CAS" %>
+            <br/>
+            </p>
+          </div>
+          <div class="col-sm-2 col-sm-offset-5 text-center">
+            <%= link_to t('login.COMMONLOGIN_LOGIN'), user_azure_activedirectory_v2_omniauth_authorize_path, class: "btn btn-primary btn-block" %>
+           </div>
+          <div class="col-sm-12 text-center">
+            <%= image_tag "openceas_qrcode.png", class: "hidden-xs hidden-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% if Settings.CAS_AUTHENTICATION || Settings.AZUREAD_AUTHENTICATION %>
+          <div class="col-sm-12 text-center">
+            <p><%=t "login.LOG_LOGIN_MESSAGE" %></p>
+
+            <a href="#local-login" data-toggle="modal"><%= t('login.COMMONLOGIN_LOGIN') %></a>
+            <!-- ローカルログインリンクでログインフォームをモーダル表示-->
+            <!-- ログインモーダルここから -->
+            <div class="modal" id="local-login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+              <div class="modal-dialog modal-lg modal-dialog-center">
+                <div class="modal-content text-left">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h6 class="modal-title">
+                      <span id="" class="explanation_text"><%= t('login.COMMONLOGIN_LOGIN') %></span>
+                    </h6>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+
+                      <%= form_for(resource, url: sign_in_path) do |f| %>
+                        <div class="input-group">
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <%= t('login.LOG_LOGIN_ID') %>
+                          </span>
+                          <%= f.text_field :account, autofocus: true, :class => "form-control" %>
+                        </div>
+                        <label class="col-xs-12">
+                          <%= t('login.LOG_LOGIN_IDEXAMPLE') %>
+                        </label>
+
+                        <br />
+
+                        <div class="input-group">
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            <%= t('login.LOG_LOGIN_PASSWORD') %>
+                          </span>
+                          <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+                        </div>
+                        <label class="col-xs-12">
+                          <%= t('login.LOG_LOGIN_PASSWORDEXAMPLE') %>
+                        </label>
+
+                        <br />
+
+                        <div class="form-group">
+                          <div class="pull-right">
+                            <div class="col-xs-12 col-sm-8  col-md-6">
+                              <%= f.submit t('login.COMMONLOGIN_LOGIN'), :class => "btn btn-primary" %>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ログインモーダルここまで -->
           </div>
         <% else %>
           <div class="col-md-3 col-sm-2">
@@ -83,74 +187,6 @@
         <% end %>
       </div>
     </div>
-
-    <% if Settings.CAS_AUTHENTICATION %>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="col-sm-12 text-center">
-          <p><%=t "login.LOG_LOGIN_MESSAGE" %></p>
-
-          <a href="#local-login" data-toggle="modal"><%= t('login.COMMONLOGIN_LOGIN') %></a>
-          <!-- ローカルログインリンクでログインフォームをモーダル表示-->
-          <!-- ログインモーダルここから -->
-          <div class="modal" id="local-login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-lg modal-dialog-center">
-              <div class="modal-content text-left">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h6 class="modal-title">
-                    <span id="" class="explanation_text"><%= t('login.COMMONLOGIN_LOGIN') %></span>
-                  </h6>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-
-                    <%= form_for(resource, url: sign_in_path) do |f| %>
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-user"></span>
-                          <%= t('login.LOG_LOGIN_ID') %>
-                        </span>
-                        <%= f.text_field :account, autofocus: true, :class => "form-control" %>
-                      </div>
-                      <label class="col-xs-12">
-                        <%= t('login.LOG_LOGIN_IDEXAMPLE') %>
-                      </label>
-
-                      <br />
-
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-lock"></span>
-                          <%= t('login.LOG_LOGIN_PASSWORD') %>
-                        </span>
-                        <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
-                      </div>
-                      <label class="col-xs-12">
-                        <%= t('login.LOG_LOGIN_PASSWORDEXAMPLE') %>
-                      </label>
-
-                      <br />
-
-                      <div class="form-group">
-                        <div class="pull-right">
-                          <div class="col-xs-12 col-sm-8  col-md-6">
-                            <%= f.submit t('login.COMMONLOGIN_LOGIN'), :class => "btn btn-primary" %>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- ログインモーダルここまで -->
-        </div>
-      </div>
-    </div>
-    <% end %>
   </div>
 </div>
 

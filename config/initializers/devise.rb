@@ -295,4 +295,20 @@ Devise.setup do |config|
       # Take whatever action is necessary to remove any local reference to the user's session
       ServiceTickets.where(ticket: request.params[:session_index]).destroy
     }
+
+  config.omniauth :azure_activedirectory_v2,
+                  client_id: Settings.AZURE_CLIENT_ID,
+                  client_secret: Settings.AZURE_CLIENT_SECRET,
+                  tenant_id: Settings.AZURE_TENANT_ID
+
+  config.omniauth :saml,
+                  issuer: Settings.SAML_ISSUER,
+                  assertion_consumer_service_url: Settings.SAML_ASSERTION_CONSUMER_SERVICE_URL,
+                  sp_entity_id: Settings.SAML_SP_ENTITY_ID,
+                  idp_sso_service_url: Settings.SAML_IDP_SSO_SERVICE_URL,
+                  idp_sso_service_url_runtime_params: {:original_request_param => :mapped_idp_param},
+                  idp_cert: File.read(Rails.root.join('config', Settings.SAML_IDP_CERT)),
+                  idp_cert_fingerprint: Settings.SAML_IDP_CERT_FINGERPRINT,
+                  idp_cert_fingerprint_validator: lambda { |fingerprint| fingerprint },
+                  name_identifier_format: Settings.SAML_NAME_IDENTIFIER_FORMAT
 end
