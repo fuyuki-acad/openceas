@@ -24,6 +24,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include Devise::Controllers::Rememberable
   skip_before_action :authenticate_user!
+  protect_from_forgery :except => [:saml]
 
   def cas
     callback_from :cas
