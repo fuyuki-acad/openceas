@@ -26,9 +26,9 @@ zh_TW:
     LOG_LOGIN_INEFFECTIVE: "使用者權限無效"
     LOG_LOGIN_INFOMATION: "CEAS公告"
     LOG_LOGIN_INFOMATION_LIST: "更多CEAS公告"
-    LOG_LOGIN_QRCODE: "Kio University CEAS QR code"
+    LOG_LOGIN_QRCODE: "OpenCEAS, Inc. QR code"
     LOG_LOGIN_PREVIOUS: "Log in previous CEAS"
-    LOG_LOGIN_MESSAGE: "For non Kio University observed the use, please click the following link."
+    LOG_LOGIN_MESSAGE: "To use locally managed user ID, click Login link below."
     LOG_LOGIN_MESSAGEPREVIOUS: "To operate in the previous screen, please click the following link. (Both the class information, and the like can be used in common.)"
 
     #registerMail.jsp

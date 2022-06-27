@@ -26,9 +26,9 @@ ja:
     LOG_LOGIN_INEFFECTIVE: "利用権限が有効になっていません。"
     LOG_LOGIN_INFOMATION: "管理者からのお知らせ"
     LOG_LOGIN_INFOMATION_LIST: "お知らせ一覧"
-    LOG_LOGIN_QRCODE: "畿央大学CEAS QRコード"
+    LOG_LOGIN_QRCODE: "OpenCEAS株式会社 QRコード"
     LOG_LOGIN_PREVIOUS: "以前の CEAS でログイン"
-    LOG_LOGIN_MESSAGE: "利用を認められた畿央大学以外の方は、以下のリンクをクリックしてください。"
+    LOG_LOGIN_MESSAGE: "ローカル管理ユーザIDを使用する場合は、次のリンクをクリックして下さい。"
     LOG_LOGIN_MESSAGEPREVIOUS: "以前の画面で操作するには、以下のリンクをクリックしてください。（授業情報等はどちらも共通に利用できます。）"
 
     #registerMail.jsp
