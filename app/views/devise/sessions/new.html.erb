@@ -83,7 +83,7 @@
 
     <div class="panel panel-default">
       <div class="panel-body">
-        <% if Settings.CAS_AUTHENTICATION || Settings.AZUREAD_AUTHENTICATION %>
+        <% if Settings.CAS_AUTHENTICATION || Settings.AZUREAD_AUTHENTICATION || Settings.SAML_AUTHENTICATION %>
           <div class="col-sm-12 text-center">
             <p><%=t "login.LOG_LOGIN_MESSAGE" %></p>
 
