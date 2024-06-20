@@ -1,98 +1,59 @@
 <html>
   <head>
-    <title>Azure iframe test</title>
-    <link href="//amp.azure.net/libs/amp/latest/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
-    <script src="//amp.azure.net/libs/amp/latest/azuremediaplayer.min.js"></script>
+    <title>video-ja TEST</title>
+    <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.4.1/video.js"></script>
   </head>
   <body>
-    <video id="azuremediaplayer" class="azuremediaplayer amp-default-skin amp-big-play-centered" tabindex="0"></video>
-  </body>
-  <script>
-    var generic_id = ''
-    var url = new URL(window.location.href);
-    if (url.searchParams.get('generic_id')) generic_id = '_'+url.searchParams.get('generic_id');
-    if (window.parent.document.getElementById("url_content"+generic_id)) var url_content = window.parent.document.getElementById("url_content"+generic_id);
-    if (url_content) url_content.classList.add('none');
-    if (window.parent.document.getElementById("azure_message"+generic_id)) var azure_message = window.parent.document.getElementById("azure_message"+generic_id);
+    <video-js id="videoPlayer" class="vjs-fluid vjs-big-play-centered" controls>
+    </video-js>
 
-    var controls = true;
-    var auto_play = false;
-    var rewind_count = 0;
-    var seeked_count = 0;
-    var video_width = 640;
-    var video_height = 400;
-    var start_date = get_datetime();
-    if (window.parent.document.getElementById("panel_display"+generic_id)) controls = window.parent.document.getElementById("panel_display"+generic_id).textContent;
-    if (window.parent.document.getElementById("video_width"+generic_id)) video_width = window.parent.document.getElementById("video_width"+generic_id).textContent;
-    if (window.parent.document.getElementById("video_height"+generic_id)) video_height = window.parent.document.getElementById("video_height"+generic_id).textContent;
-    if (window.parent.document.getElementById("video_url"+generic_id)) var video_url = window.parent.document.getElementById("video_url"+generic_id).textContent;
-    if (window.parent.document.getElementById("forwarding_url"+generic_id)) var forwarding_url = window.parent.document.getElementById("forwarding_url"+generic_id).textContent;
-    if (window.parent.document.getElementById("forwarding"+generic_id)) var forwarding = window.parent.document.getElementById("forwarding"+generic_id).textContent;
-    if (window.parent.document.getElementById("init_message"+generic_id) && azure_message) azure_message.innerHTML = window.parent.document.getElementById("init_message"+generic_id).textContent;
-    if (window.parent.document.getElementById("firstquartile_message"+generic_id)) var firstquartile_message = window.parent.document.getElementById("firstquartile_message"+generic_id).textContent;
-    if (window.parent.document.getElementById("midpoint_message"+generic_id)) var midpoint_message = window.parent.document.getElementById("midpoint_message"+generic_id).textContent;
-    if (window.parent.document.getElementById("thirdquartile_message"+generic_id)) var thirdquartile_message = window.parent.document.getElementById("thirdquartile_message"+generic_id).textContent;
-    if (window.parent.document.getElementById("ended_message"+generic_id)) var ended_message = window.parent.document.getElementById("ended_message"+generic_id).textContent;
-    if (controls == "true") {
-      controls = true;
-      auto_play = false;
-    } else {
-      controls = false;
-      auto_play = true;
-    }
+    <script>
+      var generic_id = ''
+      var url = new URL(window.location.href);
+      if (url.searchParams.get('generic_id')) generic_id = '_'+url.searchParams.get('generic_id');
+      if (window.parent.document.getElementById("azure_message"+generic_id)) var azure_message = window.parent.document.getElementById("azure_message"+generic_id);
 
-    var myOptions = {
-      "nativeControlsForTouch": false,
-      controls: controls,
-      autoplay: auto_play,
-      width: video_width,
-      height: video_height,
-    }
-    myPlayer = amp("azuremediaplayer", myOptions);
-    myPlayer.addEventListener(amp.eventName.ended, function () {
-      params = ''
-      if (forwarding == 'true') {
-        if (ended_message) {
-          if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+ended_message+"</a>";
+      var controls = true;
+      if (window.parent.document.getElementById("panel_display"+generic_id)) controls = window.parent.document.getElementById("panel_display"+generic_id).textContent;
+      if (window.parent.document.getElementById("video_url"+generic_id)) var video_url = window.parent.document.getElementById("video_url"+generic_id).textContent;
+      if (window.parent.document.getElementById("forwarding_url"+generic_id)) var forwarding_url = window.parent.document.getElementById("forwarding_url"+generic_id).textContent;
+      if (window.parent.document.getElementById("forwarding"+generic_id)) var forwarding = window.parent.document.getElementById("forwarding"+generic_id).textContent;
+      if (window.parent.document.getElementById("init_message"+generic_id) && azure_message) azure_message.innerHTML = window.parent.document.getElementById("init_message"+generic_id).textContent;
+      if (window.parent.document.getElementById("firstquartile_message"+generic_id)) var firstquartile_message = window.parent.document.getElementById("firstquartile_message"+generic_id).textContent;
+      if (window.parent.document.getElementById("midpoint_message"+generic_id)) var midpoint_message = window.parent.document.getElementById("midpoint_message"+generic_id).textContent;
+      if (window.parent.document.getElementById("thirdquartile_message"+generic_id)) var thirdquartile_message = window.parent.document.getElementById("thirdquartile_message"+generic_id).textContent;
+      if (window.parent.document.getElementById("ended_message"+generic_id)) var ended_message = window.parent.document.getElementById("ended_message"+generic_id).textContent;
+
+      var player = videojs('videoPlayer', {
+        autoplay: false,
+        controls: controls.toLowerCase() == "true",
+        preload: 'auto',
+        sources: [
+          {
+            src: video_url,
+            type: "application/x-mpegURL",
+          }
+        ],
+        playbackRates: [0.5, 1, 1.5, 2]
+      });
+      var duration = player.duration();
+      player.on('timeupdate', function () {
+        if (firstquartile_message && (player.duration() / 4) < player.currentTime()) azure_message.innerHTML = firstquartile_message;
+        if (midpoint_message && (player.duration() / 2) < player.currentTime()) azure_message.innerHTML = midpoint_message;
+        if (thirdquartile_message && (player.duration() / 4 * 3) < player.currentTime()) azure_message.innerHTML = thirdquartile_message;
+      });
+      player.on('ended', function () {
+        if (forwarding == 'true') {
+          if (ended_message) {
+            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+ended_message+"</a>";
+          } else {
+            if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+forwarding_url+"</a>";
+          }
         } else {
-          if (azure_message) azure_message.innerHTML = "<a href='"+forwarding_url+"' class='btn btn-primary btn-lg' target='_blank'>"+forwarding_url+"</a>";
+          if (ended_message && azure_message) azure_message.innerHTML = ended_message;
         }
-      } else {
-        if (ended_message && azure_message) azure_message.innerHTML = ended_message;
-      }
-    });
-    myPlayer.addEventListener(amp.eventName.seeked, function () {
-      seeked_count+=1;
-    });
-    myPlayer.addEventListener(amp.eventName.rewind, function () {
-      rewind_count+=1;
-    });
-    myPlayer.addEventListener(amp.eventName.firstquartile, function () {
-      if (firstquartile_message && azure_message) azure_message.innerHTML = firstquartile_message;
-    });
-    myPlayer.addEventListener(amp.eventName.midpoint, function () {
-      if (midpoint_message && azure_message) azure_message.innerHTML = midpoint_message;
-    });
-    myPlayer.addEventListener(amp.eventName.thirdquartile, function () {
-      if (thirdquartile_message && azure_message) azure_message.innerHTML = thirdquartile_message;
-    });
-    myPlayer.src([
-      {
-        "src": video_url,
-        "type": "application/vnd.ms-sstr+xml"
-      }
-    ]);
-
-    function get_datetime() {
-      var date = new Date();
-      format_str = 'YYYYMMDDhhmmss';
-      format_str = format_str.replace(/YYYY/g, date.getFullYear());
-      format_str = format_str.replace(/MM/g, ('0'+(date.getMonth()+1)).slice(-2));
-      format_str = format_str.replace(/DD/g, ('0'+date.getDate()).slice(-2));
-      format_str = format_str.replace(/hh/g, ('0'+date.getHours()).slice(-2));
-      format_str = format_str.replace(/mm/g, ('0'+date.getMinutes()).slice(-2));
-      format_str = format_str.replace(/ss/g, ('0'+date.getSeconds()).slice(-2));
-      return format_str;
-    }
-  </script>
+      });
+    </script>
+  </body>
 </html>
