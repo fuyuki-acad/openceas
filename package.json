@@ -3,9 +3,10 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.2",
-    "@rails/webpacker": "4.3.0",
+    "@rails/webpacker": "5.4.4",
     "bootstrap-vue": "^2.21.1",
-    "pdfjs-dist": "^2.5.207",
+    "css-select": "5.1.0",
+    "pdfjs-dist": "^4.3.136",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-loading-overlay": "^3.4.2",
@@ -14,6 +15,6 @@
     "worker-loader": "^3.0.7"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^4.15.2"
   }
 }
