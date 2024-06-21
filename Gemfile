@@ -80,6 +80,7 @@ gem 'ckeditor', '4.3.0'
 
 gem 'rmagick'
 gem 'mini_magick'
+gem 'mimemagic', '~> 0.3.9'
 
 # i18n
 gem 'rails-i18n'
