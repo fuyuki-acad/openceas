@@ -2,7 +2,7 @@
 ja:
   activerecord:
     models:
-      azure_video: "Azure動画"
+      azure_video: "HLS動画"
 
     attributes:
       azure_video:
