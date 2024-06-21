@@ -1,2 +1,2 @@
 #!/bin/sh
-exec env NOEXEC_EXCLUDE=passenger passenger start --daemonize --address 0.0.0.0 -p 28080 -R cable/config.ru --force-max-concurrent-requests-per-process 0
+exec env NOEXEC_EXCLUDE=passenger SECRET_KEY_BASE='7d5ac4f1b703047fcc03fae30474cc2293573596c6010a09d57419e44ea15febcbd843ba84c1096c6d0e48835fac5dc215d758c8fc85df3cf7e23bacc91e8492' passenger start -e production --daemonize --address 0.0.0.0 -p 28080 -R cable/config.ru --force-max-concurrent-requests-per-process 0

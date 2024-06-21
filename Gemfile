@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '6.1.0'
+gem 'rails', '~> 6.1', '>= 6.1.7.7'
 # Use mysql as the database for Active Record
 gem "mysql2"
 # Use postgresql as the database for Active Record
 # gem 'pg', '~> 0.15'
-gem 'puma', '~> 4.1'
+gem "puma", ">= 5.6.8"
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Use Uglifier as compressor for JavaScript assets
@@ -65,7 +65,7 @@ gem 'carrierwave-magic'
 
 # Jquery UI
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
-gem 'jquery-ui-rails', '~> 5.0'
+gem 'jquery-ui-rails', '~> 7.0'
 
 # Turbolinks対策
 gem 'jquery-turbolinks'
@@ -80,6 +80,7 @@ gem 'ckeditor', '4.3.0'
 
 gem 'rmagick'
 gem 'mini_magick'
+gem 'mimemagic', '~> 0.3.9'
 
 # i18n
 gem 'rails-i18n'
