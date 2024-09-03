@@ -156,6 +156,7 @@
                       <div class="form-file">
                         <label for="file" >
                           <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= file_field_tag :file %>
+                          <%= render "shared/fileupload_help" %>
                         </label>
                         <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
                       </div >
