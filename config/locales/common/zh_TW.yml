@@ -231,3 +231,4 @@ zh_TW:
     COMMON_UPLOADED: "File upload has been completed"
     COMMON_SELECT_FILE: "Choose File"
     COMMON_NO_FILE_SELECTED: "no file selected"
+    COMMON_FILE_UPLOAD_HELP: "If certain characters(e.g.,comma(,),semicolon(;),and ampersand(&))are included, an error may occur and the file may not upload properly."
