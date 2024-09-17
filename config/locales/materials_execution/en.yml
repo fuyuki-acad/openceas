@@ -37,6 +37,7 @@ en:
     COMMONMATERIALSEXECUTION_MARKER: "Marked by "
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT: "You are not allowed to submit this open course."
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "You are not allowed to present this open course."
+    COMMONMATERIALSEXECUTION_SPACE_ADDITION: "Unnecessary spaces have been entered in the answer field. Delete spaces before submitting."
     #####複合式テスト実施#####
     ##executeCompound.jsp
     MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "You have taken the quiz: %{current} / %{total}"
@@ -187,6 +188,7 @@ en:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED: "Not Submitted"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "Submitted"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "Not Submitted (Exprired)"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_WARNING_STATEMENT: "Response is saved temporarily and has not been submitted."
     ##errorExecuteQuestionnaire.jsp
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "This survey was already closed (submission period: <strong> %{param0} </strong>). "
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "This survey was already closed (submission period: <strong> %{param0}～%{param1} </strong>). "

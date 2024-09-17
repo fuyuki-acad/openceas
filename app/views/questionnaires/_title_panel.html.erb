@@ -37,6 +37,14 @@
                   <% end %>
                 <% end %>
               <% end %>
+
+              <% if@generic_page.latest_score(current_user.id) && @generic_page.latest_score(current_user.id).total_score == -1 %>
+                <br/>
+                <br/>
+                <code>
+                  <%= t("execution.MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_WARNING_STATEMENT") %>
+                </code>
+              <% end %>
             </td>
           </tr>
         </table>

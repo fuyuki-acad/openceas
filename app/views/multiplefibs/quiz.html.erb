@@ -54,7 +54,7 @@
                       <%= j %>
                     </td>
                     <td>
-                      <%= text_field_tag "answer[#{question.id}]", "", :size => 3, :maxlength => 3 %>
+                      <%= text_field_tag "answer[#{question.id}]", "", :size => 3, :maxlength => 3, :class => "text_input" %>
                     </td>
                   </tr>
                 <% end %>
@@ -73,12 +73,12 @@
               <%= button_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"),
                 type: 'button',
                 class: "btn btn-default ceas-button-margin-5 center-block",
-                onclick: 'submit();' %>
+                onclick: "if(check_answer()){if(window.alert('#{t("execution.COMMONMATERIALSEXECUTION_SPACE_ADDITION")}')){submit()}}else{submit()}" %>
             <% else %>
               <%= button_tag t("execution.COMMONMATERIALSEXECUTION_GRADE") + t("common.COMMON_DO"),
                 type: 'button',
                 class: "btn btn-default ceas-button-margin-5 center-block",
-                onclick: 'submit();' %>
+                onclick: "if(check_answer()){if(window.alert('#{t("execution.COMMONMATERIALSEXECUTION_SPACE_ADDITION")}')){submit()}}else{submit()}" %>
             <% end %>
           <% end %>
         </div>
@@ -86,3 +86,14 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  function check_answer() {
+    elements = document.querySelectorAll(".text_input")
+    for (const element of elements) {
+      if (element.value.startsWith(" ") || element.value.endsWith(" ")) {
+        return true
+      }
+    }
+  }
+</script>

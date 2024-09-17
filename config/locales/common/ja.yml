@@ -231,4 +231,4 @@ ja:
     COMMON_UPLOADED: "アップロードが完了しました"
     COMMON_SELECT_FILE: "ファイルを選択"
     COMMON_NO_FILE_SELECTED: "選択されていません"
-    COMMON_FILE_UPLOAD_HELP: "特定の文字（「,」「;」「&」など）の記号が含まれている場合、エラーとなり正常にアップロードできない場合があります。"
+    COMMON_FILE_UPLOAD_HELP: "特定の文字（「,」「;」「&」など）の記号が含まれている場合、エラーとなり正常にアップロードできません。"
