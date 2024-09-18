@@ -37,6 +37,7 @@ ja:
     COMMONMATERIALSEXECUTION_MARKER: "採点者"
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_SUBMIT: "公開されている科目に回答できません。"
     COMMONMATERIALSEXECUTION_NOT_ALLOWED_TO_PRESENT: "公開されている科目に提出できません。"
+    COMMONMATERIALSEXECUTION_SPACE_ADDITION: "解答欄に不要な空白が含まれています。空白を削除し、提出してください。"
     #####複合式テスト実施#####
     ##executeCompound.jsp
     MAT_EXE_COM_EXECUTECOMPOUND_EXECUTECOUNT: "%{current}回／%{total}回目"
@@ -187,6 +188,7 @@ ja:
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_NOT_ANSWERED: "未回答"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_ANSWERED: "回答済み"
     MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_EXPIRED: "未回答（回答締切）"
+    MAT_EXE_QUE_EXECUTEQUESTIONNAIRE_WARNING_STATEMENT: "回答は一時保存状態のため未提出です。"
     ##errorExecuteQuestionnaire.jsp
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_ALREADYPASSEDENDTIME_html: "このアンケートの期限は『<strong>%{param0}</strong>』までです。"
     MAT_EXE_QUE_ERROREXECUTEQUESTIONNAIRE_INVALIDTERM_html: "このアンケートの受付期間は『<strong>%{param0}から%{param1}</strong>』までです。"

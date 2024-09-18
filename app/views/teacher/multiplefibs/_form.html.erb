@@ -80,6 +80,7 @@
                     <div class="form-file">
                       <label for="generic_page_file" >
                         <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+                        <%= render "shared/fileupload_help" %>
                       </label>
                       <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
                     </div >
@@ -125,6 +126,7 @@
         <div class="form-file">
           <label for="generic_page_file" >
             <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :file %>
+            <%= render "shared/fileupload_help" %>
           </label>
           <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
         <% if @generic_page.link_name.blank? %>
@@ -153,10 +155,11 @@
         <div class="col-sm-12">
           <div class="panel panel-default">
             <div class="panel-body">
-	      <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
+	            <label><%= radio_button :generic_page, :content_type, GenericPage::TYPE_FILEUPLOAD, :checked => true, :onclick => "fadeOut('fade_explanation_panel');" %> <%= t('materials_registration.MAT_REG_MAT_REGISTERMULTIPLEFIB_FILEUPLOAD') %></label>
               <div class="form-file">
                 <label for="generic_page_explanation_file" >
                   <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
+                  <%= render "shared/fileupload_help" %>
                 </label>
                 <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
               </div >
@@ -210,6 +213,7 @@
                   <div class="form-file">
                     <label for="generic_page_explanation_file" >
                       <span class="browse_btn"><%= t('common.COMMON_SELECT_FILE') %></span><%= form.file_field :explanation_file %>
+                      <%= render "shared/fileupload_help" %>
                     </label>
                     <span class="form-file-name"><%= t('common.COMMON_NO_FILE_SELECTED') %></span>
                   </div >
